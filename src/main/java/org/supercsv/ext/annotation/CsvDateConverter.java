@@ -61,12 +61,14 @@ public @interface CsvDateConverter {
     
     /**
      * start date 
+     * <p>set CellProcessor for 'FutureDate'
      * @return
      */
     String min() default "";
     
     /**
      * end date 
+     * <p>set CellProcessor for 'PastDate'
      * @return
      */
     String max() default "";

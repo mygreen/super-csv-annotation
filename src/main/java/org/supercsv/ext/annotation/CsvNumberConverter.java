@@ -28,6 +28,7 @@ public @interface CsvNumberConverter {
     
     /**
      * format pattern
+     * <p> set for CellProcessor 'FormatLocaleNumber'
      * @return
      */
     String pattern() default "";
@@ -60,13 +61,14 @@ public @interface CsvNumberConverter {
     String country() default "";
     
     /**
-     * 
+     * <p>set for CellProcessro 'Min'
      * @return
      */
     String min() default "";
     
     /**
      * 
+     * <p>set for CellProcessro 'Max'
      * @return
      */
     String max() default "";

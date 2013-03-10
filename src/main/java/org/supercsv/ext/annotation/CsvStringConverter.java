@@ -53,6 +53,7 @@ public @interface CsvStringConverter {
     
     /**
      * not empty
+     * <p>set CellProcessor for 'StrNotNullOrEmpty'
      * @return
      */
     boolean notEmpty() default false;

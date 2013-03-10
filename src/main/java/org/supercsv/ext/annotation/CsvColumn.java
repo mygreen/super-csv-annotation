@@ -51,7 +51,8 @@ public @interface CsvColumn {
     boolean optional() default false;
     
     /**
-     * trim
+     * trimming on read/write
+     * <p>set CellProcessor for 'Trim'
      * @return
      */
     boolean trim() default false;

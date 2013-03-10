@@ -24,11 +24,31 @@ import java.lang.annotation.Target;
 @Documented
 public @interface CsvBooleanConverter {
     
+    /**
+     * candidate string with pare string as true.
+     * <p>set CellProcessor for 'ParseBool'
+     * @return 
+     */
     String[] inputTrueValue() default {"true", "1", "yes", "on"};
     
+    /**
+     * candidate string with pare string as true.
+     * <p>set CellProcessor for 'ParseBool'
+     * @return
+     */
     String[] inputFalseValue() default {"false", "0", "no", "off"};
     
+    /**
+     * candidate string with format 'true' as string.
+     * <p>set CellProcessor for 'FmtBool'
+     * @return
+     */
     String outputTrueValue() default "true";
     
+    /**
+     * candidate string with format 'true' as string.
+     * <p>set CellProcessor for 'FmtBool'
+     * @return
+     */
     String outputFalseValue() default "false";
 }
