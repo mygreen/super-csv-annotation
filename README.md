@@ -1,12 +1,17 @@
 super-csv-annotation
 ====================
 
-○'Super CSV' extention library for annotation
+'Super CSV' extention library for annotation
 (1)this library automatic build CellProcessor from Annotation with JavaBean.
 (2)simply showing localized messages.
 
+------------------------
+depends
+------------------------
+ (1)JDK1.6+ (SuperCSV2.x is JDK1.5)
+ (2)SuperCSV 2.x
 
-○Sample Annotation 
+===============================
 (1) @CsvEnity annotate Bean class.
  ・header = automatic header
 =============================
@@ -30,7 +35,7 @@ public class SampleBean1{
  ・builderClass = set your customize CellProcessorBuilder class. this class must inherit 'AbstractCellProcessorBuilder'
 
 =============================
-example @CsvColumn
+Example @CsvColumn
 =============================
 // Java Bean
 @CsvBean(header=true)
@@ -137,7 +142,7 @@ example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvEnum
 @CsvBean(header=true)
 public class SampleBean1{
 
-    @CsvColumn(position = 0, label="数字1")
+    @CsvColumn(position = 0, label="数字")
     private int integer1;
     
     @CsvColumn(position = 1, optional=true)
@@ -155,17 +160,17 @@ public class SampleBean1{
     private Date date1;
     
     @CsvColumn(position = 5, optional=true)
-    @CsvDateConverter(pattern="yyyy年MM月dd日", min="2000年01月30日")
+    @CsvDateConverter(pattern="yyyy/MM/dd", min="2000/10/30")
     private Timestamp date2;
     
-    @CsvColumn(position = 6, label="列挙型", optional=true, inputDefaultValue="BLUE")
+    @CsvColumn(position = 6, label="enum class", optional=true, inputDefaultValue="BLUE")
     @CsvEnumConveret(lenient = true)
     private Color enum1;
     
 }
 
 ===================================================
-○Sample Writer
+Sample Writer
 ===================================================
 
 (1) use CsvBeanWriter
@@ -205,7 +210,7 @@ for(final SampleBean1 item : list) {
 }
 
 ===================================================
-○Sample Reader
+Sample Reader
 ===================================================
 
 (1) use CsvBeanReader
@@ -246,7 +251,7 @@ while((bean1 = csvReader.read()) != null) {
 
 
 ===================================================
-○Sample Localize Message
+Sample Localize Message
 ===================================================
  use ValidatableCsvBeanReader (custom class)
 // create cell processor and field name mapping
@@ -283,7 +288,7 @@ try {
     }
 }
 ---------------------------
-○Custoize messages.
+Custoize messages.
 ---------------------------
 ・set message resolver.
 
