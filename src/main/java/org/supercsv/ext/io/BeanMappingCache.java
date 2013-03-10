@@ -1,0 +1,53 @@
+/*
+ * BeanMappingCache.java
+ * created in 2013/03/09
+ *
+ * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
+ */
+package org.supercsv.ext.io;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.ext.builder.CsvBeanMapping;
+
+
+/**
+ *
+ *
+ * @author T.TSUCHIE
+ *
+ */
+public class BeanMappingCache {
+    
+    private final String[] header;
+    
+    private final String[] nameMapping;
+    
+    private final CellProcessor[] inputCellProcessors;
+    
+    private final CellProcessor[] outputCellProcessors;
+    
+    @SuppressWarnings("rawtypes")
+    public BeanMappingCache(CsvBeanMapping mapping) {
+        this.header = mapping.getHeader();
+        this.nameMapping = mapping.getNameMapping();
+        this.inputCellProcessors = mapping.getInputCellProcessor();
+        this.outputCellProcessors = mapping.getOutputCellProcessor();
+    }
+    
+    public String[] getHeader() {
+        return header;
+    }
+    
+    public String[] getNameMapping() {
+        return nameMapping;
+    }
+    
+    public CellProcessor[] getInputCellProcessors() {
+        return inputCellProcessors;
+    }
+    
+    public CellProcessor[] getOutputCellProcessors() {
+        return outputCellProcessors;
+    }
+    
+}
