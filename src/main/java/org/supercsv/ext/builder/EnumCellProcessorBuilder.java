@@ -13,6 +13,7 @@ import java.util.Iterator;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.annotation.CsvEnumConverter;
 import org.supercsv.ext.cellprocessor.ParseEnum;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
@@ -91,7 +92,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
             
         }
         
-        throw new IllegalArgumentException(String.format("convert fail enum value %s", defaultValue));
+        throw new SuperCsvInvalidAnnotationException(String.format("convert fail enum value %s", defaultValue));
     }
     
 }

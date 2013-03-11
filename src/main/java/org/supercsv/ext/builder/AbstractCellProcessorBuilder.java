@@ -61,15 +61,16 @@ public abstract class AbstractCellProcessorBuilder<T> {
                     getParseValue(type, annos, csvColumnAnno.equalsValue()));
         }
         
-        if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
-            cellProcessor = prependConvertNullToProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.outputDefaultValue()));
-        }
-        
         if(csvColumnAnno.optional() && !type.isPrimitive()) {
             cellProcessor = prependOptionalProcessor(cellProcessor);
         } else {
             cellProcessor = prependNotNullProcessor(cellProcessor);
+        }
+        
+        if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
+            cellProcessor = prependConvertNullToProcessor(type, cellProcessor,
+//                    getParseValue(type, annos, csvColumnAnno.outputDefaultValue()))
+                    csvColumnAnno.outputDefaultValue());
         }
         
         return cellProcessor;
@@ -113,6 +114,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
         
         return (processor == null ? 
                 new ConvertNullTo(value) : new ConvertNullTo(value, processor));
+//                new ConvertNullToNext(value) : new ConvertNullToNext(value, processor));
     }
     
     protected CellProcessor prependEqualsProcessor(final Class<T> type, final CellProcessor processor, final Object value) {

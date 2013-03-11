@@ -27,6 +27,7 @@ import org.supercsv.ext.cellprocessor.ParseLocaleTimestamp;
 import org.supercsv.ext.cellprocessor.constraint.DateRange;
 import org.supercsv.ext.cellprocessor.constraint.FutureDate;
 import org.supercsv.ext.cellprocessor.constraint.PastDate;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
@@ -390,7 +391,9 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         try {
             return formatter.parse(defaultValue);
         } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format(" default '%s' value cannot parse to Date with pattern '%s'",
+                            defaultValue, pattern), e);
         }
     }
     

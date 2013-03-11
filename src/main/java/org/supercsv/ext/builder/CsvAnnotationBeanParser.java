@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
@@ -128,7 +129,7 @@ public class CsvAnnotationBeanParser {
         }
         
         if(!lackPosition.isEmpty() || !duplicatePosition.isEmpty()) {
-            throw new SuperCsvException(String.format(
+            throw new SuperCsvInvalidAnnotationException(String.format(
                     "position value is wrong. lacked position=%s, duplicated position=%s", lackPosition, duplicatePosition));
         }
     }

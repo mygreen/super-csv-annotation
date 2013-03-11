@@ -63,14 +63,14 @@ public class SampleBean1{
 ----------------------------
 (1)build field 'integer1' CellProcessor
  #input CellProcessor
-  new Optional()
+  new Optional(new ParseInt())
  
  #output CellProcessor
   new Optional()
 
 (2)build field 'integer2' CellProcessor
  #input CellProcessor
-  new NotNull(new Unique())
+  new NotNull(new Unique(new ParseInt()))
  
  #output CellProcessor
   new NotNull(new Unique())
@@ -99,7 +99,7 @@ public class SampleBean1{
 =============================
 
 =============================
-example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvEnumConverter
+example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvBooleanConverter / @CsvEnumConverter
 =============================
 (1) @CsvStringConverter is setting for String class.
  ・minLength : constrain the minimum character long. set CellProcessor 'MinLength' (custom processor)
@@ -135,7 +135,15 @@ example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvEnum
 ・max : constarin the maximum value. set CellProcessor 'PastDate' (custom processor)
        if min != "" and max != "", set CellProcessor 'DateRange' (custom processor)
 
-(4)@CsvEnumConverter is setting for Enum class.
+(4)@BooleanConverter is seting for boolean class.
+・inputTrueValues : pase string as true value. set CellProcessor 'ParseBoolean' (custom processor)
+・inputTrueValues : pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
+・outputTrueValue : output boolean(true) to string value.
+・outputFalseValue : output boolean(false) to string value.
+・lenient : in parse, ignore lower / upper case.
+・failtToFalse : in fail to parse, return to false.
+
+(5)@CsvEnumConverter is setting for Enum class.
 ・lenient : parse with ignored case. optional argument for CellProsessor ''
 
 --------------------------------------
@@ -166,6 +174,11 @@ public class SampleBean1{
     @CsvColumn(position = 6, label="enum class", optional=true, inputDefaultValue="BLUE")
     @CsvEnumConveret(lenient = true)
     private Color enum1;
+    
+    @CsvColumn(position = 7, optional=true)
+    @BooleanConverter(inputTrueValues = {"○"}, inputFalseValues = {"×"}, inputTrueValue = "○", outputFalseValue="×")
+    private Boolean avaialble;
+
     
 }
 
@@ -235,7 +248,7 @@ while((bean1 = csvReader.read(SampleBean1.class, nameMapping, cellProcessors)) !
     list.add(bean1);
 }
 ---------------------------------------------------
-(2) use CsvAnnotationBeanWriter (custom class)
+(2) use CsvAnnotationBeanReader (custom class)
 ---------------------------------------------------
 File inputFile = new File("src/test/data/test_error.csv");
 CsvAnnotationBeanReader csvReader = 

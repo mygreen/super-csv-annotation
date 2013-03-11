@@ -33,6 +33,7 @@ import org.supercsv.ext.cellprocessor.ParseShort;
 import org.supercsv.ext.cellprocessor.constraint.Max;
 import org.supercsv.ext.cellprocessor.constraint.Min;
 import org.supercsv.ext.cellprocessor.constraint.NumberRange;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
@@ -275,13 +276,15 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).byteValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Byte",
+                                    value, formatter), e);
                 }
             }
             
             return Byte.valueOf(value);
         }
-
+        
         @Override
         public Byte getParseValue(final Class<Byte> type, final Annotation[] annos, final String defaultValue) {
             
@@ -372,7 +375,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).shortValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Short",
+                                    value, formatter), e);
                 }
             }
             
@@ -468,7 +473,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).intValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Integer",
+                                    value, formatter), e);
                 }
             }
             
@@ -564,7 +571,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).longValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Long",
+                                    value, formatter), e);
                 }
             }
             
@@ -660,7 +669,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).floatValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Float",
+                                    value, formatter), e);
                 }
             }
             
@@ -755,7 +766,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return formatter.parse(value).doubleValue();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to Double",
+                                    value, formatter), e);
                 }
             }
             
@@ -850,7 +863,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return (BigDecimal) formatter.parse(value);
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to BigDecimal",
+                                    value, formatter), e);
                 }
             }
             
@@ -945,7 +960,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                 try {
                     return ((BigDecimal) formatter.parse(value)).toBigIntegerExact();
                 } catch(ParseException e) {
-                    throw new RuntimeException(e);
+                    throw new SuperCsvInvalidAnnotationException(
+                            String.format(" value '%s' cannot parse to BigInteger",
+                                    value, formatter), e);
                 }
             }
             

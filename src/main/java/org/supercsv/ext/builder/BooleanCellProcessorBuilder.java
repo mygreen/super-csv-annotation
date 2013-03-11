@@ -14,6 +14,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
 import org.supercsv.ext.cellprocessor.ParseBoolean;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
@@ -123,8 +124,33 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     
     @Override
     public Boolean getParseValue(final Class<Boolean> type, final Annotation[] annos, final String defaultValue) {
+        final CsvBooleanConverter converterAnno = getAnnotation(annos);
+        final String[] trueValue = getInputTrueValue(converterAnno);
+        final String[] falseValue = getInputFalseValue(converterAnno);
+        final boolean lenient = getLenient(converterAnno);
+        final boolean failToFalse = getFailToFalse(converterAnno);
         
-        return Boolean.valueOf(defaultValue);
+        for(String trueStr : trueValue) {
+            if(lenient && trueStr.equalsIgnoreCase(defaultValue)) {
+                return Boolean.TRUE;
+            } else if(!lenient && trueStr.equals(defaultValue)) {
+                return Boolean.TRUE;
+            }
+        }
+        
+        for(String falseStr : falseValue) {
+            if(lenient && falseStr.equalsIgnoreCase(defaultValue)) {
+                return Boolean.FALSE;
+            } else if(!lenient && falseStr.equals(defaultValue)) {
+                return Boolean.FALSE;
+            }
+        }
+        
+        if(failToFalse) {
+            return Boolean.TRUE;
+        }
+        
+        throw new SuperCsvInvalidAnnotationException(String.format("defaultValue'%s' cannot parse.", defaultValue));
     }
     
     
