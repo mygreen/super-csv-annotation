@@ -135,7 +135,7 @@ example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvBool
 ・max : constarin the maximum value. set CellProcessor 'PastDate' (custom processor)
        if min != "" and max != "", set CellProcessor 'DateRange' (custom processor)
 
-(4)@BooleanConverter is seting for boolean class.
+(4)@CsvBooleanConverter is seting for boolean class.
 ・inputTrueValues : pase string as true value. set CellProcessor 'ParseBoolean' (custom processor)
 ・inputTrueValues : pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
 ・outputTrueValue : output boolean(true) to string value.
@@ -176,7 +176,7 @@ public class SampleBean1{
     private Color enum1;
     
     @CsvColumn(position = 7, optional=true)
-    @BooleanConverter(inputTrueValues = {"○"}, inputFalseValues = {"×"}, inputTrueValue = "○", outputFalseValue="×")
+    @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
     private Boolean avaialble;
 
     
