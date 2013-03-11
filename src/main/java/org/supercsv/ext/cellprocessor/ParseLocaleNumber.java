@@ -185,6 +185,8 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         vars.put("pattern", getPattern());
         vars.put("currency", getCurrency());
         vars.put("symbols", getSymbols().getCurrencySymbol());
+        vars.put("lenient", isLenient());
+        
         return vars;
     }
     

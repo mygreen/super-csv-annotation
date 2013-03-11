@@ -158,6 +158,7 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         vars.put("pattern", getPattern());
         vars.put("locale", getLocale());
         vars.put("timeZone", getTimeZone());
+        vars.put("lenient", isLenient());
         
         return vars;
     }

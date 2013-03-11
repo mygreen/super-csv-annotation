@@ -9,11 +9,11 @@ package org.supercsv.ext.builder;
 import java.lang.annotation.Annotation;
 
 import org.supercsv.cellprocessor.FmtBool;
-import org.supercsv.cellprocessor.ParseBool;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
+import org.supercsv.ext.cellprocessor.ParseBoolean;
 
 
 /**
@@ -58,7 +58,7 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     
     protected String[] getInputTrueValue(final CsvBooleanConverter converterAnno) {
         if(converterAnno == null) {
-            return new String[]{"true", "1", "yes", "on"};
+            return new String[]{"true", "1", "yes", "on", "y", "t"};
         }
         
         return converterAnno.inputTrueValue();
@@ -66,10 +66,26 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     
     protected String[] getInputFalseValue(final CsvBooleanConverter converterAnno) {
         if(converterAnno == null) {
-            return new String[]{"false", "0", "no", "off"};
+            return new String[]{"false", "0", "no", "off", "f", "n"};
         }
         
         return converterAnno.inputFalseValue();
+    }
+    
+    protected boolean getLenient(final CsvBooleanConverter converterAnno) {
+        if(converterAnno == null) {
+            return false;
+        }
+        
+        return converterAnno.lenient();
+    }
+    
+    protected boolean getFailToFalse(final CsvBooleanConverter converterAnno) {
+        if(converterAnno == null) {
+            return false;
+        }
+        
+        return converterAnno.failToFalse();
     }
     
     @Override
@@ -94,10 +110,13 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final CsvBooleanConverter converterAnno = getAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
+        final boolean lenient = getLenient(converterAnno);
+        final boolean failToFalse = getFailToFalse(converterAnno);
         
         CellProcessor cellProcessor = processor;
         cellProcessor = (cellProcessor == null
-                ? new ParseBool(trueValue, falseValue) : new ParseBool(trueValue, falseValue, (BoolCellProcessor) cellProcessor));
+                ? new ParseBoolean(trueValue, falseValue, lenient).setFailToFalse(failToFalse) :
+                    new ParseBoolean(trueValue, falseValue, lenient, (BoolCellProcessor) cellProcessor).setFailToFalse(failToFalse));
         
         return cellProcessor;
     }

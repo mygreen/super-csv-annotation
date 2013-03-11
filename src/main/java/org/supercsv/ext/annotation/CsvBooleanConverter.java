@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 
 
 /**
- * Boolen formmating annotation.
+ * Boolean formmating annotation.
  *
  * @author T.TSUCHIE
  *
@@ -29,14 +29,14 @@ public @interface CsvBooleanConverter {
      * <p>set CellProcessor for 'ParseBool'
      * @return 
      */
-    String[] inputTrueValue() default {"true", "1", "yes", "on"};
+    String[] inputTrueValue() default {"true", "1", "yes", "on", "y", "t"};
     
     /**
      * candidate string with pare string as true.
      * <p>set CellProcessor for 'ParseBool'
      * @return
      */
-    String[] inputFalseValue() default {"false", "0", "no", "off"};
+    String[] inputFalseValue() default {"false", "0", "no", "off", "f", "n"};
     
     /**
      * candidate string with format 'true' as string.
@@ -51,4 +51,16 @@ public @interface CsvBooleanConverter {
      * @return
      */
     String outputFalseValue() default "false";
+    
+    /**
+     * ignore lower / upper case.
+     * @return
+     */
+    boolean lenient() default false;
+    
+    /**
+     * if fail parsing, convert to false.
+     * @return
+     */
+    boolean failToFalse() default false;
 }

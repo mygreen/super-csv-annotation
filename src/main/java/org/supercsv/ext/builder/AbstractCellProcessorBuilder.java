@@ -42,7 +42,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
     public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos,
             final boolean ignoreValidationProcessor) {
         
-        CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
+        final CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
         
         CellProcessor cellProcessor = null;
         
@@ -77,7 +77,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
     
     public CellProcessor buildInputCellProcessor(final Class<T> type, final Annotation[] annos) {
         
-        CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
+        final CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
         
         CellProcessor cellProcessor = null;
         cellProcessor = buildInputCellProcessor(type, annos, cellProcessor);
