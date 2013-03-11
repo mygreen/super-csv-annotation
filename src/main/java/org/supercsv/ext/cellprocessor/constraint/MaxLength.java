@@ -25,24 +25,24 @@ import org.supercsv.util.CsvContext;
  */
 public class MaxLength extends CellProcessorAdaptor implements StringCellProcessor, ValidationCellProcessor {
     
-    protected final long max;
+    protected final int max;
     
-    public MaxLength(final long max) {
+    public MaxLength(final int max) {
         super();
         checkPreconditions(max);
         this.max = max;
     }
     
-    public MaxLength(final long max, final CellProcessor next) {
+    public MaxLength(final int max, final CellProcessor next) {
         super(next);
         checkPreconditions(max);
         this.max = max;
     }
     
-    private static void checkPreconditions(final long max) {
+    private static void checkPreconditions(final int max) {
         
         if(max <= 0) {
-            throw new IllegalArgumentException(String.format("max (%d) should not be > 0", max));
+            throw new IllegalArgumentException(String.format("max (%d) should not be < 0", max));
         }
     }
     
@@ -62,7 +62,7 @@ public class MaxLength extends CellProcessorAdaptor implements StringCellProcess
         return next.execute(stringValue, context);
     }
     
-    public long getMax() {
+    public int getMax() {
         return max;
     }
     

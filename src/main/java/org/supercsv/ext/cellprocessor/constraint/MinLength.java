@@ -25,21 +25,21 @@ import org.supercsv.util.CsvContext;
  */
 public class MinLength extends CellProcessorAdaptor implements StringCellProcessor, ValidationCellProcessor {
     
-    protected final long min;
+    protected final int min;
     
-    public MinLength(final long min) {
+    public MinLength(final int min) {
         super();
         checkPreconditions(min);
         this.min = min;
     }
     
-    public MinLength(final long min, final CellProcessor next) {
+    public MinLength(final int min, final CellProcessor next) {
         super(next);
         checkPreconditions(min);
         this.min = min;
     }
     
-    private static void checkPreconditions(final long min) {
+    private static void checkPreconditions(final int min) {
         
         if(min < 0) {
             throw new IllegalArgumentException(String.format("min (%d) should not be >= 0", min));
@@ -62,7 +62,7 @@ public class MinLength extends CellProcessorAdaptor implements StringCellProcess
         return next.execute(stringValue, context);
     }
     
-    public long getMin() {
+    public int getMin() {
         return min;
     }
     
