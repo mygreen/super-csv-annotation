@@ -101,13 +101,14 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
      * @throws IllegalArgumentException
      * 
      */
-    protected void checkPreconditions(final String pattern) {
+    protected static void checkPreconditions(final String pattern) {
         if(pattern == null || pattern.isEmpty() ) {
             throw new IllegalArgumentException("pattern should not be null");
         }
     }
     
-    public Object execute(Object value, CsvContext context) {
+    @Override
+    public Object execute(final Object value, final CsvContext context) {
         validateInputNotNull(value, context);
         
         if(!(value instanceof String)) {

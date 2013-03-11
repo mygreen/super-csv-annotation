@@ -32,7 +32,7 @@ public class NullCellProcessorBuilder extends AbstractCellProcessorBuilder<Class
     }
     
     @Override
-    public Class<?> getParseValue(Class<Class<?>> type, Annotation[] annos, String defaultValue) {
+    public Class<?> getParseValue(final Class<Class<?>> type, final Annotation[] annos, final String defaultValue) {
         return null;
     }
     

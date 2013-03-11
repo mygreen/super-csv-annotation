@@ -99,7 +99,7 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formateValue(final Object value) {
         if(value == null) {
             return "";
         }

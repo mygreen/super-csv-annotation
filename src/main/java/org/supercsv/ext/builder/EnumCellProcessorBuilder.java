@@ -23,7 +23,7 @@ import org.supercsv.ext.cellprocessor.ParseEnum;
  */
 public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<?>> {
     
-    protected CsvEnumConverter getAnnotation(Annotation[] annos) {
+    protected CsvEnumConverter getAnnotation(final Annotation[] annos) {
         
         if(annos == null || annos.length == 0) {
             return null;
@@ -73,7 +73,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public Enum getParseValue(Class<Enum<?>> type, Annotation[] annos, String defaultValue) {
+    public Enum getParseValue(final Class<Enum<?>> type, final Annotation[] annos, final String defaultValue) {
         CsvEnumConverter converterAnno = getAnnotation(annos);
         final boolean lenient = getLenient(converterAnno);
         

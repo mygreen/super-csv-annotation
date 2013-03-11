@@ -37,7 +37,8 @@ import org.supercsv.ext.cellprocessor.constraint.PastDate;
  */
 public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date> {
     
-    protected DateFormat createDateFormat(String pattern, boolean lenient, Locale locale, TimeZone timeZone) {
+    protected DateFormat createDateFormat(final String pattern, boolean lenient,
+            final Locale locale, final TimeZone timeZone) {
         DateFormat value = new SimpleDateFormat(pattern, locale);
         value.setLenient(lenient);
         
@@ -48,7 +49,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return value;
     }
     
-    protected CsvDateConverter getAnnotation(Annotation[] annos) {
+    protected CsvDateConverter getAnnotation(final Annotation[] annos) {
         
         if(annos == null || annos.length == 0) {
             return null;
@@ -64,7 +65,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         
     }
     
-    protected String getPattern(CsvDateConverter converterAnno) {
+    protected String getPattern(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return "yyyy-MM-dd";
         }
@@ -72,7 +73,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return converterAnno.pattern();
     }
     
-    protected boolean getLenient(CsvDateConverter converterAnno) {
+    protected boolean getLenient(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return true;
         }
@@ -80,7 +81,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return converterAnno.lenient();
     }
     
-    protected Locale getLocale(CsvDateConverter converterAnno) {
+    protected Locale getLocale(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return Locale.getDefault();
         }
@@ -98,7 +99,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return Locale.getDefault();
     }
     
-    protected TimeZone getTimeZone(CsvDateConverter converterAnno) {
+    protected TimeZone getTimeZone(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return null;
         }
@@ -106,7 +107,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return TimeZone.getTimeZone(converterAnno.timezone());
     }
     
-    protected String getMin(CsvDateConverter converterAnno) {
+    protected String getMin(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return "";
         }
@@ -114,7 +115,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return converterAnno.min();
     }
     
-    protected String getMax(CsvDateConverter converterAnno) {
+    protected String getMax(final CsvDateConverter converterAnno) {
         if(converterAnno == null) {
             return "";
         }
@@ -122,8 +123,9 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return converterAnno.max();
     }
     
-    protected CellProcessor prependRangeProcessor(final Date min, final Date max, CellProcessor cellProcessor) {
+    protected CellProcessor prependRangeProcessor(final Date min, final Date max, final CellProcessor processor) {
         
+        CellProcessor cellProcessor = processor;
         if(min != null && max != null) {
             if(cellProcessor == null) {
                 cellProcessor = new DateRange<Date>(min, max);
@@ -147,7 +149,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return cellProcessor;
     }
     
-    protected Date parseDate(final String value, DateFormat formatter) {
+    protected Date parseDate(final String value, final DateFormat formatter) {
         if(value.isEmpty()) {
             return null;
         }
@@ -231,7 +233,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     public static class SqlDateCellProcessorBuilder extends DateCellProcessorBuilder {
         
         @Override
-        protected String getPattern(CsvDateConverter converterAnno) {
+        protected String getPattern(final CsvDateConverter converterAnno) {
             if(converterAnno == null) {
                 return "yyyy-MM-dd";
             }
@@ -240,7 +242,8 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        public CellProcessor buildInputCellProcessor(Class<Date> type, Annotation[] annos, CellProcessor cellProcessor) {
+        public CellProcessor buildInputCellProcessor(final Class<Date> type, final Annotation[] annos, 
+                final CellProcessor processor) {
             
             final CsvDateConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -253,6 +256,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final java.sql.Date min = parseDate(getMin(converterAnno), formatter);
             final java.sql.Date max = parseDate(getMax(converterAnno), formatter);
             
+            CellProcessor cellProcessor = processor;
             cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             
             cellProcessor = (cellProcessor == null ?
@@ -264,13 +268,13 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        protected java.sql.Date parseDate(final String value, DateFormat formatter) {
+        protected java.sql.Date parseDate(final String value, final DateFormat formatter) {
             Date date = super.parseDate(value, formatter);
             return date == null ? null : new java.sql.Date(date.getTime());
         }
         
         @Override
-        public Date getParseValue(Class<Date> type, Annotation[] annos, String defaultValue) {
+        public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
             return new java.sql.Date(super.getParseValue(type, annos, defaultValue).getTime());
         }
         
@@ -279,7 +283,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     public static class TimestampCellProcessorBuilder extends DateCellProcessorBuilder {
         
         @Override
-        protected String getPattern(CsvDateConverter converterAnno) {
+        protected String getPattern(final CsvDateConverter converterAnno) {
             if(converterAnno == null) {
                 return "yyyy-MM-dd HH:mm:ss.SSS";
             }
@@ -288,7 +292,8 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        public CellProcessor buildInputCellProcessor(Class<Date> type, Annotation[] annos, CellProcessor cellProcessor) {
+        public CellProcessor buildInputCellProcessor(final Class<Date> type, final Annotation[] annos,
+                final CellProcessor processor) {
             
             final CsvDateConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -301,6 +306,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final Timestamp min = parseDate(getMin(converterAnno), formatter);
             final Timestamp max = parseDate(getMax(converterAnno), formatter);
             
+            CellProcessor cellProcessor = processor;
             cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             
             cellProcessor = (cellProcessor == null ?
@@ -312,13 +318,13 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        protected Timestamp parseDate(final String value, DateFormat formatter) {
+        protected Timestamp parseDate(final String value, final DateFormat formatter) {
             Date date = super.parseDate(value, formatter);
             return date == null ? null : new Timestamp(date.getTime());
         }
         
         @Override
-        public Date getParseValue(Class<Date> type, Annotation[] annos, String defaultValue) {
+        public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
             return new Timestamp(super.getParseValue(type, annos, defaultValue).getTime());
         }
         
@@ -327,7 +333,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     public static class TimeCellProcessorBuilder extends DateCellProcessorBuilder {
         
         @Override
-        protected String getPattern(CsvDateConverter converterAnno) {
+        protected String getPattern(final CsvDateConverter converterAnno) {
             if(converterAnno == null) {
                 return "HH:mm";
             }
@@ -336,7 +342,8 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        public CellProcessor buildInputCellProcessor(Class<Date> type, Annotation[] annos, CellProcessor cellProcessor) {
+        public CellProcessor buildInputCellProcessor(final Class<Date> type, final Annotation[] annos,
+                final CellProcessor processor) {
             
             final CsvDateConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -349,8 +356,8 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final Time min = parseDate(getMin(converterAnno), formatter);
             final Time max = parseDate(getMax(converterAnno), formatter);
             
+            CellProcessor cellProcessor = processor;
             cellProcessor = prependRangeProcessor(min, max, cellProcessor);
-            
             cellProcessor = (cellProcessor == null ?
                     new ParseLocaleTime(pattern, lenient, locale, timeZone) :
                         new ParseLocaleTime(pattern, lenient, locale, timeZone, (DateCellProcessor)cellProcessor));
@@ -360,19 +367,19 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         }
         
         @Override
-        protected Time parseDate(final String value, DateFormat formatter) {
+        protected Time parseDate(final String value, final DateFormat formatter) {
             Date date = super.parseDate(value, formatter);
             return date == null ? null : new Time(date.getTime());
         }
         
         @Override
-        public Date getParseValue(Class<Date> type, Annotation[] annos, String defaultValue) {
+        public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
             return new Time(super.getParseValue(type, annos, defaultValue).getTime());
         }
     }
     
     @Override
-    public Date getParseValue(Class<Date> type, Annotation[] annos, String defaultValue) {
+    public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
         final CsvDateConverter converterAnno = getAnnotation(annos);
         final String pattern = getPattern(converterAnno);
         final boolean lenient = getLenient(converterAnno);

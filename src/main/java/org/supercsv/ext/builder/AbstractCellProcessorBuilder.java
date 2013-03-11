@@ -39,7 +39,8 @@ public abstract class AbstractCellProcessorBuilder<T> {
         
     }
     
-    public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos, final boolean ignoreValidableProcessor) {
+    public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos,
+            final boolean ignoreValidableProcessor) {
         
         CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
         
@@ -108,37 +109,37 @@ public abstract class AbstractCellProcessorBuilder<T> {
         return cellProcessor;
     }
     
-    protected CellProcessor prependConvertNullToProcessor(final Class<T> type, final CellProcessor cellProcessor, final Object value) {
+    protected CellProcessor prependConvertNullToProcessor(final Class<T> type, final CellProcessor processor, final Object value) {
         
-        return (cellProcessor == null ? 
-                new ConvertNullTo(value) : new ConvertNullTo(value, cellProcessor));
+        return (processor == null ? 
+                new ConvertNullTo(value) : new ConvertNullTo(value, processor));
     }
     
-    protected CellProcessor prependEqualsProcessor(final Class<T> type, final CellProcessor cellProcessor, final Object value) {
+    protected CellProcessor prependEqualsProcessor(final Class<T> type, final CellProcessor processor, final Object value) {
         
-        return (cellProcessor == null ? 
-                new Equals(value) : new Equals(value, cellProcessor));
+        return (processor == null ? 
+                new Equals(value) : new Equals(value, processor));
     }
     
-    protected CellProcessor prependUniqueProcessor(final CellProcessor cellProcessor) {
-        return (cellProcessor == null ? new Unique() : new Unique(cellProcessor));
+    protected CellProcessor prependUniqueProcessor(final CellProcessor processor) {
+        return (processor == null ? new Unique() : new Unique(processor));
     }
     
-    protected CellProcessor prependOptionalProcessor(final CellProcessor cellProcessor) {
-        return (cellProcessor == null ? new Optional() : new Optional(cellProcessor));
+    protected CellProcessor prependOptionalProcessor(final CellProcessor processor) {
+        return (processor == null ? new Optional() : new Optional(processor));
     }
     
-    protected CellProcessor prependNotNullProcessor(final CellProcessor cellProcessor) {
-        return (cellProcessor == null ? new NotNull() : new NotNull(cellProcessor));
+    protected CellProcessor prependNotNullProcessor(final CellProcessor processor) {
+        return (processor == null ? new NotNull() : new NotNull(processor));
     }
     
-    protected CellProcessor prependTrimProcessor(final CellProcessor cellProcessor) {
-        return (cellProcessor == null ? new Trim() : new Trim((StringCellProcessor) cellProcessor));
+    protected CellProcessor prependTrimProcessor(final CellProcessor processor) {
+        return (processor == null ? new Trim() : new Trim((StringCellProcessor) processor));
     }
     
-    public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor cellProcessor, boolean ignoreValidableProcessor);
+    public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor, boolean ignoreValidableProcessor);
     
-    public abstract CellProcessor buildInputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor cellProcessor);
+    public abstract CellProcessor buildInputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor);
     
     public abstract T getParseValue(Class<T> type, Annotation[] annos, String strValue);
     

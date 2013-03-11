@@ -29,22 +29,22 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
     
     final boolean lenient;
     
-    public ParseEnum(Class type) {
+    public ParseEnum(final Class type) {
         this(type, false);
     }
     
-    public ParseEnum(Class type, CellProcessor next) {
+    public ParseEnum(final Class type, final CellProcessor next) {
         this(type, false, next);
     }
     
-    public ParseEnum(Class type, final boolean lenient) {
+    public ParseEnum(final Class type, final boolean lenient) {
         super();
         checkPreconditions(type);
         this.type = type;
         this.lenient = lenient;
     }
     
-    public ParseEnum(Class type, final boolean lenient, CellProcessor next) {
+    public ParseEnum(final Class type, final boolean lenient, final CellProcessor next) {
         super(next);
         checkPreconditions(type);
         this.type = type;
@@ -58,7 +58,8 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         }
     }
     
-    public Object execute(Object value, CsvContext context) {
+    @Override
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         

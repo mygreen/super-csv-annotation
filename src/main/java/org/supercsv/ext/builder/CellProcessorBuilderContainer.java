@@ -36,8 +36,10 @@ public class CellProcessorBuilderContainer {
         builderMap.clear();
         
         registBuilder(String.class, new StringCellProcessorBuilder());
+        
         registBuilder(Boolean.class, new BooleanCellProcessorBuilder());
         registBuilder(boolean.class, new BooleanCellProcessorBuilder());
+        
         registBuilder(Byte.class, NumberCellProcessorBuilder.newByte());
         registBuilder(byte.class, NumberCellProcessorBuilder.newByte());
         registBuilder(Short.class, NumberCellProcessorBuilder.newShort());
@@ -50,26 +52,28 @@ public class CellProcessorBuilderContainer {
         registBuilder(float.class, NumberCellProcessorBuilder.newFloat());
         registBuilder(Double.class, NumberCellProcessorBuilder.newDouble());
         registBuilder(double.class, NumberCellProcessorBuilder.newDouble());
-        registBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
+        
         registBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
         registBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
-        registBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
+        
         registBuilder(Character.class, new CharacterCellProcessorBuilder());
         registBuilder(char.class, new CharacterCellProcessorBuilder());
+        
         registBuilder(Date.class, new DateCellProcessorBuilder());
         registBuilder(java.sql.Date.class, DateCellProcessorBuilder.newSqlDate());
         registBuilder(Timestamp.class, DateCellProcessorBuilder.newTimestamp());
         registBuilder(Time.class, DateCellProcessorBuilder.newTime());
+        
         registBuilder(Enum.class, new EnumCellProcessorBuilder());
     }
     
-    public <T> void registBuilder(Class<?> type, AbstractCellProcessorBuilder<T> builder) {
+    public <T> void registBuilder(final Class<?> type, final AbstractCellProcessorBuilder<T> builder) {
         builderMap.put(type, builder);
         
     }
     
     @SuppressWarnings("unchecked")
-    public <T> AbstractCellProcessorBuilder<T> getBuilder(Class<?> type) {
+    public <T> AbstractCellProcessorBuilder<T> getBuilder(final Class<?> type) {
         return builderMap.get(type);
     }
     

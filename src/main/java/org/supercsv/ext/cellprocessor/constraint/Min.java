@@ -33,7 +33,7 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         this.min = min;
     }
     
-    public Min(T min, final CellProcessor next) {
+    public Min(final T min, final CellProcessor next) {
         super(next);
         checkPreconditions(min);
         this.min = min;
@@ -47,7 +47,7 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     
     @SuppressWarnings("unchecked")
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
@@ -85,7 +85,7 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formateValue(final Object value) {
         if(value == null) {
             return "";
         }

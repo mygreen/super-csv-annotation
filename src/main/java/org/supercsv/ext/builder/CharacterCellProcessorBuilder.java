@@ -38,7 +38,7 @@ public class CharacterCellProcessorBuilder extends AbstractCellProcessorBuilder<
     }
     
     @Override
-    public Character getParseValue(Class<Character> type, Annotation[] annos, String defaultValue) {
+    public Character getParseValue(final Class<Character> type, final Annotation[] annos, final String defaultValue) {
         return defaultValue.charAt(0);
     }
 }

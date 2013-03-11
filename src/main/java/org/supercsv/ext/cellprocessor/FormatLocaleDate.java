@@ -113,7 +113,7 @@ public class FormatLocaleDate extends CellProcessorAdaptor
      * @throws IllegalArgumentException
      * 
      */
-    protected void checkPreconditions(final String pattern, final Locale locale) {
+    protected static void checkPreconditions(final String pattern, final Locale locale) {
         if(pattern == null || pattern.isEmpty() ) {
             throw new IllegalArgumentException("pattern should not be null");
         }
@@ -124,7 +124,7 @@ public class FormatLocaleDate extends CellProcessorAdaptor
     }
     
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         

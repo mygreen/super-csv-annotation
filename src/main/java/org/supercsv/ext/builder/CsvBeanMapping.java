@@ -22,7 +22,7 @@ public class CsvBeanMapping<T> {
     
     private final Class<T> type;
     
-    public CsvBeanMapping(Class<T> type) {
+    public CsvBeanMapping(final Class<T> type) {
         this.type = type;
     }
     
@@ -74,7 +74,7 @@ public class CsvBeanMapping<T> {
         return header;
     }
     
-    public void setHeader(boolean header) {
+    public void setHeader(final boolean header) {
         this.header = header;
     }
     
@@ -82,7 +82,7 @@ public class CsvBeanMapping<T> {
         return columns;
     }
     
-    public void setColumns(List<CsvColumnMapping> columns) {
+    public void setColumns(final List<CsvColumnMapping> columns) {
         this.columns = columns;
     }
     

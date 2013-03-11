@@ -34,7 +34,7 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
         this.max = max;
     }
     
-    public PastDate(T max, final CellProcessor next) {
+    public PastDate(final T max, final CellProcessor next) {
         super(next);
         checkPreconditions(max);
         this.max = max;
@@ -48,7 +48,7 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
 
     @SuppressWarnings("unchecked")
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
@@ -86,7 +86,7 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formateValue(final Object value) {
         if(value == null) {
             return "";
         }

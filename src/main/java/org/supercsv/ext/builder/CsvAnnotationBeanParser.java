@@ -82,6 +82,7 @@ public class CsvAnnotationBeanParser {
         // sorting column data by position value
         Collections.sort(mappingColumns, new Comparator<CsvColumnMapping>() {
             
+            @Override
             public int compare(CsvColumnMapping o1, CsvColumnMapping o2) {
                 if(o1.getPosition() > o2.getPosition()) {
                     return 1;
@@ -100,7 +101,7 @@ public class CsvAnnotationBeanParser {
         return mappingBean;
     }
     
-    private void validatePosition(List<CsvColumnMapping> columns) {
+    private void validatePosition(final List<CsvColumnMapping> columns) {
         if(columns.isEmpty()) {
             throw new SuperCsvException("not found column definition.");
         }
@@ -183,7 +184,7 @@ public class CsvAnnotationBeanParser {
         return builderContainer;
     }
     
-    public void setBuilderContainer(CellProcessorBuilderContainer builderContainer) {
+    public void setBuilderContainer(final CellProcessorBuilderContainer builderContainer) {
         this.builderContainer = builderContainer;
     }
     

@@ -24,7 +24,7 @@ import org.supercsv.ext.annotation.CsvBooleanConverter;
  */
 public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Boolean> {
     
-    protected CsvBooleanConverter getAnnotation(Annotation[] annos) {
+    protected CsvBooleanConverter getAnnotation(final Annotation[] annos) {
         
         if(annos == null || annos.length == 0) {
             return null;
@@ -101,9 +101,9 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         
         return cellProcessor;
     }
-
+    
     @Override
-    public Boolean getParseValue(Class<Boolean> type, Annotation[] annos, String defaultValue) {
+    public Boolean getParseValue(final Class<Boolean> type, final Annotation[] annos, final String defaultValue) {
         
         return Boolean.valueOf(defaultValue);
     }

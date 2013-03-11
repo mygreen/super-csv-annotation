@@ -78,7 +78,7 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
         };
     }
     
-    public FormatLocaleNumber(final String pattern, final Currency currency, DecimalFormatSymbols symbols) {
+    public FormatLocaleNumber(final String pattern, final Currency currency, final DecimalFormatSymbols symbols) {
         super();
         checkPreconditions(pattern);
         this.pattern = pattern;
@@ -124,14 +124,14 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
      * @throws IllegalArgumentException
      * 
      */
-    protected void checkPreconditions(final String pattern) {
+    protected static void checkPreconditions(final String pattern) {
         if(pattern == null || pattern.isEmpty() ) {
             throw new IllegalArgumentException("pattern should not be null");
         }
     }
     
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         

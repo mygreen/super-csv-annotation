@@ -34,7 +34,7 @@ public class CsvColumnMapping {
         return columnType;
     }
     
-    public void setColumnType(Class<?> columnType) {
+    public void setColumnType(final Class<?> columnType) {
         this.columnType = columnType;
     }
     
@@ -42,7 +42,7 @@ public class CsvColumnMapping {
         return columnName;
     }
     
-    public void setColumnName(String columnName) {
+    public void setColumnName(final String columnName) {
         this.columnName = columnName;
     }
     
@@ -66,7 +66,7 @@ public class CsvColumnMapping {
         return outputCellProcessor;
     }
     
-    public void setOutputCellProcessor(CellProcessor outputCellProcessor) {
+    public void setOutputCellProcessor(final CellProcessor outputCellProcessor) {
         this.outputCellProcessor = outputCellProcessor;
     }
     
@@ -74,7 +74,7 @@ public class CsvColumnMapping {
         return inputCellProcessor;
     }
     
-    public void setInputCellProcessor(CellProcessor inputCellProcessor) {
+    public void setInputCellProcessor(final CellProcessor inputCellProcessor) {
         this.inputCellProcessor = inputCellProcessor;
     }
     

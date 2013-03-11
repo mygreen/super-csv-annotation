@@ -87,7 +87,7 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
      * @throws IllegalArgumentException
      * 
      */
-    protected void checkPreconditions(final String pattern, final Locale locale) {
+    protected static void checkPreconditions(final String pattern, final Locale locale) {
         if(pattern == null || pattern.isEmpty() ) {
             throw new IllegalArgumentException("pattern should not be null");
         }

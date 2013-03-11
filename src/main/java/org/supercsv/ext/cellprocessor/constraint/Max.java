@@ -33,7 +33,7 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         this.max = max;
     }
     
-    public Max(T max, final CellProcessor next) {
+    public Max(final T max, final CellProcessor next) {
         super(next);
         checkPreconditions(max);
         this.max = max;
@@ -46,7 +46,8 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     }
 
     @SuppressWarnings("unchecked")
-    public Object execute(Object value, CsvContext context) {
+    @Override
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         

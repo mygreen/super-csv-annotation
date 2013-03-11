@@ -179,19 +179,19 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
             if(cellProcessor == null) {
                 cellProcessor = new MinLength(minLength);
             } else {
-                cellProcessor = new MinLength(minLength, (StringCellProcessor) cellProcessor);
+                cellProcessor = new MinLength(minLength, cellProcessor);
             }
         } else if(maxLength != null) {
             if(cellProcessor == null) {
                 cellProcessor = new MaxLength(maxLength);
             } else {
-                cellProcessor = new MaxLength(maxLength, (StringCellProcessor) cellProcessor);
+                cellProcessor = new MaxLength(maxLength, cellProcessor);
             }
         } else if(exactLength != null) {
             if(cellProcessor == null) {
                 cellProcessor = new Strlen(exactLength);
             } else {
-                cellProcessor = new Strlen(exactLength, (StringCellProcessor) cellProcessor);
+                cellProcessor = new Strlen(exactLength, cellProcessor);
             }
             
         }
@@ -267,7 +267,7 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     }
     
     @Override
-    public String getParseValue(Class<String> type, Annotation[] annos, String defaultValue) {
+    public String getParseValue(final Class<String> type, final Annotation[] annos, final String defaultValue) {
         if(defaultValue.equals(CONVERT_NULL_STRING_EMPTY)) {
             return "";
         }

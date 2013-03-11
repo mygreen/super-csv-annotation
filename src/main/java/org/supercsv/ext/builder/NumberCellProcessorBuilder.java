@@ -1,5 +1,5 @@
 /*
- * BooleanCellProcessorBuilder.java
+ * NumberCellProcessorBuilder.java
  * created in 2013/03/05
  *
  * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
@@ -266,7 +266,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected Byte parseNumber(final String value, DecimalFormat formatter) {
+        protected Byte parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -283,7 +283,8 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public Byte getParseValue(Class<Byte> type, Annotation[] annos, String defaultValue) {
+        public Byte getParseValue(final Class<Byte> type, final Annotation[] annos, final String defaultValue) {
+            
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -362,7 +363,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected Short parseNumber(final String value, DecimalFormat formatter) {
+        protected Short parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -379,7 +380,8 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public Short getParseValue(Class<Short> type, Annotation[] annos, String defaultValue) {
+        public Short getParseValue(final Class<Short> type, final Annotation[] annos, final String defaultValue) {
+            
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -457,7 +459,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             return cellProcessor;
         }
         
-        protected Integer parseNumber(final String value, DecimalFormat formatter) {
+        protected Integer parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -472,9 +474,10 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
             return Integer.valueOf(value);
         }
-
+        
         @Override
-        public Integer getParseValue(Class<Integer> type, Annotation[] annos, String defaultValue) {
+        public Integer getParseValue(final Class<Integer> type, final Annotation[] annos, final String defaultValue) {
+            
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -521,7 +524,8 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
         
         @Override
-        public CellProcessor buildInputCellProcessor(Class<Long> type, Annotation[] annos, CellProcessor cellProcessor) {
+        public CellProcessor buildInputCellProcessor(final Class<Long> type,final  Annotation[] annos,
+                final CellProcessor processor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -535,6 +539,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Long min = parseNumber(getMin(converterAnno), formatter);
             final Long max = parseNumber(getMax(converterAnno), formatter);
             
+            CellProcessor cellProcessor = processor;
             cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             
             if(formatter != null) {
@@ -550,7 +555,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected Long parseNumber(final String value, DecimalFormat formatter) {
+        protected Long parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -567,7 +572,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public Long getParseValue(Class<Long> type, Annotation[] annos, String defaultValue) {
+        public Long getParseValue(final Class<Long> type, final Annotation[] annos, final String defaultValue) {
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -646,7 +651,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected Float parseNumber(final String value, DecimalFormat formatter) {
+        protected Float parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -663,7 +668,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public Float getParseValue(Class<Float> type, Annotation[] annos, String defaultValue) {
+        public Float getParseValue(final Class<Float> type, final Annotation[] annos, final String defaultValue) {
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -741,7 +746,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected Double parseNumber(final String value, DecimalFormat formatter) {
+        protected Double parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -758,7 +763,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public Double getParseValue(Class<Double> type, Annotation[] annos, String defaultValue) {
+        public Double getParseValue(final Class<Double> type, final Annotation[] annos, final String defaultValue) {
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -836,7 +841,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             
         }
         
-        protected BigDecimal parseNumber(final String value, DecimalFormat formatter) {
+        protected BigDecimal parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -853,7 +858,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public BigDecimal getParseValue(Class<BigDecimal> type, Annotation[] annos, String defaultValue) {
+        public BigDecimal getParseValue(final Class<BigDecimal> type, final Annotation[] annos, final String defaultValue) {
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);
@@ -931,7 +936,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             return cellProcessor;
         }
         
-        protected BigInteger parseNumber(final String value, DecimalFormat formatter) {
+        protected BigInteger parseNumber(final String value, final DecimalFormat formatter) {
             if(value.isEmpty()) {
                 return null;
             }
@@ -948,7 +953,8 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         }
 
         @Override
-        public BigInteger getParseValue(Class<BigInteger> type, Annotation[] annos, String defaultValue) {
+        public BigInteger getParseValue(final Class<BigInteger> type, final Annotation[] annos, final String defaultValue) {
+            
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
             final boolean lenient = getLenient(converterAnno);

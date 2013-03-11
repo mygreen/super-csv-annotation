@@ -31,14 +31,6 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     
     protected final T max;
     
-    public static <T extends Date> DateRange<T> range(final T min, final T max) {
-        return new DateRange<T>(min, max);
-    }
-    
-    public static <T extends Date> DateRange<T> range(final T min, final T max, final CellProcessor next) {
-        return new DateRange<T>(min, max, next);
-    }
-    
     public DateRange(final T min, final T max) {
         super();
         checkPreconditions(min, max);
@@ -46,7 +38,7 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         this.max = max;
     }
     
-    public DateRange(T min, T max, final CellProcessor next) {
+    public DateRange(final T min, final T max, final CellProcessor next) {
         super(next);
         checkPreconditions(min, max);
         this.min = min;
@@ -65,7 +57,7 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     
     @SuppressWarnings("unchecked")
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
@@ -107,7 +99,7 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formateValue(final Object value) {
         if(value == null) {
             return "";
         }

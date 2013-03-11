@@ -44,7 +44,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
         this.max = max;
     }
     
-    public NumberRange(T min, T max, final CellProcessor next) {
+    public NumberRange(final T min, final T max, final CellProcessor next) {
         super(next);
         checkPreconditions(min, max);
         this.min = min;
@@ -63,7 +63,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
 
     @SuppressWarnings("unchecked")
     @Override
-    public Object execute(Object value, CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
@@ -104,7 +104,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formateValue(final Object value) {
         if(value == null) {
             return "";
         }
