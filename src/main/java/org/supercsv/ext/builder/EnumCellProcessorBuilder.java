@@ -12,7 +12,6 @@ import java.util.Iterator;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.annotation.CsvEnumConverter;
-import org.supercsv.ext.annotation.CsvStringConverter;
 import org.supercsv.ext.cellprocessor.ParseEnum;
 
 
@@ -31,7 +30,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
         }
         
         for(Annotation anno : annos) {
-            if(anno instanceof CsvStringConverter) {
+            if(anno instanceof CsvEnumConverter) {
                 return (CsvEnumConverter) anno;
             }
         }
