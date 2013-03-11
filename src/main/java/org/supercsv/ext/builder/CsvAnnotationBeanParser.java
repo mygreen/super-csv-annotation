@@ -37,7 +37,7 @@ public class CsvAnnotationBeanParser {
         return parse(clazz, false);
     }
     
-    public <T> CsvBeanMapping<T> parse(final Class<T> clazz, final boolean ignoreValidableProcessorOnOutput) {
+    public <T> CsvBeanMapping<T> parse(final Class<T> clazz, final boolean ignoreValidationProcessorOnOutput) {
         
         if(clazz == null) {
             throw new IllegalArgumentException("clazz must be not null.");
@@ -63,7 +63,7 @@ public class CsvAnnotationBeanParser {
                 continue;
             }
             
-            mappingColumns.add(createColumnMapping(field, csvColumnAnno, ignoreValidableProcessorOnOutput));
+            mappingColumns.add(createColumnMapping(field, csvColumnAnno, ignoreValidationProcessorOnOutput));
             
         }
         
@@ -75,7 +75,7 @@ public class CsvAnnotationBeanParser {
                 continue;
             }
             
-            mappingColumns.add(createColumnMapping(field, csvColumnAnno, ignoreValidableProcessorOnOutput));
+            mappingColumns.add(createColumnMapping(field, csvColumnAnno, ignoreValidationProcessorOnOutput));
             
         }
         
@@ -135,7 +135,7 @@ public class CsvAnnotationBeanParser {
     
     @SuppressWarnings({"rawtypes", "unchecked"})
     private CsvColumnMapping createColumnMapping(final Field field, final CsvColumn csvColumnAnno,
-            final boolean ignoreValidableProcessorOnOutput) {
+            final boolean ignoreValidationProcessorOnOutput) {
         
         CsvColumnMapping columnMapping = new CsvColumnMapping();
         
@@ -170,7 +170,7 @@ public class CsvAnnotationBeanParser {
         
         if(builder != null) {
             columnMapping.setOutputCellProcessor(builder.buildOutputCellProcessor(
-                    field.getType(), field.getAnnotations(), ignoreValidableProcessorOnOutput));
+                    field.getType(), field.getAnnotations(), ignoreValidationProcessorOnOutput));
             
             columnMapping.setInputCellProcessor(builder.buildInputCellProcessor(
                     field.getType(), field.getAnnotations()));

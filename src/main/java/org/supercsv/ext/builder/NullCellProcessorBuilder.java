@@ -21,7 +21,7 @@ public class NullCellProcessorBuilder extends AbstractCellProcessorBuilder<Class
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Class<?>> type, final Annotation[] annos,
-            CellProcessor processor, final boolean ignoreValidableProcessor) {
+            CellProcessor processor, final boolean ignoreValidationProcessor) {
         return processor;
     }
     

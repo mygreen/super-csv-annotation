@@ -23,7 +23,7 @@ public class CharacterCellProcessorBuilder extends AbstractCellProcessorBuilder<
 
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Character> type, final Annotation[] annos,
-            final CellProcessor processor, final boolean ignoreValidableProcessor) {
+            final CellProcessor processor, final boolean ignoreValidationProcessor) {
         return processor;
     }
 

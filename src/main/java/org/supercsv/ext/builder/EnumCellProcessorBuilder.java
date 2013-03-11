@@ -49,7 +49,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Enum<?>> type, final Annotation[] annos,
-            final CellProcessor processor, final boolean ignoreValidableProcessor) {
+            final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
 //        CsvEnumConverter converterAnno = getAnnotation(annos);
         

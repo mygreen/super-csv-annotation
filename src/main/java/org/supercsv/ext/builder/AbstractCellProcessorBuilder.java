@@ -40,7 +40,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
     }
     
     public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos,
-            final boolean ignoreValidableProcessor) {
+            final boolean ignoreValidationProcessor) {
         
         CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
         
@@ -50,13 +50,13 @@ public abstract class AbstractCellProcessorBuilder<T> {
             cellProcessor = prependTrimProcessor(cellProcessor);
         }
         
-        cellProcessor = buildOutputCellProcessor(type, annos, cellProcessor, ignoreValidableProcessor);
+        cellProcessor = buildOutputCellProcessor(type, annos, cellProcessor, ignoreValidationProcessor);
         
-        if(csvColumnAnno.unique() && !ignoreValidableProcessor) {
+        if(csvColumnAnno.unique() && !ignoreValidationProcessor) {
             cellProcessor = prependUniqueProcessor(cellProcessor);
         }
         
-        if(!csvColumnAnno.equalsValue().isEmpty() && !ignoreValidableProcessor) {
+        if(!csvColumnAnno.equalsValue().isEmpty() && !ignoreValidationProcessor) {
             cellProcessor = prependEqualsProcessor(type, cellProcessor,
                     getParseValue(type, annos, csvColumnAnno.equalsValue()));
         }
@@ -137,7 +137,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
         return (processor == null ? new Trim() : new Trim((StringCellProcessor) processor));
     }
     
-    public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor, boolean ignoreValidableProcessor);
+    public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor, boolean ignoreValidationProcessor);
     
     public abstract CellProcessor buildInputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor);
     

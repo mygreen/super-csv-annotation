@@ -117,7 +117,7 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<String> type, final  Annotation[] annos,
-            final CellProcessor processor, final boolean ignoreValidableProcessor) {
+            final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvStringConverter converterAnno = getAnnotation(annos);
         final Integer minLength = getMinLength(converterAnno);
@@ -130,7 +130,7 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         
         CellProcessor cellProcessor = processor;
         
-        if(!ignoreValidableProcessor) {
+        if(!ignoreValidationProcessor) {
             cellProcessor = prependRegExProcessor(cellProcessor, regex);
             cellProcessor = prependLengthProcessor(cellProcessor, minLength, maxLength, exactLength);
             cellProcessor = prependForbidProcessor(cellProcessor, forbid);

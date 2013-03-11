@@ -74,7 +74,7 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Boolean> type, final Annotation[] annos,
-            final CellProcessor processor, final boolean ignoreValidableProcessor) {
+            final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvBooleanConverter converterAnno = getAnnotation(annos);
         final String trueValue = getOutputTrueValue(converterAnno);

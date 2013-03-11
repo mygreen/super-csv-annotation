@@ -180,7 +180,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         return cellProcessor;
     }
     
-    protected DecimalFormat createDateFormat(final String pattern, final boolean lenient,
+    protected DecimalFormat createNumberFormat(final String pattern, final boolean lenient,
             final Currency currency, final DecimalFormatSymbols symbols) {
         
         if(pattern.isEmpty()) {
@@ -207,7 +207,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Byte> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -216,7 +216,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Byte min = parseNumber(getMin(converterAnno), formatter);
             final Byte max = parseNumber(getMax(converterAnno), formatter);
@@ -227,7 +227,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -245,7 +245,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Byte min = parseNumber(getMin(converterAnno), formatter);
             final Byte max = parseNumber(getMax(converterAnno), formatter);
@@ -292,7 +292,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -304,7 +304,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Short> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -313,7 +313,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Short min = parseNumber(getMin(converterAnno), formatter);
             final Short max = parseNumber(getMax(converterAnno), formatter);
@@ -324,7 +324,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -342,7 +342,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Short min = parseNumber(getMin(converterAnno), formatter);
             final Short max = parseNumber(getMax(converterAnno), formatter);
@@ -389,7 +389,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -400,7 +400,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Integer> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -409,7 +409,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Integer min = parseNumber(getMin(converterAnno), formatter);
             final Integer max = parseNumber(getMax(converterAnno), formatter);
@@ -420,7 +420,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -439,7 +439,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Integer min = parseNumber(getMin(converterAnno), formatter);
             final Integer max = parseNumber(getMax(converterAnno), formatter);
@@ -485,7 +485,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -496,7 +496,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Long> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -505,7 +505,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Long min = parseNumber(getMin(converterAnno), formatter);
             final Long max = parseNumber(getMax(converterAnno), formatter);
@@ -516,7 +516,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -534,7 +534,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Long min = parseNumber(getMin(converterAnno), formatter);
             final Long max = parseNumber(getMax(converterAnno), formatter);
@@ -580,7 +580,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -591,7 +591,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Float> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -600,7 +600,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Float min = parseNumber(getMin(converterAnno), formatter);
             final Float max = parseNumber(getMax(converterAnno), formatter);
@@ -611,7 +611,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -629,7 +629,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Float min = parseNumber(getMin(converterAnno), formatter);
             final Float max = parseNumber(getMax(converterAnno), formatter);
@@ -676,7 +676,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -687,7 +687,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<Double> type, final Annotation[] annos, 
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -696,7 +696,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Double min = parseNumber(getMin(converterAnno), formatter);
             final Double max = parseNumber(getMax(converterAnno), formatter);
@@ -707,7 +707,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -725,7 +725,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final Double min = parseNumber(getMin(converterAnno), formatter);
             final Double max = parseNumber(getMax(converterAnno), formatter);
@@ -771,7 +771,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -782,7 +782,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<BigDecimal> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -791,7 +791,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final BigDecimal min = parseNumber(getMin(converterAnno), formatter);
             final BigDecimal max = parseNumber(getMax(converterAnno), formatter);
@@ -802,7 +802,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -820,7 +820,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final BigDecimal min = parseNumber(getMin(converterAnno), formatter);
             final BigDecimal max = parseNumber(getMax(converterAnno), formatter);
@@ -866,7 +866,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }
@@ -877,7 +877,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         
         @Override
         public CellProcessor buildOutputCellProcessor(final Class<BigInteger> type, final Annotation[] annos,
-                final CellProcessor processor, final boolean ignoreValidableProcessor) {
+                final CellProcessor processor, final boolean ignoreValidationProcessor) {
             
             final CsvNumberConverter converterAnno = getAnnotation(annos);
             final String pattern = getPattern(converterAnno);
@@ -886,7 +886,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final BigInteger min = parseNumber(getMin(converterAnno), formatter);
             final BigInteger max = parseNumber(getMax(converterAnno), formatter);
@@ -897,7 +897,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
                         new FmtNumber(formatter) : new FmtNumber(formatter, (StringCellProcessor) cellProcessor));
             }
             
-            if(!ignoreValidableProcessor) {
+            if(!ignoreValidationProcessor) {
                 cellProcessor = prependRangeProcessor(min, max, cellProcessor);
             }
             
@@ -916,7 +916,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             final BigInteger min = parseNumber(getMin(converterAnno), formatter);
             final BigInteger max = parseNumber(getMax(converterAnno), formatter);
@@ -962,7 +962,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Currency currency = getCurrency(converterAnno);
             final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
             
-            DecimalFormat formatter = createDateFormat(pattern, lenient, currency, symbols);
+            DecimalFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
             
             return parseNumber(defaultValue, formatter);
         }

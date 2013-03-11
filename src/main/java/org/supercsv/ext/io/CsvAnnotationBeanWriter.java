@@ -30,9 +30,9 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
         this(clazz, writer, preferences, false);
     }
     
-    public CsvAnnotationBeanWriter(final Class<T> clazz, Writer writer, final CsvPreference preferences, final boolean ignoreValidableProcessor) { 
+    public CsvAnnotationBeanWriter(final Class<T> clazz, Writer writer, final CsvPreference preferences, final boolean ignoreValidationProcessor) { 
         super(writer, preferences);
-        this.beanMapping = createBeanMapping(clazz, ignoreValidableProcessor);
+        this.beanMapping = createBeanMapping(clazz, ignoreValidationProcessor);
         this.mappingCache = new BeanMappingCache(beanMapping);
     }
     
@@ -42,8 +42,8 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
         this.mappingCache = new BeanMappingCache(this.beanMapping);
     }
     
-    protected CsvBeanMapping<T> createBeanMapping(final Class<T> clazz, final boolean ignoreValidableProcessor) {
-        return new CsvAnnotationBeanParser().parse(clazz, ignoreValidableProcessor);
+    protected CsvBeanMapping<T> createBeanMapping(final Class<T> clazz, final boolean ignoreValidationProcessor) {
+        return new CsvAnnotationBeanParser().parse(clazz, ignoreValidationProcessor);
     }
     
     public boolean hasHeader() {

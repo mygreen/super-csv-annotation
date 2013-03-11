@@ -168,7 +168,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Date> type, final Annotation[] annos,
-            final CellProcessor processor, final boolean ignoreValidableProcessor) {
+            final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvDateConverter converterAnno = getAnnotation(annos);
         final String pattern = getPattern(converterAnno);
@@ -186,7 +186,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
                 new FormatLocaleDate(pattern, locale, timeZone) : 
                     new FormatLocaleDate(pattern, locale, timeZone, (DateCellProcessor) cellProcessor));
         
-        if(!ignoreValidableProcessor) {
+        if(!ignoreValidationProcessor) {
             cellProcessor = prependRangeProcessor(min, max, cellProcessor);
         }
         return cellProcessor;
