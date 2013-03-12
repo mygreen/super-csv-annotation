@@ -2,41 +2,46 @@ super-csv-annotation
 ====================
 
 'Super CSV' extention library for annotation
-(1)this library automatic build CellProcessor from Annotation with JavaBean.
-(2)simply showing localized messages.
++ this library automatic build CellProcessor from Annotation with JavaBean.
++ simply showing localized messages.
 
-------------------------
-depends
-------------------------
- (1)JDK1.6+ (SuperCSV2.x is JDK1.5)
- (2)SuperCSV 2.x
+# Depends
+------------------------------
++ JDK1.6+ (SuperCSV2.x is JDK1.5)
++ SuperCSV 2.x
 
-===============================
-(1) @CsvEnity annotate Bean class.
- ・header = automatic header
-=============================
-example @CsvBean
-=============================
+# Usage
+------------------------------
+
+## Require Annotation
+
+### @CsvEnity annotate Bean class.
+#### annotation elements
+- header : boolean = whether using header. 
+
+#### Example @CsvBean
+
+```java:
 @CsvBean(header=true)
 public class SampleBean1{
 ...
 }
-=============================
+```
 
-(2) @CsvColumn annotate Field type. set for public / private / protcted field.
- ・position = rqeuired argment. column index start with zero(0). 
- ・label = header label. if empty, use filed name.
- ・optional = set CellProcessor NotNull(false) / Optional(true). default false.
- ・trim = if set true, set CellProcessor Trim()
- ・inputDefaultValue = on reading, set CellProcessor 'ConvertNullTo'. if field type String class, empty value as '@empty'.
- ・outputDefaultValue = on writing, set CellProcessor 'ConvertNullTo'.if field type String class, empty value as '@empty'.
- ・unique = constaint option. set CellProcessor 'Unique()'.
- ・equalsValue = constain option. set CellProcessor 'Equals()'.
- ・builderClass = set your customize CellProcessorBuilder class. this class must inherit 'AbstractCellProcessorBuilder'
+###  @CsvColumn annotate Field type. set for public / private / protcted field.
+#### annotation elements
+- position : int = rqeuired argment. column index start with zero(0). 
+- label : String = header label. if empty, use filed name.
+- optional : boolean = set CellProcessor NotNull(false) / Optional(true). default false.
+- trim : boolean = if set true, set CellProcessor Trim()
+- inputDefaultValue : String = if set this values, then reading to set for CellProcessor 'ConvertNullTo'. if field type String class, empty value as '@empty'.
+- outputDefaultValue : String = if set this values, then writing to set for CellProcessor 'ConvertNullTo'. if field type String class, empty value as '@empty'.
+- unique : boolean = constaint option. check the value for unique. if set the true, reading/wriing to set CellProcessor 'Unique()'.
+- equalsValue : String = constain option. check the value for equals. if set the value, reading/wriing to set CellProcessor 'Equals()'.
+- builderClass : Class = you can set fo your customize CellProcessorBuilder class. this class must inherit 'AbstractCellProcessorBuilder'.
 
-=============================
-Example @CsvColumn
-=============================
+### Example @CsvColumn
+```java
 // Java Bean
 @CsvBean(header=true)
 public class SampleBean1{
@@ -53,141 +58,251 @@ public class SampleBean1{
     @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00")
     public Date date4;
     
-    @CsvColumn(position = 4, inputDefaultValue="RED", outputDefualtValue="BLUE")
-    public Color enum5;
+    @CsvColumn(position = 4, inputDefaultValue="false", outputDefualtValue="true")
+    public boolean boole5;
+    
+    @CsvColumn(position = 5, inputDefaultValue="RED", outputDefualtValue="BLUE")
+    public Color enum6;
     
     enum Color {
        RED, BLUE, GREEN, Yellow;
     }
 }
-----------------------------
-(1)build field 'integer1' CellProcessor
- #input CellProcessor
-  new Optional(new ParseInt())
- 
- #output CellProcessor
-  new Optional()
+```
 
-(2)build field 'integer2' CellProcessor
- #input CellProcessor
+#### this api build cell processos from avobe examples.
+
+0. build field 'integer1' CellProcessor ( @CsvColumn(position = 0, optional = true) )
+```java
+ // buld for input CellProcessor
+ new Optional(new ParseInt())
+ 
+ // buld for output CellProcessor
+ new Optional()
+```
+
+1. build field 'integer2' CellProcessor ( @CsvColumn(position = 1, optional = false, unique = true) )
+```java
+ // buld for input CellProcessor
   new NotNull(new Unique(new ParseInt()))
  
- #output CellProcessor
+ // buld for output CellProcessor
   new NotNull(new Unique())
+```
 
-(3)build field 'string3' CellProcessor
- #input CellProcessor
-  new Optional(new new ConvertNullTo('aa', Trim()))
+2. build field 'string3' CellProcessor ( @CsvColumn(position = 2, optional = true, trim = true, inputDefaultValue="aa") )
+```java
+ // buld for input CellProcessor
+  new ConvertNullTo('a', new Optional(new Trim()))
  
- #output CellProcessor
+ // buld for output CellProcessor
   new Optional(new Trim())
-  
-(4)build field 'date4' CellProcessor
- #input CellProcessor
+```
+
+3. build field 'date4' CellProcessor ( @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00") )
+```java
+ // buld for input CellProcessor
+ // use default pattern 'yyyy-MM-dd HH:mm:ss'
   new ConvertNullTo(date obj('2012-10-13 00:00:00'), new NotNull(new ParseLocaleDate('yyyy-MM-dd HH:mm:ss')))
  
- #output CellProcessor
-  new NotNull(ConvertNullTo(date obj('2012-10-13 00:00:00'), new FormatLocaleDate('yyyy-MM-dd HH:mm:ss')))
+ // buld for output CellProcessor
+ // use default pattern 'yyyy-MM-dd HH:mm:ss'
+  new NotNull(ConvertNullTo( date obj('2012-10-13 00:00:00'), new FormatLocaleDate('yyyy-MM-dd HH:mm:ss')))
+```
 
-(5)build field 'enum5' CellProcessor
- #input CellProcessor
+4. build field 'bool5' CellProcessor ( @CsvColumn(position = 4, inputDefaultValue="false" )
+```java
+ // buld for input CellProcessor
+  new ConvertNullTo( boolean obj('false'), new NotNull( new ParseBoolean()))
+ 
+ // buld for output CellProcessor
+  new NotNull( new FmtBool())
+```
+
+5. build field 'enum6' CellProcessor ( @CsvColumn(position = 5, inputDefaultValue="RED", outputDefualtValue="BLUE") )
+```java
+ // buld for input CellProcessor
   new ConvertNullTo(enum obj('RED'), new NotNull(new ParseEnum()))
  
- #output CellProcessor
-  new NotNull(ConvertNullTo(enum obj('BLUE')))
+ // buld for output CellProcessor
+  new ConvertNullTo(enum obj('BLUE', new NotNull())
+```
 
-=============================
 
-=============================
-example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvBooleanConverter / @CsvEnumConverter
-=============================
-(1) @CsvStringConverter is setting for String class.
- ・minLength : constrain the minimum character long. set CellProcessor 'MinLength' (custom processor)
- ・maxLength : constrain the maximum character long. set CellProcessor 'MaxLength' (custom processor)
-             if minLength > 0 and maxLength >0, set CellProcessor 'StrMinMax'
- ・exactlength : constain the equals character long. set CellProcessor 'Strlen'
- ・regex : constrain the reqular expression pattern. set CellProcessor 'StrRegEx'
- ・forbid : constrain the not contain fobbien substring. set CellProcessor 'ForbidSubStr'
- ・contain : constrain the contain substirng. set CellProcessor 'RequireSubStr'
- ・notEmpty : constain the not empty. set CellProcesor 'StrNotNullOrEmpty'
+## Optional Annotation
 
-(2) @CsvNumberConverter is setting for number classes. 
-    number classes : byte/shortint/long/float/double/Byte/Integer/Long/Float/Double/BigDecimal/BigInteger 
-    
-・pattern : Number format pattern. set CellProcessor 'FormatLocaleNumber' (custom processor).
-・lenient : paring string to Number object non-exactly. optional argument for CellProcessor 'FormatLocaleNumber'.
-・currency : Code(ISO 4217 Code). optional argument for CellProcessor 'FormatLocaleNumber'.
-・language : Locale with language. optional argument for CellProcessor 'FormatLocaleNumber'.
-・country : Locale with country. optional argument for CellProcessor 'FormatLocaleNumber'.
-・min : constarin the mininum value. set CellProcessor 'Min' (custom processor)
-・max : constarin the maximum value. set CellProcessor 'Max' (custom processor)
-       if min != "" and max != "", set CellProcessor 'NumberRange' (custom processor)
+### @CsvStringConverter is setting for String class.
+this annotation for String classes.
 
-(3)@CsvDateConverter is setting for date class.
-   date classes : java.util.Date / java.sql.Date / java.sql.Time / java.sql.Timestamp 
-   
-・pattern : Date format pattern. set CellProcessor 'FormatLocaleDate / ParseLocaleDate' (custom processor).
-・lenient : parse string to Date object non-exactly. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
-・timezone : optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
-・language : Locale with language. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
-・country : Locale with country. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
-・min : constarin the mininum value. set CellProcessor 'FutrueDate' (custom processor)
-・max : constarin the maximum value. set CellProcessor 'PastDate' (custom processor)
-       if min != "" and max != "", set CellProcessor 'DateRange' (custom processor)
+#### annotation elements
+- minLength : int = constrain the minimum character long. set CellProcessor 'MinLength' (custom processor).
+- maxLength int = constrain the maximum character long. set CellProcessor 'MaxLength' (custom processor).
+-- if minLength > 0 and maxLength >0, set CellProcessor 'StrMinMax'.
+- exactlength : int = constain the equals character long. set CellProcessor 'Strlen'.
+- regex : String = constrain the reqular expression pattern. set CellProcessor 'StrRegEx'.
+- forbid : String[] = constrain the not contain fobbien substring. set CellProcessor 'ForbidSubStr'.
+- contain : String[] = constrain the contain substirng. set CellProcessor 'RequireSubStr'.
+- notEmpty : boolean = constain the not empty. set CellProcesor 'StrNotNullOrEmpty'
 
-(4)@CsvBooleanConverter is seting for boolean class.
-・inputTrueValues : pase string as true value. set CellProcessor 'ParseBoolean' (custom processor)
-・inputTrueValues : pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
-・outputTrueValue : output boolean(true) to string value.
-・outputFalseValue : output boolean(false) to string value.
-・lenient : in parse, ignore lower / upper case.
-・failtToFalse : in fail to parse, return to false.
+### @CsvNumberConverter is setting for number classes. 
+this annotation for number classes : byte/shortint/long/float/double/Byte/Integer/Long/Float/Double/BigDecimal/BigInteger 
 
-(5)@CsvEnumConverter is setting for Enum class.
-・lenient : parse with ignored case. optional argument for CellProsessor ''
+#### annotation elements
+- pattern : String = Number format pattern. set CellProcessor 'FormatLocaleNumber' (custom processor).
+-- if empty, parse for Number object parse method. ex) Integer.parseInt(...), Double.parseDouble(...).
+- lenient : boolean = Paring from string to Number object non-exactly. optional argument for CellProcessor 'FormatLocaleNumber'.
+- currency : String = Code(ISO 4217 Code). optional argument for CellProcessor 'FormatLocaleNumber'.
+- language : String = Locale with language. optional argument for CellProcessor 'FormatLocaleNumber'.
+- country : String = Locale with country. optional argument for CellProcessor 'FormatLocaleNumber'.
+- min : String = constarin the mininum value. set CellProcessor 'Min' (custom processor)
+-- if buld for input processor, pase this value by element 'pattern'.
+- max : String = String = constarin the maximum value. set CellProcessor 'Max' (custom processor)
+-- if min != "" and max != "", set CellProcessor 'NumberRange' (custom processor)
+-- if build input processor, pase this value by element 'pattern'.
 
---------------------------------------
+### @CsvDateConverter is setting for date class.
+this annotation for date classes : java.util.Date / java.sql.Date / java.sql.Time / java.sql.Timestamp 
+
+#### annotation elements
+- pattern : String = Date format pattern. set CellProcessor 'FormatLocaleDate / ParseLocaleDate' (custom processor).
+- lenient : boolean = parse string to Date object non-exactly. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
+- timezone : String = optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
+- language : String = Locale with language. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
+- country : String = Locale with country. optional argument for CellProcessor 'FormatLocaleDate / ParseLocaleDate'.
+- min : String = constarin the mininum value. set CellProcessor 'FutrueDate' (custom processor)
+-- if buld for input processor, pase this value by element 'pattern'.
+- max : String = constarin the maximum value. set CellProcessor 'PastDate' (custom processor)
+-- if min != "" and max != "", set CellProcessor 'DateRange' (custom processor)
+-- if buld for input processor, pase this value by element 'pattern'.
+
+### @CsvBooleanConverter is seting for boolean class.
+this annotation for Boolean classes : boolean / Boolean.
+
+#### annotation elements
+- inputTrueValues : String[] = pase string as true value. set CellProcessor 'ParseBoolean' (custom processor)
+- inputTrueValues : String[] = pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
+- outputTrueValue : String = output boolean(true) to string value. set CellProsessor 'FtmBool'.
+- outputFalseValue : String = output boolean(false) to string value. set CellProsessor 'FtmBool'.
+- lenient : boolean = if this value is 'true', parse whith ignore lower / upper case.
+- failtToFalse : boolean : if fail parsing the value, return to false.
+
+### @CsvEnumConverter is setting for Enum class.
+this annotation for Enum classes.
+
+#### annotation elements
+- lenient boolean = if this value is 'true', parse with ignored case. optional argument for CellProsessor 'ParseEnum'
+
+## Example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvBooleanConverter / @CsvEnumConverter
+
+```java:
 @CsvBean(header=true)
 public class SampleBean1{
 
     @CsvColumn(position = 0, label="数字")
-    private int integer1;
+    @CsvNumberConverter(min="101.0", max="200.5")
+    private float float0;
     
     @CsvColumn(position = 1, optional=true)
-    @CsvNumberConverter(pattern="###,###,###")
-    private Integer integer2;
+    @CsvNumberConverter(pattern="###,###,###", max="100,00,000")
+    private BigDecimal bigDecimal1;
     
     @CsvColumn(position = 2)
-    private String string1;
-    
-    @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty")
-    @CsvStringConverter(maxLength=6, contain={"1"})
     private String string2;
     
+    @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty")
+    @CsvStringConverter(maxLength=6, contain={"abc", "bbb"})
+    private String string3;
+    
     @CsvColumn(position = 4)
-    private Date date1;
+    @CsvDateConverter(pattern="yyyy/MM/dd HH:mm", min="2000/10/30 00:00", max=2000/12/31 23:59")
+    private Date date4;
     
     @CsvColumn(position = 5, optional=true)
     @CsvDateConverter(pattern="yyyy/MM/dd", min="2000/10/30")
-    private Timestamp date2;
+    private Timestamp date5;
     
-    @CsvColumn(position = 6, label="enum class", optional=true, inputDefaultValue="BLUE")
-    @CsvEnumConveret(lenient = true)
-    private Color enum1;
-    
-    @CsvColumn(position = 7, optional=true)
+    @CsvColumn(position = 6, optional=true)
     @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
-    private Boolean avaialble;
-
+    private Boolean bool6;
+    
+    @CsvColumn(position = 7, label="enum class", optional=true, inputDefaultValue="BLUE")
+    @CsvEnumConveret(lenient = true)
+    private Color enum7;
     
 }
+```
+### this api build cell processos from above examples.
 
-===================================================
-Sample Writer
-===================================================
+1. build field 'float1' CellProcessor ( @CsvColumn(position = 0, label="数字") + @CsvNumberConverter(min="101.0", max="200.5") )
+``` java:
+ // buld for input CellProcessor
+ new NotNull(new ParseFloat(new NumerRange<Float>(Float.parseFloat('101.0'), Float.parseFloat('200.5')))
+ 
+ // buld for output CellProcessor
+ new NotNull(new NumerRange<Float>(Float.parseFloat('101.0'), Float.parseFloat('200.5'))
+```
+2. build field 'bigDecimal2' Cell Processor (  @CsvColumn(position = 1, optional=true) + @CsvNumberConverter(pattern="###,###,###", max="100,00,000") )
+```java:
+ // buld for input CellProcessor
+ new Optional(new ParseBigDecimal("###,###,###",  new Max<Float>(bigdecimal obj('101.0', "###,###,###")))
+ 
+ // buld for output CellProcessor
+ new Optional(new Max<BigDecimal>(bigdecimal obj('101.0', "###,###,###"),  NumberLocaleFormat("###,###,###")))
+```
 
-(1) use CsvBeanWriter
----------------------------------------------------
+3. build field 'bigDecimal3' Cell Processor ( @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty") + @CsvStringConverter(maxLength=6, contain={"abc", "bbb"}) )
+```java:
+ // buld for input CellProcessor
+ new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
+ 
+ // buld for output CellProcessor
+ new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
+```
+
+4. build field 'date4' Cell Processor ( @CsvColumn(position = 4) + @CsvDateConverter(pattern="yyyy/MM/dd HH:mm", min="2000/10/30 00:00", max=2000/12/31 23:59") )
+```java:
+ // buld for input CellProcessor
+ new NotNull(ParseLocaleDate("yyyy/MM/dd HH:mm", new DateRange(data obj('2000/10/30 00:00'), date obj('2000/12/31 23:59'))))
+ 
+ // buld for output CellProcessor
+ new NotNull(new DateRange(data obj('2000/10/30 00:00'), date obj('2000/12/31 23:59')), new FormatLocaleDate("yyyy/MM/dd HH:mm"))
+```
+
+5. build field 'date5' Cell Processor ( @CsvColumn(position = 5, optional=true) + @CsvDateConverter(pattern="yyyy/MM/dd", min="2000/10/30")
+ )
+```java:
+ // buld for input CellProcessor
+ new Optional(ParseLocaleDate("yyyy/MM/dd", new Future(data obj('2000/10/30'))))
+ 
+ // buld for output CellProcessor
+ new Optional(new Future(data obj('2000/10/30')), new FormatLocaleDate("yyyy/MM/dd"))
+```
+
+6. build field 'bool6' Cell Processor ( @CsvColumn(position = 6, optional=true) + @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
+    )
+```java:
+ // buld for input CellProcessor
+ new Optional( ParseBoolean(new String[]{"○"}, new String[]{"×"}))
+ 
+ // buld for output CellProcessor
+ new Optional( new FmtBool("○", "×"))
+```
+
+7. build field 'enum7' Cell Processor ( @CsvColumn(position = 7, label="enum class", optional=true, inputDefaultValue="BLUE") + @CsvEnumConveret(lenient = true)
+    )
+```java:
+ // buld for input CellProcessor
+ new ConvertNullTo(, new Optional(pase enum('BLUE'), ParseEnum(false))
+ 
+ // buld for output CellProcessor
+ new Optional()
+```
+
+
+## Sample Writer
+
+###  use CsvBeanWriter
+```java:
 // create cell processor and field name mapping
 CsvAnnotationBeanParser helper = new CsvAnnotationBeanParser();
 CsvBeanMapping<SampleBean1> mappingBean = helper.parse(SampleBean1.class, false);
@@ -206,9 +321,10 @@ for(final SampleBean1 item : list) {
     csvWriter.write(item, nameMapping, cellProcessors);
     csvWriter.flush();
 }
----------------------------------------------------
-(2) use CsvAnnotationBeanWriter (custom class)
----------------------------------------------------
+```
+
+### use CsvAnnotationBeanWriter (custom class)
+```java:
 StringWriter strWriter = new StringWriter();
 CsvAnnotationBeanWriter<SampleBean1> csvWriter = 
     new CsvAnnotationBeanWriter<SampleBean1>(SampleBean1.class, 
@@ -221,13 +337,11 @@ for(final SampleBean1 item : list) {
     csvWriter.write(item);  // use cutom method.
     csvWriter.flush();
 }
+```
 
-===================================================
-Sample Reader
-===================================================
-
-(1) use CsvBeanReader
----------------------------------------------------
+## Sample Reader
+### use CsvBeanReader
+```java:
 // create cell processor and field name mapping
 CsvAnnotationBeanParser helper = new CsvAnnotationBeanParser();
 CsvBeanMapping<SampleBean1> mappingBean = helper.parse(SampleBean1.class, false);
@@ -247,9 +361,10 @@ while((bean1 = csvReader.read(SampleBean1.class, nameMapping, cellProcessors)) !
     System.out.println(bean1);
     list.add(bean1);
 }
----------------------------------------------------
-(2) use CsvAnnotationBeanReader (custom class)
----------------------------------------------------
+```
+
+### use CsvAnnotationBeanReader (custom class)
+```java:
 File inputFile = new File("src/test/data/test_error.csv");
 CsvAnnotationBeanReader csvReader = 
     new CsvAnnotationBeanReader(SampleBean1.class, strWriter, CsvPreference.STANDARD_PREFERENCE);
@@ -261,11 +376,11 @@ while((bean1 = csvReader.read()) != null) {
     System.out.println(bean1);
     list.add(bean1);
 }
+```
 
+## Sample Localize Message
 
-===================================================
-Sample Localize Message
-===================================================
+```java:
  use ValidatableCsvBeanReader (custom class)
 // create cell processor and field name mapping
 CsvAnnotationBeanParser helper = new CsvAnnotationBeanParser();
@@ -300,18 +415,19 @@ try {
         System.err.println(str);
     }
 }
----------------------------
-Custoize messages.
----------------------------
-・set message resolver.
+```
 
+### Custoize messages.
+### set message resolver.
+
+```java:
 CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
 MessageConverter messageConverter = new MessageConverter();
 messageConverter.setMessageResolver(new ResourceBundleMessageResolver(... your resource bundle))
+```
 
----------------------------
-message example (org/supercsv/ext/SuperCsvMessages.properties)
----------
+#### message example (org/supercsv/ext/SuperCsvMessages.properties)
+```
 # common variable
 # ${lineNumber} = the line number of the file being read/written
 # ${rowNumber} = the CSV row number (CSV rows can span multiple lines)
@@ -379,7 +495,7 @@ org.supercsv.ext.cellprocessor.constraint.Min.violated=(row, column)=(${lineNumb
 org.supercsv.ext.cellprocessor.constraint.MinLength.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' cannot be shorter than ${min} characters
 org.supercsv.ext.cellprocessor.constraint.NumberRange.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' is not in the range ${min} throud ${max}
 org.supercsv.ext.cellprocessor.constraint.PastDate.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' must be in the past ${max}
-===========================
+```
  
 
 
