@@ -124,10 +124,10 @@ public class SampleBean1{
 5. build field 'enum6' CellProcessor ( @CsvColumn(position = 5, inputDefaultValue="RED", outputDefualtValue="BLUE") )
 ```java
  // buld for input CellProcessor
-  new ConvertNullTo(enum obj('RED'), new NotNull(new ParseEnum()))
+  new ConvertNullTo(/*enum obj('RED')*/, new NotNull(new ParseEnum()))
  
  // buld for output CellProcessor
-  new ConvertNullTo(enum obj('BLUE', new NotNull())
+  new ConvertNullTo(/*enum obj('BLUE')*/, new NotNull())
 ```
 
 
@@ -246,7 +246,7 @@ public class SampleBean1{
 2. build field 'bigDecimal2' Cell Processor (  @CsvColumn(position = 1, optional=true) + @CsvNumberConverter(pattern="###,###,###", max="100,00,000") )
 ```java
  // buld for input CellProcessor
- new Optional(new ParseBigDecimal("###,###,###",  new Max<Float>(/*bigdecimal obj('101.0')*/))
+ new Optional(new ParseBigDecimal("###,###,###",  new Max<BigDecimal>(/*bigdecimal obj('101.0')*/))
  
  // buld for output CellProcessor
  new Optional(new Max<BigDecimal>(/*bigdecimal obj('101.0')*/,  NumberLocaleFormat("###,###,###")))
@@ -294,7 +294,7 @@ public class SampleBean1{
     )
 ```java
  // buld for input CellProcessor
- new ConvertNullTo(, new Optional(/*pase enum('BLUE')*/, ParseEnum(false))
+ new ConvertNullTo(, new Optional(/*pase enum('BLUE')*/, new ParseEnum(false))
  
  // buld for output CellProcessor
  new Optional()
