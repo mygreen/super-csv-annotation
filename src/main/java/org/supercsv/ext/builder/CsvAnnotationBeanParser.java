@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.supercsv.exception.SuperCsvException;
 import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
@@ -49,7 +48,7 @@ public class CsvAnnotationBeanParser {
         // @CsvBean
         CsvBean csvBeanAnno = clazz.getAnnotation(CsvBean.class);
         if(csvBeanAnno == null) {
-            throw new SuperCsvException("not found annotation 'CsvBean'");
+            throw new SuperCsvInvalidAnnotationException("not found annotation 'CsvBean'");
         }
         
         mappingBean.setHeader(csvBeanAnno.header());
@@ -104,7 +103,7 @@ public class CsvAnnotationBeanParser {
     
     private void validatePosition(final List<CsvColumnMapping> columns) {
         if(columns.isEmpty()) {
-            throw new SuperCsvException("not found column definition.");
+            throw new SuperCsvInvalidAnnotationException("not found column definition.");
         }
         
         // check duplicated position value 

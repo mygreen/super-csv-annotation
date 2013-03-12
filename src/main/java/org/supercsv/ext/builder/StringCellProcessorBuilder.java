@@ -155,11 +155,11 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         final boolean notEmpty = getNotEmpty(converterAnno);
         
         CellProcessor cellProcessor = processor;
-        cellProcessor = prependNotEmptyProcessor(cellProcessor, notEmpty);
-        cellProcessor = prependContainProcessor(cellProcessor, contain);
-        cellProcessor = prependForbidProcessor(cellProcessor, forbid);
-        cellProcessor = prependLengthProcessor(cellProcessor, minLength, maxLength, exactLength);
         cellProcessor = prependRegExProcessor(cellProcessor, regex);
+        cellProcessor = prependLengthProcessor(cellProcessor, minLength, maxLength, exactLength);
+        cellProcessor = prependForbidProcessor(cellProcessor, forbid);
+        cellProcessor = prependContainProcessor(cellProcessor, contain);
+        cellProcessor = prependNotEmptyProcessor(cellProcessor, notEmpty);
         
         return cellProcessor;
     }
