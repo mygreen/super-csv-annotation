@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.supercsv.ext.annotation.CsvBean;
+import org.supercsv.ext.annotation.CsvBooleanConverter;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvDateConverter;
 import org.supercsv.ext.annotation.CsvNumberConverter;
@@ -33,18 +34,22 @@ public class SampleBean1 implements Serializable {
     private String string1;
     
     @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty")
-    @CsvStringConverter(maxLength=6, contain={"1"})
+    @CsvStringConverter(maxLength=6/*, contain={"1"}*/)
     private String string2;
     
     @CsvColumn(position = 4)
     private Date date1;
     
     @CsvColumn(position = 5, optional=true)
-    @CsvDateConverter(pattern="yyyy年MM月dd日", min="2000年01月30日")
+    @CsvDateConverter(pattern="yyyy年MM月dd日"/*, min="2000年01月30日"*/)
     private Timestamp date2;
     
     @CsvColumn(position = 6, label="列挙型", optional=true, inputDefaultValue="BLUE")
     private Color enum1;
+    
+    @CsvColumn(position = 7, optional=false, inputDefaultValue="○", outputDefaultValue="×")
+    @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
+    private Boolean avaialble;
     
     public SampleBean1() {
         
@@ -117,6 +122,16 @@ public class SampleBean1 implements Serializable {
     
     public void setEnum1(Color enum1) {
         this.enum1 = enum1;
+    }
+
+    
+    public Boolean getAvaialble() {
+        return avaialble;
+    }
+
+    
+    public void setAvaialble(Boolean avaialble) {
+        this.avaialble = avaialble;
     }
     
     

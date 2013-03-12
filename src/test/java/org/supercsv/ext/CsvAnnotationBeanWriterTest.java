@@ -27,7 +27,6 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
-import org.supercsv.util.CsvContext;
 
 
 public class CsvAnnotationBeanWriterTest {
@@ -98,6 +97,7 @@ public class CsvAnnotationBeanWriterTest {
         bean2.setString1("string value 2");
         bean2.setDate1(Timestamp.valueOf("2000-02-01 01:00:00.000"));
         bean2.setDate2(Timestamp.valueOf("2000-02-02 02:00:00.000"));
+        bean2.setAvaialble(Boolean.TRUE);
 
         list.add(bean2);
         
@@ -216,6 +216,46 @@ public class CsvAnnotationBeanWriterTest {
             }
         }
         csvReader.close();
+        
+    }
+    
+    @Test
+    public void testRead3() throws Exception {
+        
+//        File inputFile = new File("src/test/data/test_error2.csv");
+        File inputFile = new File("src/test/data/test.csv");
+        CsvAnnotationBeanReader<SampleBean1> csvReader = new CsvAnnotationBeanReader<SampleBean1>(
+                SampleBean1.class,
+                new InputStreamReader(new FileInputStream(inputFile), "Windows-31j"),
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        List<SampleBean1> list = new ArrayList<SampleBean1>();
+        SampleBean1 bean1;
+        String[] headers = csvReader.getHeader();
+        while(true) {
+            try {
+                bean1 = csvReader.read();
+                if(bean1 == null) {
+                    break;
+                }
+                if(csvReader.hasNotError()) {
+                    // エラーがなければ読み込む
+                    list.add(bean1);
+                }
+            } catch(SuperCsvException e) { }
+        }
+        csvReader.close();
+        
+        if(csvReader.hasError()) {
+            // エラーを取得して、メッセージに変換する
+            MessageConverter messageConverter = new MessageConverter();
+            List<String> messages = messageConverter.convertMessage(csvReader.getCsvErrors());
+            for(String str : messages) {
+                System.err.println(str);
+            }
+            
+        }
+
         
     }
     
