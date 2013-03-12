@@ -28,7 +28,9 @@ public class SampleBean1{
 }
 ```
 
-###  @CsvColumn annotate Field type. set for public / private / protcted field.
+###  @CsvColumn annotate Field type.
+set for public / private / protected field.
+
 #### annotation elements
 - position : int = rqeuired argment. column index start with zero(0). 
 - label : String = header label. if empty, use filed name.
@@ -109,7 +111,7 @@ public class SampleBean1{
  
  // buld for output CellProcessor
  // use default pattern 'yyyy-MM-dd HH:mm:ss'
-  new NotNull(ConvertNullTo( /*date obj('2012-10-13 00:00:00')*/, new FormatLocaleDate('yyyy-MM-dd HH:mm:ss')))
+  new NotNull(ConvertNullTo("2012-10-13 00:00:00", new FormatLocaleDate('yyyy-MM-dd HH:mm:ss')))
 ```
 
 4. build field 'bool5' CellProcessor ( @CsvColumn(position = 4, inputDefaultValue="false" )
@@ -127,7 +129,7 @@ public class SampleBean1{
   new ConvertNullTo(/*enum obj('RED')*/, new NotNull(new ParseEnum()))
  
  // buld for output CellProcessor
-  new ConvertNullTo(/*enum obj('BLUE')*/, new NotNull())
+  new ConvertNullTo("BLUE", new NotNull())
 ```
 
 
@@ -182,7 +184,7 @@ this annotation for Boolean classes : boolean / Boolean.
 
 #### annotation elements
 - inputTrueValues : String[] = pase string as true value. set CellProcessor 'ParseBoolean' (custom processor)
-- inputTrueValues : String[] = pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
+- inputFalseValues : String[] = pase string as false value. set CellProcessor 'ParseBoolean' (custom processor)
 - outputTrueValue : String = output boolean(true) to string value. set CellProsessor 'FtmBool'.
 - outputFalseValue : String = output boolean(false) to string value. set CellProsessor 'FtmBool'.
 - lenient : boolean = if this value is 'true', parse whith ignore lower / upper case.
@@ -241,7 +243,7 @@ public class SampleBean1{
  new NotNull(new ParseFloat(new NumerRange<Float>(/*Float.parseFloat('101.0')*/, /*Float.parseFloat('200.5')*/))
  
  // buld for output CellProcessor
- new NotNull(new NumerRange<Float>(/*Float.parseFloat('101.0')*/, /*Float.parseFloat('200.5')*/)
+ new NotNull(new NumerRange<Float>("101.0'", /*Float.parseFloat('200.5')*/)
 ```
 2. build field 'bigDecimal2' Cell Processor (  @CsvColumn(position = 1, optional=true) + @CsvNumberConverter(pattern="###,###,###", max="100,00,000") )
 ```java
@@ -294,7 +296,7 @@ public class SampleBean1{
     )
 ```java
  // buld for input CellProcessor
- new ConvertNullTo(, new Optional(/*pase enum('BLUE')*/, new ParseEnum(false))
+ new ConvertNullTo(/*parse enum('BLUE')*/, new Optional(new ParseEnum(false))
  
  // buld for output CellProcessor
  new Optional()
