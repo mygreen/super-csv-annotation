@@ -72,7 +72,7 @@ public class SampleBean1{
 }
 ```
 
-#### this api build cell processos from avobe examples.
+#### this api build cell processos from above examples.
 
 0. build field 'integer1' CellProcessor ( @CsvColumn(position = 0, optional = true) )
 ```java
@@ -381,9 +381,9 @@ while((bean1 = csvReader.read()) != null) {
 ```
 
 ## Sample Localize Message
+### use ValidatableCsvBeanReader (custom class)
 
 ```java
- use ValidatableCsvBeanReader (custom class)
 // create cell processor and field name mapping
 CsvAnnotationBeanParser helper = new CsvAnnotationBeanParser();
 CsvBeanMapping<SampleBean1> mappingBean = helper.parse(SampleBean1.class, false);
