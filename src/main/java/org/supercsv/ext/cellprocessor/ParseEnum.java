@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -34,6 +35,8 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
     
     protected final Map<String, Enum> enumValueMap;
     
+    protected final Method valueMethod;
+    
     public ParseEnum(final Class type) {
         this(type, false);
     }
@@ -42,12 +45,21 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         this(type, false, next);
     }
     
+    public ParseEnum(final Class type, final String valueMethodName) {
+        this(type, false, valueMethodName);
+    }
+    
+    public ParseEnum(final Class type, final String valueMethodName, final CellProcessor next) {
+        this(type, false, valueMethodName, next);
+    }
+    
     public ParseEnum(final Class type, final boolean lenient) {
         super();
         checkPreconditions(type);
         this.type = type;
         this.lenient = lenient;
         this.enumValueMap = createEnumMap(type, lenient);
+        this.valueMethod = null;
     }
     
     public ParseEnum(final Class type, final boolean lenient, final CellProcessor next) {
@@ -56,9 +68,28 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         this.type = type;
         this.lenient = lenient;
         this.enumValueMap = createEnumMap(type, lenient);
+        this.valueMethod = null;
     }
     
-    private static void checkPreconditions(final Class type) {
+    public ParseEnum(final Class type, final boolean lenient, final String valueMethodName) {
+        super();
+        checkPreconditions(type);
+        this.type = type;
+        this.lenient = lenient;
+        this.enumValueMap = createEnumMap(type, lenient, valueMethodName);
+        this.valueMethod = createEnumValueMethod(type, valueMethodName);
+    }
+    
+    public ParseEnum(final Class type, final boolean lenient, final String valueMethodName, final CellProcessor next) {
+        super(next);
+        checkPreconditions(type);
+        this.type = type;
+        this.lenient = lenient;
+        this.enumValueMap = createEnumMap(type, lenient, valueMethodName);
+        this.valueMethod = createEnumValueMethod(type, valueMethodName);
+    }
+    
+    protected static void checkPreconditions(final Class type) {
         
         if(type == null) {
             throw new NullPointerException("type should be not null");
@@ -67,6 +98,18 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         if(!Enum.class.isAssignableFrom(type)) {
             throw new IllegalArgumentException(String.format("type should be Enum class : %s", type.getCanonicalName()));
         }
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected Method createEnumValueMethod(final Class enumClass, final String valueMethodName) {
+        try {
+            return enumClass.getMethod(valueMethodName);
+        } catch (SecurityException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException(String.format("not found method '%s'", valueMethodName), e);
+        }
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -79,6 +122,29 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
             
             final String key = (lenient ? e.name().toLowerCase() : e.name());
             map.put(key, e);            
+        }
+        
+        return Collections.unmodifiableMap(map);
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean lenient, final String methodName) {
+        
+        Map<String, Enum> map = new LinkedHashMap<String, Enum>();
+        try {
+            final Method method = createEnumValueMethod(enumClass, methodName);
+            
+            EnumSet set = EnumSet.allOf(enumClass);
+            for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
+                Enum e = it.next();
+                
+                Object returnValue = method.invoke(e);
+                final String key = (lenient ? returnValue.toString().toLowerCase() : returnValue.toString());
+                
+                map.put(key, e);            
+            }
+        } catch(Exception e) {
+            throw new RuntimeException(e);
         }
         
         return Collections.unmodifiableMap(map);
@@ -116,5 +182,13 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
     
     public boolean isLenient() {
         return lenient;
+    }
+    
+    public Map<String, Enum> getEnumValueMap() {
+        return enumValueMap;
+    }
+    
+    public Method getValueMethod() {
+        return valueMethod;
     }
 }

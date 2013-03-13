@@ -32,7 +32,7 @@ public @interface CsvEnumConverter {
     boolean lenient() default false;
     
     /**
-     * alias Enum.value()
+     * your customze method name. ex. Color.label()
      */
     String valueMethodName() default "";
 }

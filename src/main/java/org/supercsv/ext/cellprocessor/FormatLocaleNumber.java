@@ -127,6 +127,7 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
         if(pattern == null || pattern.isEmpty() ) {
             throw new IllegalArgumentException("pattern should not be null");
         }
+        
     }
     
     @Override

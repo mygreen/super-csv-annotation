@@ -26,12 +26,20 @@ public class MessageConverter {
     
     public String convertMessage(final CsvMessage error) {
         
+        if(error == null) {
+            throw new NullPointerException("error should not be null.");
+        }
+        
         final String msg = messageResolver.getMessage(error.getCode());
         return MapVariableInterpolator.interpolate(msg, error.getVariables());
         
     }
     
     public List<String> convertMessage(final List<CsvMessage> errors) {
+        
+        if(errors == null) {
+            throw new NullPointerException("errors should not be null.");
+        }
         
         List<String> messages = new ArrayList<String>();
         for(CsvMessage error : errors) {
@@ -45,7 +53,7 @@ public class MessageConverter {
         return messageResolver;
     }
     
-    public void setMessageResolver(MessageResolver messageResolver) {
+    public void setMessageResolver(final MessageResolver messageResolver) {
         this.messageResolver = messageResolver;
     }
     

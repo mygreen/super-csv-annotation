@@ -1,5 +1,5 @@
 /*
- * ExceptionConveter.java
+ * CsvExceptionConveter.java
  * created in 2013/03/09
  *
  * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
@@ -33,6 +33,11 @@ import org.supercsv.util.CsvContext;
 public class CsvExceptionConveter {
     
     public List<CsvMessage> convertCsvError(final SuperCsvException exception) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
         List<CsvMessage> errrors = new ArrayList<CsvMessage>();
         
         if(exception instanceof SuperCsvNoMatchColumnSizeException) {
@@ -53,6 +58,11 @@ public class CsvExceptionConveter {
     }
     
     public List<CsvMessage> convertCsvError(final SuperCsvRowException exception) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
         List<CsvMessage> messages = new ArrayList<CsvMessage>();
         for(SuperCsvException e : exception.getColumnErrors()) {
             messages.addAll(convertCsvError(e));
@@ -61,6 +71,11 @@ public class CsvExceptionConveter {
     }
     
     public List<CsvMessage> convertCsvError(final SuperCsvCellProcessorException exception) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
         CellProcessor cellProcessor = exception.getProcessor();
         
         final CsvMessage message;
@@ -93,10 +108,20 @@ public class CsvExceptionConveter {
     }
     
     public List<CsvMessage> convertCsvError(final SuperCsvConstraintViolationException exception) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
         return convertCsvError((SuperCsvCellProcessorException) exception);
     }
     
     public List<CsvMessage> convertCsvError(final SuperCsvNoMatchColumnSizeException exception) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
         CsvMessage message = new CsvMessage("csvError.noMatchColumnSize");
         message.add("lineNumber", String.valueOf(exception.getCsvContext().getLineNumber()));
         message.add("rowNumber", String.valueOf(exception.getCsvContext().getRowNumber()));
@@ -110,6 +135,10 @@ public class CsvExceptionConveter {
     }
     
     public Map<String, ?> createCsvContextVariable(final CsvContext context) {
+        
+        if(context == null) {
+            throw new NullPointerException("context should not be null."); 
+        }
         
         Map<String, Object> vars = new HashMap<String, Object>();
         

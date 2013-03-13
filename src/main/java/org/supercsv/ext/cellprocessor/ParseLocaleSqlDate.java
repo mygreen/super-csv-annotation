@@ -1,5 +1,5 @@
 /*
- * ParseLocaleTimestamp.java
+ * ParseLocaleSqlDate.java
  * created in 2013/03/06
  *
  * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
@@ -28,6 +28,14 @@ public class ParseLocaleSqlDate extends ParseLocaleDate {
         this(format, true, null, null, next);
     }
     
+    public ParseLocaleSqlDate(final String pattern, final boolean lenient) {
+        this(pattern, lenient, Locale.getDefault(), null);
+    }
+    
+    public ParseLocaleSqlDate(final String pattern, final boolean lenient, final DateCellProcessor next) {
+        this(pattern, lenient, Locale.getDefault(), null, next);
+    }
+    
     public ParseLocaleSqlDate(final String format, final boolean lenient, final Locale locale, final TimeZone timeZone) {
         super(format, lenient, locale, timeZone);
     }
@@ -36,6 +44,9 @@ public class ParseLocaleSqlDate extends ParseLocaleDate {
         super(format, lenient, locale, timeZone, next);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Object parse(final String value) throws ParseException {
         

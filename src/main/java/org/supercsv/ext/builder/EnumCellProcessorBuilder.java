@@ -7,11 +7,14 @@
 package org.supercsv.ext.builder;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.EnumSet;
 import java.util.Iterator;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvEnumConverter;
+import org.supercsv.ext.cellprocessor.FormatEnum;
 import org.supercsv.ext.cellprocessor.ParseEnum;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
@@ -48,25 +51,48 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
         return converterAnno.lenient();
     }
     
+    protected String getValueMethodName(final CsvEnumConverter converterAnno) {
+        if(converterAnno == null) {
+            return "";
+        }
+        
+        return converterAnno.valueMethodName();
+    }
+    
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Enum<?>> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-//        CsvEnumConverter converterAnno = getAnnotation(annos);
+        final CsvEnumConverter converterAnno = getAnnotation(annos);
+        final String valueMethodName = getValueMethodName(converterAnno);
         
-        return processor;
+        CellProcessor cellProcessor = processor;
+        if(!valueMethodName.isEmpty()) {
+            cellProcessor = (cellProcessor == null ? 
+                    new FormatEnum(type, valueMethodName) :
+                        new FormatEnum(type, valueMethodName, (StringCellProcessor) cellProcessor));
+        }
+        
+        return cellProcessor;
     }
     
     @Override
     public CellProcessor buildInputCellProcessor(final Class<Enum<?>> type, final Annotation[] annos,
             final CellProcessor processor) {
         
-        CsvEnumConverter converterAnno = getAnnotation(annos);
+        final CsvEnumConverter converterAnno = getAnnotation(annos);
         final boolean lenient = getLenient(converterAnno);
+        final String valueMethodName = getValueMethodName(converterAnno);
         
         CellProcessor cellProcessor = processor;
-        cellProcessor = (cellProcessor == null ? 
-                new ParseEnum(type, lenient) : new ParseEnum(type, lenient, cellProcessor));
+        if(valueMethodName.isEmpty()) {
+            cellProcessor = (cellProcessor == null ? 
+                    new ParseEnum(type, lenient) : new ParseEnum(type, lenient, cellProcessor));
+        } else {
+            cellProcessor = (cellProcessor == null ? 
+                    new ParseEnum(type, lenient, valueMethodName) :
+                        new ParseEnum(type, lenient, valueMethodName, cellProcessor));
+        }
         
         return cellProcessor;
     }
@@ -77,19 +103,42 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     public Enum getParseValue(final Class<Enum<?>> type, final Annotation[] annos, final String defaultValue) {
         CsvEnumConverter converterAnno = getAnnotation(annos);
         final boolean lenient = getLenient(converterAnno);
+        final String valueMethodName = getValueMethodName(converterAnno);
         
-        EnumSet set = EnumSet.allOf((Class) type);
-        for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-            Enum e = it.next();
-            
-            if(defaultValue.equals(e.name())) {
-                return e;
+        final EnumSet set = EnumSet.allOf((Class) type);
+        if(valueMethodName.isEmpty()) {
+            for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
+                Enum e = it.next();
+                
+                if(defaultValue.equals(e.name())) {
+                    return e;
+                }
+                
+                if(lenient && defaultValue.equalsIgnoreCase(e.name())) {
+                    return e;
+                }
+                
             }
-            
-            if(lenient && defaultValue.equalsIgnoreCase(e.name())) {
-                return e;
+        } else {
+            try {
+                final Method valueMethod = type.getMethod(valueMethodName);
+                for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
+                    Enum e = it.next();
+                    
+                    final String value = valueMethod.invoke(e).toString();
+                    if(defaultValue.equals(value)) {
+                        return e;
+                    }
+                    
+                    if(lenient && defaultValue.equalsIgnoreCase(value)) {
+                        return e;
+                    }
+                    
+                }
+            } catch(Exception e) {
+                throw new SuperCsvInvalidAnnotationException(
+                        String.format("enum class '%s' has not method '%s'", type.getCanonicalName(), valueMethodName));
             }
-            
         }
         
         throw new SuperCsvInvalidAnnotationException(String.format("convert fail enum value %s", defaultValue));

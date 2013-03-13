@@ -258,7 +258,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Byte>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Byte>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Byte>(type, pattern, lenient, currency, symbols, cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseByte() : new ParseByte((LongCellProcessor) cellProcessor));
@@ -357,7 +357,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Short>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Short>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Short>(type, pattern, lenient, currency, symbols, cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseShort() : new ParseShort((LongCellProcessor) cellProcessor));
@@ -456,7 +456,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Integer>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Integer>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Integer>(type, pattern, lenient, currency, symbols, cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseInt() : new ParseInt((LongCellProcessor) cellProcessor));
@@ -553,7 +553,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Long>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Long>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Long>(type, pattern, lenient, currency, symbols, cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLong() : new ParseLong((LongCellProcessor) cellProcessor));
@@ -650,7 +650,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Float>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Float>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Float>(type, pattern, lenient, currency, symbols, cellProcessor));
                     
             } else {
                 cellProcessor = (cellProcessor == null ?
@@ -748,7 +748,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<Double>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Double>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));
+                            new ParseLocaleNumber<Double>(type, pattern, lenient, currency, symbols, cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseDouble() : new ParseDouble((DoubleCellProcessor) cellProcessor));
@@ -845,7 +845,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<BigDecimal>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<BigDecimal>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));                
+                            new ParseLocaleNumber<BigDecimal>(type, pattern, lenient, currency, symbols, cellProcessor));                
             } else {
                 cellProcessor = (cellProcessor == null ? 
                         new ParseBigDecimal() : new ParseBigDecimal(cellProcessor));
@@ -946,7 +946,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLocaleNumber<BigInteger>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<BigInteger>(type, pattern, lenient, currency, symbols, (StringCellProcessor) cellProcessor));                
+                            new ParseLocaleNumber<BigInteger>(type, pattern, lenient, currency, symbols, cellProcessor));                
             }
             
             return cellProcessor;

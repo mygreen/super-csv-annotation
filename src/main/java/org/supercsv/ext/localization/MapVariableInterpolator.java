@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 public class MapVariableInterpolator {
     
     /** 正規表現のエスケープマップ */
-    private static String[][] escapeMapRegex = {
+    private static final String[][] escapeMapRegex = {
         {"$", "\\$"},
         {"^", "\\^"},
         {".", "\\."},

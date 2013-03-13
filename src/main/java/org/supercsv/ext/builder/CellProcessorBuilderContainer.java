@@ -37,6 +37,9 @@ public class CellProcessorBuilderContainer {
         
         registBuilder(String.class, new StringCellProcessorBuilder());
         
+        registBuilder(Character.class, new CharacterCellProcessorBuilder());
+        registBuilder(char.class, new CharacterCellProcessorBuilder());
+        
         registBuilder(Boolean.class, new BooleanCellProcessorBuilder());
         registBuilder(boolean.class, new BooleanCellProcessorBuilder());
         
@@ -55,9 +58,6 @@ public class CellProcessorBuilderContainer {
         
         registBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
         registBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
-        
-        registBuilder(Character.class, new CharacterCellProcessorBuilder());
-        registBuilder(char.class, new CharacterCellProcessorBuilder());
         
         registBuilder(Date.class, new DateCellProcessorBuilder());
         registBuilder(java.sql.Date.class, DateCellProcessorBuilder.newSqlDate());

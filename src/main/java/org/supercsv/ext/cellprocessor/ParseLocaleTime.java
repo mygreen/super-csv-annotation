@@ -29,6 +29,14 @@ public class ParseLocaleTime extends ParseLocaleDate {
         this(format, true, null, null, next);
     }
     
+    public ParseLocaleTime(final String pattern, final boolean lenient) {
+        this(pattern, lenient, Locale.getDefault(), null);
+    }
+    
+    public ParseLocaleTime(final String pattern, final boolean lenient, final DateCellProcessor next) {
+        this(pattern, lenient, Locale.getDefault(), null, next);
+    }
+    
     public ParseLocaleTime(final String format, final boolean lenient, final Locale locale, final TimeZone timeZone) {
         super(format, lenient, locale, timeZone);
     }
@@ -37,6 +45,9 @@ public class ParseLocaleTime extends ParseLocaleDate {
         super(format, lenient, locale, timeZone, next);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Object parse(final String value) throws ParseException {
         

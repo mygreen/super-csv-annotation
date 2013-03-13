@@ -25,7 +25,9 @@ import org.supercsv.util.CsvContext;
 
 
 /**
- *
+ * 
+ * @version 1.0.0
+ * @since 1.0.0
  * @see {@link ParseDate}
  * @author T.TSUCHIE
  *
@@ -64,21 +66,52 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         this(pattern, true, Locale.getDefault(), null, next);
     }
     
+    public ParseLocaleDate(final String pattern, final boolean lenient) {
+        this(pattern, lenient, Locale.getDefault(), null);
+    }
+    
+    public ParseLocaleDate(final String pattern, final boolean lenient, final DateCellProcessor next) {
+        this(pattern, lenient, Locale.getDefault(), null, next);
+    }
+    
+    /**
+     * 
+     * @param pattern (required)
+     * @param lenient 
+     * @param locale
+     *          if null, set for {@link Locale#getDefault()} (optional)
+     * @param timeZone (optional)
+     */
     public ParseLocaleDate(final String pattern, final boolean lenient, final Locale locale, final TimeZone timeZone) {
         super();
-        checkPreconditions(pattern, locale);
+        checkPreconditions(pattern);
         this.pattern = pattern;
         this.lenient = lenient;
-        this.locale = locale;
+        this.locale = (locale == null ? Locale.getDefault() : locale);
         this.timeZone = timeZone;
     }
     
+    /**
+     * 
+     * @param pattern
+     *          the date format pattern (required).
+     * @param lenient
+     *          whether date interpretation is lenient.
+     * @param locale
+     *          the date format locale. if locale is null, use default value with {@link Locale#getDefault()} (optional).
+     * @param timeZone
+     *          the date format timeZone (optional).
+     * @param next
+     *          the next processor in the chain (required).
+     * @throws IllegalArgumentException
+     *          if pattern is null or empty.
+     */
     public ParseLocaleDate(final String pattern, final boolean lenient, final Locale locale, final TimeZone timeZone, final DateCellProcessor next) {
         super(next);
-        checkPreconditions(pattern, locale);
+        checkPreconditions(pattern);
         this.pattern = pattern;
         this.lenient = lenient;
-        this.locale = locale;
+        this.locale = (locale == null ? Locale.getDefault() : locale);
         this.timeZone = timeZone;
     }
     
@@ -87,21 +120,18 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
      * @throws IllegalArgumentException
      * 
      */
-    protected static void checkPreconditions(final String pattern, final Locale locale) {
+    protected static void checkPreconditions(final String pattern) {
         if(pattern == null || pattern.isEmpty() ) {
-            throw new IllegalArgumentException("pattern should not be null");
+            throw new IllegalArgumentException("pattern should not be null or empty.");
         }
         
-        if(locale == null) {
-            throw new IllegalArgumentException("locale should not be null");
-        }
     }
     
     /**
      * {@inheritDoc}
      * 
      * @throws SuperCsvCellProcessorException
-     *             if value is null, isn't a String, or can't be parsed to a Date
+     *             if value is null, isn't a String, or can't be parsed to a Date.a
      */
     @Override
     public Object execute(final Object value, final CsvContext context) {
@@ -147,11 +177,17 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         return formatter;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getMessageCode() {
         return this.getClass().getCanonicalName() + ".violated";
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
@@ -162,7 +198,10 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         
         return vars;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String formatValue(final Object value) {
         if(value == null) {

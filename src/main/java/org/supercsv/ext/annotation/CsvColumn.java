@@ -31,7 +31,7 @@ public @interface CsvColumn {
     
     /**
      * position of column.
-     * <p>start with '0'.
+     * <p>start with zero(0).
      * @return
      */
     int position();

@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
+import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
@@ -68,7 +71,13 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         
     }
     
-    public ParseLocaleNumber(final Class<N> type, final String pattern, final StringCellProcessor next) {
+    /**
+     * 
+     * @param type
+     * @param pattern
+     * @param next
+     */
+    public ParseLocaleNumber(final Class<N> type, final String pattern, final CellProcessor next) {
         this(type, pattern, true, null, null, next);
         
     }
@@ -86,14 +95,15 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
     }
     
     public ParseLocaleNumber(final Class<N> type, final String pattern, final boolean lenient,
-            final Currency currency, final DecimalFormatSymbols symbols, StringCellProcessor next) {
+            final Currency currency, final DecimalFormatSymbols symbols, CellProcessor next) {
         super(next);
         checkPreconditions(pattern);
         this.type = type;
         this.pattern = pattern;
         this.lenient = lenient;
         this.currency = currency;
-        this.symbols = symbols;        
+        this.symbols = symbols;
+        
     }
     
     /**
@@ -130,25 +140,26 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         
         final BigDecimal result = (BigDecimal) formatter.get().parse(value);
         
-        if(type.isAssignableFrom(Byte.class) || type.isAssignableFrom(byte.class)) {
+        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
             return lenient ? result.byteValue() : result.byteValueExact();
-        } else if(type.isAssignableFrom(Short.class) || type.isAssignableFrom(short.class)) {
+        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
             return lenient ? result.shortValue() : result.shortValueExact();
-        } else if(type.isAssignableFrom(Integer.class) || type.isAssignableFrom(int.class)) {
+        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
             return lenient ? result.intValue() : result.intValueExact();
-        } else if(type.isAssignableFrom(Long.class) || type.isAssignableFrom(long.class)) {
+        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
             return lenient ? result.longValue() : result.longValueExact();
-        } else if(type.isAssignableFrom(Float.class) || type.isAssignableFrom(float.class)) {
+        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
             return result.floatValue();
-        } else if(type.isAssignableFrom(Double.class) || type.isAssignableFrom(double.class)) {
+        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
             return result.doubleValue();
         } else if(type.isAssignableFrom(BigInteger.class)) {
             return lenient ? result.toBigInteger() : result.toBigIntegerExact();
+        } else if(type.isAssignableFrom(BigDecimal.class)) {
+            return result;
         }
         
         return result;
     }
-    
     
     public Class<N> getType() {
         return type;

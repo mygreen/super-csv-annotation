@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 public @interface CsvBean {
     
     /**
-     * has CSV Header column
+     * has CSV Header column.
      * @return
      */
     boolean header() default false;

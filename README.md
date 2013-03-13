@@ -61,7 +61,7 @@ public class SampleBean1{
     @CsvColumn(position = 2, optional = true, trim = true, inputDefaultValue="aa")
     public String string3;
     
-    @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00")
+    @CsvColumn(position = 3, outputDefaultValue="2012-10-13 00:00:00")
     public Date date4;
     
     @CsvColumn(position = 4, inputDefaultValue="false", outputDefualtValue="true")
@@ -102,7 +102,7 @@ public class SampleBean1{
  // build CellProcessor for writing
   new Optional(new Trim())
 ```
-3. build CellProcessor for field 'date4' with java.util.Date. ( @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00") )
+3. build CellProcessor for field 'date4' with java.util.Date. ( @CsvColumn(position = 3, outputDefaultValue="2012-10-13 00:00:00") )
 ```java
  // build CellProcessor for reading
  // use default pattern 'yyyy-MM-dd HH:mm:ss'
@@ -193,7 +193,8 @@ this annotation for Boolean classes : boolean / Boolean.
 this annotation for Enum classes.
 
 #### annotation elements
-- lenient boolean = if this value is 'true', parse with ignored case. optional argument for CellProsessor 'ParseEnum'
+- lenient : boolean = if this value is 'true', parse with ignored case. optional argument for CellProsessor 'ParseEnum'
+- valueMethodName String : customize Enum method name. ex. Color.label() 
 
 ## Example @CsvStringConverter / @CsvNumberConverter / @CsvDateConverter / @CsvBooleanConverter / @CsvEnumConverter
 

@@ -28,8 +28,8 @@ import org.supercsv.util.CsvContext;
  */
 public class ParseBoolean extends CellProcessorAdaptor implements StringCellProcessor, ValidationCellProcessor {
     
-    public static final String[] DEFAULT_TRUE_VALUES = new String[] {"true", "1", "yes", "on", "y", "t"};
-    public static final String[] DEFAULT_FALSE_VALUES = new String[] {"false", "0", "no", "off", "f", "n"};
+    protected static final String[] DEFAULT_TRUE_VALUES = new String[] {"true", "1", "yes", "on", "y", "t"};
+    protected static final String[] DEFAULT_FALSE_VALUES = new String[] {"false", "0", "no", "off", "f", "n"};
     
     protected final Set<String> trueValues;
     

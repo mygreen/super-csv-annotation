@@ -40,6 +40,7 @@ public class ConvertNullToNext extends CellProcessorAdaptor implements BoolCellP
     /**
      * {@inheritDoc}
      */
+    @Override
     public Object execute(final Object value, final CsvContext context) {
         if( value == null ) {
             return next.execute(returnValue, context);

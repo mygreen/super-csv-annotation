@@ -24,6 +24,11 @@ public class PropertiesMessageResolver implements MessageResolver {
     }
     
     public PropertiesMessageResolver(final Properties properties) {
+        
+        if(properties == null) {
+            throw new NullPointerException("properties should not be null.");
+        }
+        
         this.properties = properties;
     }
     

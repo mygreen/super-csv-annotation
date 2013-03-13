@@ -29,6 +29,14 @@ public class ParseLocaleTimestamp extends ParseLocaleDate {
         this(format, true, null, null, next);
     }
     
+    public ParseLocaleTimestamp(final String pattern, final boolean lenient) {
+        this(pattern, lenient, Locale.getDefault(), null);
+    }
+    
+    public ParseLocaleTimestamp(final String pattern, final boolean lenient, final DateCellProcessor next) {
+        this(pattern, lenient, Locale.getDefault(), null, next);
+    }
+    
     public ParseLocaleTimestamp(final String format, final boolean lenient, final Locale locale, final TimeZone timeZone) {
         super(format, lenient, locale, timeZone);
     }
