@@ -78,8 +78,7 @@ public class SampleBean1{
 
 #### this api build CellProcessor from above examples.
 
-0. build CellProcessor for field 'integer1' with int. 
-    - ( @CsvColumn(position = 0, optional = true) )
+0. build CellProcessor for field 'integer1' with int.  ( @CsvColumn(position = 0, optional = true) )
 ```java
  // build CellProcessor for reading
  new Optional(new ParseInt())
@@ -87,8 +86,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new Optional()
 ```
-1. build CellProcessor for field 'integer2' with java.lang.Integer.
-    - ( @CsvColumn(position = 1, optional = false, unique = true) )
+1. build CellProcessor for field 'integer2' with java.lang.Integer. ( @CsvColumn(position = 1, optional = false, unique = true) )
 ```java
  // build CellProcessor for reading
   new NotNull(new Unique(new ParseInt()))
@@ -96,8 +94,7 @@ public class SampleBean1{
  // build CellProcessor for writing
   new NotNull(new Unique())
 ```
-2. build CellProcessor for field 'string3' with java.lang.String.
-    - ( @CsvColumn(position = 2, optional = true, trim = true, inputDefaultValue="aa") )
+2. build CellProcessor for field 'string3' with java.lang.String. ( @CsvColumn(position = 2, optional = true, trim = true, inputDefaultValue="aa") )
 ```java
  // build CellProcessor for reading
   new ConvertNullTo('a', new Optional(new Trim()))
@@ -105,8 +102,7 @@ public class SampleBean1{
  // build CellProcessor for writing
   new Optional(new Trim())
 ```
-3. build CellProcessor for field 'date4' with java.util.Date.
-    - ( @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00") )
+3. build CellProcessor for field 'date4' with java.util.Date. ( @CsvColumn(position = 3, ,outputDefaultValue="2012-10-13 00:00:00") )
 ```java
  // build CellProcessor for reading
  // use default pattern 'yyyy-MM-dd HH:mm:ss'
@@ -116,8 +112,7 @@ public class SampleBean1{
  // use default pattern 'yyyy-MM-dd HH:mm:ss'
   new NotNull(ConvertNullTo("2012-10-13 00:00:00", new FormatLocaleDate("yyyy-MM-dd HH:mm:ss")))
 ```
-4. build CellProcessor for field 'bool5' with boolean.
-    - ( @CsvColumn(position = 4, inputDefaultValue="false" )
+4. build CellProcessor for field 'bool5' with boolean. ( @CsvColumn(position = 4, inputDefaultValue="false" )
 ```java
  // build CellProcessor for reading
   new ConvertNullTo( /*boolean obj('false')*/, new NotNull( new ParseBoolean()))
@@ -125,8 +120,7 @@ public class SampleBean1{
  // build CellProcessor for writing
   new NotNull( new FmtBool())
 ```
-5. build CellProcessor for field 'enum6' with Enum class.
-    - ( @CsvColumn(position = 5, inputDefaultValue="RED", outputDefualtValue="BLUE") )
+5. build CellProcessor for field 'enum6' with Enum class. ( @CsvColumn(position = 5, inputDefaultValue="RED", outputDefualtValue="BLUE") )
 ```java
  // build CellProcessor for reading
   new ConvertNullTo(/*enum obj('RED')*/, new NotNull(new ParseEnum()))
@@ -243,8 +237,7 @@ public class SampleBean1{
 ```
 ### this api build cell processos from above examples.
 
-1. build CellProcessor field 'float1' with float type.
-    - ( @CsvColumn(position = 0, label="数字") + @CsvNumberConverter(min="101.0", max="200.5") )
+1. build CellProcessor field 'float1' with float type. ( @CsvColumn(position = 0, label="数字") + @CsvNumberConverter(min="101.0", max="200.5") )
 ``` java
  // build CellProcessor for reading
  new NotNull(new ParseFloat(new NumerRange<Float>(/*float obj('101.0')*/, /**float obj('200.5')*/))
@@ -252,8 +245,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new NotNull(new NumerRange<Float>(/**float obj("101.0")*/, /**float obj('200.5')*/)
 ```
-2. build CellProcessor for field 'bigDecimal1' with BigDecimal.
-    - (  @CsvColumn(position = 1, optional=true) + @CsvNumberConverter(pattern="###,###,###", max="100,00,000") )
+2. build CellProcessor for field 'bigDecimal1' with BigDecimal. (  @CsvColumn(position = 1, optional=true) + @CsvNumberConverter(pattern="###,###,###", max="100,00,000") )
 ```java
  // build CellProcessor for reading
  new Optional(new ParseBigDecimal("###,###,###",  new Max<BigDecimal>(/*big decimal obj('100,00,000')*/))
@@ -261,8 +253,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new Optional(new Max<BigDecimal>(/*big decimal obj('100,00,000')*/,  NumberLocaleFormat("###,###,###")))
 ```
-3. build CellProcessor for field 'string2' with String.
-    - ( @CsvColumn(position = 2) + @CsvStringConverter(minLength=5, maxLength=8, regex="[a-zA-Z]*") )
+3. build CellProcessor for field 'string2' with String. ( @CsvColumn(position = 2) + @CsvStringConverter(minLength=5, maxLength=8, regex="[a-zA-Z]*") )
 ```java
  // build CellProcessor for reading
  new NotNull(new StrRegEx("[a-zA-Z]*",  new Length(5, 8))
@@ -270,8 +261,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new NotNull(new StrRegEx("[a-zA-Z]*",  new Length(5, 8))
 ```
-4. build CellProcessor for field 'string3' with String.
-    - ( @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty") + @CsvStringConverter(maxLength=6, contain={"abc", "bbb"}) )
+4. build CellProcessor for field 'string3' with String. ( @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty") + @CsvStringConverter(maxLength=6, contain={"abc", "bbb"}) )
 ```java
  // build CellProcessor for reading
  new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
@@ -279,8 +269,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
 ```
-5. build CellProcessor for field 'date4' with java.util.Date.
-    - ( @CsvColumn(position = 4) + @CsvDateConverter(pattern="yyyy/MM/dd HH:mm", min="2000/10/30 00:00", max=2000/12/31 23:59") )
+5. build CellProcessor for field 'date4' with java.util.Date. ( @CsvColumn(position = 4) + @CsvDateConverter(pattern="yyyy/MM/dd HH:mm", min="2000/10/30 00:00", max=2000/12/31 23:59") )
 ```java
  // build CellProcessor for reading
  new NotNull(new ParseLocaleDate("yyyy/MM/dd HH:mm", new DateRange(/*data obj('2000/10/30 00:00')*/, /*date obj('2000/12/31 23:59')*/)))
@@ -288,8 +277,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new NotNull(new DateRange(/*data obj('2000/10/30 00:00')*/, /*date obj('2000/12/31 23:59')*/), new FormatLocaleDate("yyyy/MM/dd HH:mm"))
 ```
-5. build CellProcessor for field 'date5' with java.sql.Timestamp
-    - ( @CsvColumn(position = 5, optional=true) + @CsvDateConverter(pattern="yyyy/MM/dd", min="2000/10/30")
+5. build CellProcessor for field 'date5' with java.sql.Timestamp ( @CsvColumn(position = 5, optional=true) + @CsvDateConverter(pattern="yyyy/MM/dd", min="2000/10/30")
  )
 ```java
  // build CellProcessor for reading
@@ -298,8 +286,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new Optional(new Future(/*data obj('2000/10/30')*/), new FormatLocaleDate("yyyy/MM/dd"))
 ```
-6. build CellProcessor for field 'bool6' with java.lang.Boolean
-    - ( @CsvColumn(position = 6, optional=true) + @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
+6. build CellProcessor for field 'bool6' with java.lang.Boolean ( @CsvColumn(position = 6, optional=true) + @CsvBooleanConverter(inputTrueValue = {"○"}, inputFalseValue = {"×"}, outputTrueValue = "○", outputFalseValue="×")
     )
 ```java
  // build CellProcessor for reading
@@ -308,8 +295,7 @@ public class SampleBean1{
  // build CellProcessor for writing
  new Optional( new FmtBool("○", "×"))
 ```
-7. build CellProcessor for field 'enum7' with Enum type.
-    - ( @CsvColumn(position = 7, label="enum class", optional=true, inputDefaultValue="BLUE") + @CsvEnumConveret(lenient = true)
+7. build CellProcessor for field 'enum7' with Enum type. ( @CsvColumn(position = 7, label="enum class", optional=true, inputDefaultValue="BLUE") + @CsvEnumConveret(lenient = true)
     )
 ```java
  // build CellProcessor for reading
