@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Currency;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -139,7 +138,7 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
             throw new SuperCsvCellProcessorException(Number.class, value, context, this);
         }
         
-        String result = formatter.get().format((Date) value);
+        String result = formatter.get().format((Number) value);
         return next.execute(result, context);
     }
     
