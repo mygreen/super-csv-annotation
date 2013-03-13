@@ -38,9 +38,9 @@ set for public / private / protected field.
 - optional : boolean = set CellProcessor NotNull(false) / Optional(true). default false.
 - trim : boolean = if set true, set CellProcessor Trim()
 - inputDefaultValue : String = if set this values, then reading to set for CellProcessor 'ConvertNullTo'. 
-    - if field type String class, empty value as '@empty'.
+    - When field type is 'String', set the magic value '@empty' as empty charcters "".
 - outputDefaultValue : String = if set this values, then writing to set for CellProcessor 'ConvertNullTo'. 
-    - if field type String class, empty value as '@empty'.
+    - When field type is 'String', set the magic value '@empty' as empty charcters "".
 - unique : boolean = constricting option. check the value for unique. if set the true, reading/wriing to set CellProcessor 'Unique()'.
 - equalsValue : String = constricting option. check the value for equals. if set the value, reading/wriing to set CellProcessor 'Equals()'.
 - builderClass : Class = you can set fo your customize CellProcessorBuilder class. this class must inherit 'AbstractCellProcessorBuilder'.
