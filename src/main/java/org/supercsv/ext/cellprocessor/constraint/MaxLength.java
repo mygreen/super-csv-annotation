@@ -79,7 +79,7 @@ public class MaxLength extends CellProcessorAdaptor implements StringCellProcess
     }
     
     @Override
-    public String formateValue(final Object value) {
+    public String formatValue(final Object value) {
         if(value == null) {
             return "";
         }

@@ -85,7 +85,7 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     }
     
     @Override
-    public String formateValue(Object value) {
+    public String formatValue(Object value) {
         if(value == null) {
             return "";
         }

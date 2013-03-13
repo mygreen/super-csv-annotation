@@ -87,7 +87,7 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
     }
     
     @Override
-    public String formateValue(final Object value) {
+    public String formatValue(final Object value) {
         if(value == null) {
             return "";
         }

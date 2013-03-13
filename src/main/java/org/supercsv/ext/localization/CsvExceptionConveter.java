@@ -71,7 +71,7 @@ public class CsvExceptionConveter {
             
             final Object source = exception.getCsvContext().getRowSource().get(
                     exception.getCsvContext().getColumnNumber()-1);
-            message.add("value", p.formateValue(source));
+            message.add("value", p.formatValue(source));
             
         } else {
             message = new CsvMessage(cellProcessor.getClass().getCanonicalName() + ".violated");

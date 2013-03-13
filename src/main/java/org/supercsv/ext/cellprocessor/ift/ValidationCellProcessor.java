@@ -41,5 +41,5 @@ public interface ValidationCellProcessor {
      * @param value
      * @return
      */
-    String formateValue(Object value);
+    String formatValue(Object value);
 }

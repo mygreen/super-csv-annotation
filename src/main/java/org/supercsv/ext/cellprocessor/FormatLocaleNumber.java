@@ -174,7 +174,7 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
     }
 
     @Override
-    public String formateValue(final Object value) {
+    public String formatValue(final Object value) {
         if(value == null) {
             return "";
         }

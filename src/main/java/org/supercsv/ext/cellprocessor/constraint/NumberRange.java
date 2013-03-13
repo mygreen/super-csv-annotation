@@ -104,7 +104,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
     }
     
     @Override
-    public String formateValue(final Object value) {
+    public String formatValue(final Object value) {
         if(value == null) {
             return "";
         }
