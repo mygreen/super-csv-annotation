@@ -28,9 +28,9 @@ import org.supercsv.util.CsvContext;
 @SuppressWarnings("rawtypes")
 public class ParseEnum extends CellProcessorAdaptor implements StringCellProcessor {
     
-    final Class type;
+    protected final Class type;
     
-    final boolean lenient;
+    protected final boolean lenient;
     
     protected final Map<String, Enum> enumValueMap;
     
@@ -90,16 +90,16 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         validateInputNotNull(value, context);
         
         final Enum result;
-        if(value instanceof Enum && value.getClass().isAssignableFrom(type)) {
-            result = (Enum) value;
-            
-        } else if(value instanceof String) {
+        if(value instanceof String) {
             final String stringValue = (lenient ? ((String) value).toLowerCase() : (String) value);
             result = enumValueMap.get(stringValue);
             if(result == null) {
                 throw new SuperCsvCellProcessorException(
                         String.format("'%s' could not be parsed as an Enum", value), context, this);
             }
+            
+        } else if(value instanceof Enum && value.getClass().isAssignableFrom(type)) {
+            result = (Enum) value;
             
         } else {
             final String actualClassName = value.getClass().getName();
