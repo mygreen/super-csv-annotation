@@ -8,9 +8,9 @@ package org.supercsv.ext.cellprocessor;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
@@ -104,7 +104,7 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     
     protected Set<String> createBooleanValuesSet(final String[] values, final boolean lenient) {
         
-        Set<String> set = new TreeSet<String>();
+        Set<String> set = new LinkedHashSet<String>();
         if(lenient) {
             for(String str : values) {
                 // to lower

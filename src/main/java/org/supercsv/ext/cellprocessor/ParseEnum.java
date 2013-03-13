@@ -1,13 +1,16 @@
 /*
- * ParseShort.java
+ * ParseEnum.java
  * created in 2013/03/06
  *
  * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
  */
 package org.supercsv.ext.cellprocessor;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -29,6 +32,8 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
     
     final boolean lenient;
     
+    protected final Map<String, Enum> enumValueMap;
+    
     public ParseEnum(final Class type) {
         this(type, false);
     }
@@ -42,6 +47,7 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         checkPreconditions(type);
         this.type = type;
         this.lenient = lenient;
+        this.enumValueMap = createEnumMap(type, lenient);
     }
     
     public ParseEnum(final Class type, final boolean lenient, final CellProcessor next) {
@@ -49,13 +55,33 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         checkPreconditions(type);
         this.type = type;
         this.lenient = lenient;
+        this.enumValueMap = createEnumMap(type, lenient);
     }
     
     private static void checkPreconditions(final Class type) {
         
         if(type == null) {
-            throw new IllegalArgumentException("type should be not null");
+            throw new NullPointerException("type should be not null");
         }
+        
+        if(!Enum.class.isAssignableFrom(type)) {
+            throw new IllegalArgumentException(String.format("type should be Enum class : %s", type.getCanonicalName()));
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean lenient) {
+        
+        Map<String, Enum> map = new LinkedHashMap<String, Enum>();
+        EnumSet set = EnumSet.allOf(enumClass);
+        for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
+            Enum e = it.next();
+            
+            final String key = (lenient ? e.name().toLowerCase() : e.name());
+            map.put(key, e);            
+        }
+        
+        return Collections.unmodifiableMap(map);
     }
     
     @Override
@@ -68,7 +94,8 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
             result = (Enum) value;
             
         } else if(value instanceof String) {
-            result = valueOfEnumByName((String) value);
+            final String stringValue = (lenient ? ((String) value).toLowerCase() : (String) value);
+            result = enumValueMap.get(stringValue);
             if(result == null) {
                 throw new SuperCsvCellProcessorException(
                         String.format("'%s' could not be parsed as an Enum", value), context, this);
@@ -81,26 +108,6 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
         }
         
         return next.execute(result, context);
-    }
-    
-    @SuppressWarnings("unchecked")
-    protected Enum valueOfEnumByName(final String name) {
-        
-        EnumSet set = EnumSet.allOf((Class) type);
-        for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-            Enum e = it.next();
-            
-            if(name.equals(e.name())) {
-                return e;
-            }
-            
-            if(lenient && name.equalsIgnoreCase(e.name())) {
-                return e;
-            }
-            
-        }
-        
-        return null;
     }
     
     public Class<?> getType() {
