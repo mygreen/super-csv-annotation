@@ -3,7 +3,7 @@
  * reserved.
  */
 /**
- * Provides CellProcessor classe fro conversion, formatting and parsing.
+ * Provides CellProcessor classes for conversion, formatting and parsing.
  * 
  * @author T.TSUCHIE
  * 

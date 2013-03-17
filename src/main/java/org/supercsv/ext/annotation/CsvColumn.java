@@ -30,7 +30,7 @@ import org.supercsv.ext.builder.NullCellProcessorBuilder;
 public @interface CsvColumn {
     
     /**
-     * position of column.
+     * index of column.
      * <p>start with zero(0).
      * @return
      */
@@ -44,8 +44,8 @@ public @interface CsvColumn {
     
     /**
      * optional colums.
-     * <p>setting CellProcessor for 'NotNull'
-     * <p>setting CellProcessor for 'Optional'
+     * <p>if set the true, set CellProcessor for 'Optional'
+     * <p>if set the false, set CellProcessor for 'NotNull'
      * @return
      */
     boolean optional() default false;
@@ -60,7 +60,7 @@ public @interface CsvColumn {
     /**
      * default value.
      * <p>set CellProcessor for 'ConvertNullTo'
-     * <p>if type 'String', empty value is masic string '@empty'
+     * <p>When type is 'String', set the magic value '@empty' as empty ''.
      * @return
      */
     String inputDefaultValue() default "";
@@ -68,7 +68,7 @@ public @interface CsvColumn {
     /**
      * default value.
      * <p>set CellProcessor for 'ConvertNullTo'
-     * <p>if type 'String', empty value is masic string '@empty'
+     * <p>When type is 'String', set the magic value '@empty' as empty ''.
      * @return
      */
     String outputDefaultValue() default "";

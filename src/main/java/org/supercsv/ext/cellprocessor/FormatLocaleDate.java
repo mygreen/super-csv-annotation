@@ -91,7 +91,9 @@ public class FormatLocaleDate extends CellProcessorAdaptor
         this.formatter = createDateFormatter(pattern, locale, timeZone);
     }
     
-    protected static ThreadLocal<DateFormat> createDateFormatter(final String pattern, final Locale locale, final TimeZone timeZone) {
+    protected static ThreadLocal<DateFormat> createDateFormatter(final String pattern, final Locale locale,
+            final TimeZone timeZone) {
+        
         return new ThreadLocal<DateFormat>() {
             
             @Override

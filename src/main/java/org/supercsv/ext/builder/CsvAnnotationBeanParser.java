@@ -67,7 +67,7 @@ public class CsvAnnotationBeanParser {
             
         }
         
-        // @CsvColumn for private
+        // @CsvColumn for private / default / protected
         for(Field field : clazz.getDeclaredFields()) {
             
             CsvColumn csvColumnAnno = field.getAnnotation(CsvColumn.class);
@@ -83,7 +83,7 @@ public class CsvAnnotationBeanParser {
         Collections.sort(mappingColumns, new Comparator<CsvColumnMapping>() {
             
             @Override
-            public int compare(CsvColumnMapping o1, CsvColumnMapping o2) {
+            public int compare(final CsvColumnMapping o1, final CsvColumnMapping o2) {
                 if(o1.getPosition() > o2.getPosition()) {
                     return 1;
                 } else if(o1.getPosition() == o2.getPosition()) {
@@ -128,8 +128,9 @@ public class CsvAnnotationBeanParser {
         }
         
         if(!lackPosition.isEmpty() || !duplicatePosition.isEmpty()) {
-            throw new SuperCsvInvalidAnnotationException(String.format(
-                    "position value is wrong. lacked position=%s, duplicated position=%s", lackPosition, duplicatePosition));
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format("position value is wrong. lacked position=%s, duplicated position=%s",
+                            lackPosition, duplicatePosition));
         }
     }
     
@@ -163,8 +164,9 @@ public class CsvAnnotationBeanParser {
             try {
                 builder = csvColumnAnno.builderClass().newInstance();
             } catch (Exception e) {
-                //TODO: メッセージの修正
-                throw new RuntimeException(e);
+                throw new SuperCsvInvalidAnnotationException(
+                        String.format("fail create instance of %s with 'builderClass' of @CsvColumn property",
+                                csvColumnAnno.builderClass().getCanonicalName()), e);
             }
         }
         

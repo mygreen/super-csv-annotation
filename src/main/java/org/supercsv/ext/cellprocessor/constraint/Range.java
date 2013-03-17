@@ -1,5 +1,5 @@
 /*
- * NumberRange.java
+ * Range.java
  * created in 2012/09/22
  *
  * (C) Copyright 2003-2012 GreenDay Project. All rights reserved.
@@ -19,32 +19,35 @@ import org.supercsv.util.CsvContext;
 
 
 /**
+ * validate with an inclusive range of Number objects of the same type.
+ * 
+ * @param <T> inherit number object. ex, int, Integer, double, Double,...
  * @author T.TSUCHIE
  *
  */
-public class NumberRange<T extends Number & Comparable<T>> extends CellProcessorAdaptor
+public class Range<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         implements LongCellProcessor, DoubleCellProcessor, ValidationCellProcessor {
     
     protected final T min;
     
     protected final T max;
     
-    public static <T extends Number & Comparable<T>> NumberRange<T> range(final T min, final T max) {
-        return new NumberRange<T>(min, max);
+    public static <T extends Number & Comparable<T>> Range<T> range(final T min, final T max) {
+        return new Range<T>(min, max);
     }
     
-    public static <T extends Number & Comparable<T>> NumberRange<T> range(final T min, final T max, final CellProcessor next) {
-        return new NumberRange<T>(min, max, next);
+    public static <T extends Number & Comparable<T>> Range<T> range(final T min, final T max, final CellProcessor next) {
+        return new Range<T>(min, max, next);
     }
     
-    public NumberRange(final T min, final T max) {
+    public Range(final T min, final T max) {
         super();
         checkPreconditions(min, max);
         this.min = min;
         this.max = max;
     }
     
-    public NumberRange(final T min, final T max, final CellProcessor next) {
+    public Range(final T min, final T max, final CellProcessor next) {
         super(next);
         checkPreconditions(min, max);
         this.min = min;
@@ -53,7 +56,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
     
     protected static <T extends Number & Comparable<T>> void checkPreconditions(final T min, final T max) {
         if(min == null || max == null) {
-            throw new IllegalArgumentException("min and max should not be null");
+            throw new NullPointerException("min and max should not be null");
         }
         
         if(min.compareTo(max) > 0) {
@@ -92,7 +95,7 @@ public class NumberRange<T extends Number & Comparable<T>> extends CellProcessor
     }
     @Override
     public String getMessageCode() {
-        return NumberRange.class.getCanonicalName()+ ".violated";
+        return Range.class.getCanonicalName()+ ".violated";
     }
     
     @Override

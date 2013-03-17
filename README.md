@@ -160,7 +160,7 @@ this annotation for number classes:
 - min : String = constricting the mininum value. set CellProcessor 'Min' (custom processor)
     - if build for input processor, parse this value by element 'pattern'.
 - max : String = String = constricting the maximum value. set CellProcessor 'Max' (custom processor)
-    - if min != "" and max != "", set CellProcessor 'NumberRange' (custom processor)
+    - if min != "" and max != "", set CellProcessor 'Range' (custom processor)
     - if build input processor, parse this value by element 'pattern'.
 
 ### @CsvDateConverter is setting for date class.
@@ -265,10 +265,10 @@ public class SampleBean1{
 4. build CellProcessor for field 'string3' with String. ( @CsvColumn(position = 3, optional=true, inputDefaultValue="@empty") + @CsvStringConverter(maxLength=6, contain={"abc", "bbb"}) )
 ```java
  // build CellProcessor for reading
- new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
+ new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String[]{"abc", "bbb"})))
  
  // build CellProcessor for writing
- new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String{"abc", "bbb"})))
+ new ConvertNullTo("", new Optional(new MaxLength(6, new RequiredSubStr(new String[]{"abc", "bbb"})))
 ```
 5. build CellProcessor for field 'date4' with java.util.Date. ( @CsvColumn(position = 4) + @CsvDateConverter(pattern="yyyy/MM/dd HH:mm", min="2000/10/30 00:00", max=2000/12/31 23:59") )
 ```java
@@ -505,7 +505,7 @@ org.supercsv.ext.cellprocessor.constraint.Max.violated=(row, column)=(${lineNumb
 org.supercsv.ext.cellprocessor.constraint.MaxLength.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' cannot be longer than ${max} characters
 org.supercsv.ext.cellprocessor.constraint.Min.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' cannnt be smaller than ${min}
 org.supercsv.ext.cellprocessor.constraint.MinLength.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' cannot be shorter than ${min} characters
-org.supercsv.ext.cellprocessor.constraint.NumberRange.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' is not in the range ${min} throud ${max}
+org.supercsv.ext.cellprocessor.constraint.Range.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' is not in the range ${min} throud ${max}
 org.supercsv.ext.cellprocessor.constraint.PastDate.violated=(row, column)=(${lineNumber}, ${columnNumber}) : '${value}' must be in the past ${max}
 ```
  

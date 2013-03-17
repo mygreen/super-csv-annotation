@@ -18,8 +18,6 @@ import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
-import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;

@@ -20,7 +20,6 @@ import org.supercsv.util.CsvContext;
 
 /**
  * 
- * @see {@link NumberRange}
  * @author T.TSUCHIE
  *
  */
@@ -47,7 +46,7 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     
     protected static <T extends Date> void checkPreconditions(final T min, final T max) {
         if(min == null || max == null) {
-            throw new IllegalArgumentException("min and max should not be null");
+            throw new NullPointerException("min and max should not be null");
         }
         
         if(min.compareTo(max) > 0) {

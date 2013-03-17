@@ -33,7 +33,7 @@ import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.cellprocessor.ParseShort;
 import org.supercsv.ext.cellprocessor.constraint.Max;
 import org.supercsv.ext.cellprocessor.constraint.Min;
-import org.supercsv.ext.cellprocessor.constraint.NumberRange;
+import org.supercsv.ext.cellprocessor.constraint.Range;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
@@ -161,9 +161,9 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         CellProcessor cellProcessor = processor;
         if(min != null && max != null) {
             if(cellProcessor == null) {
-                cellProcessor = new NumberRange<N>(min, max);
+                cellProcessor = new Range<N>(min, max);
             } else {
-                cellProcessor = new NumberRange<N>(min, max, cellProcessor);
+                cellProcessor = new Range<N>(min, max, cellProcessor);
             }
         } else if(min != null) {
             if(cellProcessor == null) {
