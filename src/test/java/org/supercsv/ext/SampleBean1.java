@@ -9,6 +9,7 @@ import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvDateConverter;
+import org.supercsv.ext.annotation.CsvEnumConverter;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.annotation.CsvStringConverter;
 
@@ -44,7 +45,8 @@ public class SampleBean1 implements Serializable {
     @CsvDateConverter(pattern="yyyy年MM月dd日"/*, min="2000年01月30日"*/)
     private Timestamp date2;
     
-    @CsvColumn(position = 6, label="列挙型", optional=true, inputDefaultValue="BLUE")
+    @CsvColumn(position = 6, label="列挙型", optional=true/*, inputDefaultValue="青"*/, inputDefaultValue="BLUE")
+    @CsvEnumConverter(lenient = true/*, valueMethodName="aliasName"*/)
     private Color enum1;
     
     @CsvColumn(position = 7, optional=false, inputDefaultValue="○", outputDefaultValue="×")

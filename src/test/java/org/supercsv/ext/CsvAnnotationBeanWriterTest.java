@@ -18,6 +18,8 @@ import org.supercsv.exception.SuperCsvConstraintViolationException;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.ext.builder.CsvAnnotationBeanParser;
 import org.supercsv.ext.builder.CsvBeanMapping;
+import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
+import org.supercsv.ext.cellprocessor.constraint.Min;
 import org.supercsv.ext.io.CsvAnnotationBeanReader;
 import org.supercsv.ext.io.ValidatableCsvBeanReader;
 import org.supercsv.ext.localization.CsvExceptionConveter;
@@ -45,6 +47,7 @@ public class CsvAnnotationBeanWriterTest {
         bean1.setInteger2(11);
         bean1.setString1("string value 1");
         bean1.setString2("123456");
+        bean1.setEnum1(Color.YELLOW);
         list.add(bean1);
         
         SampleBean1 bean2 = new SampleBean1();
@@ -89,6 +92,7 @@ public class CsvAnnotationBeanWriterTest {
         bean1.setString2("123456");
         bean1.setDate1(Timestamp.valueOf("2000-01-01 01:00:00.000"));
         bean1.setDate2(Timestamp.valueOf("2000-01-02 02:00:00.000"));
+        bean1.setEnum1(Color.YELLOW);
         list.add(bean1);
         
         SampleBean1 bean2 = new SampleBean1();
