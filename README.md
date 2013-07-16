@@ -11,6 +11,11 @@ super-csv-annotation
     - (SuperCSV2.x is JDK1.5+, but this library )
 + SuperCSV 2.x
 
+# Download
+-------------------------------
++ [JavaDoc](http://tatsu-no-otoshigo.github.io/super-csv-annotation/apidocs/index.html)
++ [Download](http://tatsu-no-otoshigo.github.io/super-csv-annotation/download/)
+
 # Usage
 ------------------------------
 
