@@ -5,10 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>super-csv</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>1.0</version>
-	<description>[<![CDATA[
+	<version>1.0.1</version>
+	<description><![CDATA[
 Super CSV Annotation, And Localization Message
-]]>]</description>
+]]></description>
 	<url></url>
 	<build>
 		<resources>
