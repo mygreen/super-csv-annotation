@@ -55,19 +55,7 @@ public class CsvAnnotationBeanParser {
         
         List<CsvColumnMapping> mappingColumns = new ArrayList<CsvColumnMapping>();
         
-        // @CsvColumn for public
-        for(Field field : clazz.getFields()) {
-            
-            CsvColumn csvColumnAnno = field.getAnnotation(CsvColumn.class);
-            if(csvColumnAnno == null) {
-                continue;
-            }
-            
-            mappingColumns.add(createColumnMapping(field, csvColumnAnno, ignoreValidationProcessorOnOutput));
-            
-        }
-        
-        // @CsvColumn for private / default / protected
+        // @CsvColumn for all (public /private / default / protected)
         for(Field field : clazz.getDeclaredFields()) {
             
             CsvColumn csvColumnAnno = field.getAnnotation(CsvColumn.class);
