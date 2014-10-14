@@ -105,6 +105,11 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             return null;
         }
         
+        final String timezone = converterAnno.timezone();
+        if(timezone.isEmpty()) {
+            return TimeZone.getDefault();
+        }
+        
         return TimeZone.getTimeZone(converterAnno.timezone());
     }
     
