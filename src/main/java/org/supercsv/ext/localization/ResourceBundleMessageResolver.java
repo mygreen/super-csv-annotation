@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  */
 public class ResourceBundleMessageResolver implements MessageResolver {
     
-    public static final String DEFAULT_MESSAGES_CLASSAPTH = "org/supercsv/ext/SuperCSVMessages";
+    public static final String DEFAULT_MESSAGES_CLASSAPTH = "org.supercsv.ext.SuperCSVMessages";
     
     private final Map<ResourceBundle, List<String>> messageBundleKeys = new HashMap<ResourceBundle, List<String>>(8);
     
