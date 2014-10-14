@@ -21,6 +21,10 @@ public class SpringMessageResolver implements MessageResolver {
     
     protected MessageSourceAccessor messageSourceAccessor;
     
+    public SpringMessageResolver() {
+        
+    }
+    
     public SpringMessageResolver(final MessageSource messageSource) {
         setMessageSource(messageSource);
     }

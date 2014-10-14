@@ -18,12 +18,15 @@ import java.util.ResourceBundle;
  * Default implementation that resolves messages based on the registered resource bundles.
  * 
  * @see net.sf.oval.localization.message.ResourceBundleMessageResolver
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
 public class ResourceBundleMessageResolver implements MessageResolver {
     
-    public static final String DEFAULT_MESSAGES_CLASSAPTH = "org/supercsv/ext/SuperCSVMessages";
+    public static final String USER_MESSAGE = "SuperCsvMessages";
+    
+    public static final String DEFAULT_MESSAGE = String.format("%s.%s", ResourceBundleMessageResolver.class.getPackage().getName(), USER_MESSAGE);
     
     private final Map<ResourceBundle, List<String>> messageBundleKeys = new HashMap<ResourceBundle, List<String>>(8);
     
@@ -33,7 +36,12 @@ public class ResourceBundleMessageResolver implements MessageResolver {
     
     public ResourceBundleMessageResolver() {
         // add the message bundle for the pre-built constraints in the default locale
-        addMessageBundle(ResourceBundle.getBundle(DEFAULT_MESSAGES_CLASSAPTH));
+        addMessageBundle(ResourceBundle.getBundle(DEFAULT_MESSAGE));
+        
+        try {
+            // load locale messages.
+            addMessageBundle(ResourceBundle.getBundle(USER_MESSAGE));
+        } catch(Throwable e) { }
     }
     
     /**

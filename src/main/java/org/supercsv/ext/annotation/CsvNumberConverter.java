@@ -47,17 +47,29 @@ public @interface CsvNumberConverter {
     String currency() default "";
     
     /**
-     * formatting {@link Locale} for laugage code.
-     * <p>example. ja, en
+     * formatting {@link Locale}.
+     * ex. 'ja', 'ja_JP'
+     * @since 1.2
      * @return
      */
+    String locale() default "";
+    
+    /**
+     * formatting {@link Locale} for laugage code.
+     * <p>example. ja, en
+     * <p>use {@link #locale()}
+     * @return
+     */
+    @Deprecated
     String language() default "";
     
     /**
      * formatting {@link Locale} for country code.
      * <p>example. JP, US
+     * <p>use {@link #locale()}
      * @return
      */
+    @Deprecated
     String country() default "";
     
     /**

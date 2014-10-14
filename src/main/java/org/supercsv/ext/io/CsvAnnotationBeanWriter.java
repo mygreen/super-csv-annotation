@@ -8,6 +8,7 @@ package org.supercsv.ext.io;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collection;
 
 import org.supercsv.ext.builder.CsvAnnotationBeanParser;
 import org.supercsv.ext.builder.CsvBeanMapping;
@@ -22,6 +23,8 @@ import org.supercsv.prefs.CsvPreference;
  */
 public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
     
+    protected CsvAnnotationBeanParser beanParser = new CsvAnnotationBeanParser();
+    
     protected final CsvBeanMapping<T> beanMapping;
     
     protected final BeanMappingCache mappingCache;
@@ -30,9 +33,17 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
         this(clazz, writer, preferences, false);
     }
     
+    public CsvAnnotationBeanWriter(final Class<T> clazz, final Writer writer, final CsvPreference preferences,
+            final boolean ignoreValidationProcessor, final CsvAnnotationBeanParser beanParser) { 
+        super(writer, preferences);
+        this.beanParser = beanParser;
+        this.beanMapping = beanParser.parse(clazz, ignoreValidationProcessor);
+        this.mappingCache = new BeanMappingCache(beanMapping);
+    }
+    
     public CsvAnnotationBeanWriter(final Class<T> clazz, Writer writer, final CsvPreference preferences, final boolean ignoreValidationProcessor) { 
         super(writer, preferences);
-        this.beanMapping = createBeanMapping(clazz, ignoreValidationProcessor);
+        this.beanMapping = beanParser.parse(clazz, ignoreValidationProcessor);
         this.mappingCache = new BeanMappingCache(beanMapping);
     }
     
@@ -40,10 +51,6 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
         super(writer, preferences);
         this.beanMapping = beanMapping;
         this.mappingCache = new BeanMappingCache(this.beanMapping);
-    }
-    
-    protected CsvBeanMapping<T> createBeanMapping(final Class<T> clazz, final boolean ignoreValidationProcessor) {
-        return new CsvAnnotationBeanParser().parse(clazz, ignoreValidationProcessor);
     }
     
     public boolean hasHeader() {
@@ -54,8 +61,14 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
         writeHeader(getMappingCache().getHeader());
     }
     
-    public void write(final Object source) throws IOException {
+    public void write(final T source) throws IOException {
         write(source, getMappingCache().getNameMapping(), getMappingCache().getOutputCellProcessors());
+    }
+    
+    public void writeAll(final Collection<T> collection) throws IOException {
+        for(T item : collection) {
+            write(item, getMappingCache().getNameMapping(), getMappingCache().getOutputCellProcessors());
+        }
     }
     
     public CsvBeanMapping<T> getBeanMapping() {

@@ -12,15 +12,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
-import org.supercsv.ext.builder.NullCellProcessorBuilder;
+import org.supercsv.ext.builder.CellProcessorBuilder;
+import org.supercsv.ext.builder.DefaultCellProcessorBuilder;
 
 
 /**
  * Annotation for CSV "Column".
  * 
- * @version 01-00
- * @since 01-00
+ * @version 1.1
+ * @since 1.0
  * @author T.TSUCHIE
  *
  */
@@ -93,5 +93,5 @@ public @interface CsvColumn {
      * @return
      */
     @SuppressWarnings("rawtypes")
-    Class<? extends AbstractCellProcessorBuilder> builderClass() default NullCellProcessorBuilder.class;
+    Class<? extends CellProcessorBuilder> builderClass() default DefaultCellProcessorBuilder.class;
 }

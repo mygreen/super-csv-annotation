@@ -26,13 +26,23 @@ import org.supercsv.util.CsvContext;
  */
 public class CsvAnnotationBeanReader<T> extends ValidatableCsvBeanReader {
     
+    protected CsvAnnotationBeanParser beanParser = new CsvAnnotationBeanParser();
+    
     protected final CsvBeanMapping<T> beanMapping;
     
     protected final BeanMappingCache mappingCache;
     
     public CsvAnnotationBeanReader(final Class<T> clazz, final Reader reader, final CsvPreference preferences) {
         super(reader, preferences);
-        this.beanMapping = createBeanMapping(clazz);
+        this.beanMapping = beanParser.parse(clazz);
+        this.mappingCache = new BeanMappingCache(beanMapping);
+    }
+    
+    public CsvAnnotationBeanReader(final Class<T> clazz, final Reader reader, final CsvPreference preferences,
+            final CsvAnnotationBeanParser beanParser) {
+        super(reader, preferences);
+        this.beanParser = beanParser;
+        this.beanMapping = beanParser.parse(clazz);
         this.mappingCache = new BeanMappingCache(beanMapping);
     }
     
@@ -41,10 +51,6 @@ public class CsvAnnotationBeanReader<T> extends ValidatableCsvBeanReader {
         this.beanMapping = beanMapping;
         this.mappingCache = new BeanMappingCache(this.beanMapping);
         
-    }
-    
-    protected CsvBeanMapping<T> createBeanMapping(Class<T> clazz) {
-        return new CsvAnnotationBeanParser().parse(clazz);
     }
     
     public boolean hasHeader() {

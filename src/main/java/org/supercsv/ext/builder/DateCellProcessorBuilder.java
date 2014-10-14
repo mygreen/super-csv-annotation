@@ -18,6 +18,7 @@ import java.util.TimeZone;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
+import org.supercsv.ext.Utils;
 import org.supercsv.ext.annotation.CsvDateConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleDate;
 import org.supercsv.ext.cellprocessor.ParseLocaleDate;
@@ -87,17 +88,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             return Locale.getDefault();
         }
         
-        final String language = converterAnno.language();
-        final String country = converterAnno.country();
-        
-        if(!language.isEmpty() && !country.isEmpty()) {
-            return new Locale(language, country);
-            
-        } else if(!language.isEmpty()) {
-            return new Locale(language);
-        }
-        
-        return Locale.getDefault();
+        return Utils.getLocale(converterAnno.locale());
     }
     
     protected TimeZone getTimeZone(final CsvDateConverter converterAnno) {
@@ -105,8 +96,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             return null;
         }
         
-        final String timezone = converterAnno.timezone();
-        if(timezone.isEmpty()) {
+        if(converterAnno.timezone().isEmpty()) {
             return TimeZone.getDefault();
         }
         

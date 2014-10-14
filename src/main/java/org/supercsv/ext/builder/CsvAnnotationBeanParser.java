@@ -21,7 +21,7 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  *
- *
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
@@ -29,8 +29,19 @@ public class CsvAnnotationBeanParser {
     
     private CellProcessorBuilderContainer builderContainer;
     
+    private CellProcessorBuilderFactory builderFactory;
+    
     public CsvAnnotationBeanParser() {
-        builderContainer = new CellProcessorBuilderContainer();
+        this.builderContainer = new CellProcessorBuilderContainer();
+        
+        this.builderFactory = new CellProcessorBuilderFactory() {
+            
+            @Override
+            public <T extends CellProcessorBuilder<?>> T create(final Class<T> builderClass) throws Exception {
+                return builderClass.newInstance();
+            }
+            
+        };
     }
     
     public <T> CsvBeanMapping<T> parse(final Class<T> clazz) {
@@ -55,7 +66,7 @@ public class CsvAnnotationBeanParser {
         
         List<CsvColumnMapping> mappingColumns = new ArrayList<CsvColumnMapping>();
         
-        // @CsvColumn for all (public /private / default / protected)
+        // @CsvColumn for all(public / private / default / protected)
         for(Field field : clazz.getDeclaredFields()) {
             
             CsvColumn csvColumnAnno = field.getAnnotation(CsvColumn.class);
@@ -138,8 +149,8 @@ public class CsvAnnotationBeanParser {
             columnMapping.setLabel(field.getName());
         }
         
-        AbstractCellProcessorBuilder builder = null;
-        if(csvColumnAnno.builderClass().equals(NullCellProcessorBuilder.class)) {
+        CellProcessorBuilder builder = null;
+        if(csvColumnAnno.builderClass().equals(DefaultCellProcessorBuilder.class)) {
             builder = builderContainer.getBuilder(field.getType());
             
             // if enum type
@@ -147,11 +158,16 @@ public class CsvAnnotationBeanParser {
                 builder = builderContainer.getBuilder(Enum.class);
             }
             
+            // if not found builder, use default builder.
+            if(builder == null) {
+                builder = DefaultCellProcessorBuilder.INSTANCE;
+            }
+            
         } else {
             // use custom builder class
             try {
-                builder = csvColumnAnno.builderClass().newInstance();
-            } catch (Exception e) {
+                builder = builderFactory.create(csvColumnAnno.builderClass());
+            } catch (Throwable e) {
                 throw new SuperCsvInvalidAnnotationException(
                         String.format("fail create instance of %s with 'builderClass' of @CsvColumn property",
                                 csvColumnAnno.builderClass().getCanonicalName()), e);
@@ -164,6 +180,13 @@ public class CsvAnnotationBeanParser {
             
             columnMapping.setInputCellProcessor(builder.buildInputCellProcessor(
                     field.getType(), field.getAnnotations()));
+            
+        } else {
+            // user default builder.
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format("not resolve CellProecssorBuilder for field '%s#%s' and type '%s'",
+                            field.getDeclaringClass().getName(), field.getName(),
+                            field.getType().getClass().getName()));
         }
         
         return columnMapping;
@@ -178,5 +201,12 @@ public class CsvAnnotationBeanParser {
         this.builderContainer = builderContainer;
     }
     
+    public CellProcessorBuilderFactory getBuilderFactory() {
+        return builderFactory;
+    }
+    
+    public void setBuilderFactory(CellProcessorBuilderFactory builderFactory) {
+        this.builderFactory = builderFactory;
+    }
     
 }

@@ -15,16 +15,16 @@ import java.util.List;
  * @author T.TSUCHIE
  *
  */
-public class MessageConverter {
+public class CsvMessageConverter {
     
     private MessageResolver messageResolver;
     
-    public MessageConverter() {
+    public CsvMessageConverter() {
         this.messageResolver = new ResourceBundleMessageResolver();
         
     }
     
-    public MessageConverter(final MessageResolver messageResolver) {
+    public CsvMessageConverter(final MessageResolver messageResolver) {
         this.messageResolver = messageResolver;
     }
     

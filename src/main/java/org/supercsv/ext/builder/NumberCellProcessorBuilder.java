@@ -24,6 +24,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.ext.Utils;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
 import org.supercsv.ext.cellprocessor.ParseBigInteger;
@@ -100,17 +101,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             return Locale.getDefault();
         }
         
-        final String language = converterAnno.language();
-        final String country = converterAnno.country();
-        
-        if(!language.isEmpty() && !country.isEmpty()) {
-            return new Locale(language, country);
-            
-        } else if(!language.isEmpty()) {
-            return new Locale(language);
-        }
-        
-        return Locale.getDefault();
+        return Utils.getLocale(converterAnno.locale());
     }
     
     protected Currency getCurrency(final CsvNumberConverter converterAnno) {

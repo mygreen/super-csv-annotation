@@ -1,5 +1,5 @@
 /*
- * NullCellProcessorBuilder.java
+ * DefaultCellProcessorBuilder.java
  * created in 2013/03/08
  *
  * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
@@ -13,11 +13,13 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  *
- *
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
-public class NullCellProcessorBuilder extends AbstractCellProcessorBuilder<Class<?>>{
+public class DefaultCellProcessorBuilder extends AbstractCellProcessorBuilder<Class<?>>{
+    
+    public static DefaultCellProcessorBuilder INSTANCE = new DefaultCellProcessorBuilder();
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Class<?>> type, final Annotation[] annos,

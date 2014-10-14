@@ -17,63 +17,63 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
- *
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
 public class CellProcessorBuilderContainer {
     
     @SuppressWarnings("rawtypes")
-    private final Map<Class<?>, AbstractCellProcessorBuilder> builderMap;
+    private final Map<Class<?>, CellProcessorBuilder> builderMap;
     
     @SuppressWarnings("rawtypes")
     public CellProcessorBuilderContainer() {
-        builderMap = new ConcurrentHashMap<Class<?>, AbstractCellProcessorBuilder>();
+        builderMap = new ConcurrentHashMap<Class<?>, CellProcessorBuilder>();
         init();
     }
     
     public void init() {
         builderMap.clear();
         
-        registBuilder(String.class, new StringCellProcessorBuilder());
+        registerBuilder(String.class, new StringCellProcessorBuilder());
         
-        registBuilder(Character.class, new CharacterCellProcessorBuilder());
-        registBuilder(char.class, new CharacterCellProcessorBuilder());
+        registerBuilder(Character.class, new CharacterCellProcessorBuilder());
+        registerBuilder(char.class, new CharacterCellProcessorBuilder());
         
-        registBuilder(Boolean.class, new BooleanCellProcessorBuilder());
-        registBuilder(boolean.class, new BooleanCellProcessorBuilder());
+        registerBuilder(Boolean.class, new BooleanCellProcessorBuilder());
+        registerBuilder(boolean.class, new BooleanCellProcessorBuilder());
         
-        registBuilder(Byte.class, NumberCellProcessorBuilder.newByte());
-        registBuilder(byte.class, NumberCellProcessorBuilder.newByte());
-        registBuilder(Short.class, NumberCellProcessorBuilder.newShort());
-        registBuilder(short.class, NumberCellProcessorBuilder.newShort());
-        registBuilder(Integer.class, NumberCellProcessorBuilder.newInteger());
-        registBuilder(int.class, NumberCellProcessorBuilder.newInteger());
-        registBuilder(Long.class, NumberCellProcessorBuilder.newLong());
-        registBuilder(long.class, NumberCellProcessorBuilder.newLong());
-        registBuilder(Float.class, NumberCellProcessorBuilder.newFloat());
-        registBuilder(float.class, NumberCellProcessorBuilder.newFloat());
-        registBuilder(Double.class, NumberCellProcessorBuilder.newDouble());
-        registBuilder(double.class, NumberCellProcessorBuilder.newDouble());
+        registerBuilder(Byte.class, NumberCellProcessorBuilder.newByte());
+        registerBuilder(byte.class, NumberCellProcessorBuilder.newByte());
+        registerBuilder(Short.class, NumberCellProcessorBuilder.newShort());
+        registerBuilder(short.class, NumberCellProcessorBuilder.newShort());
+        registerBuilder(Integer.class, NumberCellProcessorBuilder.newInteger());
+        registerBuilder(int.class, NumberCellProcessorBuilder.newInteger());
+        registerBuilder(Long.class, NumberCellProcessorBuilder.newLong());
+        registerBuilder(long.class, NumberCellProcessorBuilder.newLong());
+        registerBuilder(Float.class, NumberCellProcessorBuilder.newFloat());
+        registerBuilder(float.class, NumberCellProcessorBuilder.newFloat());
+        registerBuilder(Double.class, NumberCellProcessorBuilder.newDouble());
+        registerBuilder(double.class, NumberCellProcessorBuilder.newDouble());
         
-        registBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
-        registBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
+        registerBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
+        registerBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
         
-        registBuilder(Date.class, new DateCellProcessorBuilder());
-        registBuilder(java.sql.Date.class, DateCellProcessorBuilder.newSqlDate());
-        registBuilder(Timestamp.class, DateCellProcessorBuilder.newTimestamp());
-        registBuilder(Time.class, DateCellProcessorBuilder.newTime());
+        registerBuilder(Date.class, new DateCellProcessorBuilder());
+        registerBuilder(java.sql.Date.class, DateCellProcessorBuilder.newSqlDate());
+        registerBuilder(Timestamp.class, DateCellProcessorBuilder.newTimestamp());
+        registerBuilder(Time.class, DateCellProcessorBuilder.newTime());
         
-        registBuilder(Enum.class, new EnumCellProcessorBuilder());
+        registerBuilder(Enum.class, new EnumCellProcessorBuilder());
     }
     
-    public <T> void registBuilder(final Class<?> type, final AbstractCellProcessorBuilder<T> builder) {
+    public <T> void registerBuilder(final Class<?> type, final CellProcessorBuilder<T> builder) {
         builderMap.put(type, builder);
         
     }
     
     @SuppressWarnings("unchecked")
-    public <T> AbstractCellProcessorBuilder<T> getBuilder(final Class<?> type) {
+    public <T> CellProcessorBuilder<T> getBuilder(final Class<?> type) {
         return builderMap.get(type);
     }
     
