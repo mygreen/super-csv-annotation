@@ -17,6 +17,7 @@ import org.supercsv.exception.SuperCsvConstraintViolationException;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.ext.exception.SuperCsvNoMatchColumnSizeException;
+import org.supercsv.ext.exception.SuperCsvNoMatchHeaderException;
 import org.supercsv.ext.exception.SuperCsvRowException;
 import org.supercsv.util.CsvContext;
 
@@ -33,31 +34,38 @@ import org.supercsv.util.CsvContext;
 public class CsvExceptionConveter {
     
     public List<CsvMessage> convertCsvError(final SuperCsvException exception) {
+        return convertCsvError(exception, null);
+    }
+    
+    public List<CsvMessage> convertCsvError(final SuperCsvException exception, final String[] headers) {
         
         if(exception == null) {
             throw new NullPointerException("exception should not be null."); 
         }
         
-        List<CsvMessage> errrors = new ArrayList<CsvMessage>();
+        final List<CsvMessage> errors = new ArrayList<CsvMessage>();
         
         if(exception instanceof SuperCsvNoMatchColumnSizeException) {
-            errrors.addAll(convertCsvError((SuperCsvNoMatchColumnSizeException) exception));
+            errors.addAll(convertCsvError((SuperCsvNoMatchColumnSizeException) exception, headers));
+            
+        } else if(exception instanceof SuperCsvNoMatchHeaderException) {
+            errors.addAll(convertCsvError((SuperCsvNoMatchHeaderException) exception, headers));
             
         } else if(exception instanceof SuperCsvRowException) {
-            errrors.addAll(convertCsvError((SuperCsvRowException) exception));
+            errors.addAll(convertCsvError((SuperCsvRowException) exception, headers));
         } else if(exception instanceof SuperCsvCellProcessorException) {
-            errrors.addAll(convertCsvError((SuperCsvCellProcessorException) exception));
+            errors.addAll(convertCsvError((SuperCsvCellProcessorException) exception, headers));
             
         } else {
             CsvMessage error = new CsvMessage("csvError");
-            error.addAll(createCsvContextVariable(exception.getCsvContext()));
-            errrors.add(error);
+            error.addAll(createCsvContextVariable(exception.getCsvContext(), headers));
+            errors.add(error);
         }
         
-        return errrors;
+        return errors;
     }
     
-    public List<CsvMessage> convertCsvError(final SuperCsvRowException exception) {
+    public List<CsvMessage> convertCsvError(final SuperCsvRowException exception, final String[] headers) {
         
         if(exception == null) {
             throw new NullPointerException("exception should not be null."); 
@@ -65,12 +73,12 @@ public class CsvExceptionConveter {
         
         List<CsvMessage> messages = new ArrayList<CsvMessage>();
         for(SuperCsvException e : exception.getColumnErrors()) {
-            messages.addAll(convertCsvError(e));
+            messages.addAll(convertCsvError(e, headers));
         }
         return messages;
     }
     
-    public List<CsvMessage> convertCsvError(final SuperCsvCellProcessorException exception) {
+    public List<CsvMessage> convertCsvError(final SuperCsvCellProcessorException exception, final String[] headers) {
         
         if(exception == null) {
             throw new NullPointerException("exception should not be null."); 
@@ -100,51 +108,84 @@ public class CsvExceptionConveter {
             }
         }
         
-        message.addAll(createCsvContextVariable(exception.getCsvContext()));
+        message.addAll(createCsvContextVariable(exception.getCsvContext(), headers));
         
         List<CsvMessage> errors = new ArrayList<CsvMessage>();
         errors.add(message);
         return errors;
     }
     
-    public List<CsvMessage> convertCsvError(final SuperCsvConstraintViolationException exception) {
+    public List<CsvMessage> convertCsvError(final SuperCsvConstraintViolationException exception, final String[] headers) {
         
         if(exception == null) {
             throw new NullPointerException("exception should not be null."); 
         }
         
-        return convertCsvError((SuperCsvCellProcessorException) exception);
+        return convertCsvError((SuperCsvCellProcessorException) exception, headers);
     }
     
-    public List<CsvMessage> convertCsvError(final SuperCsvNoMatchColumnSizeException exception) {
+    public List<CsvMessage> convertCsvError(final SuperCsvNoMatchColumnSizeException exception, final String[] headers) {
         
         if(exception == null) {
             throw new NullPointerException("exception should not be null."); 
         }
         
-        CsvMessage message = new CsvMessage("csvError.noMatchColumnSize");
+        final CsvMessage message = new CsvMessage("csvError.noMatchColumnSize");
         message.add("lineNumber", String.valueOf(exception.getCsvContext().getLineNumber()));
         message.add("rowNumber", String.valueOf(exception.getCsvContext().getRowNumber()));
         message.add("columnNumber", String.valueOf(exception.getCsvContext().getColumnNumber()));
         message.add("value", String.valueOf(exception.getActualColumnSize()))
             .add("expectedSize", String.valueOf(exception.getEpxpectedColumnSize()));
         
-        List<CsvMessage> errors = new ArrayList<CsvMessage>();
+        final int colIndex = exception.getCsvContext().getColumnNumber();
+        if(headers != null && headers.length >= colIndex) {
+            message.add("columnLabel", headers[colIndex-1]);
+        }
+        
+        final List<CsvMessage> errors = new ArrayList<CsvMessage>();
         errors.add(message);
         return errors;
     }
     
-    public Map<String, ?> createCsvContextVariable(final CsvContext context) {
+    public List<CsvMessage> convertCsvError(final SuperCsvNoMatchHeaderException exception, final String[] headers) {
+        
+        if(exception == null) {
+            throw new NullPointerException("exception should not be null."); 
+        }
+        
+        final CsvMessage message = new CsvMessage("csvError.notMatchHeader");
+        message.add("lineNumber", String.valueOf(exception.getCsvContext().getLineNumber()));
+        message.add("rowNumber", String.valueOf(exception.getCsvContext().getRowNumber()));
+        message.add("columnNumber", String.valueOf(exception.getCsvContext().getColumnNumber()));
+        message.add("value", exception.getActualHeadersWithJoin(","))
+            .add("expectedValue", exception.getExpectedHeadersWithJoin(","));
+        
+        final int colIndex = exception.getCsvContext().getColumnNumber();
+        if(headers != null && headers.length >= colIndex) {
+            message.add("columnLabel", headers[colIndex-1]);
+        }
+        
+        final List<CsvMessage> errors = new ArrayList<CsvMessage>();
+        errors.add(message);
+        return errors;
+    }
+    
+    public Map<String, ?> createCsvContextVariable(final CsvContext context, final String[] headers) {
         
         if(context == null) {
             throw new NullPointerException("context should not be null."); 
         }
         
-        Map<String, Object> vars = new HashMap<String, Object>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         
         vars.put("lineNumber", context.getLineNumber());
         vars.put("rowNumber", context.getRowNumber());
         vars.put("columnNumber", context.getColumnNumber());
+        
+        final int colIndex = context.getColumnNumber();
+        if(headers != null && headers.length >= colIndex) {
+            vars.put("columnLabel", headers[colIndex-1]);
+        }
         
 //        Object source = context.getRowSource().get(context.getColumnNumber()-1);
 //        if(source != null) {

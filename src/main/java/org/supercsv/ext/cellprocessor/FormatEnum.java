@@ -19,6 +19,7 @@ import java.util.Map;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.ext.Utils;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -170,15 +171,16 @@ public class FormatEnum extends CellProcessorAdaptor implements ValidationCellPr
 
     @Override
     public Map<String, ?> getMessageVariable() {
-        Map<String, Object> vars = new HashMap<String, Object>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("type", getType().getCanonicalName());
-        vars.put("valueMethod", getValueMethod().getName());
+        vars.put("valueMethod", getValueMethod() == null ? "" : getValueMethod().getName());
         
-        List<String> enumValues = new ArrayList<String>();
+        final List<String> enumValues = new ArrayList<String>();
         for(Map.Entry<Enum, String> entry : getEnumValueMap().entrySet()) {
             enumValues.add(entry.getKey().name());
         }
         vars.put("enumValues", enumValues);
+        vars.put("enumsStr", Utils.join(enumValues, ", "));
         return vars;
     }
 

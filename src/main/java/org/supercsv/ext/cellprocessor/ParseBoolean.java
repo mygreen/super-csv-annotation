@@ -16,6 +16,7 @@ import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.ext.Utils;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -177,7 +178,9 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("trueValues", getTrueValues());
+        vars.put("trueStr", Utils.join(getTrueValues(), ", "));
         vars.put("falseValues", getFalseValues());
+        vars.put("falseStr", Utils.join(getFalseValues(), ", "));
         vars.put("lenient", isLenient());
         vars.put("failToFalse", isFailToFalse());
         return vars;

@@ -7,16 +7,21 @@
 package org.supercsv.ext.cellprocessor;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.ext.Utils;
+import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
 
@@ -27,7 +32,8 @@ import org.supercsv.util.CsvContext;
  *
  */
 @SuppressWarnings("rawtypes")
-public class ParseEnum extends CellProcessorAdaptor implements StringCellProcessor {
+public class ParseEnum extends CellProcessorAdaptor 
+        implements StringCellProcessor, ValidationCellProcessor {
     
     protected final Class type;
     
@@ -190,5 +196,33 @@ public class ParseEnum extends CellProcessorAdaptor implements StringCellProcess
     
     public Method getValueMethod() {
         return valueMethod;
+    }
+
+    @Override
+    public String getMessageCode() {
+        return ParseEnum.class.getCanonicalName() + ".violated";
+    }
+
+    @Override
+    public Map<String, ?> getMessageVariable() {
+        final Map<String, Object> vars = new HashMap<String, Object>();
+        vars.put("type", getType().getCanonicalName());
+        vars.put("valueMethod", getValueMethod() == null ? "" : getValueMethod().getName());
+        
+        final List<String> enumValues = new ArrayList<String>();
+        for(Map.Entry<String, Enum> entry : getEnumValueMap().entrySet()) {
+            enumValues.add(entry.getValue().name());
+        }
+        vars.put("enumValues", enumValues);
+        vars.put("enumsStr", Utils.join(enumValues, ", "));
+        return vars;
+    }
+
+    @Override
+    public String formatValue(final Object value) {
+        if(value == null) {
+            return "";
+        }
+        return value.toString();
     }
 }

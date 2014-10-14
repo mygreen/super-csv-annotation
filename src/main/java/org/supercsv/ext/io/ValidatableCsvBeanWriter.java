@@ -150,7 +150,7 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
         } catch(SuperCsvRowException e) {
             throw e;
         } catch(SuperCsvException e) {
-            errors.addAll(exceptionConverter.convertCsvError(e));
+            errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
             throw e;
         }
         
@@ -199,10 +199,10 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
                 }
             } catch(SuperCsvCellProcessorException e) {
                 columnError.addError(e);
-                errors.addAll(exceptionConverter.convertCsvError(e));
+                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
             } catch(SuperCsvException e) {
                 columnError.addError(e);
-                errors.addAll(exceptionConverter.convertCsvError(e));
+                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
             }
         }
         
@@ -210,5 +210,13 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
             throw columnError;
         }
         
+    }
+    
+    /**
+     * Get CSV Headers. if has not header, return null.
+     * @return
+     */
+    public String[] getDefinedHeader() {
+        return null;
     }
 }

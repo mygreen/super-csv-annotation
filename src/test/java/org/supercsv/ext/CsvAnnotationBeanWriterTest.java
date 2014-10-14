@@ -228,8 +228,9 @@ public class CsvAnnotationBeanWriterTest {
     @Test
     public void testRead3() throws Exception {
         
-//        File inputFile = new File("src/test/data/test_error2.csv");
-        File inputFile = new File("src/test/data/test.csv");
+//        File inputFile = new File("src/test/data/test_error.csv");
+        File inputFile = new File("src/test/data/test_error4.csv");
+//        File inputFile = new File("src/test/data/test.csv");
         CsvAnnotationBeanReader<SampleBean1> csvReader = new CsvAnnotationBeanReader<SampleBean1>(
                 SampleBean1.class,
                 new InputStreamReader(new FileInputStream(inputFile), "Windows-31j"),
@@ -237,7 +238,14 @@ public class CsvAnnotationBeanWriterTest {
         
         List<SampleBean1> list = new ArrayList<SampleBean1>();
         SampleBean1 bean1;
-        String[] headers = csvReader.getHeader();
+        
+        try {
+            String[] headers = csvReader.readHeader(true);
+        
+        } catch(SuperCsvException e) {
+            e.printStackTrace();
+        }
+        
         while(true) {
             try {
                 bean1 = csvReader.read();

@@ -20,8 +20,12 @@ public class MessageConverter {
     private MessageResolver messageResolver;
     
     public MessageConverter() {
-        messageResolver = new ResourceBundleMessageResolver();
+        this.messageResolver = new ResourceBundleMessageResolver();
         
+    }
+    
+    public MessageConverter(final MessageResolver messageResolver) {
+        this.messageResolver = messageResolver;
     }
     
     public String convertMessage(final CsvMessage error) {

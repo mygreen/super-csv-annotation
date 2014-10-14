@@ -213,9 +213,10 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
                 return populateBean(clazz, nameMapping);
                 
             } catch(SuperCsvRowException e) {
+//                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
                 throw e;
             } catch(SuperCsvException e) {
-                errors.addAll(exceptionConverter.convertCsvError(e));
+                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
                 throw e;
             }
         }
@@ -264,10 +265,10 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
                 }
             } catch(SuperCsvCellProcessorException e) {
                 columnError.addError(e);
-                errors.addAll(exceptionConverter.convertCsvError(e));
+                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
             } catch(SuperCsvException e) {
                 columnError.addError(e);
-                errors.addAll(exceptionConverter.convertCsvError(e));
+                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
             }
         }
         
@@ -275,5 +276,13 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
             throw columnError;
         }
         
+    }
+    
+    /**
+     * Get CSV Headers. if has not header, return null.
+     * @return
+     */
+    public String[] getDefinedHeader() {
+        return null;
     }
 }
