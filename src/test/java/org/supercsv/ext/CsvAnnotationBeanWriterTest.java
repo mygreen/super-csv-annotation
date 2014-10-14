@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.supercsv.ext.builder.CsvBeanMapping;
 import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.cellprocessor.constraint.Min;
 import org.supercsv.ext.io.CsvAnnotationBeanReader;
+import org.supercsv.ext.io.CsvAnnotationBeanWriter;
 import org.supercsv.ext.io.ValidatableCsvBeanReader;
 import org.supercsv.ext.localization.CsvExceptionConveter;
 import org.supercsv.ext.localization.CsvMessage;
@@ -271,5 +273,51 @@ public class CsvAnnotationBeanWriterTest {
         
         Class<?> type = Color.class;
         System.out.println(type);
+    }
+    
+    @Test
+    public void testWriteTrim() {
+        
+        // testBean
+        TrimCsv csv1 = new TrimCsv();
+        csv1.strTrim0 = " aaa ";
+        csv1.strTrim1 = " bbb ";
+        csv1.strTrim2 = " ccc ";
+        csv1.strTrim3 = " ddd ";
+        csv1.intTrim4 = 1;
+        
+        StringWriter strWriter = new StringWriter();
+        try {
+            CsvAnnotationBeanWriter<TrimCsv> writer = new CsvAnnotationBeanWriter<TrimCsv>(
+                TrimCsv.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+            
+            writer.write(csv1);
+            writer.close();
+            
+        } catch(Exception e) {
+            fail();
+            e.printStackTrace();
+        }
+        final String outCsv = strWriter.toString();
+        System.out.println(outCsv);
+        
+        StringReader strReader = new StringReader(outCsv);
+        try {
+            CsvAnnotationBeanReader<TrimCsv> reader = new CsvAnnotationBeanReader<TrimCsv>(
+                    TrimCsv.class,
+                    strReader,
+                    CsvPreference.STANDARD_PREFERENCE);
+            
+            TrimCsv csv = null;
+            while((csv = reader.read()) != null) {
+                System.out.println(csv);
+            }
+            
+        } catch(Exception e) {
+            fail();
+            e.printStackTrace();
+        }
     }
 }

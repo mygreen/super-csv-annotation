@@ -10,13 +10,12 @@ import java.lang.annotation.Annotation;
 
 import org.supercsv.cellprocessor.ConvertNullTo;
 import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.Trim;
 import org.supercsv.cellprocessor.constraint.Equals;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.Unique;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvColumn;
+import org.supercsv.ext.cellprocessor.Trim;
 
 
 /**
@@ -136,7 +135,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
     }
     
     protected CellProcessor prependTrimProcessor(final CellProcessor processor) {
-        return (processor == null ? new Trim() : new Trim((StringCellProcessor) processor));
+        return (processor == null ? new Trim() : new Trim(processor));
     }
     
     public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor, boolean ignoreValidationProcessor);
