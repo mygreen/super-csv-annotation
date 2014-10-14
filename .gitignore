@@ -1,0 +1,14 @@
+## for maven.
+/bin
+/target
+
+## for eclipse.
+/.settings
+/.classpath
+/.factorypath
+/.project
+
+## for tmporary file.
+*~
+~*
+\#*\#
