@@ -3,13 +3,69 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>super-csv</groupId>
+	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>1.0.3</version>
-	<description><![CDATA[
+	<version>1.1</version>
+	<name>super-csv-annotation</name>
+	<url>http://mygreen.github.io/super-csv-annotation/</url>
+	<description>[<![CDATA[
 Super CSV Annotation, And Localization Message
-]]></description>
-	<url></url>
+]]>]</description>
+	
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/mygreen/super-csv-annotation/issues</url>
+	</issueManagement>
+	
+	<scm>
+		<connection>scm:git:ssh://github.com/mygreen/super-csv-annotation.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/mygreen/super-csv-annotation.git</developerConnection>
+		<url>https://github.com/mygreen/super-csv-annotation</url>
+	</scm>
+	
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Maven Central Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	
+	<organization>
+		<name>mygreen</name>
+		<url>http://mygreen.github.io/super-csv-annotation/</url>
+	</organization>
+	
+	<developers>
+		<developer>
+			<id>mygreen</id>
+			<name>Tatsuo TSUCHIE</name>
+			<url>http://mygreen.github.io/super-csv-annotation/</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<properties>
+		<java.version>1.6</java.version>
+		<slf4j.version>1.7.1</slf4j.version>
+		<spring.version>3.2.1.RELEASE</spring.version>
+	</properties>
+	
 	<build>
 		<resources>
 			<resource>
@@ -47,6 +103,7 @@ Super CSV Annotation, And Localization Message
 		</testResources>
 		<pluginManagement>
 			<plugins>
+				
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -59,11 +116,69 @@ Super CSV Annotation, And Localization Message
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>source-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<nohelp>true</nohelp>
+					<charset>UTF-8</charset>
+					<encoding>UTF-8</encoding>
+					<docencoding>UTF-8</docencoding>
+					<locale>en</locale>
+					<maxmemory>512m</maxmemory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
 					<downloadSources>true</downloadSources>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<locales>ja</locales>
+					<inputEncoding>UTF-8</inputEncoding>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<!-- pgp -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
 	<repositories>
@@ -98,28 +213,52 @@ Super CSV Annotation, And Localization Message
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.2.1.RELEASE</version>
+			<version>${spring.version}</version>
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-			<scope>provided</scope>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Logger -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 	<reporting>
-		<outputDirectory>site</outputDirectory>
 		<plugins>
-			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<locales>en</locales>
-					<inputEncoding>UTF-8</inputEncoding>
-					<outputEncoding>UTF-8</outputEncoding>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId> 
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -146,7 +285,4 @@ Super CSV Annotation, And Localization Message
 			</plugin>
 		</plugins>
 	</reporting>
-	<properties>
-		
-	</properties>
 </project>

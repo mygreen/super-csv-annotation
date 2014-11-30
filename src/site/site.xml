@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SuperCsvAnnotation">
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.3.1</version>
+	</skin>
+	<body>
+		<menu name="Document">
+			<item name="基本的な使い方" href="howtouse.html" />
+			<item name="メッセージ処理" href="validation.html" />
+			<item name="拡張方法" href="extension.html" />
+			<item name="ダウンロード" href="download.html" />
+			<item name="リリース情報" href="release.html" />
+		</menu>
+		<menu ref="reports" />
+	</body>
+</project>

@@ -1,0 +1,20 @@
+            ------
+            ダウンロード
+            ------
+            Tatsuo TSUCHIE
+            ------
+            2014-11-28
+
+Download
+
+ Mavenを使用する場合はpom.xmlに以下の記述を追加してください。
+
+--------
+<dependencies>
+  <dependency>
+    <groupId>com.github.mygreen</groupId>
+    <artifactId>super-csv-annotation</artifactId>
+    <version>1.1</version>
+  </dependency>
+</dependencies>
+--------

@@ -26,7 +26,7 @@ import org.supercsv.ext.io.CsvAnnotationBeanWriter;
 import org.supercsv.ext.io.ValidatableCsvBeanReader;
 import org.supercsv.ext.localization.CsvExceptionConveter;
 import org.supercsv.ext.localization.CsvMessage;
-import org.supercsv.ext.localization.MessageConverter;
+import org.supercsv.ext.localization.CsvMessageConverter;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
@@ -128,7 +128,7 @@ public class CsvAnnotationBeanWriterTest {
         } catch(SuperCsvConstraintViolationException e) {
             e.printStackTrace();
             CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
-            MessageConverter messageConverter = new MessageConverter();
+            CsvMessageConverter messageConverter = new CsvMessageConverter();
             List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
             List<String> messages = messageConverter.convertMessage(csvErrors);
             for(String str : messages) {
@@ -181,7 +181,7 @@ public class CsvAnnotationBeanWriterTest {
         } catch(SuperCsvException e) {
             e.printStackTrace();
             CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
-            MessageConverter messageConverter = new MessageConverter();
+            CsvMessageConverter messageConverter = new CsvMessageConverter();
             List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
             List<String> messages = messageConverter.convertMessage(csvErrors);
             for(String str : messages) {
@@ -214,7 +214,7 @@ public class CsvAnnotationBeanWriterTest {
         } catch(SuperCsvException e) {
             e.printStackTrace();
             CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
-            MessageConverter messageConverter = new MessageConverter();
+            CsvMessageConverter messageConverter = new CsvMessageConverter();
             List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
             List<String> messages = messageConverter.convertMessage(csvErrors);
             for(String str : messages) {
@@ -262,7 +262,7 @@ public class CsvAnnotationBeanWriterTest {
         
         if(csvReader.hasError()) {
             // エラーを取得して、メッセージに変換する
-            MessageConverter messageConverter = new MessageConverter();
+            CsvMessageConverter messageConverter = new CsvMessageConverter();
             List<String> messages = messageConverter.convertMessage(csvReader.getCsvErrors());
             for(String str : messages) {
                 System.err.println(str);

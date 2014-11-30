@@ -1,0 +1,32 @@
+            ------
+            Release note
+            ------
+            Tatsuo TSUCHIE
+            ------
+            2014-11-28
+
+Release note
+
+* {1.1 - 2014-11-30}
+ 
+ * enhance.
+ 
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#9}} - CellProcessorBuilderのインスタンス生成をカスタマイズ可能にする。
+ 
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#10}} - クラス名の変更 : MessageConverter -> CsvMessageConverter。
+   
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#11}} - ResourceBundleMessageResolverのローカルのプロパティファイルの読み込み対応。
+
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#12}} - @CsvDateConverter/@CsvNumberConverterの属性localeの追加。
+   
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#13}} - メソッドの名の変更 : 'CellProcessorBuilderContainer#registBuilder' -> 'CellProcessorBuilderContainer#registerBuilder'。
+   
+   * {{{https://github.com/mygreen/super-csv-annotation1/issues}#3}} - Mavenセントラルリポジトリへの対応。
+   
+ * bug fix.
+
+  * ありません。
+
+ []
+
+

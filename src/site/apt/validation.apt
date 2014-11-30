@@ -1,0 +1,197 @@
+            ------
+            メッセージ処理
+            ------
+            Tatsuo TSUCHIE
+            ------
+            2014-10-30
+
+メッセージ処理
+
+%{toc|section=1|fromDepth=1|toDepth=3}
+
+* {例外クラスのメッセージ変換}
+
+
+ CsvAnnotationBeanReaderを使用して読み込ん場合、カラムの値などが不正な場合、下記の例外をスローします。
+ 
+*------------------------------------+------------------------------------------------------------------------------------+
+ クラス名                            |説明                                                                                 
+*------------------------------------+------------------------------------------------------------------------------------+
+ SuperCsvCellProcessorException      |カラムの値の変換に失敗したときなどにスローされる例外です。                           
+*------------------------------------+------------------------------------------------------------------------------------+
+ SuperCsvConstraintViolationException|カラムの値が制約に違反したときにスローされる例外です。                               
+*------------------------------------+------------------------------------------------------------------------------------+
+ SuperCsvNoMatchColumnSizeException  |カラムのサイズが不正な場合にスローされる例外です。                                   
+*------------------------------------+------------------------------------------------------------------------------------+
+ SuperCsvNoMatchHeaderException      |読み込み時に見出し行の値が、定義している値を異なっている場合にスローされる例外です。 
+*------------------------------------+------------------------------------------------------------------------------------+
+ SuperCsvRowException                |1行分の例外がまとめられた例外です。                                                  
+*------------------------------------+------------------------------------------------------------------------------------+
+
+
+ スローされた例外をメッセージに変換するには、「CsvExceptionConverter」と「CsvMessageConverter」クラスを使用します。
+ 
+ * CsvExceptionConverterは、例外クラスを、MessageConverterクラスで処理可能なメッセージオブジェクト「CsvMessage」に変換します。
+ 
+ * CsvMessageConverterは、CsvMessageオブジェクトを、文字列に変換します。
+ 
+   * 文字列に変換するには、プロパティファイルなどに定義されたメッセージテンプレートを元に変換します。
+ 
+ []
+
+------------
+// インスタンスの作成
+CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
+CsvMessageConverter messageConverter = new MessageConverter();
+
+// CSVの読み込み
+List<SampleBean1> list = new ArrayList<SampleBean1>();
+try {
+    String[] headers = csvReader.getHeader(true);
+    SampleBean bean = null;
+    while((bean1 = csvReader.read(SampleBean1.class, nameMapping, cellProcessors)) != null) {
+        System.out.println(bean1);
+        list.add(bean1);
+    }
+} catch(SuperCsvException e) {
+    // 例外クラスのメッセージの変換 
+    List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
+    List<String> messages = messageConverter.convertMessage(csvErrors);
+    for(String str : messages) {
+        System.err.println(str);
+    }
+}
+------------
+
+
+ 読み込み時など、全ての行に対して値を検証したい場合は、例外のキャッチを行単位に行います。
+
+------------
+// インスタンスの作成
+CsvExceptionConveter exceptionConveter = new CsvExceptionConveter();
+CsvMessageConverter messageConverter = new MessageConverter();
+
+// 見出し行の読み込みとチェック
+try {
+    String[] headers = csvReader.getHeader(true);
+    
+} catch(SuperCsvException e) {
+    // 例外クラスのメッセージの変換 
+    List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
+    List<String> messages = messageConverter.convertMessage(csvErrors);
+    for(String str : messages) {
+        System.err.println(str);
+    }
+}
+
+// データ行の読み込み
+List<SampleBean> list = new ArrayList<SampleBean1>();
+SampleBean bean = null;
+while(true) {
+    try {
+        bean = csvReader.read();
+        if(bean == null) {
+            // CSVの読み込みの終了
+            break;
+        }
+        System.out.println(bean1);
+        list.add(bean1);
+    
+    } catch(SuperCsvException e) {
+        // 例外クラスのメッセージの変換 
+        List<CsvMessage> csvErrors= exceptionConveter.convertCsvError(e);
+        List<String> messages = messageConverter.convertMessage(csvErrors);
+        for(String str : messages) {
+            System.err.println(str);
+        }
+    }
+}
+------------
+
+
+* {メッセージのカスタマイズ}
+
+ メッセージをカスタマイズするには、CsvMessageConverterに渡す「MessageResolver」の実装を変更します。
+ 
+ MessageResolverの実装は複数あり、プロパティファイルやSpringのMessageSourceなどを渡すことができます。
+
+*------------------------------+----------------------------------------------------------+
+ クラス名                      |説明                                                       
+*------------------------------+----------------------------------------------------------+
+ ResourceBundleMessageResolver |java.util.ResourceBundleからメッセージを取得します。       
+*------------------------------+----------------------------------------------------------+
+ PropertiesMessageResolver     |java.util.Properitesからメッセージを取得します。           
+*------------------------------+----------------------------------------------------------+
+ SpringMessageResolver         |SpringFrameworkのMessageSourceからメッセージを取得します。 
+*------------------------------+----------------------------------------------------------+
+
+
+ 標準では、「ResourceBundleMessageResolver」が設定されています。
+ 
+ ResourceBundleMessageResolverは、クラスパス上に「SuperCsvMessages.properties」が定義されていると、自動的に読み込みます。
+ マスターのプロパティファイルは、本ライブラリの「org/supercsv/ext/localization/SuperCsvMessages.properties」に格納されています。
+
+----------
+MessageConverter messageConverter = new MessageConverter();
+messageConverter.setMessageResolver(new SpringMessageResolver(messageSource))
+----------
+
+* {メッセージの書式}
+
+ * メッセージのキー名は、CellProcessorの「クラスパス + '.violated'」です。
+ 
+   * カラム数の不正や、CellProcessorに該当するメッセージがないときは、固定のメッセージになります。
+ 
+ * メッセージ中には、変数が利用可能で、\{変数名\}の形式で定義します。
+ 
+   * 共通している変数として、行番号、列番号などがあります。
+   
+   * CellProcessor固有の変数が利用できます。
+ 
+ []
+
+----------------------------
+## 共通変数
+# ${lineNumber} = 現在、書き込んだ／読み込んだ行数。SuperCSV1.5を使用する場合は、${rowNumber}と同じです。
+# ${rowNumber} = CSVの行番号。
+# ${columnNumber} = CSVの列番号。
+# ${columnLabel} = CSVの列ラベル。
+# ${value} = エラーの原因となった値。
+
+## 特殊なメッセージ 
+# 該当するCellProcessorのメッセージが見つからない場合の標準のメッセージ。
+csvError=(行, 列)=(${rowNumber}, ${columnNumber}) : 不正な値です。
+
+# 例外「SuperCsvNoMatchColumnSizeException」に対するメッセージ。
+csvError.noMatchColumnSize=(行)=(${rowNumber}) : 列数が不正です。 列数は ${expectedSize} で設定すべきですが、'${value}' になっています。
+
+# 例外「SuperCsvNoMatchHeaderException」に対するメッセージ。
+csvError.notMatchHeader=(行)=(${rowNumber}) : ヘッダーの値 '${value}' は、'${expectedValue}' と一致しません。
+
+## 標準のSuperCsv のCellProcessorに対するメッセージ（フォーマット変換）
+org.supercsv.cellprocessor.ConvertNullTo.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : NULLオブジェクトからの変換に失敗しました。
+org.supercsv.cellprocessor.FmtBool.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : Boolean型 の値'${value}' のフォーマットに失敗しました。
+org.supercsv.cellprocessor.FmtDate.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : Date型 の値'${value}' のフォーマットに失敗しました。
+org.supercsv.cellprocessor.FmtNumber.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : 数値型 の値'${value}' のフォーマットに失敗しました。
+#・・・省略
+
+## 標準のSuperCsv のCellProcessorに対するメッセージ（制約チェック）
+org.supercsv.cellprocessor.constraint.DMinMax.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' は特定の範囲の値ではありません。
+org.supercsv.cellprocessor.constraint.Equals.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' は特定の値を同一ではありません。
+org.supercsv.cellprocessor.constraint.ForbidSubStr.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' は禁止された文字を含んでいます。
+#・・・省略
+
+## 本ライブラリのCellProcessorに対数メッセージ（フォーマット変換）
+org.supercsv.ext.cellprocessor.ConvertEmptyTo.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : NULLオブジェクトからの変換に失敗しました。
+org.supercsv.ext.cellprocessor.Optional.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : オプションとしての値の処理に失敗しました。
+org.supercsv.ext.cellprocessor.FormatEnum.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : Enum型の値'${value}'のフォーマットに失敗しました。
+#・・・省略
+
+## 本ライブラリのCellProcessorに対数メッセージ（制約チェック）
+org.supercsv.ext.cellprocessor.constraint.DateRange.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' が最小値(${min})から最大値(${max})の期間である必要があります。
+org.supercsv.ext.cellprocessor.constraint.FutureDate.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' は${min}より後である必要があります。 
+org.supercsv.ext.cellprocessor.constraint.Length.violated=(行, 列)=(${rowNumber}, ${columnNumber}) : '${value}' は文字列長が最小値(${min})から最大値(${max})の間でなければなりません。
+#・・・省略
+
+-----------------------
+

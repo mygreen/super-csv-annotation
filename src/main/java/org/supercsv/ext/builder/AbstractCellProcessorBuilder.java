@@ -20,11 +20,11 @@ import org.supercsv.ext.cellprocessor.Trim;
 
 /**
  *
- *
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
-public abstract class AbstractCellProcessorBuilder<T> {
+public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBuilder<T> {
     
     protected CsvColumn getCsvColumnAnnotation(final Annotation[] annos) {
         
@@ -38,6 +38,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
         
     }
     
+    @Override
     public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos,
             final boolean ignoreValidationProcessor) {
         
@@ -75,6 +76,7 @@ public abstract class AbstractCellProcessorBuilder<T> {
         return cellProcessor;
     }
     
+    @Override
     public CellProcessor buildInputCellProcessor(final Class<T> type, final Annotation[] annos) {
         
         final CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
@@ -113,7 +115,6 @@ public abstract class AbstractCellProcessorBuilder<T> {
         
         return (processor == null ? 
                 new ConvertNullTo(value) : new ConvertNullTo(value, processor));
-//                new ConvertNullToNext(value) : new ConvertNullToNext(value, processor));
     }
     
     protected CellProcessor prependEqualsProcessor(final Class<T> type, final CellProcessor processor, final Object value) {
