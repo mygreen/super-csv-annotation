@@ -61,11 +61,11 @@ public class Utils {
     }
     
     /**
-     * ������`���̃��P�[�����I�u�W�F�N�g�ɕϊ�����B
-     * <p>�A���_�[�o�[�ŋ�؂���'ja_JP'�𕪉����āALocale�ɓn���B
+     * 文字列形式のロケールをオブジェクトに変換する。
+     * <p>アンダーバーで区切った'ja_JP'を分解して、Localeに渡す。
      * @since 1.2
      * @param str
-     * @return ��������̎��̓f�t�H���g���P�[����Ԃ��B
+     * @return 引数が空の時はデフォルトロケールを返す。
      */
     public static Locale getLocale(final String str) {
         
