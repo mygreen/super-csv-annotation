@@ -29,7 +29,7 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
     
     protected final BeanMappingCache mappingCache;
     
-    public CsvAnnotationBeanWriter(final Class<T> clazz, Writer writer, final CsvPreference preferences) {
+    public CsvAnnotationBeanWriter(final Class<T> clazz, final Writer writer, final CsvPreference preferences) {
         this(clazz, writer, preferences, false);
     }
     
