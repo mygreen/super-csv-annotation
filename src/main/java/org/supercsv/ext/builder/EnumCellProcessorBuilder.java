@@ -21,7 +21,7 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -43,12 +43,12 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
         
     }
     
-    protected boolean getLenient(final CsvEnumConverter converterAnno) {
+    protected boolean getIgnoreCase(final CsvEnumConverter converterAnno) {
         if(converterAnno == null) {
             return false;
         }
         
-        return converterAnno.lenient();
+        return converterAnno.ignoreCase();
     }
     
     protected String getValueMethodName(final CsvEnumConverter converterAnno) {
@@ -81,17 +81,17 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
             final CellProcessor processor) {
         
         final CsvEnumConverter converterAnno = getAnnotation(annos);
-        final boolean lenient = getLenient(converterAnno);
+        final boolean ignoreCase = getIgnoreCase(converterAnno);
         final String valueMethodName = getValueMethodName(converterAnno);
         
         CellProcessor cellProcessor = processor;
         if(valueMethodName.isEmpty()) {
             cellProcessor = (cellProcessor == null ? 
-                    new ParseEnum(type, lenient) : new ParseEnum(type, lenient, cellProcessor));
+                    new ParseEnum(type, ignoreCase) : new ParseEnum(type, ignoreCase, cellProcessor));
         } else {
             cellProcessor = (cellProcessor == null ? 
-                    new ParseEnum(type, lenient, valueMethodName) :
-                        new ParseEnum(type, lenient, valueMethodName, cellProcessor));
+                    new ParseEnum(type, ignoreCase, valueMethodName) :
+                        new ParseEnum(type, ignoreCase, valueMethodName, cellProcessor));
         }
         
         return cellProcessor;
@@ -102,7 +102,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     @Override
     public Enum getParseValue(final Class<Enum<?>> type, final Annotation[] annos, final String defaultValue) {
         CsvEnumConverter converterAnno = getAnnotation(annos);
-        final boolean lenient = getLenient(converterAnno);
+        final boolean ignoreCase = getIgnoreCase(converterAnno);
         final String valueMethodName = getValueMethodName(converterAnno);
         
         final EnumSet set = EnumSet.allOf((Class) type);
@@ -114,7 +114,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
                     return e;
                 }
                 
-                if(lenient && defaultValue.equalsIgnoreCase(e.name())) {
+                if(ignoreCase && defaultValue.equalsIgnoreCase(e.name())) {
                     return e;
                 }
                 
@@ -130,7 +130,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
                         return e;
                     }
                     
-                    if(lenient && defaultValue.equalsIgnoreCase(value)) {
+                    if(ignoreCase && defaultValue.equalsIgnoreCase(value)) {
                         return e;
                     }
                     

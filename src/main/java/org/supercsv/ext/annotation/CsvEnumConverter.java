@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 /**
  * String formmating annotation.
  *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -29,7 +30,7 @@ public @interface CsvEnumConverter {
      * <p>default = false
      * @return
      */
-    boolean lenient() default false;
+    boolean ignoreCase() default false;
     
     /**
      * your customze method name. ex. Color.label()

@@ -23,7 +23,7 @@ import org.supercsv.util.CsvContext;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -37,7 +37,7 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     protected final Set<String> falseValues;
     
     /** ignore low / upper case. */
-    protected final boolean lenient;
+    protected final boolean ignoreCase;
     
     /** if fail to pase, return */
     protected boolean failToFalse;
@@ -46,67 +46,67 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         this(DEFAULT_TRUE_VALUES, DEFAULT_FALSE_VALUES, false);
     }
     
-    public ParseBoolean(final boolean lenient) {
-        this(DEFAULT_TRUE_VALUES, DEFAULT_FALSE_VALUES, lenient);
+    public ParseBoolean(final boolean ignoreCase) {
+        this(DEFAULT_TRUE_VALUES, DEFAULT_FALSE_VALUES, ignoreCase);
     }
     
     public ParseBoolean(final String trueValue, final String falseValue) {
         this(trueValue, falseValue, false);
     }
     
-    public ParseBoolean(final String trueValue, final String falseValue, final boolean lenient) {
+    public ParseBoolean(final String trueValue, final String falseValue, final boolean ignoreCase) {
         super();
         checkPreconditions(trueValue, falseValue);
-        this.trueValues = createBooleanValuesSet(trueValue, lenient);
-        this.falseValues = createBooleanValuesSet(falseValue, lenient);
-        this.lenient = lenient;
+        this.trueValues = createBooleanValuesSet(trueValue, ignoreCase);
+        this.falseValues = createBooleanValuesSet(falseValue, ignoreCase);
+        this.ignoreCase = ignoreCase;
     }
     
     public ParseBoolean(final String[] trueValues, final String[] falseValues) {
         this(trueValues, falseValues, false);
     }
     
-    public ParseBoolean(final String[] trueValues, final String[] falseValues, final boolean lenient) {
+    public ParseBoolean(final String[] trueValues, final String[] falseValues, final boolean ignoreCase) {
         super();
         checkPreconditions(trueValues, falseValues);
-        this.trueValues = createBooleanValuesSet(trueValues, lenient);
-        this.falseValues = createBooleanValuesSet(falseValues, lenient);
-        this.lenient = lenient;
+        this.trueValues = createBooleanValuesSet(trueValues, ignoreCase);
+        this.falseValues = createBooleanValuesSet(falseValues, ignoreCase);
+        this.ignoreCase = ignoreCase;
     }
     
     public ParseBoolean(final String trueValue, final String falseValue, final BoolCellProcessor next) {
         this(trueValue, falseValue, false, next);
     }
     
-    public ParseBoolean(final String trueValue, final String falseValue, final boolean lenient, final BoolCellProcessor next) {
+    public ParseBoolean(final String trueValue, final String falseValue, final boolean ignoreCase, final BoolCellProcessor next) {
         super(next);
         checkPreconditions(trueValue, falseValue);
-        this.trueValues = createBooleanValuesSet(trueValue, lenient);
-        this.falseValues = createBooleanValuesSet(falseValue, lenient);
-        this.lenient = lenient;
+        this.trueValues = createBooleanValuesSet(trueValue, ignoreCase);
+        this.falseValues = createBooleanValuesSet(falseValue, ignoreCase);
+        this.ignoreCase = ignoreCase;
     }
     
     public ParseBoolean(final String[] trueValues, final String[] falseValues, final BoolCellProcessor next) {
         this(trueValues, falseValues, false, next);
     }
     
-    public ParseBoolean(final String[] trueValues, final String[] falseValues, final boolean lenient, final BoolCellProcessor next) {
+    public ParseBoolean(final String[] trueValues, final String[] falseValues, final boolean ignoreCase, final BoolCellProcessor next) {
         super(next);
         checkPreconditions(trueValues, falseValues);
-        this.trueValues = createBooleanValuesSet(trueValues, lenient);
-        this.falseValues = createBooleanValuesSet(falseValues, lenient);
-        this.lenient = lenient;
+        this.trueValues = createBooleanValuesSet(trueValues, ignoreCase);
+        this.falseValues = createBooleanValuesSet(falseValues, ignoreCase);
+        this.ignoreCase = ignoreCase;
     }
     
-    protected Set<String> createBooleanValuesSet(final String value, final boolean lenient) {
-        return createBooleanValuesSet(new String[]{value}, lenient);
+    protected Set<String> createBooleanValuesSet(final String value, final boolean ignoreCase) {
+        return createBooleanValuesSet(new String[]{value}, ignoreCase);
         
     }
     
-    protected Set<String> createBooleanValuesSet(final String[] values, final boolean lenient) {
+    protected Set<String> createBooleanValuesSet(final String[] values, final boolean ignoreCase) {
         
         Set<String> set = new LinkedHashSet<String>();
-        if(lenient) {
+        if(ignoreCase) {
             for(String str : values) {
                 // to lower
                 set.add(str.toLowerCase());
@@ -151,7 +151,7 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
             throw new SuperCsvCellProcessorException(String.class, value, context, this);
         }
         
-        final String stringValue = lenient ? ((String) value).toLowerCase() : (String) value;
+        final String stringValue = ignoreCase ? ((String) value).toLowerCase() : (String) value;
         final Boolean result;
         if( trueValues.contains(stringValue) ) {
             result = Boolean.TRUE;
@@ -181,7 +181,7 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         vars.put("trueStr", Utils.join(getTrueValues(), ", "));
         vars.put("falseValues", getFalseValues());
         vars.put("falseStr", Utils.join(getFalseValues(), ", "));
-        vars.put("lenient", isLenient());
+        vars.put("ignoreCase", isIgnoreCase());
         vars.put("failToFalse", isFailToFalse());
         return vars;
     }
@@ -202,8 +202,8 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         return falseValues;
     }
     
-    public boolean isLenient() {
-        return lenient;
+    public boolean isIgnoreCase() {
+        return ignoreCase;
     }
     
     public boolean isFailToFalse() {

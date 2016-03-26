@@ -19,7 +19,7 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -73,12 +73,12 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         return converterAnno.inputFalseValue();
     }
     
-    protected boolean getLenient(final CsvBooleanConverter converterAnno) {
+    protected boolean getIgnoreCase(final CsvBooleanConverter converterAnno) {
         if(converterAnno == null) {
             return false;
         }
         
-        return converterAnno.lenient();
+        return converterAnno.ignoreCase();
     }
     
     protected boolean getFailToFalse(final CsvBooleanConverter converterAnno) {
@@ -111,13 +111,13 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final CsvBooleanConverter converterAnno = getAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
+        final boolean ignoreCase = getIgnoreCase(converterAnno);
         final boolean failToFalse = getFailToFalse(converterAnno);
         
         CellProcessor cellProcessor = processor;
         cellProcessor = (cellProcessor == null
-                ? new ParseBoolean(trueValue, falseValue, lenient).setFailToFalse(failToFalse) :
-                    new ParseBoolean(trueValue, falseValue, lenient, (BoolCellProcessor) cellProcessor).setFailToFalse(failToFalse));
+                ? new ParseBoolean(trueValue, falseValue, ignoreCase).setFailToFalse(failToFalse) :
+                    new ParseBoolean(trueValue, falseValue, ignoreCase, (BoolCellProcessor) cellProcessor).setFailToFalse(failToFalse));
         
         return cellProcessor;
     }
@@ -127,21 +127,21 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final CsvBooleanConverter converterAnno = getAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
+        final boolean ignoreCase = getIgnoreCase(converterAnno);
         final boolean failToFalse = getFailToFalse(converterAnno);
         
         for(String trueStr : trueValue) {
-            if(lenient && trueStr.equalsIgnoreCase(defaultValue)) {
+            if(ignoreCase && trueStr.equalsIgnoreCase(defaultValue)) {
                 return Boolean.TRUE;
-            } else if(!lenient && trueStr.equals(defaultValue)) {
+            } else if(!ignoreCase && trueStr.equals(defaultValue)) {
                 return Boolean.TRUE;
             }
         }
         
         for(String falseStr : falseValue) {
-            if(lenient && falseStr.equalsIgnoreCase(defaultValue)) {
+            if(ignoreCase && falseStr.equalsIgnoreCase(defaultValue)) {
                 return Boolean.FALSE;
-            } else if(!lenient && falseStr.equals(defaultValue)) {
+            } else if(!ignoreCase && falseStr.equals(defaultValue)) {
                 return Boolean.FALSE;
             }
         }

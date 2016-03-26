@@ -27,7 +27,7 @@ import org.supercsv.util.CsvContext;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -37,7 +37,7 @@ public class ParseEnum extends CellProcessorAdaptor
     
     protected final Class type;
     
-    protected final boolean lenient;
+    protected final boolean ignoreCase;
     
     protected final Map<String, Enum> enumValueMap;
     
@@ -59,39 +59,39 @@ public class ParseEnum extends CellProcessorAdaptor
         this(type, false, valueMethodName, next);
     }
     
-    public ParseEnum(final Class type, final boolean lenient) {
+    public ParseEnum(final Class type, final boolean ignoreCase) {
         super();
         checkPreconditions(type);
         this.type = type;
-        this.lenient = lenient;
-        this.enumValueMap = createEnumMap(type, lenient);
+        this.ignoreCase = ignoreCase;
+        this.enumValueMap = createEnumMap(type, ignoreCase);
         this.valueMethod = null;
     }
     
-    public ParseEnum(final Class type, final boolean lenient, final CellProcessor next) {
+    public ParseEnum(final Class type, final boolean ignoreCase, final CellProcessor next) {
         super(next);
         checkPreconditions(type);
         this.type = type;
-        this.lenient = lenient;
-        this.enumValueMap = createEnumMap(type, lenient);
+        this.ignoreCase = ignoreCase;
+        this.enumValueMap = createEnumMap(type, ignoreCase);
         this.valueMethod = null;
     }
     
-    public ParseEnum(final Class type, final boolean lenient, final String valueMethodName) {
+    public ParseEnum(final Class type, final boolean ignoreCase, final String valueMethodName) {
         super();
         checkPreconditions(type);
         this.type = type;
-        this.lenient = lenient;
-        this.enumValueMap = createEnumMap(type, lenient, valueMethodName);
+        this.ignoreCase = ignoreCase;
+        this.enumValueMap = createEnumMap(type, ignoreCase, valueMethodName);
         this.valueMethod = createEnumValueMethod(type, valueMethodName);
     }
     
-    public ParseEnum(final Class type, final boolean lenient, final String valueMethodName, final CellProcessor next) {
+    public ParseEnum(final Class type, final boolean ignoreCase, final String valueMethodName, final CellProcessor next) {
         super(next);
         checkPreconditions(type);
         this.type = type;
-        this.lenient = lenient;
-        this.enumValueMap = createEnumMap(type, lenient, valueMethodName);
+        this.ignoreCase = ignoreCase;
+        this.enumValueMap = createEnumMap(type, ignoreCase, valueMethodName);
         this.valueMethod = createEnumValueMethod(type, valueMethodName);
     }
     
@@ -119,14 +119,14 @@ public class ParseEnum extends CellProcessorAdaptor
     }
     
     @SuppressWarnings("unchecked")
-    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean lenient) {
+    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean ignoreCase) {
         
         Map<String, Enum> map = new LinkedHashMap<String, Enum>();
         EnumSet set = EnumSet.allOf(enumClass);
         for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
             Enum e = it.next();
             
-            final String key = (lenient ? e.name().toLowerCase() : e.name());
+            final String key = (ignoreCase ? e.name().toLowerCase() : e.name());
             map.put(key, e);            
         }
         
@@ -134,7 +134,7 @@ public class ParseEnum extends CellProcessorAdaptor
     }
     
     @SuppressWarnings("unchecked")
-    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean lenient, final String methodName) {
+    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean ignoreCase, final String methodName) {
         
         Map<String, Enum> map = new LinkedHashMap<String, Enum>();
         try {
@@ -145,7 +145,7 @@ public class ParseEnum extends CellProcessorAdaptor
                 Enum e = it.next();
                 
                 Object returnValue = method.invoke(e);
-                final String key = (lenient ? returnValue.toString().toLowerCase() : returnValue.toString());
+                final String key = (ignoreCase ? returnValue.toString().toLowerCase() : returnValue.toString());
                 
                 map.put(key, e);            
             }
@@ -163,7 +163,7 @@ public class ParseEnum extends CellProcessorAdaptor
         
         final Enum result;
         if(value instanceof String) {
-            final String stringValue = (lenient ? ((String) value).toLowerCase() : (String) value);
+            final String stringValue = (ignoreCase ? ((String) value).toLowerCase() : (String) value);
             result = enumValueMap.get(stringValue);
             if(result == null) {
                 throw new SuperCsvCellProcessorException(
@@ -186,8 +186,8 @@ public class ParseEnum extends CellProcessorAdaptor
         return type;
     }
     
-    public boolean isLenient() {
-        return lenient;
+    public boolean isIgnoreCase() {
+        return ignoreCase;
     }
     
     public Map<String, Enum> getEnumValueMap() {
@@ -208,6 +208,7 @@ public class ParseEnum extends CellProcessorAdaptor
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("type", getType().getCanonicalName());
         vars.put("valueMethod", getValueMethod() == null ? "" : getValueMethod().getName());
+        vars.put("ignoreCase", isIgnoreCase());
         
         final List<String> enumValues = new ArrayList<String>();
         for(Map.Entry<String, Enum> entry : getEnumValueMap().entrySet()) {

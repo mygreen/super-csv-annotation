@@ -56,7 +56,7 @@ public @interface CsvBooleanConverter {
      * ignore lower / upper case.
      * @return
      */
-    boolean lenient() default false;
+    boolean ignoreCase() default false;
     
     /**
      * if fail parsing, convert to false.
