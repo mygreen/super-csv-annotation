@@ -54,24 +54,6 @@ public @interface CsvDateConverter {
     String locale() default "";
     
     /**
-     * formatting {@link Locale} for laugage code.
-     * <p>example. ja, en
-     * <p>use {@link #locale()}
-     * @return
-     */
-    @Deprecated
-    String language() default "";
-    
-    /**
-     * formatting {@link Locale} for country code.
-     * <p>example. JP, US
-     * <p>use {@link #locale()}
-     * @return
-     */
-    @Deprecated
-    String country() default "";
-    
-    /**
      * start date 
      * <p>set CellProcessor for 'FutureDate'
      * @return
