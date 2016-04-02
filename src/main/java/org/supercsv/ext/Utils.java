@@ -6,10 +6,27 @@ import java.util.Locale;
 
 
 /**
+ * 
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public class Utils {
+    
+    /**
+     * check with empty object.
+     * 
+     * @since 1.2
+     * @param value
+     * @return true : {@literal value is null or length == 0}.
+     */
+    public static boolean isEmpty(final Object[] value) {
+        if(value == null || value.length == 0) {
+            return true;
+        }
+        
+        return false;
+    }
     
     public static String join(final String[] arrays, final String seperator) {
         

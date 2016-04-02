@@ -168,6 +168,18 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
         return resultBean;
     }
     
+    @Override
+    public <T> T read(T arg0, String... arg1) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> T read(T arg0, String[] arg1, CellProcessor... arg2) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -285,4 +297,5 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
     public String[] getDefinedHeader() {
         return null;
     }
+    
 }

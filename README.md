@@ -7,9 +7,9 @@ super-csv-annotation
 
 # Depends
 ------------------------------
-+ JDK1.6+
-    - (SuperCSV2.x is JDK1.5+, but this library )
-+ SuperCSV 2.x
++ Java1.8+
+    - (SuperCSV2.x is Java1.5+, but this library require Java1.8)
++ SuperCSV 2.4.0+
 
 # Setup
 
@@ -18,7 +18,7 @@ super-csv-annotation
   <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>super-csv-annotation</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
   </dependency>
 </dependencies>
 ```

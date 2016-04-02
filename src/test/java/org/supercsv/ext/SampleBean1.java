@@ -46,7 +46,7 @@ public class SampleBean1 implements Serializable {
     private Timestamp date2;
     
     @CsvColumn(position = 6, label="列挙型", optional=true/*, inputDefaultValue="青"*/, inputDefaultValue="BLUE")
-    @CsvEnumConverter(lenient = true/*, valueMethodName="aliasName"*/)
+    @CsvEnumConverter(ignoreCase = true/*, valueMethodName="aliasName"*/)
     private Color enum1;
     
     @CsvColumn(position = 7, optional=false, inputDefaultValue="○", outputDefaultValue="×")
