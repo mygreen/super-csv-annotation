@@ -61,7 +61,7 @@ public class FormatLocaleDate extends CellProcessorAdaptor
     }
     
     public FormatLocaleDate(final DateFormat formatter, final DateCellProcessor next) {
-        super();
+        super(next);
         this.pattern = null;
         this.locale = null;
         this.timeZone = null;
