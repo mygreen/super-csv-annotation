@@ -199,6 +199,13 @@ Super CSV Annotation, And Localization Message
 			<scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>net.sf.supercsv</groupId>
+			<artifactId>super-csv-joda</artifactId>
+			<version>${supercsv.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<!-- tester -->
 		<dependency>
 			<groupId>junit</groupId>
