@@ -39,7 +39,7 @@ public class PastTemporalTest {
      * Test constructor argument's with wrong values.
      * max is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_maxNull() {
         
         new PastTemporal<LocalDate>(null);
@@ -113,7 +113,7 @@ public class PastTemporalTest {
      * Tests max value.
      */
     @Test
-    public void testTax() {
+    public void testMax() {
         
         PastTemporal<LocalDate> cp = (PastTemporal<LocalDate>) processor;
         assertThat(cp.getMax(), is(max));

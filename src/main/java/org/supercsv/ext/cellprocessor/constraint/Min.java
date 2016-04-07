@@ -41,7 +41,7 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     
     protected static <T extends Number & Comparable<T>> void checkPreconditions(final T min) {
         if(min == null) {
-            throw new IllegalArgumentException("min should not be null");
+            throw new NullPointerException("min should not be null");
         }
     }
     
@@ -51,10 +51,11 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
-            throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+        final Class<?> exepectedClass = getMin().getClass();
+        if(!exepectedClass.isAssignableFrom(value.getClass())) {
+            throw new SuperCsvConstraintViolationException(
+                    String.format("the value '%s' could not implements '%s' class.", value, exepectedClass.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);

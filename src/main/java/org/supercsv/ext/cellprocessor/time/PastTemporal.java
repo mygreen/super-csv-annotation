@@ -36,7 +36,7 @@ public class PastTemporal<T extends TemporalAccessor & Comparable<? super T>>
     
     protected static <T extends TemporalAccessor & Comparable<? super T>> void checkPreconditions(final T max) {
         if(max == null) {
-            throw new IllegalArgumentException("max should not be null");
+            throw new NullPointerException("max should not be null");
         }
     }
     

@@ -1,4 +1,4 @@
-package org.supercsv.ext.cellprocessor.joda;
+package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -6,7 +6,6 @@ import static org.supercsv.ext.TestUtils.*;
 
 import java.util.Map;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -14,35 +13,35 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
 
 /**
- * Tests the {@link FutureJoda} constraint.
+ * Tests the {@link Max} constraint.
  *
  * @since 1.2
  * @author T.TSUCHIE
  *
  */
-public class FutureJodaTest {
+public class MaxTest {
     
     private CellProcessor processor;
     private CellProcessor processorChain;
-    private LocalDate min = new LocalDate(2000, 1, 1);
+    private Integer max = new Integer(100);
     
     /**
      * Sets up the processor for the test using Combinations
      */
     @Before
     public void setUp() {
-        processor = new FutureJoda<LocalDate>(min);
-        processorChain = new FutureJoda<LocalDate>(min, new NextCellProcessor());
+        processor = new Max<Integer>(max);
+        processorChain = new Max<Integer>(max, new NextCellProcessor());
     }
     
     /**
      * Test constructor argument's with wrong values.
-     * min is null.
+     * max is null.
      */
     @Test(expected=NullPointerException.class)
-    public void testCheckConditionsWithWrong_minNull() {
+    public void testCheckConditionsWithWrong_maxNull() {
         
-        new FutureJoda<LocalDate>(null);
+        new Max<Integer>(null);
         
         fail();
         
@@ -55,7 +54,7 @@ public class FutureJodaTest {
     @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_nextNull() {
         
-        new FutureJoda<LocalDate>(min, null);
+        new Max<Integer>(max, null);
         
         fail();
         
@@ -89,11 +88,11 @@ public class FutureJodaTest {
     @Test
     public void testExecuteWithValid() {
         
-        processor.execute(min, ANONYMOUS_CSVCONTEXT);
-        processor.execute(min.plusDays(1), ANONYMOUS_CSVCONTEXT);
+        processor.execute(max, ANONYMOUS_CSVCONTEXT);
+        processor.execute(max -1, ANONYMOUS_CSVCONTEXT);
         
-        processorChain.execute(min, ANONYMOUS_CSVCONTEXT);
-        processorChain.execute(min.plusDays(1), ANONYMOUS_CSVCONTEXT);
+        processorChain.execute(max, ANONYMOUS_CSVCONTEXT);
+        processorChain.execute(max -1 , ANONYMOUS_CSVCONTEXT);
         
     }
     
@@ -101,22 +100,22 @@ public class FutureJodaTest {
      * Test execusion with invalidValue.
      */
     @Test(expected=SuperCsvConstraintViolationException.class)
-    public void testExecuteWithBelowMin() {
+    public void testExecuteWithAvovbMax() {
         
-        processor.execute(min.minusDays(1), ANONYMOUS_CSVCONTEXT);
+        processor.execute(max + 1, ANONYMOUS_CSVCONTEXT);
         
         fail();
         
     }
     
     /**
-     * Tests min value.
+     * Tests max value.
      */
     @Test
-    public void testMin() {
+    public void testMax() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
-        assertThat(cp.getMin(), is(min));
+        Max<Integer> cp = (Max<Integer>) processor;
+        assertThat(cp.getMax(), is(max));
         
     }
     
@@ -126,8 +125,8 @@ public class FutureJodaTest {
     @Test
     public void testMessageCode() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
-        assertThat(cp.getMessageCode(), is("org.supercsv.ext.cellprocessor.joda.FutureJoda.violated"));
+        Max<Integer> cp = (Max<Integer>) processor;
+        assertThat(cp.getMessageCode(), is("org.supercsv.ext.cellprocessor.constraint.Max.violated"));
         
     }
     
@@ -137,21 +136,20 @@ public class FutureJodaTest {
     @Test
     public void testMessageVariable() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        Max<Integer> cp = (Max<Integer>) processor;
         Map<String, ?> vars = cp.getMessageVariable();
-        assertThat(vars.get("min"), is(min));
+        assertThat(vars.get("max"), is(max));
         
     }
     
     /**
-     * Tests format value.
+     * Tests format values
      */
     @Test
     public void testFormatValue() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        Max<Integer> cp = (Max<Integer>) processor;
         assertThat(cp.formatValue(null), is(""));
-        assertThat(cp.formatValue(min), is("2000-01-01"));
+        assertThat(cp.formatValue(max), is("100"));
     }
-    
 }

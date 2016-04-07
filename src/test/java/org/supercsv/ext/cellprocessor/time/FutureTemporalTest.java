@@ -39,7 +39,7 @@ public class FutureTemporalTest {
      * Test constructor argument's with wrong values.
      * min is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_minNull() {
         
         new FutureTemporal<LocalDate>(null);

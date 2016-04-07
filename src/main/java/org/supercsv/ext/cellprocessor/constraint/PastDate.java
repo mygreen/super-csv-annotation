@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor.constraint;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,8 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
     
     protected final T max;
     
+    protected DateFormat formatter;
+    
     public PastDate(final T max) {
         super();
         checkPreconditions(max);
@@ -42,25 +45,25 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
     
     protected static <T extends Date> void checkPreconditions(final T max) {
         if(max == null) {
-            throw new IllegalArgumentException("max should not be null");
+            throw new NullPointerException("max should not be null");
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
+        if(!Date.class.isAssignableFrom(value.getClass())) {
             throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+                    "the value '%s' could not implement '%s' class.", value, Date.class.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);
         
-        if(result.compareTo(max) < 0) {
+        if(result.compareTo(max) > 0) {
             throw new SuperCsvConstraintViolationException(
                     String.format("%s does not lie the max (%s) values (inclusive)", result, max),
                     context, this);
@@ -73,6 +76,15 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
         return max;
     }
     
+    public DateFormat getFormatter() {
+        return formatter;
+    }
+    
+    public PastDate<T> setFormatter(DateFormat formatter) {
+        this.formatter = formatter;
+        return this;
+    }
+    
     @Override
     public String getMessageCode() {
         return PastDate.class.getCanonicalName() + ".violated";
@@ -80,7 +92,7 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
     
     @Override
     public Map<String, ?> getMessageVariable() {
-        Map<String, Object> vars = new HashMap<String, Object>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("max", getMax());
         return vars;
     }
@@ -90,7 +102,21 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
         if(value == null) {
             return "";
         }
-        return value.toString();
+        
+        if(value instanceof Date) {
+            final Date date = (Date) value;
+            final DateFormatterWrapper df;
+            if(getFormatter() != null) {
+                df = new DateFormatterWrapper(getFormatter());
+            } else {
+                df = new DateFormatterWrapper(date.getClass());
+            }
+            
+            return df.format(date);
+            
+        } else {
+            return value.toString();
+        }
     }
     
 }

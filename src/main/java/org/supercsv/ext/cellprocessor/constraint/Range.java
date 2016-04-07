@@ -32,14 +32,6 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
     
     protected final T max;
     
-    public static <T extends Number & Comparable<T>> Range<T> range(final T min, final T max) {
-        return new Range<T>(min, max);
-    }
-    
-    public static <T extends Number & Comparable<T>> Range<T> range(final T min, final T max, final CellProcessor next) {
-        return new Range<T>(min, max, next);
-    }
-    
     public Range(final T min, final T max) {
         super();
         checkPreconditions(min, max);
@@ -70,10 +62,11 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
-            throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+        final Class<?> exepectedClass = getMin().getClass();
+        if(!exepectedClass.isAssignableFrom(value.getClass())) {
+            throw new SuperCsvConstraintViolationException(
+                    String.format("the value '%s' could not implements '%s' class.", value, exepectedClass.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);

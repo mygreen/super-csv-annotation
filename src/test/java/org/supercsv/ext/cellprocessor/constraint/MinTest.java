@@ -1,4 +1,4 @@
-package org.supercsv.ext.cellprocessor.joda;
+package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -6,7 +6,6 @@ import static org.supercsv.ext.TestUtils.*;
 
 import java.util.Map;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -14,25 +13,25 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
 
 /**
- * Tests the {@link FutureJoda} constraint.
+ * Tests the {@link Min} constraint.
  *
  * @since 1.2
  * @author T.TSUCHIE
  *
  */
-public class FutureJodaTest {
+public class MinTest {
     
     private CellProcessor processor;
     private CellProcessor processorChain;
-    private LocalDate min = new LocalDate(2000, 1, 1);
+    private Integer min = new Integer(100);
     
     /**
      * Sets up the processor for the test using Combinations
      */
     @Before
     public void setUp() {
-        processor = new FutureJoda<LocalDate>(min);
-        processorChain = new FutureJoda<LocalDate>(min, new NextCellProcessor());
+        processor = new Min<Integer>(min);
+        processorChain = new Min<Integer>(min, new NextCellProcessor());
     }
     
     /**
@@ -42,7 +41,7 @@ public class FutureJodaTest {
     @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_minNull() {
         
-        new FutureJoda<LocalDate>(null);
+        new Min<Integer>(null);
         
         fail();
         
@@ -55,7 +54,7 @@ public class FutureJodaTest {
     @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_nextNull() {
         
-        new FutureJoda<LocalDate>(min, null);
+        new Min<Integer>(min, null);
         
         fail();
         
@@ -90,10 +89,10 @@ public class FutureJodaTest {
     public void testExecuteWithValid() {
         
         processor.execute(min, ANONYMOUS_CSVCONTEXT);
-        processor.execute(min.plusDays(1), ANONYMOUS_CSVCONTEXT);
+        processor.execute(min + 1, ANONYMOUS_CSVCONTEXT);
         
         processorChain.execute(min, ANONYMOUS_CSVCONTEXT);
-        processorChain.execute(min.plusDays(1), ANONYMOUS_CSVCONTEXT);
+        processorChain.execute(min + 1, ANONYMOUS_CSVCONTEXT);
         
     }
     
@@ -103,7 +102,7 @@ public class FutureJodaTest {
     @Test(expected=SuperCsvConstraintViolationException.class)
     public void testExecuteWithBelowMin() {
         
-        processor.execute(min.minusDays(1), ANONYMOUS_CSVCONTEXT);
+        processor.execute(min - 1, ANONYMOUS_CSVCONTEXT);
         
         fail();
         
@@ -115,7 +114,7 @@ public class FutureJodaTest {
     @Test
     public void testMin() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        Min<Integer> cp = (Min<Integer>) processor;
         assertThat(cp.getMin(), is(min));
         
     }
@@ -126,8 +125,8 @@ public class FutureJodaTest {
     @Test
     public void testMessageCode() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
-        assertThat(cp.getMessageCode(), is("org.supercsv.ext.cellprocessor.joda.FutureJoda.violated"));
+        Min<Integer> cp = (Min<Integer>) processor;
+        assertThat(cp.getMessageCode(), is("org.supercsv.ext.cellprocessor.constraint.Min.violated"));
         
     }
     
@@ -137,7 +136,7 @@ public class FutureJodaTest {
     @Test
     public void testMessageVariable() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        Min<Integer> cp = (Min<Integer>) processor;
         Map<String, ?> vars = cp.getMessageVariable();
         assertThat(vars.get("min"), is(min));
         
@@ -149,9 +148,8 @@ public class FutureJodaTest {
     @Test
     public void testFormatValue() {
         
-        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        Min<Integer> cp = (Min<Integer>) processor;
         assertThat(cp.formatValue(null), is(""));
-        assertThat(cp.formatValue(min), is("2000-01-01"));
+        assertThat(cp.formatValue(min), is("100"));
     }
-    
 }

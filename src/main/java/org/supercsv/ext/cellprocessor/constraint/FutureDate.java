@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor.constraint;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
     
     protected final T min;
     
+    protected DateFormat formatter;
+    
     public FutureDate(final T min) {
         super();
         checkPreconditions(min);
@@ -43,7 +46,7 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
     
     protected static <T extends Date> void checkPreconditions(final T min) {
         if(min == null) {
-            throw new IllegalArgumentException("min should not be null");
+            throw new NullPointerException("min should not be null");
         }
     }
     
@@ -53,10 +56,10 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
+        if(!Date.class.isAssignableFrom(value.getClass())) {
             throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+                    "the value '%s' could not implement '%s' class.", value, Date.class.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);
@@ -74,6 +77,15 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
         return min;
     }
     
+    public DateFormat getFormatter() {
+        return formatter;
+    }
+    
+    public FutureDate<T> setFormatter(DateFormat formatter) {
+        this.formatter = formatter;
+        return this;
+    }
+    
     @Override
     public String getMessageCode() {
         return FutureDate.class.getCanonicalName() + ".violated";
@@ -81,7 +93,7 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
     
     @Override
     public Map<String, ?> getMessageVariable() {
-        Map<String, Object> vars = new HashMap<String, Object>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());
         return vars;
     }
@@ -91,7 +103,21 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
         if(value == null) {
             return "";
         }
-        return value.toString();
+        
+        if(value instanceof Date) {
+            final Date date = (Date) value;
+            final DateFormatterWrapper df;
+            if(getFormatter() != null) {
+                df = new DateFormatterWrapper(getFormatter());
+            } else {
+                df = new DateFormatterWrapper(date.getClass());
+            }
+            
+            return df.format(date);
+            
+        } else {
+            return value.toString();
+        }
     }
     
 }

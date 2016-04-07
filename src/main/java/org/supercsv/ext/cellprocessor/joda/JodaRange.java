@@ -39,7 +39,7 @@ public class JodaRange <T extends Comparable<? super T>>
     
     private static <T extends Comparable<? super T>> void checkPreconditions(final T min, final T max) {
         if(min == null || max == null) {
-            throw new IllegalArgumentException("min and max should not be null");
+            throw new NullPointerException("min and max should not be null");
         }
         
         if(min.compareTo(max) > 0) {

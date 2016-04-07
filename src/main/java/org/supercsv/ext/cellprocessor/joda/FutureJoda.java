@@ -35,7 +35,7 @@ public class FutureJoda <T extends Comparable<? super T>>
     
     private static <T extends Comparable<? super T>> void checkPreconditions(final T min) {
         if(min == null) {
-            throw new IllegalArgumentException("min should not be null");
+            throw new NullPointerException("min should not be null");
         }
     }
     

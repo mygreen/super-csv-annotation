@@ -58,6 +58,7 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
         if( max < min ) {
             throw new IllegalArgumentException(String.format("max (%d) should not be < min (%d)", max, min));
         }
+        
         if( min < 0 ) {
             throw new IllegalArgumentException(String.format("min length (%d) should not be < 0", min));
         }

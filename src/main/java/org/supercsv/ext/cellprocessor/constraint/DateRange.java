@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor.constraint;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     protected final T min;
     
     protected final T max;
+    
+    protected DateFormat formatter;
     
     public DateRange(final T min, final T max) {
         super();
@@ -60,10 +63,10 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
+        if(!Date.class.isAssignableFrom(value.getClass())) {
             throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+                    "the value '%s' could not implement '%s' class.", value, Date.class.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);
@@ -84,6 +87,15 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         return max;
     }
     
+    public DateFormat getFormatter() {
+        return formatter;
+    }
+    
+    public DateRange<T> setFormatter(DateFormat formatter) {
+        this.formatter = formatter;
+        return this;
+    }
+    
     @Override
     public String getMessageCode() {
         return DateRange.class.getCanonicalName() + ".violated";
@@ -102,7 +114,22 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         if(value == null) {
             return "";
         }
-        return value.toString();
+        
+        if(value instanceof Date) {
+            final Date date = (Date) value;
+            final DateFormatterWrapper df;
+            if(getFormatter() != null) {
+                df = new DateFormatterWrapper(getFormatter());
+            } else {
+                df = new DateFormatterWrapper(date.getClass());
+            }
+            
+            return df.format(date);
+            
+        } else {
+            return value.toString();
+        }
     }
+    
     
 }

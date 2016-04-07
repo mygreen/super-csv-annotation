@@ -41,25 +41,26 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     
     protected static <T extends Number & Comparable<T>> void checkPreconditions(final T max) {
         if(max == null) {
-            throw new IllegalArgumentException("max should not be null");
+            throw new NullPointerException("max should not be null");
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
-        if(!(value instanceof Comparable)) {
-            throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement Comparable interface.",
-                    value), context, this);
+        final Class<?> exepectedClass = getMax().getClass();
+        if(!exepectedClass.isAssignableFrom(value.getClass())) {
+            throw new SuperCsvConstraintViolationException(
+                    String.format("the value '%s' could not implements '%s' class.", value, exepectedClass.getCanonicalName()),
+                    context, this);
         }
         
         final T result = ((T) value);
         
-        if(result.compareTo(max) < 0) {
+        if(result.compareTo(max) > 0) {
             throw new SuperCsvConstraintViolationException(
                     String.format("%s does not lie the max (%s) values (inclusive)", result, max),
                     context, this);

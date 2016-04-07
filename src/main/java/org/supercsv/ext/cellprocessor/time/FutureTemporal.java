@@ -27,7 +27,7 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
     /**
      * Constructs a new <tt>{@link FutureTemporal}</tt> processor.
      * @param min the minimum date (lower bound) (invalusive).
-     * @throws IllegalArgumentException if {@literal min == null}
+     * @throws NullPointerException if {@literal min is null}
      */
     public FutureTemporal(final T min) {
         super();
@@ -39,7 +39,7 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
      * Constructs a new <tt>{@link FutureTemporal}</tt> processor. then calls the next processor in the chain.
      * @param min the minimum date (lower bound) (invalusive).
      * @param next the next processor in the chain
-     * @throws IllegalArgumentException if min is null
+     * @throws NullPointerException if min is null
      * @throws NullPointerException if next is null.
      */
     public FutureTemporal(final T min, final CellProcessor next) {
@@ -50,7 +50,7 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
     
     private static <T extends TemporalAccessor & Comparable<? super T>> void checkPreconditions(final T min) {
         if(min == null) {
-            throw new IllegalArgumentException("min should not be null");
+            throw new NullPointerException("min should not be null");
         }
     }
     

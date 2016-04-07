@@ -35,7 +35,7 @@ public class PastJoda <T extends Comparable<? super T>>
     
     private static <T extends Comparable<? super T>> void checkPreconditions(final T max) {
         if(max == null) {
-            throw new IllegalArgumentException("max should not be null");
+            throw new NullPointerException("max should not be null");
         }
     }
     

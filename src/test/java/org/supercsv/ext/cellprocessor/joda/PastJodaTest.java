@@ -39,7 +39,7 @@ public class PastJodaTest {
      * Test constructor argument's with wrong values.
      * max is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_maxNull() {
         
         new PastJoda<LocalDate>(null);
@@ -113,7 +113,7 @@ public class PastJodaTest {
      * Tests max value.
      */
     @Test
-    public void testTax() {
+    public void testMax() {
         
         PastJoda<LocalDate> cp = (PastJoda<LocalDate>) processor;
         assertThat(cp.getMax(), is(max));

@@ -7,7 +7,6 @@ import static org.supercsv.ext.TestUtils.*;
 import java.time.LocalDate;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -41,7 +40,7 @@ public class TemporalRangeTest {
      * Test constructor argument's with wrong values.
      * min is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_minNull() {
         
         new TemporalRange<LocalDate>(null, max);
@@ -155,7 +154,7 @@ public class TemporalRangeTest {
      * Tests max value.
      */
     @Test
-    public void testTax() {
+    public void tesMTax() {
         
         TemporalRange<LocalDate> cp = (TemporalRange<LocalDate>) processor;
         assertThat(cp.getMax(), is(max));

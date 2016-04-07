@@ -40,7 +40,7 @@ public class JodaRangeTest {
      * Test constructor argument's with wrong values.
      * min is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testCheckConditionsWithWrong_minNull() {
         
         new JodaRange<LocalDate>(null, max);
@@ -154,7 +154,7 @@ public class JodaRangeTest {
      * Tests max value.
      */
     @Test
-    public void testTax() {
+    public void testMax() {
         
         JodaRange<LocalDate> cp = (JodaRange<LocalDate>) processor;
         assertThat(cp.getMax(), is(max));
