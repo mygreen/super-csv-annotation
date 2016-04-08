@@ -15,7 +15,7 @@ import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.ext.cellprocessor.DateFormatterWrapper;
+import org.supercsv.ext.cellprocessor.DateFormatWrapper;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -107,11 +107,11 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
         
         if(value instanceof Date) {
             final Date date = (Date) value;
-            final DateFormatterWrapper df;
+            final DateFormatWrapper df;
             if(getFormatter() != null) {
-                df = new DateFormatterWrapper(getFormatter());
+                df = new DateFormatWrapper(getFormatter());
             } else {
-                df = new DateFormatterWrapper(date.getClass());
+                df = new DateFormatWrapper(date.getClass());
             }
             
             return df.format(date);
