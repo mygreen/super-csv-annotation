@@ -74,7 +74,7 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
         cp = (cp == null ? new FmtZonedDateTime(formatter) : new FmtZonedDateTime(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, cp);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
         return cp;

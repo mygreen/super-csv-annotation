@@ -3,6 +3,8 @@ package org.supercsv.ext.cellprocessor.joda;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.ReadablePartial;
+import org.joda.time.format.DateTimeFormatter;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
@@ -17,10 +19,12 @@ import org.supercsv.util.CsvContext;
  * @author T.TSUCHIE
  *
  */
-public class PastJoda <T extends Comparable<? super T>>
+public class PastJoda <T extends ReadablePartial>
         extends CellProcessorAdaptor implements DateCellProcessor, ValidationCellProcessor {
     
     private final T max;
+    
+    private DateTimeFormatter formatter;
     
     public PastJoda(final T max) {
         super();
@@ -34,7 +38,7 @@ public class PastJoda <T extends Comparable<? super T>>
         this.max = max;
     }
     
-    private static <T extends Comparable<? super T>> void checkPreconditions(final T max) {
+    private static <T extends ReadablePartial> void checkPreconditions(final T max) {
         if(max == null) {
             throw new NullPointerException("max should not be null");
         }
@@ -82,6 +86,13 @@ public class PastJoda <T extends Comparable<? super T>>
             return "";
         }
         
+        if(value instanceof ReadablePartial) {
+            final ReadablePartial rp = (ReadablePartial) value;
+            if(getFormatter() != null) {
+                return getFormatter().print(rp);
+            }
+        }
+        
         return value.toString();
     }
     
@@ -91,5 +102,14 @@ public class PastJoda <T extends Comparable<? super T>>
      */
     public T getMax() {
         return max;
+    }
+    
+    public DateTimeFormatter getFormatter() {
+        return formatter;
+    }
+    
+    public PastJoda<T> setFormatter(DateTimeFormatter formatter) {
+        this.formatter = formatter;
+        return this;
     }
 }

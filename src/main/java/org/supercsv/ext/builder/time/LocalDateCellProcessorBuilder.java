@@ -75,7 +75,7 @@ public class LocalDateCellProcessorBuilder extends AbstractTemporalAccessorCellP
         cp = (cp == null ? new FmtLocalDate(formatter) : new FmtLocalDate(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, cp);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
         return cp;

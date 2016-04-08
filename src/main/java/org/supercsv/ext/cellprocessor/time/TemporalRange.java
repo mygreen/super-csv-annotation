@@ -97,6 +97,14 @@ public class TemporalRange<T extends TemporalAccessor & Comparable<? super T>>
         if(value == null) {
             return "";
         }
+        
+        if(value instanceof TemporalAccessor) {
+            final TemporalAccessor temporal = (TemporalAccessor) value;
+            if(getFormatter() != null) {
+                return getFormatter().format(temporal);
+            }
+        }
+        
         return value.toString();
     }
     
@@ -106,5 +114,14 @@ public class TemporalRange<T extends TemporalAccessor & Comparable<? super T>>
     
     public T getMax() {
         return max;
+    }
+    
+    public DateTimeFormatter getFormatter() {
+        return formatter;
+    }
+    
+    public TemporalRange<T> setFormatter(DateTimeFormatter formatter) {
+        this.formatter = formatter;
+        return this;
     }
 }

@@ -72,7 +72,7 @@ public class LocalDateCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         cp = (cp == null ? new FmtLocalDate(formatter) : new FmtLocalDate(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, cp);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
         return cp;
@@ -94,7 +94,7 @@ public class LocalDateCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<LocalDate> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
         
         CellProcessor cp = processor;
-        cp = prependRangeProcessor(min, max, cp);
+        cp = prependRangeProcessor(min, max, formatter, cp);
         cp = (cp == null ? new ParseLocalDate(formatter) : new ParseLocalDate(formatter, cp));
         
         return cp;

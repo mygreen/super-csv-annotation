@@ -1,5 +1,6 @@
 package org.supercsv.ext.cellprocessor.time;
 
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
         extends CellProcessorAdaptor implements DateCellProcessor, ValidationCellProcessor {
     
     private final T min;
+    
+    private DateTimeFormatter formatter;
     
     /**
      * Constructs a new <tt>{@link FutureTemporal}</tt> processor.
@@ -96,6 +99,13 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
             return "";
         }
         
+        if(value instanceof TemporalAccessor) {
+            final TemporalAccessor temporal = (TemporalAccessor) value;
+            if(getFormatter() != null) {
+                return getFormatter().format(temporal);
+            }
+        }
+        
         return value.toString();
     }
     
@@ -105,6 +115,15 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
      */
     public T getMin() {
         return min;
+    }
+    
+    public DateTimeFormatter getFormatter() {
+        return formatter;
+    }
+    
+    public FutureTemporal<T> setFormatter(DateTimeFormatter formatter) {
+        this.formatter = formatter;
+        return this;
     }
     
 }

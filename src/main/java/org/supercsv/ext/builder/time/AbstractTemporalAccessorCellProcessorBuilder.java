@@ -93,26 +93,27 @@ public abstract class AbstractTemporalAccessorCellProcessorBuilder<T extends Tem
     
     protected abstract T parseTemporal(final String value, final DateTimeFormatter formatter);
     
-    protected CellProcessor prependRangeProcessor(final Optional<T> min, final Optional<T> max, final CellProcessor processor) {
+    protected CellProcessor prependRangeProcessor(final Optional<T> min, final Optional<T> max,
+            final DateTimeFormatter formatter, final CellProcessor processor) {
         
         CellProcessor cp = processor;
         if(min.isPresent() && max.isPresent()) {
             if(cp == null) {
-                cp = new TemporalRange<T>(min.get(), max.get());
+                cp = new TemporalRange<T>(min.get(), max.get()).setFormatter(formatter);
             } else {
-                cp = new TemporalRange<T>(min.get(), max.get(), cp);
+                cp = new TemporalRange<T>(min.get(), max.get(), cp).setFormatter(formatter);
             }
         } else if(min.isPresent()) {
             if(cp == null) {
-                cp = new FutureTemporal<T>(min.get());
+                cp = new FutureTemporal<T>(min.get()).setFormatter(formatter);
             } else {
-                cp = new FutureTemporal<T>(min.get(), cp);
+                cp = new FutureTemporal<T>(min.get(), cp).setFormatter(formatter);
             }
         } else if(max.isPresent()) {
             if(cp == null) {
-                cp = new PastTemporal<T>(max.get());
+                cp = new PastTemporal<T>(max.get()).setFormatter(formatter);
             } else {
-                cp = new PastTemporal<T>(max.get(), cp);
+                cp = new PastTemporal<T>(max.get(), cp).setFormatter(formatter);
             }
         }
         

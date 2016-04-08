@@ -75,7 +75,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
         cp = (cp == null ? new FmtLocalTime(formatter) : new FmtLocalTime(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, cp);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
         return cp;

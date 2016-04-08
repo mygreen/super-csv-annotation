@@ -72,7 +72,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         cp = (cp == null ? new FmtLocalTime(formatter) : new FmtLocalTime(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, cp);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
         return cp;
@@ -94,7 +94,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
         
         CellProcessor cp = processor;
-        cp = prependRangeProcessor(min, max, cp);
+        cp = prependRangeProcessor(min, max, formatter, cp);
         cp = (cp == null ? new ParseLocalTime(formatter) : new ParseLocalTime(formatter, cp));
         
         return cp;
