@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.TestUtils.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.junit.Before;
@@ -194,5 +195,18 @@ public class TemporalRangeTest {
         TemporalRange<LocalDate> cp = (TemporalRange<LocalDate>) processor;
         assertThat(cp.formatValue(null), is(""));
         assertThat(cp.formatValue(min), is("2000-01-01"));
+        assertThat(cp.formatValue(123), is("123"));
+    }
+    
+    /**
+     * Tests setFormatter
+     */
+    @Test
+    public void testFormatter() {
+        
+        TemporalRange<LocalDate> cp = (TemporalRange<LocalDate>) processor;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        cp.setFormatter(formatter);
+        assertThat(cp.formatValue(min), is("2000/01/01"));
     }
 }

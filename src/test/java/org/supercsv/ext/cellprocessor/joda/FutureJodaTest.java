@@ -7,6 +7,8 @@ import static org.supercsv.ext.TestUtils.*;
 import java.util.Map;
 
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -152,6 +154,19 @@ public class FutureJodaTest {
         FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
         assertThat(cp.formatValue(null), is(""));
         assertThat(cp.formatValue(min), is("2000-01-01"));
+        assertThat(cp.formatValue(123), is("123"));
+    }
+    
+    /**
+     * Tests setFormatter
+     */
+    @Test
+    public void testFormatter() {
+        
+        FutureJoda<LocalDate> cp = (FutureJoda<LocalDate>) processor;
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy/MM/dd");
+        cp.setFormatter(formatter);
+        assertThat(cp.formatValue(min), is("2000/01/01"));
     }
     
 }
