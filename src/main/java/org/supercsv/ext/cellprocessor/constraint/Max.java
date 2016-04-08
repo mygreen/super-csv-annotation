@@ -13,6 +13,7 @@ import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
+import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
@@ -53,9 +54,7 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         
         final Class<?> exepectedClass = getMax().getClass();
         if(!exepectedClass.isAssignableFrom(value.getClass())) {
-            throw new SuperCsvConstraintViolationException(
-                    String.format("the value '%s' could not implements '%s' class.", value, exepectedClass.getCanonicalName()),
-                    context, this);
+            throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);
         }
         
         final T result = ((T) value);

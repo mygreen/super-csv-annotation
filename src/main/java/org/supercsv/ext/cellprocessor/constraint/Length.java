@@ -72,6 +72,7 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
      * @throws SuperCsvConstraintViolationException
      *             if length is < min or length > max
      */
+    @SuppressWarnings("unchecked")
     public Object execute(final Object value, final CsvContext context) {
         validateInputNotNull(value, context);
         

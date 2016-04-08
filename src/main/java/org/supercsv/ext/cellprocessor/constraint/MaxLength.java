@@ -46,6 +46,7 @@ public class MaxLength extends CellProcessorAdaptor implements StringCellProcess
         }
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         validateInputNotNull(value, context);

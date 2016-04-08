@@ -14,7 +14,9 @@ import java.util.Map;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
+import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.ext.cellprocessor.DateFormatterWrapper;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -64,9 +66,7 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         validateInputNotNull(value, context);
         
         if(!Date.class.isAssignableFrom(value.getClass())) {
-            throw new SuperCsvConstraintViolationException(String.format(
-                    "the value '%s' could not implement '%s' class.", value, Date.class.getCanonicalName()),
-                    context, this);
+            throw new SuperCsvCellProcessorException(Date.class, value, context, this);
         }
         
         final T result = ((T) value);
