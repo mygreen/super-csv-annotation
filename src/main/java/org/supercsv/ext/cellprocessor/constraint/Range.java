@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor.constraint;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.ext.cellprocessor.NumberFormatWrapper;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -32,6 +34,8 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
     protected final T min;
     
     protected final T max;
+    
+    protected NumberFormat formatter;
     
     public Range(final T min, final T max) {
         super();
@@ -78,13 +82,6 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
         return next.execute(result, context);
     }
     
-    public T getMin() {
-        return min;
-    }
-    
-    public T getMax() {
-        return max;
-    }
     @Override
     public String getMessageCode() {
         return Range.class.getCanonicalName()+ ".violated";
@@ -103,7 +100,33 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
         if(value == null) {
             return "";
         }
+        
+        if(value instanceof Number) {
+            final Number number = (Number) value;
+            if(getFormatter() != null) {
+                return new NumberFormatWrapper(getFormatter()).format(number);
+            }
+            
+        }
+        
         return value.toString();
+    }
+    
+    public T getMin() {
+        return min;
+    }
+    
+    public T getMax() {
+        return max;
+    }
+    
+    public NumberFormat getFormatter() {
+        return formatter;
+    }
+    
+    public Range<T> setFormatter(NumberFormat formatter) {
+        this.formatter = formatter;
+        return this;
     }
     
 }

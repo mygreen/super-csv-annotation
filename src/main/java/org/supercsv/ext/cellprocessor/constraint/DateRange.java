@@ -126,10 +126,10 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
             
             return df.format(date);
             
-        } else {
-            return value.toString();
         }
+        
+        return value.toString();
+        
     }
-    
     
 }

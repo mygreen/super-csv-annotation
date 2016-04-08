@@ -114,9 +114,10 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
             
             return df.format(date);
             
-        } else {
-            return value.toString();
         }
+        
+        return value.toString();
+        
     }
     
 }

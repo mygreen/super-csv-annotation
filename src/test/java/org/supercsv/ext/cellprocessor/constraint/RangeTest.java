@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.TestUtils.*;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Map;
 
 import org.junit.Before;
@@ -193,6 +195,21 @@ public class RangeTest {
         Range<Integer> cp = (Range<Integer>) processor;
         assertThat(cp.formatValue(null), is(""));
         assertThat(cp.formatValue(min), is("100"));
+        assertThat(cp.formatValue("abc"), is("abc"));
+    }
+    
+    /**
+     * Tests set formatter
+     */
+    @Test
+    public void testFormatter() {
+        
+        Range<Integer> cp = (Range<Integer>) processor;
+        NumberFormat formatter = new DecimalFormat("###,###");
+        cp.setFormatter(formatter);
+        
+        assertThat(cp.formatValue(123456), is("123,456"));
+        
     }
     
 }

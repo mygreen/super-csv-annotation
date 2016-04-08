@@ -6,6 +6,7 @@
  */
 package org.supercsv.ext.cellprocessor.constraint;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.ext.cellprocessor.NumberFormatWrapper;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -27,6 +29,8 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         implements LongCellProcessor, DoubleCellProcessor, ValidationCellProcessor {
     
     protected final T max;
+    
+    protected NumberFormat formatter;
     
     public Max(final T max) {
         super();
@@ -68,10 +72,6 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         return next.execute(result, context);
     }
     
-    public T getMax() {
-        return max;
-    }
-    
     @Override
     public String getMessageCode() {
         return Max.class.getCanonicalName() + ".violated";
@@ -89,7 +89,28 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         if(value == null) {
             return "";
         }
+        
+        if(value instanceof Number) {
+            final Number number = (Number) value;
+            if(getFormatter() != null) {
+                return new NumberFormatWrapper(getFormatter()).format(number);
+            }
+            
+        }
         return value.toString();
+    }
+    
+    public T getMax() {
+        return max;
+    }
+    
+    public NumberFormat getFormatter() {
+        return formatter;
+    }
+    
+    public Max<T> setFormatter(NumberFormat formatter) {
+        this.formatter = formatter;
+        return this;
     }
     
 }
