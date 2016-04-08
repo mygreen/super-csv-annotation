@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.TestUtils.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
+import org.supercsv.ext.cellprocessor.SimpleDateFormatBuilder;
 
 /**
  * Tests the {@link DateRange} constraint.
@@ -194,5 +196,19 @@ public class DateRangeTest {
         DateRange<Date> cp = (DateRange<Date>) processor;
         assertThat(cp.formatValue(null), is(""));
         assertThat(cp.formatValue(min), is("2000-01-01 00:00:00"));
+        assertThat(cp.formatValue(123), is("123"));
+    }
+    
+    /**
+     * Tests set formatter
+     */
+    @Test
+    public void testFormatter() {
+        
+        DateRange<Date> cp = (DateRange<Date>) processor;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        cp.setFormatter(formatter);
+        
+        assertThat(cp.formatValue(min), is("2000/01/01"));
     }
 }

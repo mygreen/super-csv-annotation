@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.TestUtils.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -152,5 +153,19 @@ public class FutureDateTest {
         FutureDate<Date> cp = (FutureDate<Date>) processor;
         assertThat(cp.formatValue(null), is(""));
         assertThat(cp.formatValue(min), is("2000-01-01 00:00:00"));
+        assertThat(cp.formatValue(123), is("123"));
+    }
+    
+    /**
+     * Tests set formatter
+     */
+    @Test
+    public void testFormatter() {
+        
+        FutureDate<Date> cp = (FutureDate<Date>) processor;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        cp.setFormatter(formatter);
+        
+        assertThat(cp.formatValue(min), is("2000/01/01"));
     }
 }
