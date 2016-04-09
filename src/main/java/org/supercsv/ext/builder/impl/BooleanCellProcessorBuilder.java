@@ -1,10 +1,4 @@
-/*
- * BooleanCellProcessorBuilder.java
- * created in 2013/03/05
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
-package org.supercsv.ext.builder;
+package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
 
@@ -13,6 +7,7 @@ import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
+import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.ParseBoolean;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 

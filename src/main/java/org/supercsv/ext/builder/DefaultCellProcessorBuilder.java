@@ -1,9 +1,3 @@
-/*
- * DefaultCellProcessorBuilder.java
- * created in 2013/03/08
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.builder;
 
 import java.lang.annotation.Annotation;

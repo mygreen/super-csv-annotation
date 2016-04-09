@@ -1,9 +1,3 @@
-/*
- * CellProcessorBuilderContainer.java
- * created in 2013/03/05
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.builder;
 
 import java.math.BigDecimal;
@@ -13,6 +7,23 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.supercsv.ext.builder.impl.BooleanCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.ByteCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.DateCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.DoubleCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.EnumCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.FloatCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.IntegerCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.LongCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.ShortCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.AbstractNumberCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.BigDecimalCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.BigIntegerCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.SqlDateCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.StringCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.TimeCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.TimestampCellProcessorBuilder;
 
 
 /**
@@ -43,26 +54,26 @@ public class CellProcessorBuilderContainer {
         registerBuilder(Boolean.class, new BooleanCellProcessorBuilder());
         registerBuilder(boolean.class, new BooleanCellProcessorBuilder());
         
-        registerBuilder(Byte.class, NumberCellProcessorBuilder.newByte());
-        registerBuilder(byte.class, NumberCellProcessorBuilder.newByte());
-        registerBuilder(Short.class, NumberCellProcessorBuilder.newShort());
-        registerBuilder(short.class, NumberCellProcessorBuilder.newShort());
-        registerBuilder(Integer.class, NumberCellProcessorBuilder.newInteger());
-        registerBuilder(int.class, NumberCellProcessorBuilder.newInteger());
-        registerBuilder(Long.class, NumberCellProcessorBuilder.newLong());
-        registerBuilder(long.class, NumberCellProcessorBuilder.newLong());
-        registerBuilder(Float.class, NumberCellProcessorBuilder.newFloat());
-        registerBuilder(float.class, NumberCellProcessorBuilder.newFloat());
-        registerBuilder(Double.class, NumberCellProcessorBuilder.newDouble());
-        registerBuilder(double.class, NumberCellProcessorBuilder.newDouble());
+        registerBuilder(Byte.class, new ByteCellProcessorBuilder());
+        registerBuilder(byte.class, new ByteCellProcessorBuilder());
+        registerBuilder(Short.class, new ShortCellProcessorBuilder());
+        registerBuilder(short.class, new ShortCellProcessorBuilder());
+        registerBuilder(Integer.class, new IntegerCellProcessorBuilder());
+        registerBuilder(int.class, new IntegerCellProcessorBuilder());
+        registerBuilder(Long.class, new LongCellProcessorBuilder());
+        registerBuilder(long.class, new LongCellProcessorBuilder());
+        registerBuilder(Float.class, new FloatCellProcessorBuilder());
+        registerBuilder(float.class, new FloatCellProcessorBuilder());
+        registerBuilder(Double.class, new DoubleCellProcessorBuilder());
+        registerBuilder(double.class, new DoubleCellProcessorBuilder());
         
-        registerBuilder(BigDecimal.class, NumberCellProcessorBuilder.newBigDecimal());
-        registerBuilder(BigInteger.class, NumberCellProcessorBuilder.newBigInteger());
+        registerBuilder(BigDecimal.class, new BigDecimalCellProcessorBuilder());
+        registerBuilder(BigInteger.class, new BigIntegerCellProcessorBuilder());
         
         registerBuilder(Date.class, new DateCellProcessorBuilder());
-        registerBuilder(java.sql.Date.class, DateCellProcessorBuilder.newSqlDate());
-        registerBuilder(Timestamp.class, DateCellProcessorBuilder.newTimestamp());
-        registerBuilder(Time.class, DateCellProcessorBuilder.newTime());
+        registerBuilder(java.sql.Date.class, new SqlDateCellProcessorBuilder());
+        registerBuilder(Timestamp.class, new TimestampCellProcessorBuilder());
+        registerBuilder(Time.class, new TimeCellProcessorBuilder());
         
         registerBuilder(Enum.class, new EnumCellProcessorBuilder());
         
