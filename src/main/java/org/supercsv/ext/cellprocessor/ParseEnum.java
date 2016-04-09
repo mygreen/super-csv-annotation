@@ -1,13 +1,6 @@
-/*
- * ParseEnum.java
- * created in 2013/03/06
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -15,12 +8,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
-import org.supercsv.ext.Utils;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
 import org.supercsv.util.CsvContext;
 
@@ -31,35 +24,34 @@ import org.supercsv.util.CsvContext;
  * @author T.TSUCHIE
  *
  */
-@SuppressWarnings("rawtypes")
 public class ParseEnum extends CellProcessorAdaptor 
         implements StringCellProcessor, ValidationCellProcessor {
     
-    protected final Class type;
+    protected final Class<? extends Enum<?>> type;
     
     protected final boolean ignoreCase;
     
-    protected final Map<String, Enum> enumValueMap;
+    protected final Map<String, Enum<?>> enumValueMap;
     
     protected final Method valueMethod;
     
-    public ParseEnum(final Class type) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type) {
         this(type, false);
     }
     
-    public ParseEnum(final Class type, final CellProcessor next) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final CellProcessor next) {
         this(type, false, next);
     }
     
-    public ParseEnum(final Class type, final String valueMethodName) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final String valueMethodName) {
         this(type, false, valueMethodName);
     }
     
-    public ParseEnum(final Class type, final String valueMethodName, final CellProcessor next) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final String valueMethodName, final CellProcessor next) {
         this(type, false, valueMethodName, next);
     }
     
-    public ParseEnum(final Class type, final boolean ignoreCase) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final boolean ignoreCase) {
         super();
         checkPreconditions(type);
         this.type = type;
@@ -68,7 +60,7 @@ public class ParseEnum extends CellProcessorAdaptor
         this.valueMethod = null;
     }
     
-    public ParseEnum(final Class type, final boolean ignoreCase, final CellProcessor next) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final boolean ignoreCase, final CellProcessor next) {
         super(next);
         checkPreconditions(type);
         this.type = type;
@@ -77,7 +69,7 @@ public class ParseEnum extends CellProcessorAdaptor
         this.valueMethod = null;
     }
     
-    public ParseEnum(final Class type, final boolean ignoreCase, final String valueMethodName) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final boolean ignoreCase, final String valueMethodName) {
         super();
         checkPreconditions(type);
         this.type = type;
@@ -86,7 +78,7 @@ public class ParseEnum extends CellProcessorAdaptor
         this.valueMethod = createEnumValueMethod(type, valueMethodName);
     }
     
-    public ParseEnum(final Class type, final boolean ignoreCase, final String valueMethodName, final CellProcessor next) {
+    public <T extends Enum<T>> ParseEnum(final Class<T> type, final boolean ignoreCase, final String valueMethodName, final CellProcessor next) {
         super(next);
         checkPreconditions(type);
         this.type = type;
@@ -95,91 +87,84 @@ public class ParseEnum extends CellProcessorAdaptor
         this.valueMethod = createEnumValueMethod(type, valueMethodName);
     }
     
-    protected static void checkPreconditions(final Class type) {
+    protected static void checkPreconditions(final Class<?> type) {
         
         if(type == null) {
             throw new NullPointerException("type should be not null");
         }
-        
-        if(!Enum.class.isAssignableFrom(type)) {
-            throw new IllegalArgumentException(String.format("type should be Enum class : %s", type.getCanonicalName()));
-        }
     }
     
-    @SuppressWarnings("unchecked")
-    protected Method createEnumValueMethod(final Class enumClass, final String valueMethodName) {
+    protected <T extends Enum<T>> Method createEnumValueMethod(final Class<T> enumClass, final String valueMethodName) {
         try {
-            return enumClass.getMethod(valueMethodName);
-        } catch (SecurityException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
+            final Method method = enumClass.getMethod(valueMethodName);
+            method.setAccessible(true);
+            return method;
+            
+        } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(String.format("not found method '%s'", valueMethodName), e);
         }
         
     }
     
-    @SuppressWarnings("unchecked")
-    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean ignoreCase) {
+    protected <T extends Enum<T>> Map<String, Enum<?>> createEnumMap(final Class<T> enumClass, final boolean ignoreCase) {
         
-        Map<String, Enum> map = new LinkedHashMap<String, Enum>();
-        EnumSet set = EnumSet.allOf(enumClass);
-        for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-            Enum e = it.next();
+        Map<String, Enum<?>> map = new LinkedHashMap<>();
+        EnumSet<T> set = EnumSet.allOf(enumClass);
+        
+        for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
+            Enum<T> e = it.next();
             
             final String key = (ignoreCase ? e.name().toLowerCase() : e.name());
-            map.put(key, e);            
+            map.put(key, e);
         }
         
         return Collections.unmodifiableMap(map);
     }
     
-    @SuppressWarnings("unchecked")
-    protected Map<String, Enum> createEnumMap(final Class enumClass, final boolean ignoreCase, final String methodName) {
+    protected <T extends Enum<T>> Map<String, Enum<?>> createEnumMap(final Class<T> enumClass, final boolean ignoreCase,
+            final String methodName) {
         
-        Map<String, Enum> map = new LinkedHashMap<String, Enum>();
+        final Map<String, Enum<?>> map = new LinkedHashMap<>();
+        final Method method = createEnumValueMethod(enumClass, methodName);
+        
         try {
-            final Method method = createEnumValueMethod(enumClass, methodName);
             
-            EnumSet set = EnumSet.allOf(enumClass);
-            for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-                Enum e = it.next();
+            EnumSet<T> set = EnumSet.allOf(enumClass);
+            for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
+                Enum<T> e = it.next();
                 
                 Object returnValue = method.invoke(e);
                 final String key = (ignoreCase ? returnValue.toString().toLowerCase() : returnValue.toString());
                 
                 map.put(key, e);            
             }
-        } catch(Exception e) {
+        } catch(ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
         
         return Collections.unmodifiableMap(map);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
-        final Enum result;
-        if(value instanceof String) {
-            final String stringValue = (ignoreCase ? ((String) value).toLowerCase() : (String) value);
-            result = enumValueMap.get(stringValue);
-            if(result == null) {
-                throw new SuperCsvCellProcessorException(
-                        String.format("'%s' could not be parsed as an Enum", value), context, this);
-            }
-            
-        } else if(value instanceof Enum && value.getClass().isAssignableFrom(type)) {
-            result = (Enum) value;
-            
-        } else {
-            final String actualClassName = value.getClass().getName();
-            throw new SuperCsvCellProcessorException(String.format(
-                "the input value should be of type Enum or String but is of type %s", actualClassName), context, this);
+        if( !(value instanceof String) ) {
+            throw new SuperCsvCellProcessorException(String.class, value, context, this);
+        }
+        
+        final String stringValue = (String) value;
+        final Enum<?> result = enumValueMap.get(stringValue);
+        
+        if(result == null) {
+            throw new SuperCsvCellProcessorException(
+                    String.format("'%s' could not be parsed as an Enum", value), context, this);
         }
         
         return next.execute(result, context);
+        
     }
     
     public Class<?> getType() {
@@ -190,19 +175,19 @@ public class ParseEnum extends CellProcessorAdaptor
         return ignoreCase;
     }
     
-    public Map<String, Enum> getEnumValueMap() {
+    public Map<String, Enum<?>> getEnumValueMap() {
         return enumValueMap;
     }
     
     public Method getValueMethod() {
         return valueMethod;
     }
-
+    
     @Override
     public String getMessageCode() {
         return ParseEnum.class.getCanonicalName() + ".violated";
     }
-
+    
     @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
@@ -210,12 +195,17 @@ public class ParseEnum extends CellProcessorAdaptor
         vars.put("valueMethod", getValueMethod() == null ? "" : getValueMethod().getName());
         vars.put("ignoreCase", isIgnoreCase());
         
-        final List<String> enumValues = new ArrayList<String>();
-        for(Map.Entry<String, Enum> entry : getEnumValueMap().entrySet()) {
-            enumValues.add(entry.getValue().name());
-        }
+        final List<Enum<?>> enumValues = getEnumValueMap().entrySet().stream()
+                .map(e -> e.getValue())
+                .collect(Collectors.toList());
+        
+        final String enumsStr = getEnumValueMap().entrySet().stream()
+                .map(e -> e.getKey())
+                .collect(Collectors.joining(", "));
+        
         vars.put("enumValues", enumValues);
-        vars.put("enumsStr", Utils.join(enumValues, ", "));
+        vars.put("enumsStr", enumsStr);
+        
         return vars;
     }
 
@@ -224,6 +214,16 @@ public class ParseEnum extends CellProcessorAdaptor
         if(value == null) {
             return "";
         }
+        
+        if(value.getClass().isAssignableFrom(type)) {
+            final Enum<?> enumValue = (Enum<?>) value;
+            for(Map.Entry<String, Enum<?>> entry : getEnumValueMap().entrySet()) {
+                if(entry.getValue().equals(enumValue)) {
+                    return entry.getKey();
+                }
+            }
+        }
+        
         return value.toString();
     }
 }

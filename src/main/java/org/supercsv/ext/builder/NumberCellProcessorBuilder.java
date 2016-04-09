@@ -24,7 +24,6 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
-import org.supercsv.ext.Utils;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
 import org.supercsv.ext.cellprocessor.ParseBigInteger;
@@ -36,6 +35,7 @@ import org.supercsv.ext.cellprocessor.constraint.Max;
 import org.supercsv.ext.cellprocessor.constraint.Min;
 import org.supercsv.ext.cellprocessor.constraint.Range;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 
 /**
@@ -147,26 +147,26 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
         return new BigIntegerCellProcessorBuilder();
     }
     
-    protected CellProcessor prependRangeProcessor(final N min, final N max, final CellProcessor processor) {
+    protected CellProcessor prependRangeProcessor(final N min, final N max, final NumberFormat formatter, final CellProcessor processor) {
         
         CellProcessor cellProcessor = processor;
         if(min != null && max != null) {
             if(cellProcessor == null) {
-                cellProcessor = new Range<N>(min, max);
+                cellProcessor = new Range<N>(min, max).setFormatter(formatter);
             } else {
-                cellProcessor = new Range<N>(min, max, cellProcessor);
+                cellProcessor = new Range<N>(min, max, cellProcessor).setFormatter(formatter);
             }
         } else if(min != null) {
             if(cellProcessor == null) {
-                cellProcessor = new Min<N>(min);
+                cellProcessor = new Min<N>(min).setFormatter(formatter);
             } else {
-                cellProcessor = new Min<N>(min, cellProcessor);
+                cellProcessor = new Min<N>(min, cellProcessor).setFormatter(formatter);
             }
         } else if(max != null) {
             if(cellProcessor == null) {
-                cellProcessor = new Max<N>(max);
+                cellProcessor = new Max<N>(max).setFormatter(formatter);
             } else {
-                cellProcessor = new Max<N>(max, cellProcessor);
+                cellProcessor = new Max<N>(max, cellProcessor).setFormatter(formatter);
             }
         }
         
@@ -221,7 +221,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -244,12 +244,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Byte max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Byte>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Byte>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Byte>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Byte>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseByte() : new ParseByte((LongCellProcessor) cellProcessor));
@@ -320,7 +320,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -343,12 +343,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Short max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Short>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Short>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Short>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Short>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseShort() : new ParseShort((LongCellProcessor) cellProcessor));
@@ -418,7 +418,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -442,12 +442,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Integer max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Integer>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Integer>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Integer>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Integer>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseInt() : new ParseInt((LongCellProcessor) cellProcessor));
@@ -516,7 +516,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -539,12 +539,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Long max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Long>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Long>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Long>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Long>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseLong() : new ParseLong((LongCellProcessor) cellProcessor));
@@ -613,7 +613,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -636,12 +636,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Float max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Float>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Float>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Float>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Float>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
                     
             } else {
                 cellProcessor = (cellProcessor == null ?
@@ -711,7 +711,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -734,12 +734,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final Double max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<Double>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<Double>(type, pattern, lenient, currency, symbols, cellProcessor));
+                        new ParseLocaleNumber<Double>(type, formatter, lenient) :
+                            new ParseLocaleNumber<Double>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
                         new ParseDouble() : new ParseDouble((DoubleCellProcessor) cellProcessor));
@@ -808,7 +808,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -831,12 +831,12 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final BigDecimal max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<BigDecimal>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<BigDecimal>(type, pattern, lenient, currency, symbols, cellProcessor));                
+                        new ParseLocaleNumber<BigDecimal>(type, formatter, lenient) :
+                            new ParseLocaleNumber<BigDecimal>(type, formatter, lenient, (StringCellProcessor)cellProcessor));                
             } else {
                 cellProcessor = (cellProcessor == null ? 
                         new ParseBigDecimal() : new ParseBigDecimal(cellProcessor));
@@ -905,7 +905,7 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             }
             
             if(!ignoreValidationProcessor) {
-                cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+                cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             }
             
             return cellProcessor;
@@ -929,15 +929,15 @@ public abstract class NumberCellProcessorBuilder<N extends Number & Comparable<N
             final BigInteger max = parseNumber(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             if(formatter != null) {
                 cellProcessor = (cellProcessor == null ?
                         new ParseBigInteger() : new ParseBigInteger(cellProcessor));
             } else {
                 cellProcessor = (cellProcessor == null ?
-                        new ParseLocaleNumber<BigInteger>(type, pattern, lenient, currency, symbols) :
-                            new ParseLocaleNumber<BigInteger>(type, pattern, lenient, currency, symbols, cellProcessor));                
+                        new ParseLocaleNumber<BigInteger>(type, formatter, lenient) :
+                            new ParseLocaleNumber<BigInteger>(type, formatter, lenient, (StringCellProcessor)cellProcessor));                
             }
             
             return cellProcessor;

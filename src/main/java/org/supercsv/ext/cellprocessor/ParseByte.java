@@ -29,6 +29,7 @@ public class ParseByte extends CellProcessorAdaptor implements StringCellProcess
         super(next);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         

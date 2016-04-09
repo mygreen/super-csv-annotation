@@ -16,8 +16,8 @@ import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
-import org.supercsv.ext.cellprocessor.NumberFormatWrapper;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
+import org.supercsv.ext.util.NumberFormatWrapper;
 import org.supercsv.util.CsvContext;
 
 

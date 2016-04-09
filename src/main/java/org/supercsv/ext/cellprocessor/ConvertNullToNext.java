@@ -1,9 +1,3 @@
-/*
- * ConvertNullToNext.java
- * created in 2013/03/12
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
@@ -17,8 +11,8 @@ import org.supercsv.util.CsvContext;
 
 
 /**
- *
- *
+ * Converts null to given value.
+ * 
  * @author T.TSUCHIE
  *
  */
@@ -27,11 +21,20 @@ public class ConvertNullToNext extends CellProcessorAdaptor implements BoolCellP
     
     protected final Object returnValue;
     
+    /**
+     * 
+     * @param returnValue converts value.
+     */
     public ConvertNullToNext(final Object returnValue) {
         super();
         this.returnValue = returnValue;
     }
     
+    /**
+     * 
+     * @param returnValue converts value.
+     * @param next the next processor in the chain
+     */
     public ConvertNullToNext(final Object returnValue, final CellProcessor next) {
         super(next);
         this.returnValue = returnValue;
@@ -40,6 +43,7 @@ public class ConvertNullToNext extends CellProcessorAdaptor implements BoolCellP
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         if( value == null ) {

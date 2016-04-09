@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
-import org.supercsv.ext.Utils;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvDateConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleDate;
 import org.supercsv.ext.cellprocessor.ParseLocaleDate;
@@ -29,6 +29,7 @@ import org.supercsv.ext.cellprocessor.constraint.DateRange;
 import org.supercsv.ext.cellprocessor.constraint.FutureDate;
 import org.supercsv.ext.cellprocessor.constraint.PastDate;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 
 /**
@@ -119,26 +120,26 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         return converterAnno.max();
     }
     
-    protected CellProcessor prependRangeProcessor(final Date min, final Date max, final CellProcessor processor) {
+    protected CellProcessor prependRangeProcessor(final Date min, final Date max, final DateFormat formatter, final CellProcessor processor) {
         
         CellProcessor cellProcessor = processor;
         if(min != null && max != null) {
             if(cellProcessor == null) {
-                cellProcessor = new DateRange<Date>(min, max);
+                cellProcessor = new DateRange<Date>(min, max).setFormatter(formatter);
             } else {
-                cellProcessor = new DateRange<Date>(min, max, cellProcessor);
+                cellProcessor = new DateRange<Date>(min, max, cellProcessor).setFormatter(formatter);
             }
         } else if(min != null) {
             if(cellProcessor == null) {
-                cellProcessor = new FutureDate<Date>(min);
+                cellProcessor = new FutureDate<Date>(min).setFormatter(formatter);
             } else {
-                cellProcessor = new FutureDate<Date>(min, cellProcessor);
+                cellProcessor = new FutureDate<Date>(min, cellProcessor).setFormatter(formatter);
             }
         } else if(max != null) {
             if(cellProcessor == null) {
-                cellProcessor = new PastDate<Date>(max);
+                cellProcessor = new PastDate<Date>(max).setFormatter(formatter);
             } else {
-                cellProcessor = new PastDate<Date>(max, cellProcessor);
+                cellProcessor = new PastDate<Date>(max, cellProcessor).setFormatter(formatter);
             }
         }
         
@@ -179,11 +180,11 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         
         CellProcessor cellProcessor = processor;
         cellProcessor = (cellProcessor == null ? 
-                new FormatLocaleDate(pattern, locale, timeZone) : 
-                    new FormatLocaleDate(pattern, locale, timeZone, (DateCellProcessor) cellProcessor));
+                new FormatLocaleDate(formatter) : 
+                    new FormatLocaleDate(formatter, (StringCellProcessor) cellProcessor));
         
         if(!ignoreValidationProcessor) {
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
         }
         return cellProcessor;
     }
@@ -204,11 +205,11 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
         final Date max = parseDate(getMax(converterAnno), formatter);
         
         CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
         
         cellProcessor = (cellProcessor == null ?
-                new ParseLocaleDate(pattern, lenient, locale, timeZone) :
-                    new ParseLocaleDate(pattern, lenient, locale, timeZone, (DateCellProcessor)cellProcessor));
+                new ParseLocaleDate(formatter) :
+                    new ParseLocaleDate(formatter, (DateCellProcessor)cellProcessor));
         
         return cellProcessor;
         
@@ -253,11 +254,11 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final java.sql.Date max = parseDate(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             cellProcessor = (cellProcessor == null ?
-                    new ParseLocaleSqlDate(pattern, lenient, locale, timeZone) :
-                        new ParseLocaleSqlDate(pattern, lenient, locale, timeZone, (DateCellProcessor)cellProcessor));
+                    new ParseLocaleSqlDate(formatter) :
+                        new ParseLocaleSqlDate(formatter, (DateCellProcessor)cellProcessor));
             
             return cellProcessor;
             
@@ -303,11 +304,11 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final Timestamp max = parseDate(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             
             cellProcessor = (cellProcessor == null ?
-                    new ParseLocaleTimestamp(pattern, lenient, locale, timeZone) :
-                        new ParseLocaleTimestamp(pattern, lenient, locale, timeZone, (DateCellProcessor)cellProcessor));
+                    new ParseLocaleTimestamp(formatter) :
+                        new ParseLocaleTimestamp(formatter, (DateCellProcessor)cellProcessor));
             
             return cellProcessor;
             
@@ -353,10 +354,10 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final Time max = parseDate(getMax(converterAnno), formatter);
             
             CellProcessor cellProcessor = processor;
-            cellProcessor = prependRangeProcessor(min, max, cellProcessor);
+            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
             cellProcessor = (cellProcessor == null ?
-                    new ParseLocaleTime(pattern, lenient, locale, timeZone) :
-                        new ParseLocaleTime(pattern, lenient, locale, timeZone, (DateCellProcessor)cellProcessor));
+                    new ParseLocaleTime(formatter) :
+                        new ParseLocaleTime(formatter, (DateCellProcessor)cellProcessor));
             
             return cellProcessor;
             

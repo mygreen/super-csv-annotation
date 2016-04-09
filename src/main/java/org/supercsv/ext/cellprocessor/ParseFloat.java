@@ -29,13 +29,14 @@ public class ParseFloat extends CellProcessorAdaptor implements StringCellProces
         super(next);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         
         final Float result;
-        if( value instanceof Float ) {
+        if( value instanceof Float) {
             result = (Float) value;
             
         } else if( value instanceof String ) {

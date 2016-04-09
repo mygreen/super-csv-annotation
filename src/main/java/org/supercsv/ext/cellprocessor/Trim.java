@@ -44,6 +44,7 @@ public class Trim extends CellProcessorAdaptor implements BoolCellProcessor, Dat
      * 
      * @throws SuperCsvCellProcessorException if value is null
      */
+    @SuppressWarnings("unchecked")
     public Object execute(final Object value, final CsvContext context) {
         validateInputNotNull(value, context);
         

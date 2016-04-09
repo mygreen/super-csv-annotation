@@ -29,6 +29,7 @@ public class ParseShort extends CellProcessorAdaptor implements StringCellProces
         super(next);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object execute(final Object value, final CsvContext context) {
         

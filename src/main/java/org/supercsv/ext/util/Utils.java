@@ -1,7 +1,5 @@
-package org.supercsv.ext;
+package org.supercsv.ext.util;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Locale;
 
 
@@ -26,47 +24,6 @@ public class Utils {
         }
         
         return false;
-    }
-    
-    public static String join(final String[] arrays, final String seperator) {
-        
-        final int len = arrays.length;
-        if(arrays == null || len == 0) {
-            return "";
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i < len; i++) {
-            sb.append(arrays[i]);
-            
-            if(seperator != null && (i < len-1)) {
-                sb.append(seperator);
-            }
-        }
-        
-        return sb.toString();
-        
-    }
-    
-    public static String join(final Collection<?> col, final String seperator) {
-        
-        final int size = col.size();
-        if(col == null || size == 0) {
-            return "";
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        for(Iterator<?> itr = col.iterator(); itr.hasNext();) {
-            final Object item = itr.next();
-            sb.append(item.toString());
-            
-            if(seperator != null && itr.hasNext()) {
-                sb.append(seperator);
-            }
-        }
-        
-        return sb.toString();
-        
     }
     
     public static boolean isEmpty(final String value) {

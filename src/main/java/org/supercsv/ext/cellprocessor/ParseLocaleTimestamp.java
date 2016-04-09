@@ -1,54 +1,32 @@
-/*
- * ParseLocaleTimestamp.java
- * created in 2013/03/06
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
 
 /**
  * 
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public class ParseLocaleTimestamp extends ParseLocaleDate {
     
-    public ParseLocaleTimestamp(final String format) {
-        this(format, true, null, null);
+    public ParseLocaleTimestamp(final DateFormat formatter) {
+        super(formatter);
     }
     
-    public ParseLocaleTimestamp(final String format, final DateCellProcessor next) {
-        this(format, true, null, null, next);
-    }
-    
-    public ParseLocaleTimestamp(final String pattern, final boolean lenient) {
-        this(pattern, lenient, Locale.getDefault(), null);
-    }
-    
-    public ParseLocaleTimestamp(final String pattern, final boolean lenient, final DateCellProcessor next) {
-        this(pattern, lenient, Locale.getDefault(), null, next);
-    }
-    
-    public ParseLocaleTimestamp(final String format, final boolean lenient, final Locale locale, final TimeZone timeZone) {
-        super(format, lenient, locale, timeZone);
-    }
-    
-    public ParseLocaleTimestamp(final String format, final boolean lenient, final Locale locale, final TimeZone timeZone, final DateCellProcessor next) {
-        super(format, lenient, locale, timeZone, next);
+    public ParseLocaleTimestamp(final DateFormat formatter, final DateCellProcessor next) {
+       super(formatter, next);
     }
     
     @Override
-    protected Object parse(final String value) throws ParseException {
+    protected Date parse(final String value) throws ParseException {
         
-        final Date result = formatter.get().parse(value);
+        final Date result = formatter.parse(value);
         return new Timestamp(result.getTime());
     }
 }

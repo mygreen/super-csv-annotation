@@ -25,7 +25,7 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
  * @author T.TSUCHIE
  *
  */
-public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<?>> {
+public class EnumCellProcessorBuilder<T extends Enum<T>> extends AbstractCellProcessorBuilder<T> {
     
     protected CsvEnumConverter getAnnotation(final Annotation[] annos) {
         
@@ -60,7 +60,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     }
     
     @Override
-    public CellProcessor buildOutputCellProcessor(final Class<Enum<?>> type, final Annotation[] annos,
+    public CellProcessor buildOutputCellProcessor(final Class<T> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvEnumConverter converterAnno = getAnnotation(annos);
@@ -77,7 +77,7 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     }
     
     @Override
-    public CellProcessor buildInputCellProcessor(final Class<Enum<?>> type, final Annotation[] annos,
+    public CellProcessor buildInputCellProcessor(final Class<T> type, final Annotation[] annos,
             final CellProcessor processor) {
         
         final CsvEnumConverter converterAnno = getAnnotation(annos);
@@ -98,17 +98,16 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
     }
     
     
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public Enum getParseValue(final Class<Enum<?>> type, final Annotation[] annos, final String defaultValue) {
+    public T getParseValue(final Class<T> type, final Annotation[] annos, final String defaultValue) {
         CsvEnumConverter converterAnno = getAnnotation(annos);
         final boolean ignoreCase = getIgnoreCase(converterAnno);
         final String valueMethodName = getValueMethodName(converterAnno);
         
-        final EnumSet set = EnumSet.allOf((Class) type);
+        final EnumSet<T> set = EnumSet.allOf(type);
         if(valueMethodName.isEmpty()) {
-            for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-                Enum e = it.next();
+            for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
+                T e = it.next();
                 
                 if(defaultValue.equals(e.name())) {
                     return e;
@@ -122,8 +121,8 @@ public class EnumCellProcessorBuilder extends AbstractCellProcessorBuilder<Enum<
         } else {
             try {
                 final Method valueMethod = type.getMethod(valueMethodName);
-                for(Iterator<Enum> it = set.iterator(); it.hasNext(); ) {
-                    Enum e = it.next();
+                for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
+                    T e = it.next();
                     
                     final String value = valueMethod.invoke(e).toString();
                     if(defaultValue.equals(value)) {
