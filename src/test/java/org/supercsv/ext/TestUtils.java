@@ -1,8 +1,9 @@
 package org.supercsv.ext;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.supercsv.util.CsvContext;
 
@@ -44,7 +45,29 @@ public class TestUtils {
         
         Calendar cal = Calendar.getInstance();
         cal.set(year, month-1, dayOfMonth, hour, minute, second);
+        cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+    
+    public static java.sql.Date toSqlDate(final int year, final int month, final int dayOfMonth) {
+        return new java.sql.Date(toDate(year, month, dayOfMonth).getTime());
+    }
+    
+    public static Timestamp toTimestamp(final int year, final int month, final int dayOfMonth,
+            final int hour, final int minute, final int second, final int millsecond) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month-1, dayOfMonth, hour, minute, second);
+        cal.set(Calendar.MILLISECOND, millsecond);
+        
+        return new Timestamp(cal.getTimeInMillis());
+    }
+    
+    public static Time toTime(final int hour, final int minute, final int second) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.set(1970, 0, 1, hour, minute, second);
+        cal.set(Calendar.MILLISECOND, 0);
+        return new Time(cal.getTime().getTime());
     }
     
     public static Date plusDays(final Date date, final int daysToAdd) {
