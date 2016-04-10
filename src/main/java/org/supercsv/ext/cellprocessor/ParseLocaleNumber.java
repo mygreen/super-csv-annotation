@@ -16,6 +16,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.ext.cellprocessor.ift.ValidationCellProcessor;
+import org.supercsv.ext.util.ConversionException;
 import org.supercsv.ext.util.NumberFormatWrapper;
 import org.supercsv.util.CsvContext;
 
@@ -87,7 +88,7 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
             Object result = formatter.parse(type, (String) value);
             return next.execute(result, context);
             
-        } catch(ParseException e) {
+        } catch(ParseException | ConversionException e) {
             throw new SuperCsvCellProcessorException(
                     String.format("'%s' could not be parsed as a BigDecimal", value),
                     context, this, e);

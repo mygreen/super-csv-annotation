@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.ext.builder.StringCellProcessorBuilder;
+import org.supercsv.ext.builder.impl.StringCellProcessorBuilder;
 
 
 /**

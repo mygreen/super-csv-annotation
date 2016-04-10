@@ -16,7 +16,7 @@ import java.text.ParsePosition;
  */
 public class NumberFormatWrapper {
     
-    private final ThreadLocal<NumberFormat> formatter;
+    private final NumberFormat formatter;
     
     private final boolean lenient;
     
@@ -30,32 +30,32 @@ public class NumberFormatWrapper {
             throw new NullPointerException("formatter should not be null.");
         }
         
-        this.formatter = new ThreadLocal<NumberFormat>() {
-            
-            @Override
-            protected NumberFormat initialValue() {
-                return formatter;
-            }
-            
-        };
-        
+        this.formatter = (NumberFormat) formatter.clone();
         this.lenient = lenient;
         
     }
     
-    public String format(final Number number) {
-        return formatter.get().format(number);
+    public synchronized <N extends Number> String format(final N number) {
+        return formatter.format(number);
     }
     
-    public <N extends Number> Number parse(final Class<N> type, final String value) throws ParseException {
-        
+    /**
+     * 
+     * @param type
+     * @param value
+     * @return
+     * @throws ParseException fail parse string to Number.
+     * @throws ConversionException fail convert Number or BigDecimal.
+     */
+    @SuppressWarnings("unchecked")
+    public synchronized <N extends Number> N parse(final Class<N> type, final String value) throws ParseException, ConversionException {
         
         final Number result;
         if(lenient) {
-           result = formatter.get().parse(value);
+           result = formatter.parse(value);
         } else {
             ParsePosition position = new ParsePosition(0);
-            result = formatter.get().parse(value, position);
+            result = formatter.parse(value, position);
             
             if(position.getIndex() != value.length()) {
                 throw new ParseException(
@@ -63,29 +63,76 @@ public class NumberFormatWrapper {
             }
         }
         
+        try {
+            if(result instanceof BigDecimal) {
+                // if set DecimalFormat#setParseBigDecimal(true)
+                return (N) convertWithBigDecimal(type, (BigDecimal) result, value);
+                
+            } else {
+                return (N) convertWithNumber(type, result, value);
+            }
+        } catch(NumberFormatException | ArithmeticException e) {
+            throw new ConversionException(value, type, e);
+        }
+        
+    }
+    
+    private Number convertWithNumber(final Class<? extends Number> type, final Number number, final String str) {
+        
         if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
-            return result.byteValue();
+            return number.byteValue();
             
         } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
-            return result.shortValue() ;
+            return number.shortValue() ;
             
         } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
-            return result.intValue();
+            return number.intValue();
             
         } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
-            return result.longValue();
+            return number.longValue();
             
         } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
-            return result.floatValue();
+            return number.floatValue();
             
         } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
-            return result.doubleValue();
+            return number.doubleValue();
             
         } else if(type.isAssignableFrom(BigInteger.class)) {
-            return new BigInteger(result.toString());
+            return new BigInteger(str);
             
         } else if(type.isAssignableFrom(BigDecimal.class)) {
-            return new BigDecimal(result.toString());
+            return new BigDecimal(str);
+            
+        }
+        
+        throw new IllegalArgumentException(String.format("not support class type : %s", type.getCanonicalName()));
+    }
+    
+    private Number convertWithBigDecimal(final Class<? extends Number> type, final BigDecimal number, final String str) {
+        
+        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
+            return lenient ? number.byteValue() : number.byteValueExact();
+            
+        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
+            return lenient ? number.shortValue() : number.shortValueExact();
+            
+        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
+            return lenient ? number.intValue() : number.intValueExact();
+            
+        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
+            return lenient ? number.longValue() : number.longValueExact();
+            
+        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
+            return number.floatValue();
+            
+        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
+            return number.doubleValue();
+            
+        } else if(type.isAssignableFrom(BigInteger.class)) {
+            return lenient ? number.toBigInteger() : number.toBigIntegerExact();
+            
+        } else if(type.isAssignableFrom(BigDecimal.class)) {
+            return number;
             
         }
         
@@ -95,14 +142,17 @@ public class NumberFormatWrapper {
     
     public String getPattern() {
         
-        NumberFormat nf = formatter.get();
-        if(nf instanceof DecimalFormat) {
-            DecimalFormat df = (DecimalFormat) nf;
+        if(formatter instanceof DecimalFormat) {
+            DecimalFormat df = (DecimalFormat) formatter;
             return df.toPattern();
         }
         
         return null;
         
+    }
+    
+    public boolean isLenient() {
+        return lenient;
     }
     
 }

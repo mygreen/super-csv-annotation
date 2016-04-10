@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 
+ * DateFormatter with thread-safe.
  *
  * @since 1.2
  * @author T.TSUCHIE
@@ -16,25 +16,18 @@ import java.util.Date;
  */
 public class DateFormatWrapper {
     
-    private final ThreadLocal<DateFormat> formatter;
+    private final DateFormat formatter;
     
     public DateFormatWrapper(final DateFormat formatter) {
         if(formatter == null) {
             throw new NullPointerException("formatter should not be null.");
         }
         
-        this.formatter = new ThreadLocal<DateFormat>() {
-            
-            @Override
-            protected DateFormat initialValue() {
-                return formatter;
-            }
-            
-        };
+        this.formatter = (DateFormat) formatter.clone();
         
     }
     
-    public DateFormatWrapper(final Class<?> dateClass) {
+    public DateFormatWrapper(final Class<? extends Date> dateClass) {
         
         if(dateClass == null) {
             throw new NullPointerException("dateClass should not be null.");
@@ -48,37 +41,39 @@ public class DateFormatWrapper {
             pattern = "HH:mm:ss";
             
         } else if(java.sql.Date.class.isAssignableFrom(dateClass)) {
-            pattern = "HH:mm:ss";
+            pattern = "yyyy-MM-dd";
             
         } else {
             pattern = "yyyy-MM-dd HH:mm:ss";
         }
         
-        this.formatter = new ThreadLocal<DateFormat>() {
-            
-            @Override
-            protected DateFormat initialValue() {
-                SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-                return sdf;
-            }
-            
-        };
+        this.formatter = new SimpleDateFormat(pattern);
     }
     
-    public String format(final Date date) {
-        return formatter.get().format(date);
+    /**
+     * Format date to string with synchorinzed.
+     * @param date date value.
+     * @return formatted string.
+     */
+    public synchronized <T extends Date> String format(final T date) {
+        return formatter.format(date);
         
     }
     
-    public Date parse(final String str) throws ParseException {
-        return formatter.get().parse(str);
+    /**
+     * Parse string to date with synchronized.
+     * @param str string value.
+     * @return parsed date.
+     * @throws ParseException
+     */
+    public synchronized Date parse(final String str) throws ParseException {
+        return formatter.parse(str);
     }
     
     public String getPattern() {
         
-        DateFormat df = formatter.get();
-        if(df instanceof SimpleDateFormat) {
-            SimpleDateFormat sdf = (SimpleDateFormat) df;
+        if(formatter instanceof SimpleDateFormat) {
+            SimpleDateFormat sdf = (SimpleDateFormat) formatter;
             return sdf.toPattern();
         }
         
