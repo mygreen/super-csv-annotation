@@ -1,8 +1,8 @@
 package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
+import static org.supercsv.ext.tool.TestUtils.*;
 import static org.hamcrest.Matchers.*;
-import static org.supercsv.ext.TestUtils.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -181,8 +181,8 @@ public class DateRangeTest {
         
         DateRange<Date> cp = (DateRange<Date>) processor;
         Map<String, ?> vars = cp.getMessageVariable();
-        assertThat(vars.get("min"), is(min));
-        assertThat(vars.get("max"), is(max));
+        assertThat(vars, hasEntry("min", min));
+        assertThat(vars, hasEntry("max", max));
         
     }
     

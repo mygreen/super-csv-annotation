@@ -1,8 +1,8 @@
 package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
+import static org.supercsv.ext.tool.TestUtils.*;
 import static org.hamcrest.Matchers.*;
-import static org.supercsv.ext.TestUtils.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -140,7 +140,7 @@ public class FutureDateTest {
         
         FutureDate<Date> cp = (FutureDate<Date>) processor;
         Map<String, ?> vars = cp.getMessageVariable();
-        assertThat(vars.get("min"), is(min));
+        assertThat(vars, hasEntry("min", min));
         
     }
     

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
 import org.supercsv.ext.annotation.CsvColumn;
@@ -18,11 +17,6 @@ public class SampleBean1 implements Serializable {
     
     /** serialVersionUID */
     private static final long serialVersionUID = 1L;
-    
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
     
     @CsvColumn(position = 0, label="数字1")
     private int integer1;

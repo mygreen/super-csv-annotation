@@ -1,10 +1,15 @@
-package org.supercsv.ext;
+package org.supercsv.ext.tool;
 
+import java.io.PrintWriter;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -89,6 +94,60 @@ public class TestUtils {
         cal.add(Calendar.DAY_OF_MONTH, -daysToSubstract);
         
         return cal.getTime();
+        
+    }
+    
+    public static Annotation[] getAnnotations(final Class<?> clazz, final String fieldName) {
+        try {
+            Field field = clazz.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.getAnnotations();
+        } catch(ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static void printCellProcessorChain(final CellProcessor cellProcessor, final String message) {
+        
+        if(cellProcessor == null) {
+            return;
+        }
+        
+        System.out.printf("======= print CellProcessor chain structures. :: %s ========\n", message);
+        printCellProcessorChain(cellProcessor, new PrintWriter(System.out));
+        System.out.println();
+    }
+    
+    public static void printCellProcessorChain(final CellProcessor cellProcessor, final PrintWriter writer) {
+        
+        String index = "";
+        CellProcessor cp = cellProcessor;
+        do {
+            if(index.length() == 0) {
+                writer.printf("%s%s\n", index, cp.getClass().getName());
+                writer.flush();
+            } else {
+                writer.printf("%s└%s\n", index, cp.getClass().getName());
+                writer.flush();
+            }
+            
+            // next processor
+            try {
+                if(cp instanceof CellProcessorAdaptor) {
+                    Field field = CellProcessorAdaptor.class.getDeclaredField("next");
+                    field.setAccessible(true);
+                    cp = (CellProcessor) field.get(cp);
+                } else {
+                    break;
+                }
+                
+            } catch(ReflectiveOperationException e) {
+                return;
+            }
+            
+            index += "    ";
+            
+        } while(cp != null);
         
     }
 }

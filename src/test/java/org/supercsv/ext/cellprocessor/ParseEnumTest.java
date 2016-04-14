@@ -1,8 +1,8 @@
 package org.supercsv.ext.cellprocessor;
 
 import static org.junit.Assert.*;
+import static org.supercsv.ext.tool.TestUtils.*;
 import static org.hamcrest.Matchers.*;
-import static org.supercsv.ext.TestUtils.*;
 
 import java.util.Map;
 

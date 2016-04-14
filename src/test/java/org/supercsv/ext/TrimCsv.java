@@ -2,7 +2,6 @@ package org.supercsv.ext;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
 
@@ -26,10 +25,6 @@ public class TrimCsv implements Serializable {
     
     @CsvColumn(position=4, trim=true, optional=true)
     public int intTrim4;
-    
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
     
     public String getStrTrim0() {
         return strTrim0;

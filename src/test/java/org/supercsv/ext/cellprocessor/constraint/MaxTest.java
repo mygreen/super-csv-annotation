@@ -1,8 +1,8 @@
 package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
+import static org.supercsv.ext.tool.TestUtils.*;
 import static org.hamcrest.Matchers.*;
-import static org.supercsv.ext.TestUtils.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -140,7 +140,7 @@ public class MaxTest {
         
         Max<Integer> cp = (Max<Integer>) processor;
         Map<String, ?> vars = cp.getMessageVariable();
-        assertThat(vars.get("max"), is(max));
+        assertThat(vars, hasEntry("max", max));
         
     }
     

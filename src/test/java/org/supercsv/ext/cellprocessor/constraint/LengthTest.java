@@ -1,8 +1,8 @@
 package org.supercsv.ext.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
+import static org.supercsv.ext.tool.TestUtils.*;
 import static org.hamcrest.Matchers.*;
-import static org.supercsv.ext.TestUtils.*;
 
 import java.util.Map;
 
@@ -166,8 +166,8 @@ public class LengthTest {
         
         Length cp = (Length) processor;
         Map<String, ?> vars = cp.getMessageVariable();
-        assertThat(vars.get("min"), is(minLength));
-        assertThat(vars.get("max"), is(maxLength));
+        assertThat(vars, hasEntry("min", minLength));
+        assertThat(vars, hasEntry("max", maxLength));
         
     }
     
