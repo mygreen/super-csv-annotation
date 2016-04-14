@@ -28,10 +28,6 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     
     protected CsvStringConverter getAnnotation(final Annotation[] annos) {
         
-        if(annos == null || annos.length == 0) {
-            return null;
-        }
-        
         for(Annotation anno : annos) {
             if(anno instanceof CsvStringConverter) {
                 return (CsvStringConverter) anno;
@@ -66,12 +62,12 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         return converterAnno.maxLength();
     }
     
-    protected Integer getExactLength(final CsvStringConverter converterAnno) {
+    protected int[] getExactLength(final CsvStringConverter converterAnno) {
         if(converterAnno == null) {
             return null;
         }
         
-        if(converterAnno.exactLength() < 0) {
+        if(converterAnno.exactLength().length == 0) {
             return null;
         }
         
@@ -117,23 +113,23 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         final CsvStringConverter converterAnno = getAnnotation(annos);
         final Integer minLength = getMinLength(converterAnno);
         final Integer maxLength = getMaxLength(converterAnno);
-        final Integer exactLength = getExactLength(converterAnno);
+        final int[] exactLength = getExactLength(converterAnno);
         final String regex = getRegex(converterAnno);
         final String[] forbid = getForbid(converterAnno);
         final String[] contain = getContain(converterAnno);
         final boolean notEmpty = getNotEmpty(converterAnno);
         
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         
         if(!ignoreValidationProcessor) {
-            cellProcessor = prependRegExProcessor(cellProcessor, regex);
-            cellProcessor = prependLengthProcessor(cellProcessor, minLength, maxLength, exactLength);
-            cellProcessor = prependForbidProcessor(cellProcessor, forbid);
-            cellProcessor = prependContainProcessor(cellProcessor, contain);
-            cellProcessor = prependNotEmptyProcessor(cellProcessor, notEmpty);
+            cp = prependForbidProcessor(cp, forbid);
+            cp = prependContainProcessor(cp, contain);
+            cp = prependRegExProcessor(cp, regex);
+            cp = prependLengthProcessor(cp, minLength, maxLength, exactLength);
+            cp = prependNotEmptyProcessor(cp, notEmpty);
         }
         
-        return cellProcessor;
+        return cp;
     }
     
     @Override
@@ -143,122 +139,87 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         final CsvStringConverter converterAnno = getAnnotation(annos);
         final Integer minLength = getMinLength(converterAnno);
         final Integer maxLength = getMaxLength(converterAnno);
-        final Integer exactLength = getExactLength(converterAnno);
+        final int[] exactLength = getExactLength(converterAnno);
         final String regex = getRegex(converterAnno);
         final String[] forbid = getForbid(converterAnno);
         final String[] contain = getContain(converterAnno);
         final boolean notEmpty = getNotEmpty(converterAnno);
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRegExProcessor(cellProcessor, regex);
-        cellProcessor = prependLengthProcessor(cellProcessor, minLength, maxLength, exactLength);
-        cellProcessor = prependForbidProcessor(cellProcessor, forbid);
-        cellProcessor = prependContainProcessor(cellProcessor, contain);
-        cellProcessor = prependNotEmptyProcessor(cellProcessor, notEmpty);
+        CellProcessor cp = processor;
+        cp = prependForbidProcessor(cp, forbid);
+        cp = prependContainProcessor(cp, contain);
+        cp = prependRegExProcessor(cp, regex);
+        cp = prependLengthProcessor(cp, minLength, maxLength, exactLength);
+        cp = prependNotEmptyProcessor(cp, notEmpty);
         
-        return cellProcessor;
+        return cp;
     }
     
     protected CellProcessor prependLengthProcessor(final CellProcessor processor, 
-            final Integer minLength, final Integer maxLength, final Integer exactLength) {
-        
-        CellProcessor cellProcessor = processor;
+            final Integer minLength, final Integer maxLength, final int[] exactLength) {
         
         if(minLength != null && maxLength != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new Length(minLength, maxLength);
-            } else {
-                cellProcessor = new Length(minLength, maxLength, cellProcessor);
-            }
+            return (processor == null ? 
+                    new Length(minLength, maxLength) : new Length(minLength, maxLength, processor));
+            
         } else if(minLength != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new MinLength(minLength);
-            } else {
-                cellProcessor = new MinLength(minLength, cellProcessor);
-            }
+            return (processor == null ? 
+                    new MinLength(minLength) : new MinLength(minLength, processor));
+            
         } else if(maxLength != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new MaxLength(maxLength);
-            } else {
-                cellProcessor = new MaxLength(maxLength, cellProcessor);
-            }
+            return (processor == null ? 
+                    new MaxLength(maxLength) : new MaxLength(maxLength, processor));
+            
         } else if(exactLength != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new Strlen(exactLength);
-            } else {
-                cellProcessor = new Strlen(exactLength, cellProcessor);
-            }
+            return (processor == null ? 
+                    new Strlen(exactLength) : new Strlen(exactLength, processor));
             
         }
         
-        return cellProcessor;
+        return processor;
     }
     
     protected CellProcessor prependRegExProcessor(final CellProcessor processor, final String regex) {
         
-        CellProcessor cellProcessor = processor;
-        
         if(regex.isEmpty()) {
-            return cellProcessor;
+            return processor;
         }
         
-        if(cellProcessor == null) {
-            cellProcessor = new StrRegEx(regex);
-        } else {
-            cellProcessor = new StrRegEx(regex, (StringCellProcessor) cellProcessor);
-        }
-        
-        return cellProcessor;
+        return (processor == null ?
+                new StrRegEx(regex) : new StrRegEx(regex, (StringCellProcessor) processor));
     }
     
     protected CellProcessor prependForbidProcessor(final CellProcessor processor, final String[] forbid) {
         
-        CellProcessor cellProcessor = processor;
-        if(forbid == null || forbid.length == 0) {
-            return cellProcessor;
+        if(forbid.length == 0) {
+            return processor;
         }
         
-        if(cellProcessor == null) {
-            cellProcessor = new ForbidSubStr(forbid);
-        } else {
-            cellProcessor = new ForbidSubStr(forbid, (StringCellProcessor) cellProcessor);
-        }
+        return (processor == null ?
+                new ForbidSubStr(forbid) : new ForbidSubStr(forbid, (StringCellProcessor) processor));
         
-        return cellProcessor;
     }
     
     protected CellProcessor prependContainProcessor(final CellProcessor processor, final String[] contain) {
         
-        CellProcessor cellProcessor = processor;
-        
-        if(contain == null || contain.length == 0) {
-            return cellProcessor;
+        if(contain.length == 0) {
+            return processor;
         }
         
-        if(cellProcessor == null) {
-            cellProcessor = new RequireSubStr(contain);
-        } else {
-            cellProcessor = new RequireSubStr(contain, (StringCellProcessor) cellProcessor);
-        }
+        return (processor == null ?
+                new RequireSubStr(contain) : new RequireSubStr(contain, (StringCellProcessor) processor));
         
-        return cellProcessor;
     }
     
     protected CellProcessor prependNotEmptyProcessor(final CellProcessor processor, final boolean notEmpty) {
         
-        CellProcessor cellProcessor = processor;
-        
         if(!notEmpty) {
-            return cellProcessor;
+            return processor;
         }
         
-        if(cellProcessor == null) {
-            cellProcessor = new StrNotNullOrEmpty();
-        } else {
-            cellProcessor = new StrNotNullOrEmpty((StringCellProcessor) cellProcessor);
-        }
+        return (processor == null ?
+                new StrNotNullOrEmpty() : new StrNotNullOrEmpty((StringCellProcessor) processor));
         
-        return cellProcessor;
     }
     
     @Override

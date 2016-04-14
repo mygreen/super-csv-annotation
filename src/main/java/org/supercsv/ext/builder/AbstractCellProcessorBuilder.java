@@ -59,13 +59,17 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
         if(csvColumnAnno.optional() && !type.isPrimitive()) {
             cellProcessor = prependOptionalProcessor(cellProcessor);
         } else {
-            cellProcessor = prependNotNullProcessor(cellProcessor);
+            cellProcessor = prependNotNullProcessor(cellProcessor, annos);
         }
         
         if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
-            cellProcessor = prependConvertNullToProcessor(type, cellProcessor,
-//                    getParseValue(type, annos, csvColumnAnno.outputDefaultValue()))
-                    csvColumnAnno.outputDefaultValue());
+            final Object defaultValue;
+            if(String.class.isAssignableFrom(type)) {
+                defaultValue = getParseValue(type, annos, csvColumnAnno.outputDefaultValue());
+            } else {
+                defaultValue = csvColumnAnno.outputDefaultValue();
+            }
+            cellProcessor = prependConvertNullToProcessor(type, cellProcessor, defaultValue);
         }
         
         return cellProcessor;
@@ -95,7 +99,7 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
         if(csvColumnAnno.optional() && !type.isPrimitive()) {
             cellProcessor = prependOptionalProcessor(cellProcessor);
         } else {
-            cellProcessor = prependNotNullProcessor(cellProcessor);
+            cellProcessor = prependNotNullProcessor(cellProcessor, annos);
         }
         
         if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
@@ -126,7 +130,7 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
         return (processor == null ? new Optional() : new Optional(processor));
     }
     
-    protected CellProcessor prependNotNullProcessor(final CellProcessor processor) {
+    protected CellProcessor prependNotNullProcessor(final CellProcessor processor, final Annotation[] annos) {
         return (processor == null ? new NotNull() : new NotNull(processor));
     }
     

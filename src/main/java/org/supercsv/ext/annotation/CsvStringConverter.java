@@ -1,9 +1,3 @@
-/*
- * CsvStringConverter.java
- * created in 2013/03/05
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.annotation;
 
 import java.lang.annotation.Documented;
@@ -28,7 +22,12 @@ public @interface CsvStringConverter {
     
     int maxLength() default -1;
     
-    int exactLength() default -1;
+    /**
+     * one or more required lengths
+     * <p>set CellProcessor for 'StrLen'
+     * @return
+     */
+    int[] exactLength() default {};
     
     /**
      * regular expression pattern.
