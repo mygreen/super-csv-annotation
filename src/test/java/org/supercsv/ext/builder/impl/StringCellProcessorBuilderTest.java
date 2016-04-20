@@ -45,6 +45,14 @@ public class StringCellProcessorBuilderTest {
     
     private StringCellProcessorBuilder builder;
     
+    /**
+     * Sets up the processor for the test using Combinations
+     */
+    @Before
+    public void setUp() {
+        builder = new StringCellProcessorBuilder();
+    }
+    
     @CsvBean
     private static class TestCsv {
         
@@ -108,14 +116,6 @@ public class StringCellProcessorBuilderTest {
         @CsvStringConverter(minLength=2, regex=".*", forbid={"abc", "ABC"}, contain={"world"}, notEmpty=true)
         String str_combine2;
         
-    }
-    
-    /**
-     * Sets up the processor for the test using Combinations
-     */
-    @Before
-    public void setUp() {
-        builder = new StringCellProcessorBuilder();
     }
     
     /**
@@ -193,7 +193,7 @@ public class StringCellProcessorBuilderTest {
     }
     
     /**
-     * Teest with optional. (not grant convert annotation.)
+     * Tests with optional. (not grant convert annotation.)
      */
     @Test
     public void testBuildInput_optional() {
@@ -210,7 +210,7 @@ public class StringCellProcessorBuilderTest {
     }
     
     /**
-     * Teest with optional. (not grant convert annotation.)
+     * Tests with optional. (not grant convert annotation.)
      */
     @Test
     public void testBuildOutput_optional() {
@@ -228,7 +228,7 @@ public class StringCellProcessorBuilderTest {
     }
     
     /**
-     * Teest with optional. (not grant convert annotation.)
+     * Tests with optional. (not grant convert annotation.)
      */
     @Test
     public void testBuildOutput_optional_ignoreValidation() {
