@@ -3,7 +3,6 @@ package org.supercsv.ext.builder.impl;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.EnumSet;
-import java.util.Iterator;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -23,10 +22,6 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 public class EnumCellProcessorBuilder<T extends Enum<T>> extends AbstractCellProcessorBuilder<T> {
     
     protected CsvEnumConverter getAnnotation(final Annotation[] annos) {
-        
-        if(annos == null || annos.length == 0) {
-            return null;
-        }
         
         for(Annotation anno : annos) {
             if(anno instanceof CsvEnumConverter) {
@@ -61,14 +56,14 @@ public class EnumCellProcessorBuilder<T extends Enum<T>> extends AbstractCellPro
         final CsvEnumConverter converterAnno = getAnnotation(annos);
         final String valueMethodName = getValueMethodName(converterAnno);
         
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         if(!valueMethodName.isEmpty()) {
-            cellProcessor = (cellProcessor == null ? 
+            cp = (cp == null ? 
                     new FormatEnum(type, valueMethodName) :
-                        new FormatEnum(type, valueMethodName, (StringCellProcessor) cellProcessor));
+                        new FormatEnum(type, valueMethodName, (StringCellProcessor) cp));
         }
         
-        return cellProcessor;
+        return cp;
     }
     
     @Override
@@ -79,63 +74,63 @@ public class EnumCellProcessorBuilder<T extends Enum<T>> extends AbstractCellPro
         final boolean ignoreCase = getIgnoreCase(converterAnno);
         final String valueMethodName = getValueMethodName(converterAnno);
         
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         if(valueMethodName.isEmpty()) {
-            cellProcessor = (cellProcessor == null ? 
-                    new ParseEnum(type, ignoreCase) : new ParseEnum(type, ignoreCase, cellProcessor));
+            cp = (cp == null ? 
+                    new ParseEnum(type, ignoreCase) : new ParseEnum(type, ignoreCase, cp));
         } else {
-            cellProcessor = (cellProcessor == null ? 
+            cp = (cp == null ? 
                     new ParseEnum(type, ignoreCase, valueMethodName) :
-                        new ParseEnum(type, ignoreCase, valueMethodName, cellProcessor));
+                        new ParseEnum(type, ignoreCase, valueMethodName, cp));
         }
         
-        return cellProcessor;
+        return cp;
     }
     
     
     @Override
-    public T getParseValue(final Class<T> type, final Annotation[] annos, final String defaultValue) {
-        CsvEnumConverter converterAnno = getAnnotation(annos);
+    public T getParseValue(final Class<T> type, final Annotation[] annos, final String strValue) {
+        
+        final CsvEnumConverter converterAnno = getAnnotation(annos);
         final boolean ignoreCase = getIgnoreCase(converterAnno);
         final String valueMethodName = getValueMethodName(converterAnno);
         
         final EnumSet<T> set = EnumSet.allOf(type);
         if(valueMethodName.isEmpty()) {
-            for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
-                T e = it.next();
-                
-                if(defaultValue.equals(e.name())) {
+            for(T e : set) {
+                if(strValue.equals(e.name())) {
                     return e;
                 }
                 
-                if(ignoreCase && defaultValue.equalsIgnoreCase(e.name())) {
+                if(ignoreCase && strValue.equalsIgnoreCase(e.name())) {
                     return e;
                 }
                 
             }
+            
         } else {
             try {
                 final Method valueMethod = type.getMethod(valueMethodName);
-                for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
-                    T e = it.next();
-                    
+                valueMethod.setAccessible(true);
+                
+                for(T e: set) {
                     final String value = valueMethod.invoke(e).toString();
-                    if(defaultValue.equals(value)) {
+                    if(strValue.equals(value)) {
                         return e;
                     }
                     
-                    if(ignoreCase && defaultValue.equalsIgnoreCase(value)) {
+                    if(ignoreCase && strValue.equalsIgnoreCase(value)) {
                         return e;
                     }
-                    
                 }
-            } catch(Exception e) {
+                
+            } catch(ReflectiveOperationException e) {
                 throw new SuperCsvInvalidAnnotationException(
                         String.format("enum class '%s' has not method '%s'", type.getCanonicalName(), valueMethodName));
             }
         }
         
-        throw new SuperCsvInvalidAnnotationException(String.format("convert fail enum value %s", defaultValue));
+        throw new SuperCsvInvalidAnnotationException(String.format("parse fail enum value %s", strValue));
     }
     
 }
