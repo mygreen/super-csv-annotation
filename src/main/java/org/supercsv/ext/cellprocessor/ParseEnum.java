@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +74,7 @@ public class ParseEnum extends CellProcessorAdaptor
         this.type = type;
         this.ignoreCase = ignoreCase;
         this.enumValueMap = createEnumMap(type, ignoreCase, valueMethodName);
-        this.valueMethod = createEnumValueMethod(type, valueMethodName);
+        this.valueMethod = getEnumValueMethod(type, valueMethodName);
     }
     
     public <T extends Enum<T>> ParseEnum(final Class<T> type, final boolean ignoreCase, final String valueMethodName, final CellProcessor next) {
@@ -84,7 +83,7 @@ public class ParseEnum extends CellProcessorAdaptor
         this.type = type;
         this.ignoreCase = ignoreCase;
         this.enumValueMap = createEnumMap(type, ignoreCase, valueMethodName);
-        this.valueMethod = createEnumValueMethod(type, valueMethodName);
+        this.valueMethod = getEnumValueMethod(type, valueMethodName);
     }
     
     protected static void checkPreconditions(final Class<?> type) {
@@ -94,7 +93,7 @@ public class ParseEnum extends CellProcessorAdaptor
         }
     }
     
-    protected <T extends Enum<T>> Method createEnumValueMethod(final Class<T> enumClass, final String valueMethodName) {
+    protected <T extends Enum<T>> Method getEnumValueMethod(final Class<T> enumClass, final String valueMethodName) {
         try {
             final Method method = enumClass.getMethod(valueMethodName);
             method.setAccessible(true);
@@ -108,14 +107,13 @@ public class ParseEnum extends CellProcessorAdaptor
     
     protected <T extends Enum<T>> Map<String, Enum<?>> createEnumMap(final Class<T> enumClass, final boolean ignoreCase) {
         
-        Map<String, Enum<?>> map = new LinkedHashMap<>();
-        EnumSet<T> set = EnumSet.allOf(enumClass);
+        final EnumSet<T> set = EnumSet.allOf(enumClass);
         
-        for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
-            Enum<T> e = it.next();
-            
+        final Map<String, Enum<?>> map = new LinkedHashMap<>();
+        for(T e : set) {
             final String key = (ignoreCase ? e.name().toLowerCase() : e.name());
             map.put(key, e);
+            
         }
         
         return Collections.unmodifiableMap(map);
@@ -124,20 +122,19 @@ public class ParseEnum extends CellProcessorAdaptor
     protected <T extends Enum<T>> Map<String, Enum<?>> createEnumMap(final Class<T> enumClass, final boolean ignoreCase,
             final String methodName) {
         
-        final Map<String, Enum<?>> map = new LinkedHashMap<>();
-        final Method method = createEnumValueMethod(enumClass, methodName);
+        final Method method = getEnumValueMethod(enumClass, methodName);
         
+        final Map<String, Enum<?>> map = new LinkedHashMap<>();
         try {
             
             EnumSet<T> set = EnumSet.allOf(enumClass);
-            for(Iterator<T> it = set.iterator(); it.hasNext(); ) {
-                Enum<T> e = it.next();
-                
+            for(T e : set) {
                 Object returnValue = method.invoke(e);
                 final String key = (ignoreCase ? returnValue.toString().toLowerCase() : returnValue.toString());
                 
-                map.put(key, e);            
+                map.put(key, e);  
             }
+            
         } catch(ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }

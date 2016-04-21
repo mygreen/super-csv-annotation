@@ -1,9 +1,3 @@
-/*
- * ParseBoolean.java
- * created in 2013/03/12
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor;
 
 import java.util.Collections;
@@ -38,7 +32,7 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     /** ignore low / upper case. */
     protected final boolean ignoreCase;
     
-    /** if fail to pase, return */
+    /** if fail to parse, return */
     protected boolean failToFalse;
     
     public ParseBoolean() {
@@ -56,19 +50,6 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     public ParseBoolean(final boolean ignoreCase, final BoolCellProcessor next) {
         this(DEFAULT_TRUE_VALUES, DEFAULT_FALSE_VALUES, ignoreCase, next);
     }
-    
-//    public ParseBoolean(final String trueValue, final String falseValue) {
-//        this(trueValue, falseValue, false);
-//    }
-//    
-//    public ParseBoolean(final String trueValue, final String falseValue, final boolean ignoreCase) {
-//        super();
-//        checkPreconditions(trueValue, falseValue);
-//        this.trueValues = createBooleanValuesSet(trueValue, ignoreCase);
-//        this.falseValues = createBooleanValuesSet(falseValue, ignoreCase);
-//        this.ignoreCase = ignoreCase;
-//    }
-//    
     public ParseBoolean(final String[] trueValues, final String[] falseValues) {
         this(trueValues, falseValues, false);
     }
@@ -80,18 +61,6 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         this.falseValues = createBooleanValuesSet(falseValues);
         this.ignoreCase = ignoreCase;
     }
-    
-//    public ParseBoolean(final String trueValue, final String falseValue, final BoolCellProcessor next) {
-//        this(trueValue, falseValue, false, next);
-//    }
-//    
-//    public ParseBoolean(final String trueValue, final String falseValue, final boolean ignoreCase, final BoolCellProcessor next) {
-//        super(next);
-//        checkPreconditions(trueValue, falseValue);
-//        this.trueValues = createBooleanValuesSet(trueValue, ignoreCase);
-//        this.falseValues = createBooleanValuesSet(falseValue, ignoreCase);
-//        this.ignoreCase = ignoreCase;
-//    }
     
     public ParseBoolean(final String[] trueValues, final String[] falseValues, final BoolCellProcessor next) {
         this(trueValues, falseValues, false, next);
@@ -105,11 +74,6 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         this.ignoreCase = ignoreCase;
     }
     
-//    protected Set<String> createBooleanValuesSet(final String value, final boolean ignoreCase) {
-//        return createBooleanValuesSet(new String[]{value}, ignoreCase);
-//        
-//    }
-    
     private Set<String> createBooleanValuesSet(final String[] values) {
         
         Set<String> set = new LinkedHashSet<>();
@@ -117,15 +81,6 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
         return Collections.unmodifiableSet(set);
         
     }
-    
-//    protected static void checkPreconditions(final String trueValue, final String falseValue) {
-//        if( trueValue == null ) {
-//            throw new NullPointerException("trueValue should not be null");
-//        }
-//        if( falseValue == null ) {
-//            throw new IllegalArgumentException("falseValue should not be null");
-//        }
-//    }
     
     protected static void checkPreconditions(final String[] trueValues, final String[] falseValues) {
         
