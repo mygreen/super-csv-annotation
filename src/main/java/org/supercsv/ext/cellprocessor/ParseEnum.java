@@ -152,7 +152,7 @@ public class ParseEnum extends CellProcessorAdaptor
             throw new SuperCsvCellProcessorException(String.class, value, context, this);
         }
         
-        final String stringValue = (String) value;
+        final String stringValue = (ignoreCase ? ((String)value).toLowerCase() : ((String)value));
         final Enum<?> result = enumValueMap.get(stringValue);
         
         if(result == null) {
