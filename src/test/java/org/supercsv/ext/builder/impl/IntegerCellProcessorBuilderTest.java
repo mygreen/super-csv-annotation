@@ -254,7 +254,7 @@ public class IntegerCellProcessorBuilderTest {
             printCellProcessorChain(cellProcessor, name.getMethodName());
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
             
             // null input
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
