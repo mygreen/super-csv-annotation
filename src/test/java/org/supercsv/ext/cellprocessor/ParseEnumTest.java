@@ -113,8 +113,8 @@ public class ParseEnumTest {
     @Test
     public void testExecuteWithIgnoreCase() {
         
-        assertThat(ignoreCaseProcessor.execute("red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(ignoreCaseProcessorChain.execute("red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(ignoreCaseProcessor.execute("ReD", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(ignoreCaseProcessorChain.execute("ReD", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
         
     }
     
@@ -124,8 +124,8 @@ public class ParseEnumTest {
     @Test
     public void testExecuteWithIgnoreCaseValueMethod() {
         
-        assertThat(ignoreCaseValueMethodProcessor.execute("黄(yellow)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Yellow));
-        assertThat(ignoreCaseValueMethodProcessorChain.execute("黄(yellow)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Yellow));
+        assertThat(ignoreCaseValueMethodProcessor.execute("黄(YEllOW)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Yellow));
+        assertThat(ignoreCaseValueMethodProcessorChain.execute("黄(YEllOW)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Yellow));
         
     }
     
