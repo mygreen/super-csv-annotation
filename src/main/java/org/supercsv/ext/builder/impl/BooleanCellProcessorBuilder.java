@@ -7,6 +7,7 @@ import org.supercsv.cellprocessor.ift.BoolCellProcessor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvBooleanConverter;
+import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.ParseBoolean;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
@@ -20,11 +21,23 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
  */
 public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Boolean> {
     
-    protected CsvBooleanConverter getAnnotation(final Annotation[] annos) {
+    @Override
+    protected CellProcessor buildInputCellProcessorWithConvertNullTo(final Class<Boolean> type, final Annotation[] annos,
+            final CellProcessor cellProcessor, final CsvColumn csvColumnAnno) {
         
-        if(annos == null || annos.length == 0) {
-            return null;
+        // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、falseに変換する。
+        if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
+            return prependConvertNullToProcessor(type, cellProcessor, false);
+            
+        } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
+            return prependConvertNullToProcessor(type, cellProcessor,
+                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
         }
+        
+        return cellProcessor;
+    }
+    
+    protected CsvBooleanConverter getAnnotation(final Annotation[] annos) {
         
         for(Annotation anno : annos) {
             if(anno instanceof CsvBooleanConverter) {
@@ -92,10 +105,10 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final String trueValue = getOutputTrueValue(converterAnno);
         final String falseValue = getOutputFalseValue(converterAnno);
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = (cellProcessor == null 
-                ? new FmtBool(trueValue, falseValue) : new FmtBool(trueValue, falseValue, (StringCellProcessor) cellProcessor));
-        return cellProcessor;
+        CellProcessor cp = processor;
+        cp = (cp == null 
+                ? new FmtBool(trueValue, falseValue) : new FmtBool(trueValue, falseValue, (StringCellProcessor) cp));
+        return cp;
         
     }
     
@@ -109,16 +122,17 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final boolean ignoreCase = getIgnoreCase(converterAnno);
         final boolean failToFalse = getFailToFalse(converterAnno);
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = (cellProcessor == null
+        CellProcessor cp = processor;
+        cp = (cp == null
                 ? new ParseBoolean(trueValue, falseValue, ignoreCase).setFailToFalse(failToFalse) :
-                    new ParseBoolean(trueValue, falseValue, ignoreCase, (BoolCellProcessor) cellProcessor).setFailToFalse(failToFalse));
+                    new ParseBoolean(trueValue, falseValue, ignoreCase, (BoolCellProcessor) cp).setFailToFalse(failToFalse));
         
-        return cellProcessor;
+        return cp;
     }
     
     @Override
-    public Boolean getParseValue(final Class<Boolean> type, final Annotation[] annos, final String defaultValue) {
+    public Boolean getParseValue(final Class<Boolean> type, final Annotation[] annos, final String strValue) {
+        
         final CsvBooleanConverter converterAnno = getAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
@@ -126,26 +140,26 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         final boolean failToFalse = getFailToFalse(converterAnno);
         
         for(String trueStr : trueValue) {
-            if(ignoreCase && trueStr.equalsIgnoreCase(defaultValue)) {
+            if(ignoreCase && trueStr.equalsIgnoreCase(strValue)) {
                 return Boolean.TRUE;
-            } else if(!ignoreCase && trueStr.equals(defaultValue)) {
+            } else if(!ignoreCase && trueStr.equals(strValue)) {
                 return Boolean.TRUE;
             }
         }
         
         for(String falseStr : falseValue) {
-            if(ignoreCase && falseStr.equalsIgnoreCase(defaultValue)) {
+            if(ignoreCase && falseStr.equalsIgnoreCase(strValue)) {
                 return Boolean.FALSE;
-            } else if(!ignoreCase && falseStr.equals(defaultValue)) {
+            } else if(!ignoreCase && falseStr.equals(strValue)) {
                 return Boolean.FALSE;
             }
         }
         
         if(failToFalse) {
-            return Boolean.TRUE;
+            return Boolean.FALSE;
         }
         
-        throw new SuperCsvInvalidAnnotationException(String.format("defaultValue'%s' cannot parse.", defaultValue));
+        throw new SuperCsvInvalidAnnotationException(String.format("defaultValue '%s' cannot parse.", strValue));
     }
     
     
