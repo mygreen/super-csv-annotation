@@ -4,8 +4,6 @@ import java.lang.annotation.Annotation;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
@@ -16,7 +14,7 @@ public class TimestampCellProcessorBuilder extends DateCellProcessorBuilder {
     
     @Override
     protected String getPattern(final CsvDateConverter converterAnno) {
-        if(converterAnno == null) {
+        if(converterAnno == null || converterAnno.pattern().isEmpty()) {
             return "yyyy-MM-dd HH:mm:ss.SSS";
         }
         
@@ -28,36 +26,26 @@ public class TimestampCellProcessorBuilder extends DateCellProcessorBuilder {
             final CellProcessor processor) {
         
         final CsvDateConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final TimeZone timeZone = getTimeZone(converterAnno);
+        final DateFormat formatter = createDateFormatter(converterAnno);
         
-        final DateFormat formatter = createDateFormat(pattern, lenient, locale, timeZone);
+        final Timestamp min = getParseValue(type, annos, getMin(converterAnno));
+        final Timestamp max = getParseValue(type, annos, getMax(converterAnno));
         
-        final Timestamp min = parseDate(getMin(converterAnno), formatter);
-        final Timestamp max = parseDate(getMax(converterAnno), formatter);
+        CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
-        
-        cellProcessor = (cellProcessor == null ?
+        cp = (cp == null ?
                 new ParseLocaleTimestamp(formatter) :
-                    new ParseLocaleTimestamp(formatter, (DateCellProcessor)cellProcessor));
+                    new ParseLocaleTimestamp(formatter, (DateCellProcessor)cp));
         
-        return cellProcessor;
+        return cp;
         
     }
     
     @Override
-    protected Timestamp parseDate(final String value, final DateFormat formatter) {
-        Date date = super.parseDate(value, formatter);
+    public Timestamp getParseValue(final Class<Date> type, final Annotation[] annos, final String strValue) {
+        Date date = super.getParseValue(type, annos, strValue);
         return date == null ? null : new Timestamp(date.getTime());
-    }
-    
-    @Override
-    public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
-        return new Timestamp(super.getParseValue(type, annos, defaultValue).getTime());
     }
     
 }

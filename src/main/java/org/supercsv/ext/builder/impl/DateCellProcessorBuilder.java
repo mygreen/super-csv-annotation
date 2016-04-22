@@ -24,29 +24,33 @@ import org.supercsv.ext.util.Utils;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date> {
     
-    protected DateFormat createDateFormat(final String pattern, boolean lenient,
-            final Locale locale, final TimeZone timeZone) {
-        DateFormat value = new SimpleDateFormat(pattern, locale);
-        value.setLenient(lenient);
+    protected DateFormat createDateFormatter(final CsvDateConverter converterAnno) {
         
-        if(timeZone != null) {
-            value.setTimeZone(timeZone);
-        }
+        final String pattern = getPattern(converterAnno);
+        final boolean lenient = getLenient(converterAnno);
+        final Locale locale = getLocale(converterAnno);
+        final TimeZone timeZone = getTimeZone(converterAnno);
+        
+        return createDateFormatter(pattern, lenient, locale, timeZone);
+    }
+    
+    protected DateFormat createDateFormatter(final String pattern, boolean lenient,
+            final Locale locale, final TimeZone timeZone) {
+        
+        final DateFormat value = new SimpleDateFormat(pattern, locale);
+        value.setLenient(lenient);
+        value.setTimeZone(timeZone);
         
         return value;
     }
     
     protected CsvDateConverter getAnnotation(final Annotation[] annos) {
-        
-        if(annos == null || annos.length == 0) {
-            return null;
-        }
         
         for(Annotation anno : annos) {
             if(anno instanceof CsvDateConverter) {
@@ -59,8 +63,8 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     }
     
     protected String getPattern(final CsvDateConverter converterAnno) {
-        if(converterAnno == null) {
-            return "yyyy-MM-dd";
+        if(converterAnno == null || converterAnno.pattern().isEmpty()) {
+            return "yyyy-MM-dd HH:mm:ss";
         }
         
         return converterAnno.pattern();
@@ -75,7 +79,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     }
     
     protected Locale getLocale(final CsvDateConverter converterAnno) {
-        if(converterAnno == null) {
+        if(converterAnno == null || converterAnno.locale().isEmpty()) {
             return Locale.getDefault();
         }
         
@@ -83,11 +87,7 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     }
     
     protected TimeZone getTimeZone(final CsvDateConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
-        }
-        
-        if(converterAnno.timezone().isEmpty()) {
+        if(converterAnno == null || converterAnno.timezone().isEmpty()) {
             return TimeZone.getDefault();
         }
         
@@ -112,45 +112,28 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     
     protected CellProcessor prependRangeProcessor(final Date min, final Date max, final DateFormat formatter, final CellProcessor processor) {
         
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         if(min != null && max != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new DateRange<Date>(min, max).setFormatter(formatter);
+            if(cp == null) {
+                cp = new DateRange<Date>(min, max).setFormatter(formatter);
             } else {
-                cellProcessor = new DateRange<Date>(min, max, cellProcessor).setFormatter(formatter);
+                cp = new DateRange<Date>(min, max, cp).setFormatter(formatter);
             }
         } else if(min != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new FutureDate<Date>(min).setFormatter(formatter);
+            if(cp == null) {
+                cp = new FutureDate<Date>(min).setFormatter(formatter);
             } else {
-                cellProcessor = new FutureDate<Date>(min, cellProcessor).setFormatter(formatter);
+                cp = new FutureDate<Date>(min, cp).setFormatter(formatter);
             }
         } else if(max != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new PastDate<Date>(max).setFormatter(formatter);
+            if(cp == null) {
+                cp = new PastDate<Date>(max).setFormatter(formatter);
             } else {
-                cellProcessor = new PastDate<Date>(max, cellProcessor).setFormatter(formatter);
+                cp = new PastDate<Date>(max, cp).setFormatter(formatter);
             }
         }
         
-        return cellProcessor;
-    }
-    
-    protected Date parseDate(final String value, final DateFormat formatter) {
-        if(value.isEmpty()) {
-            return null;
-        }
-        
-        if(formatter == null) {
-            return null;
-        }
-        
-        try {
-            return formatter.parse(value);
-        } catch(ParseException e) {
-            throw new RuntimeException(e);
-        }
-        
+        return cp;
     }
     
     @Override
@@ -158,68 +141,59 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvDateConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final TimeZone timeZone = getTimeZone(converterAnno);
+        final DateFormat formatter = createDateFormatter(converterAnno);
         
-        final DateFormat formatter = createDateFormat(pattern, lenient, locale, timeZone);
+        final Date min = getParseValue(type, annos, getMin(converterAnno));
+        final Date max = getParseValue(type, annos, getMax(converterAnno));
         
-        final Date min = parseDate(getMin(converterAnno), formatter);
-        final Date max = parseDate(getMax(converterAnno), formatter);
-        
-        CellProcessor cellProcessor = processor;
-        cellProcessor = (cellProcessor == null ? 
+        CellProcessor cp = processor;
+        cp = (cp == null ? 
                 new FormatLocaleDate(formatter) : 
-                    new FormatLocaleDate(formatter, (StringCellProcessor) cellProcessor));
+                    new FormatLocaleDate(formatter, (StringCellProcessor) cp));
         
         if(!ignoreValidationProcessor) {
-            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
-        return cellProcessor;
+        return cp;
     }
-
+    
     @Override
     public CellProcessor buildInputCellProcessor(final Class<Date> type, final Annotation[] annos,
             final CellProcessor processor) {
         
         final CsvDateConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final TimeZone timeZone = getTimeZone(converterAnno);
+        final DateFormat formatter = createDateFormatter(converterAnno);
         
-        final DateFormat formatter = createDateFormat(pattern, lenient, locale, timeZone);
+        final Date min = getParseValue(type, annos, getMin(converterAnno));
+        final Date max = getParseValue(type, annos, getMax(converterAnno));
         
-        final Date min = parseDate(getMin(converterAnno), formatter);
-        final Date max = parseDate(getMax(converterAnno), formatter);
+        CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
-        
-        cellProcessor = (cellProcessor == null ?
+        cp = (cp == null ?
                 new ParseLocaleDate(formatter) :
-                    new ParseLocaleDate(formatter, (DateCellProcessor)cellProcessor));
+                    new ParseLocaleDate(formatter, (DateCellProcessor)cp));
         
-        return cellProcessor;
+        return cp;
         
     }
     
     @Override
-    public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String defaultValue) {
+    public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String strValue) {
         final CsvDateConverter converterAnno = getAnnotation(annos);
+        final DateFormat formatter = createDateFormatter(converterAnno);
         final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final TimeZone timeZone = getTimeZone(converterAnno);
         
-        final DateFormat formatter = createDateFormat(pattern, lenient, locale, timeZone);
+        if(strValue.isEmpty()) {
+            return null;
+        }
+        
         try {
-            return formatter.parse(defaultValue);
+            return formatter.parse(strValue);
         } catch (ParseException e) {
             throw new SuperCsvInvalidAnnotationException(
                     String.format(" default '%s' value cannot parse to Date with pattern '%s'",
-                            defaultValue, pattern), e);
+                            strValue, pattern), e);
         }
     }
     
