@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +23,15 @@ import org.supercsv.util.CsvContext;
 public class TestUtils {
     
     public static final CsvContext  ANONYMOUS_CSVCONTEXT = new CsvContext(1, 2, 3);
+    
+    /**
+     * create Intger from str.
+     * @param value
+     * @return
+     */
+    public static Integer toInteger(final String value) {
+        return Integer.parseInt(value);
+    }
     
     /**
      * create Date instance.
@@ -97,6 +107,72 @@ public class TestUtils {
         
     }
     
+    public static Date plusHours(final Date date, final int hoursToAdd) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.HOUR_OF_DAY, hoursToAdd);
+        
+        return cal.getTime();
+        
+    }
+    
+    public static Date minusHours(final Date date, final int hoursToSubstract) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.HOUR_OF_DAY, -hoursToSubstract);
+        
+        return cal.getTime();
+        
+    }
+    
+    public static Date plusSeconds(final Date date, final int secondsToAdd) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.SECOND, secondsToAdd);
+        
+        return cal.getTime();
+        
+    }
+    
+    public static Date minusSeconds(final Date date, final int secondsToSubstract) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.SECOND, -secondsToSubstract);
+        
+        return cal.getTime();
+        
+    }
+    
+    public static Date plusMillseconds(final Date date, final int millsecondsToAdd) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.MILLISECOND, millsecondsToAdd);
+        
+        return cal.getTime();
+        
+    }
+    
+    public static Date minusMillseconds(final Date date, final int millsecondsToSubstract) {
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        cal.add(Calendar.MILLISECOND, -millsecondsToSubstract);
+        
+        return cal.getTime();
+        
+    }
+    
     public static Annotation[] getAnnotations(final Class<?> clazz, final String fieldName) {
         try {
             Field field = clazz.getDeclaredField(fieldName);
@@ -148,6 +224,13 @@ public class TestUtils {
             index += "    ";
             
         } while(cp != null);
+        
+    }
+    
+    public static final String format(final Date value, final String pattern) {
+        
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        return formatter.format(value);
         
     }
 }
