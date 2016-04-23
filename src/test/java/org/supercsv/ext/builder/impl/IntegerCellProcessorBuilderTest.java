@@ -7,6 +7,7 @@ import static org.supercsv.ext.tool.HasCellProcessor.*;
 
 import java.lang.annotation.Annotation;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -63,6 +64,32 @@ public class IntegerCellProcessorBuilderTest {
             builder = new IntegerCellProcessorBuilder();
         }
         
+        private static final String TEST_FORMATTED_PATTERN = "#,###";
+        
+        private static final Integer TEST_VALUE_1_OBJ = toInteger("12345");
+        private static final String TEST_VALUE_1_STR_NORMAL = "12345";
+        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345";
+        
+        private static final Integer TEST_VALUE_2_OBJ = toInteger("-23456");
+        private static final String TEST_VALUE_2_STR_NORMAL = "-23456";
+        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456";
+        
+        private static final Integer TEST_VALUE_INPUT_DEFAULT_OBJ = toInteger("112233");
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233";
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233";
+        
+        private static final Integer TEST_VALUE_OUTPUT_DEFAULT_OBJ = toInteger("-223344");
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344";
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344";
+        
+        private static final Integer TEST_VALUE_MIN_OBJ = toInteger("-54321");
+        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321";
+        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321";
+        
+        private static final Integer TEST_VALUE_MAX_OBJ = toInteger("98765");
+        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765";
+        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765";
+        
         @CsvBean
         private static class TestCsv {
             
@@ -75,60 +102,62 @@ public class IntegerCellProcessorBuilderTest {
             @CsvColumn(position=2, trim=true)
             Integer integer_trim;
             
-            @CsvColumn(position=3, inputDefaultValue="12345", outputDefaultValue="-67890")
+            @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
             Integer integer_defaultValue;
             
-            @CsvColumn(position=4, inputDefaultValue="12,345", outputDefaultValue="-67,890")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             Integer integer_defaultValue_format;
             
             @CsvColumn(position=4, inputDefaultValue="abc12,345")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             Integer integer_defaultValue_format_invalid;
             
-            @CsvColumn(position=5, equalsValue="123")
+            @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
             Integer integer_equalsValue;
             
-            @CsvColumn(position=6, equalsValue="12,345")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             Integer integer_equalsValue_format;
             
             @CsvColumn(position=7, unique=true)
             Integer integer_unique;
             
             @CsvColumn(position=8, unique=true)
-            @CsvNumberConverter(pattern="#,###")
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             Integer integer_unique_format;
             
-            @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue="123", outputDefaultValue="-678", equalsValue="12345", unique=true)
+            @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
+                    equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
             Integer integer_combine1;
             
-            @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue="123", outputDefaultValue="-678", equalsValue="12345", unique=true)
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
+                    equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             Integer integer_combine_format1;
             
             @CsvColumn(position=11)
-            @CsvNumberConverter(min="5")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL)
             Integer integer_min;
             
             @CsvColumn(position=12)
-            @CsvNumberConverter(min="-12,345", pattern="#,###")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             Integer integer_min_format;
             
             @CsvColumn(position=13)
-            @CsvNumberConverter(max="10")
+            @CsvNumberConverter(max=TEST_VALUE_MAX_STR_NORMAL)
             Integer integer_max;
             
             @CsvColumn(position=14)
-            @CsvNumberConverter(max="5,678", pattern="#,###")
+            @CsvNumberConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             Integer integer_max_format;
             
             @CsvColumn(position=15)
-            @CsvNumberConverter(min="5", max="10")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
             Integer integer_range;
             
             @CsvColumn(position=16)
-            @CsvNumberConverter(min="-12,345", max="5,678", pattern="#,###")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             Integer integer_range_format;
             
             @CsvColumn(position=17)
@@ -154,10 +183,11 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             assertThat(cellProcessor, hasCellProcessor(ParseInt.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -188,9 +218,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -212,9 +243,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -235,9 +267,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -252,9 +285,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -269,9 +303,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -282,9 +317,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute("  123 ", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + " ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         }
         
         @Test
@@ -292,9 +328,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is("123"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         }
         
         @Test
@@ -302,9 +339,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is("123"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         }
         
         @Test
@@ -312,9 +350,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
         }
         
         @Test
@@ -322,9 +361,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
         }
         
         @Test
@@ -332,9 +372,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
         }
         
         @Test
@@ -342,9 +383,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
         }
         
         @Test
@@ -352,9 +394,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67,890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
         }
         
         @Test
@@ -362,9 +405,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67,890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
         }
         
         /**
@@ -386,13 +430,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -405,13 +450,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -424,12 +470,13 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
-            assertThat(cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT), is(toInteger("456")));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
         }
         
@@ -438,13 +485,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -457,13 +505,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not quals input
             try {
-                cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -476,12 +525,13 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not quals input
-            assertThat(cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT), is("456"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
             
         }
         
@@ -490,14 +540,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
-            assertThat(cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT), is(toInteger("456")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -510,14 +561,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+           
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
-            assertThat(cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT), is(toInteger("456")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -530,10 +582,12 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
             
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
-            assertThat(cellProcessor.execute(toInteger("123"), ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
         }
         
@@ -542,14 +596,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
-            assertThat(cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT), is(toInteger("456")));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -562,14 +617,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
-            assertThat(cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT), is("456"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
             
             // not unique input
             try {
-                cellProcessor.execute(toInteger("456"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -582,10 +638,12 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
         }
         
@@ -593,15 +651,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildInput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
-            assertThat(cellProcessor.execute("  12345  ", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -610,7 +667,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute("12345", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -622,15 +679,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -639,7 +695,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -651,17 +707,16 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
             
             // not equals input
-            assertThat(cellProcessor.execute(toInteger("678"), ANONYMOUS_CSVCONTEXT), is("678"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_NORMAL));
             
             // not unique input
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
             
         }
         
@@ -669,15 +724,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildInput_combine_format1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(toInteger("123")));
-            assertThat(cellProcessor.execute("  12345  ", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_FORMATTED + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -686,7 +740,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute("12345", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -698,15 +752,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine_format1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -715,7 +768,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -727,17 +780,16 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine_format1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not equals input
-            assertThat(cellProcessor.execute(toInteger("678"), ANONYMOUS_CSVCONTEXT), is("678"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
             
             // not unique input
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
         }
         
@@ -746,14 +798,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute("5", ANONYMOUS_CSVCONTEXT), is(toInteger("5")));
-            assertThat(cellProcessor.execute("6", ANONYMOUS_CSVCONTEXT), is(toInteger("6")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(5)
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = obj.toString();
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("4", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -767,14 +830,24 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute(toInteger("5"), ANONYMOUS_CSVCONTEXT), is(toInteger("5")));
-            assertThat(cellProcessor.execute(toInteger("6"), ANONYMOUS_CSVCONTEXT), is(toInteger("6")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(5)
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = obj.toString();
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute(toInteger("4"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -788,10 +861,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
-            // value less than min(5)
-            assertThat(cellProcessor.execute(toInteger("4"), ANONYMOUS_CSVCONTEXT), is(toInteger("4")));
+            // less than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
         }
         
@@ -800,14 +879,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute("-12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("-12345")));
-            assertThat(cellProcessor.execute("-12,344", ANONYMOUS_CSVCONTEXT), is(toInteger("-12344")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(-12345)
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("-12346", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -821,14 +911,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute(toInteger("-12345"), ANONYMOUS_CSVCONTEXT), is("-12,345"));
-            assertThat(cellProcessor.execute(toInteger("-12344"), ANONYMOUS_CSVCONTEXT), is("-12,344"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
             
-            // value less than min(-12345)
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute(toInteger("-12346"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -842,10 +943,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
-            // value less than min(-12345)
-            assertThat(cellProcessor.execute(toInteger("-12346"), ANONYMOUS_CSVCONTEXT), is("-12,346"));
+            // less than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
             
         }
         
@@ -854,14 +961,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute("10", ANONYMOUS_CSVCONTEXT), is(toInteger("10")));
-            assertThat(cellProcessor.execute("9", ANONYMOUS_CSVCONTEXT), is(toInteger("9")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(10)
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("11", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -875,14 +993,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute(toInteger("10"), ANONYMOUS_CSVCONTEXT), is(toInteger("10")));
-            assertThat(cellProcessor.execute(toInteger("9"), ANONYMOUS_CSVCONTEXT), is(toInteger("9")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(10)
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(toInteger("11"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -896,10 +1025,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
-            // value greater than max(10)
-            assertThat(cellProcessor.execute(toInteger("11"), ANONYMOUS_CSVCONTEXT), is(toInteger("11")));
+            // greater than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
         }
         
@@ -908,14 +1043,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute("5,678", ANONYMOUS_CSVCONTEXT), is(toInteger("5678")));
-            assertThat(cellProcessor.execute("5,677", ANONYMOUS_CSVCONTEXT), is(toInteger("5677")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(5679)
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("5,679", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -929,14 +1075,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute(toInteger("5678"), ANONYMOUS_CSVCONTEXT), is("5,678"));
-            assertThat(cellProcessor.execute(toInteger("5677"), ANONYMOUS_CSVCONTEXT), is("5,677"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
             
-            // value greater than max(5679)
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(toInteger("5679"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -950,10 +1107,17 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
-            // value greater than max(5679)
-            assertThat(cellProcessor.execute(toInteger("5679"), ANONYMOUS_CSVCONTEXT), is("5,679"));
+            // greater than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            
+            }
             
         }
         
@@ -962,26 +1126,48 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute("5", ANONYMOUS_CSVCONTEXT), is(toInteger("5")));
-            assertThat(cellProcessor.execute("6", ANONYMOUS_CSVCONTEXT), is(toInteger("6")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute("10", ANONYMOUS_CSVCONTEXT), is(toInteger("10")));
-            assertThat(cellProcessor.execute("9", ANONYMOUS_CSVCONTEXT), is(toInteger("9")));
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = obj.toString();
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
-            // value less than range(5, 10)
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("4", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than range(5, 10)
+            
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("11", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -995,30 +1181,52 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute(toInteger("5"), ANONYMOUS_CSVCONTEXT), is(toInteger("5")));
-            assertThat(cellProcessor.execute(toInteger("6"), ANONYMOUS_CSVCONTEXT), is(toInteger("6")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute(toInteger("10"), ANONYMOUS_CSVCONTEXT), is(toInteger("10")));
-            assertThat(cellProcessor.execute(toInteger("9"), ANONYMOUS_CSVCONTEXT), is(toInteger("9")));
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = obj.toString();
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            // value less than range(5,10)
+            // less than min value
             try {
-                cellProcessor.execute(toInteger("4"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(toInteger("11"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
+
             
         }
         
@@ -1027,12 +1235,24 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
-            // value less than range(5,10)
-            assertThat(cellProcessor.execute(toInteger("4"), ANONYMOUS_CSVCONTEXT), is(toInteger("4")));
+            // less than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            assertThat(cellProcessor.execute(toInteger("11"), ANONYMOUS_CSVCONTEXT), is(toInteger("11")));
+            // greater than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = obj.toString();
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
         }
         
         @Test
@@ -1040,26 +1260,45 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_range_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
-            assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute("-12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("-12345")));
-            assertThat(cellProcessor.execute("-12,344", ANONYMOUS_CSVCONTEXT), is(toInteger("-12344")));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute("5,678", ANONYMOUS_CSVCONTEXT), is(toInteger("5678")));
-            assertThat(cellProcessor.execute("5,677", ANONYMOUS_CSVCONTEXT), is(toInteger("5677")));
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            // value less than range(-12345,5678)
+            // less than min value
             try {
-                cellProcessor.execute("-12346", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than max(-12345,5678)
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("5,679", ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1073,26 +1312,47 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "integer_range_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute(toInteger("-12345"), ANONYMOUS_CSVCONTEXT), is("-12,345"));
-            assertThat(cellProcessor.execute(toInteger("-12344"), ANONYMOUS_CSVCONTEXT), is("-12,344"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
             
-            assertThat(cellProcessor.execute(toInteger("5678"), ANONYMOUS_CSVCONTEXT), is("5,678"));
-            assertThat(cellProcessor.execute(toInteger("5677"), ANONYMOUS_CSVCONTEXT), is("5,677"));
+            // greater than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
             
-            // value less than range(-12345,5678)
+            // less than min value
             try {
-                cellProcessor.execute(toInteger("-12346"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than range(-12345,5678)
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
+            
+            // less than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(toInteger("5679"), ANONYMOUS_CSVCONTEXT);
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1109,11 +1369,22 @@ public class IntegerCellProcessorBuilderTest {
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
-            // value less than range(-12345,5678)
-            assertThat(cellProcessor.execute(toInteger("-12346"), ANONYMOUS_CSVCONTEXT), is("-12,346"));
+            // less than min value
+            {
+                Integer obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
             
-            // value greater than max(-12345,5678)
-            assertThat(cellProcessor.execute(toInteger("5679"), ANONYMOUS_CSVCONTEXT), is("5,679"));
+            // greater than max value
+            {
+                Integer obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            
+            }
             
         }
         
@@ -1211,6 +1482,32 @@ public class IntegerCellProcessorBuilderTest {
             builder = new IntegerCellProcessorBuilder();
         }
         
+        private static final String TEST_FORMATTED_PATTERN = "#,###";
+        
+        private static final int TEST_VALUE_1_OBJ = 12345;
+        private static final String TEST_VALUE_1_STR_NORMAL = "12345";
+        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345";
+        
+        private static final int TEST_VALUE_2_OBJ = -23456;
+        private static final String TEST_VALUE_2_STR_NORMAL = "-23456";
+        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456";
+        
+        private static final int TEST_VALUE_INPUT_DEFAULT_OBJ = 112233;
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233";
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233";
+        
+        private static final int TEST_VALUE_OUTPUT_DEFAULT_OBJ = -223344;
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344";
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344";
+        
+        private static final int TEST_VALUE_MIN_OBJ = -54321;
+        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321";
+        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321";
+        
+        private static final int TEST_VALUE_MAX_OBJ = 98765;
+        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765";
+        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765";
+        
         @CsvBean
         private static class TestCsv {
             
@@ -1223,60 +1520,62 @@ public class IntegerCellProcessorBuilderTest {
             @CsvColumn(position=2, trim=true)
             int int_trim;
             
-            @CsvColumn(position=3, inputDefaultValue="12345", outputDefaultValue="-67890")
+            @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
             int int_defaultValue;
             
-            @CsvColumn(position=4, inputDefaultValue="12,345", outputDefaultValue="-67,890")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             int int_defaultValue_format;
             
             @CsvColumn(position=4, inputDefaultValue="abc12,345")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             int int_defaultValue_format_invalid;
             
-            @CsvColumn(position=5, equalsValue="123")
+            @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
             int int_equalsValue;
             
-            @CsvColumn(position=6, equalsValue="12,345")
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             int int_equalsValue_format;
             
             @CsvColumn(position=7, unique=true)
             int int_unique;
             
             @CsvColumn(position=8, unique=true)
-            @CsvNumberConverter(pattern="#,###")
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             int int_unique_format;
             
-            @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue="123", outputDefaultValue="-678", equalsValue="12345", unique=true)
+            @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
+                    equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
             int int_combine1;
             
-            @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue="123", outputDefaultValue="-678", equalsValue="12345", unique=true)
-            @CsvNumberConverter(pattern="#,###")
+            @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
+                    equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
+            @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
             int int_combine_format1;
             
             @CsvColumn(position=11)
-            @CsvNumberConverter(min="5")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL)
             int int_min;
             
             @CsvColumn(position=12)
-            @CsvNumberConverter(min="-12,345", pattern="#,###")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             int int_min_format;
             
             @CsvColumn(position=13)
-            @CsvNumberConverter(max="10")
+            @CsvNumberConverter(max=TEST_VALUE_MAX_STR_NORMAL)
             int int_max;
             
             @CsvColumn(position=14)
-            @CsvNumberConverter(max="5,678", pattern="#,###")
+            @CsvNumberConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             int int_max_format;
             
             @CsvColumn(position=15)
-            @CsvNumberConverter(min="5", max="10")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
             int int_range;
             
             @CsvColumn(position=16)
-            @CsvNumberConverter(min="-12,345", max="5,678", pattern="#,###")
+            @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
             int int_range_format;
             
             @CsvColumn(position=17)
@@ -1290,6 +1589,7 @@ public class IntegerCellProcessorBuilderTest {
             @CsvColumn(position=19)
             @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
             int int_format_roundingMode;
+            
         }
         
         /**
@@ -1301,10 +1601,11 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             assertThat(cellProcessor, hasCellProcessor(ParseInt.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -1335,9 +1636,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -1359,9 +1661,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input
             try {
@@ -1385,9 +1688,9 @@ public class IntegerCellProcessorBuilderTest {
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
-            // if type is primitive, then convert to zero.
+            // null input (if primitive, return 0)
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(0));
             
         }
@@ -1401,9 +1704,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_optional");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(0));
             
@@ -1418,10 +1722,11 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_optional");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
-            
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+                        
             assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(0));
         }
         
@@ -1430,9 +1735,11 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute("  123 ", ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + " ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            
         }
         
         @Test
@@ -1440,9 +1747,11 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is("123"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+            
         }
         
         @Test
@@ -1450,9 +1759,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is("123"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         }
         
         @Test
@@ -1460,9 +1770,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
         }
         
         @Test
@@ -1470,9 +1781,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
         }
         
         @Test
@@ -1480,9 +1792,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
         }
         
         @Test
@@ -1490,9 +1803,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
         }
         
         @Test
@@ -1502,7 +1816,7 @@ public class IntegerCellProcessorBuilderTest {
             printCellProcessorChain(cellProcessor, name.getMethodName());
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67,890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
         }
         
         @Test
@@ -1510,9 +1824,10 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-67,890"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
         }
         
         /**
@@ -1534,13 +1849,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1553,13 +1869,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1572,12 +1889,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
-            assertThat(cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT), is(456));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+            
             
         }
         
@@ -1586,13 +1905,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not quals input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1605,18 +1925,20 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not quals input
             try {
-                cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Equals.class)));
             }
+
         }
         
         @Test
@@ -1624,12 +1946,14 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not quals input
-            assertThat(cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT), is("456"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
+            
             
         }
         
@@ -1638,14 +1962,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute("123", ANONYMOUS_CSVCONTEXT), is(123));
-            assertThat(cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT), is(456));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1658,14 +1983,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
-            assertThat(cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT), is(456));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1678,11 +2004,13 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
             
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
-            assertThat(cellProcessor.execute(123, ANONYMOUS_CSVCONTEXT), is(123));
-            
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+                        
         }
         
         @Test
@@ -1690,14 +2018,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(12345));
-            assertThat(cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT), is(456));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
             
             // not unique input
             try {
-                cellProcessor.execute("456", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1710,14 +2039,15 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
-            assertThat(cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT), is("456"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
             
             // not unique input
             try {
-                cellProcessor.execute(456, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1730,10 +2060,12 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
         }
         
@@ -1741,15 +2073,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildInput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(123));
-            assertThat(cellProcessor.execute("  12345  ", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1758,27 +2089,27 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute("12345", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Unique.class)));
             }
+            
         }
         
         @Test
         public void testBuildOutput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1787,7 +2118,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1799,17 +2130,17 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
             
             // not equals input
-            assertThat(cellProcessor.execute(678, ANONYMOUS_CSVCONTEXT), is("678"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_NORMAL));
             
             // not unique input
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+            
             
         }
         
@@ -1817,15 +2148,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildInput_combine_format1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(123));
-            assertThat(cellProcessor.execute("  12345  ", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+            assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_FORMATTED + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1834,7 +2164,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute("12345", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1846,15 +2176,14 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine_format1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not equals input
             try {
-                cellProcessor.execute("678", ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1863,7 +2192,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // not unique input
             try {
-                cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1875,17 +2204,16 @@ public class IntegerCellProcessorBuilderTest {
         public void testBuildOutput_combine_format1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("-678"));
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
             // not equals input
-            assertThat(cellProcessor.execute(678, ANONYMOUS_CSVCONTEXT), is("678"));
+            assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
             
             // not unique input
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
             
         }
         
@@ -1894,20 +2222,30 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute("5", ANONYMOUS_CSVCONTEXT), is(5));
-            assertThat(cellProcessor.execute("6", ANONYMOUS_CSVCONTEXT), is(6));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(5)
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = Objects.toString(obj);
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("4", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Min.class)));
-            }
-            
+            }            
         }
         
         @Test
@@ -1915,14 +2253,24 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute(5, ANONYMOUS_CSVCONTEXT), is(5));
-            assertThat(cellProcessor.execute(6, ANONYMOUS_CSVCONTEXT), is(6));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(5)
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = Objects.toString(obj);
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute(4, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1936,11 +2284,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
-            // value less than min(5)
-            assertThat(cellProcessor.execute(4, ANONYMOUS_CSVCONTEXT), is(4));
-            
+            // less than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }            
         }
         
         @Test
@@ -1948,20 +2301,30 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute("-12,345", ANONYMOUS_CSVCONTEXT), is(-12345));
-            assertThat(cellProcessor.execute("-12,344", ANONYMOUS_CSVCONTEXT), is(-12344));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            // value less than min(-12345)
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("-12346", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Min.class)));
-            }
-            
+            }            
         }
         
         @Test
@@ -1969,20 +2332,30 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Min.class));
             
-            assertThat(cellProcessor.execute(-12345, ANONYMOUS_CSVCONTEXT), is("-12,345"));
-            assertThat(cellProcessor.execute(-12344, ANONYMOUS_CSVCONTEXT), is("-12,344"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
             
-            // value less than min(-12345)
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute(-12346, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Min.class)));
-            }
-            
+            }            
         }
         
         @Test
@@ -1990,11 +2363,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
-            // value less than min(-12345)
-            assertThat(cellProcessor.execute(-12346, ANONYMOUS_CSVCONTEXT), is("-12,346"));
-            
+            // less than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }            
         }
         
         @Test
@@ -2002,20 +2380,30 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute("10", ANONYMOUS_CSVCONTEXT), is(10));
-            assertThat(cellProcessor.execute("9", ANONYMOUS_CSVCONTEXT), is(9));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(10)
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("11", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Max.class)));
             }
-            
         }
         
         @Test
@@ -2023,14 +2411,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute(10, ANONYMOUS_CSVCONTEXT), is(10));
-            assertThat(cellProcessor.execute(9, ANONYMOUS_CSVCONTEXT), is(9));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(10)
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(11, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2044,10 +2443,16 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
-            // value greater than max(10)
-            assertThat(cellProcessor.execute(11, ANONYMOUS_CSVCONTEXT), is(11));
+            // greater than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
         }
         
@@ -2056,14 +2461,25 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute("5,678", ANONYMOUS_CSVCONTEXT), is(5678));
-            assertThat(cellProcessor.execute("5,677", ANONYMOUS_CSVCONTEXT), is(5677));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
             
-            // value greater than max(5679)
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("5,679", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2077,20 +2493,30 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Max.class));
             
-            assertThat(cellProcessor.execute(5678, ANONYMOUS_CSVCONTEXT), is("5,678"));
-            assertThat(cellProcessor.execute(5677, ANONYMOUS_CSVCONTEXT), is("5,677"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
             
-            // value greater than max(5679)
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(5679, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Max.class)));
-            }
-            
+            }            
         }
         
         @Test
@@ -2098,11 +2524,17 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
-            // value greater than max(5679)
-            assertThat(cellProcessor.execute(5679, ANONYMOUS_CSVCONTEXT), is("5,679"));
+            // greater than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
             
+            }            
         }
         
         @Test
@@ -2110,26 +2542,48 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute("5", ANONYMOUS_CSVCONTEXT), is(5));
-            assertThat(cellProcessor.execute("6", ANONYMOUS_CSVCONTEXT), is(6));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute("10", ANONYMOUS_CSVCONTEXT), is(10));
-            assertThat(cellProcessor.execute("9", ANONYMOUS_CSVCONTEXT), is(9));
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = Objects.toString(obj);
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
-            // value less than range(5, 10)
+            }
+            
+            // less than min value
             try {
-                cellProcessor.execute("4", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than range(5, 10)
+            
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("11", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2143,31 +2597,51 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute(5, ANONYMOUS_CSVCONTEXT), is(5));
-            assertThat(cellProcessor.execute(6, ANONYMOUS_CSVCONTEXT), is(6));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute(10, ANONYMOUS_CSVCONTEXT), is(10));
-            assertThat(cellProcessor.execute(9, ANONYMOUS_CSVCONTEXT), is(9));
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = Objects.toString(obj);
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            // value less than range(5,10)
+            // less than min value
             try {
-                cellProcessor.execute(4, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(11, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
-            }
-            
+            }            
         }
         
         @Test
@@ -2175,39 +2649,71 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
-            // value less than range(5,10)
-            assertThat(cellProcessor.execute(4, ANONYMOUS_CSVCONTEXT), is(4));
+            // less than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            assertThat(cellProcessor.execute(11, ANONYMOUS_CSVCONTEXT), is(11));
-        }
+            // greater than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = Objects.toString(obj);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
+            }        }
         
         @Test
         public void testBuildInput_range_format() {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_range_format");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute("-12,345", ANONYMOUS_CSVCONTEXT), is(-12345));
-            assertThat(cellProcessor.execute("-12,344", ANONYMOUS_CSVCONTEXT), is(-12344));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
-            assertThat(cellProcessor.execute("5,678", ANONYMOUS_CSVCONTEXT), is(5678));
-            assertThat(cellProcessor.execute("5,677", ANONYMOUS_CSVCONTEXT), is(5677));
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
             
-            // value less than range(-12345,5678)
+            // less than min value
             try {
-                cellProcessor.execute("-12346", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than max(-12345,5678)
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
+            
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute("5,679", ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2221,26 +2727,47 @@ public class IntegerCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "int_range_format");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Range.class));
             
-            assertThat(cellProcessor.execute(-12345, ANONYMOUS_CSVCONTEXT), is("-12,345"));
-            assertThat(cellProcessor.execute(-12344, ANONYMOUS_CSVCONTEXT), is("-12,344"));
+            assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
             
-            assertThat(cellProcessor.execute(5678, ANONYMOUS_CSVCONTEXT), is("5,678"));
-            assertThat(cellProcessor.execute(5677, ANONYMOUS_CSVCONTEXT), is("5,677"));
+            // greater than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
             
-            // value less than range(-12345,5678)
+            // less than min value
             try {
-                cellProcessor.execute(-12346, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MIN_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
                 assertThat(errorProcessor, is(instanceOf(Range.class)));
             }
             
-            // value greater than range(-12345,5678)
+            assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
+            
+            // less than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ - 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
+            
+            // greater than max value
             try {
-                cellProcessor.execute(5679, ANONYMOUS_CSVCONTEXT);
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2257,12 +2784,22 @@ public class IntegerCellProcessorBuilderTest {
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
-            // value less than range(-12345,5678)
-            assertThat(cellProcessor.execute(-12346, ANONYMOUS_CSVCONTEXT), is("-12,346"));
+            // less than min value
+            {
+                int obj = TEST_VALUE_MIN_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            }
             
-            // value greater than max(-12345,5678)
-            assertThat(cellProcessor.execute(5679, ANONYMOUS_CSVCONTEXT), is("5,679"));
+            // greater than max value
+            {
+                int obj = TEST_VALUE_MAX_OBJ + 1;
+                String str = format(obj, TEST_FORMATTED_PATTERN);
+                
+                assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
             
+            }
         }
         
         @Test

@@ -127,6 +127,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_default");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -152,6 +153,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_default");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -177,6 +179,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_default");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -201,6 +204,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_optional");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -218,6 +222,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_optional");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -236,6 +241,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_optional");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -250,6 +256,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_trim");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
         
         assertThat(cellProcessor.execute("  abc ", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -270,6 +277,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_trim");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
         
         assertThat(cellProcessor.execute("  abc ", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -280,6 +288,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_defaultValue");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("OK[in]"));
@@ -290,6 +299,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_defaultValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("OK[out]"));
@@ -300,6 +310,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_defaultValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("OK[out]"));
@@ -320,6 +331,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_defaultValue_empty");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(""));
@@ -330,6 +342,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_defaultValue_empty");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(""));
@@ -340,6 +353,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_equalsValue");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -359,6 +373,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_equalsValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -378,6 +393,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_equalsValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -392,6 +408,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_unique");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -412,6 +429,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -432,6 +450,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -442,7 +461,6 @@ public class StringCellProcessorBuilderTest {
     public void testBuildInput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_combine1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(" OK[in] "));
@@ -471,7 +489,6 @@ public class StringCellProcessorBuilderTest {
     public void testBuildOutput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(" OK[out]   "));
@@ -500,7 +517,6 @@ public class StringCellProcessorBuilderTest {
     public void testBuildOutput_combine1_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(" OK[out]   "));
@@ -519,6 +535,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minLength");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(MinLength.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -541,6 +558,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(MinLength.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -563,6 +581,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(MinLength.class)));
         
         // length less than minLength(5)
@@ -575,6 +594,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_maxLength");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(MaxLength.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -597,6 +617,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_maxLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(MaxLength.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -619,6 +640,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_maxLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(MaxLength.class)));
         
         // length greater than maxLength(5)
@@ -631,6 +653,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minMaxLength");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Length.class));
         
         assertThat(cellProcessor.execute("ab", ANONYMOUS_CSVCONTEXT), is("ab"));
@@ -665,6 +688,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minMaxLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Length.class));
         
         assertThat(cellProcessor.execute("ab", ANONYMOUS_CSVCONTEXT), is("ab"));
@@ -699,6 +723,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_minMaxLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(Length.class)));
         
         // length less than length(2, 5)
@@ -714,6 +739,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_exactLength");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Strlen.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -744,6 +770,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_exactLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Strlen.class));
         
         assertThat(cellProcessor.execute("abcde", ANONYMOUS_CSVCONTEXT), is("abcde"));
@@ -774,6 +801,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_exactLength");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(Strlen.class)));
         
         // length equals exactLength(5)
@@ -787,6 +815,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_regex");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(StrRegEx.class));
         
         assertThat(cellProcessor.execute("2005-10-12", ANONYMOUS_CSVCONTEXT), is("2005-10-12"));
@@ -807,6 +836,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_regex");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(StrRegEx.class));
         
         assertThat(cellProcessor.execute("2005-10-12", ANONYMOUS_CSVCONTEXT), is("2005-10-12"));
@@ -827,6 +857,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_regex");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(StrRegEx.class)));
         
         assertThat(cellProcessor.execute("2005-10-12", ANONYMOUS_CSVCONTEXT), is("2005-10-12"));
@@ -839,6 +870,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_forbid");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ForbidSubStr.class));
         
         assertThat(cellProcessor.execute("Hello!", ANONYMOUS_CSVCONTEXT), is("Hello!"));
@@ -859,6 +891,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_forbid");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(ForbidSubStr.class));
         
         assertThat(cellProcessor.execute("Hello!", ANONYMOUS_CSVCONTEXT), is("Hello!"));
@@ -879,6 +912,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_forbid");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(ForbidSubStr.class)));
         
         assertThat(cellProcessor.execute("Hello! abc", ANONYMOUS_CSVCONTEXT), is("Hello! abc"));
@@ -890,6 +924,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_contain");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(RequireSubStr.class));
         
         assertThat(cellProcessor.execute("Hello world!", ANONYMOUS_CSVCONTEXT), is("Hello world!"));
@@ -910,6 +945,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_contain");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(RequireSubStr.class));
         
         assertThat(cellProcessor.execute("Hello world!", ANONYMOUS_CSVCONTEXT), is("Hello world!"));
@@ -930,6 +966,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_contain");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(RequireSubStr.class)));
         
         assertThat(cellProcessor.execute("Hello!", ANONYMOUS_CSVCONTEXT), is("Hello!"));
@@ -941,6 +978,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_notEmpty");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(StrNotNullOrEmpty.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -970,6 +1008,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_notEmpty");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(StrNotNullOrEmpty.class));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -999,6 +1038,7 @@ public class StringCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_notEmpty");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(String.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(StrNotNullOrEmpty.class)));
         
         assertThat(cellProcessor.execute("abc", ANONYMOUS_CSVCONTEXT), is("abc"));
@@ -1010,6 +1050,7 @@ public class StringCellProcessorBuilderTest {
     public void testBuildInput_combine2() {
         Annotation[] annos = getAnnotations(TestCsv.class, "str_combine2");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(String.class, annos);
+        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute("  Hello! world!  ", ANONYMOUS_CSVCONTEXT), is("Hello! world!"));

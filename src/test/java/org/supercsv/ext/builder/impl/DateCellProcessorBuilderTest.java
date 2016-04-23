@@ -47,6 +47,14 @@ public class DateCellProcessorBuilderTest {
     
     private DateCellProcessorBuilder builder;
     
+    /**
+     * Sets up the processor for the test using Combinations
+     */
+    @Before
+    public void setUp() {
+        builder = new DateCellProcessorBuilder();
+    }
+    
     private static final String TEST_NORMAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String TEST_FORMATTED_PATTERN = "yy/M/d H:m:s";
     
@@ -73,14 +81,6 @@ public class DateCellProcessorBuilderTest {
     private static final Date TEST_VALUE_MAX_OBJ = toDate(2010, 12, 31, 23, 59, 59);
     private static final String TEST_VALUE_MAX_STR_NORMAL = "2010-12-31 23:59:59";
     private static final String TEST_VALUE_MAX_STR_FORMATTED = "10/12/31 23:59:59";
-    
-    /**
-     * Sets up the processor for the test using Combinations
-     */
-    @Before
-    public void setUp() {
-        builder = new DateCellProcessorBuilder();
-    }
     
     @CsvBean
     private static class TestCsv {
@@ -491,6 +491,7 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
@@ -545,6 +546,7 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
@@ -599,6 +601,7 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
@@ -632,7 +635,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildInput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -661,7 +663,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildOutput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -690,7 +691,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildOutput_combine1_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -708,7 +708,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildInput_format_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -737,7 +736,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildOutput_format_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -766,7 +764,6 @@ public class DateCellProcessorBuilderTest {
     public void testBuildOutput_combine_format1_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -785,18 +782,19 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);;
@@ -815,11 +813,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_NORMAL));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -844,12 +843,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_min_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(FutureDate.class)));
         
-        // less min value
+        // less than min value
         {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -863,18 +862,19 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);;
@@ -893,11 +893,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -905,7 +906,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -922,12 +923,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_min_format_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(FutureDate.class)));
         
-        // less min value
+        // less than min value
         {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -941,11 +942,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(PastDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -953,7 +955,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -972,11 +974,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(PastDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_NORMAL));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -984,7 +987,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1001,12 +1004,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_max_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(PastDate.class)));
         
-        // greater max value
+        // greater than max value
         {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1020,11 +1023,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(PastDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1032,7 +1036,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1051,11 +1055,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(PastDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1063,7 +1068,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1080,12 +1085,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_max_format_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(PastDate.class)));
         
-        // greater max value
+        // greater than max value
         {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1099,18 +1104,19 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(DateRange.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);;
@@ -1124,7 +1130,7 @@ public class DateCellProcessorBuilderTest {
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1132,7 +1138,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1151,11 +1157,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(DateRange.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_NORMAL));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1163,7 +1170,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1177,7 +1184,7 @@ public class DateCellProcessorBuilderTest {
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_NORMAL));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1185,7 +1192,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1202,12 +1209,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_range_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(DateRange.class)));
         
-        // less min value
+        // less than min value
         {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1215,7 +1222,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_NORMAL_PATTERN);
@@ -1229,18 +1236,19 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(DateRange.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);;
@@ -1254,7 +1262,7 @@ public class DateCellProcessorBuilderTest {
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1262,7 +1270,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1281,11 +1289,12 @@ public class DateCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(DateRange.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
         
-        // greater min value
+        // greater than min value
         {
             Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1293,7 +1302,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // less min value
+        // less than min value
         try {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1307,7 +1316,7 @@ public class DateCellProcessorBuilderTest {
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
         
-        // less max value
+        // less than max value
         {
             Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1315,7 +1324,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         try {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1332,12 +1341,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_range_formatignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
-        
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, not(hasCellProcessor(DateRange.class)));
         
-        // less min value
+        // less than min value
         {
             Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);
@@ -1345,7 +1354,7 @@ public class DateCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
         
-        // greater max value
+        // greater than max value
         {
             Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
             String str = format(obj, TEST_FORMATTED_PATTERN);

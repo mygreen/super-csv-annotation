@@ -163,6 +163,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
             assertThat(cellProcessor.execute(Boolean.TRUE, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -213,6 +214,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_optional");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
             assertThat(cellProcessor.execute("true", ANONYMOUS_CSVCONTEXT), is(Boolean.TRUE));
@@ -272,6 +274,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
             assertThat(cellProcessor.execute(Boolean.TRUE, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -282,6 +285,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
             assertThat(cellProcessor.execute(Boolean.TRUE, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -457,6 +461,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_unique");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
             
             assertThat(cellProcessor.execute(Boolean.TRUE, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -490,7 +495,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildInput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(Boolean.TRUE));
@@ -519,7 +523,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildOutput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("ok"));
@@ -548,7 +551,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildOutput_combine1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("ok"));
@@ -567,7 +569,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_inputValue");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -593,7 +594,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_outputValue");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FmtBool.class));
@@ -608,7 +608,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_ignoreCase");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -634,7 +633,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_failToFalse");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -651,7 +649,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine2");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(Boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -673,7 +670,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine2");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FmtBool.class));
@@ -690,7 +686,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine2");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(Boolean.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FmtBool.class));
@@ -802,6 +797,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_default");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
             
             assertThat(cellProcessor.execute(true, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -827,6 +823,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_optional");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
             assertThat(cellProcessor.execute("true", ANONYMOUS_CSVCONTEXT), is(true));
@@ -845,6 +842,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_optional");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
             assertThat(cellProcessor.execute(true, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -856,6 +854,7 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildInput_trim() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_trim");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
+            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -868,6 +867,7 @@ public class BooleanCellProcessorBuilderTest {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_trim");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(boolean.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
+            
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
             
             assertThat(cellProcessor.execute(true, ANONYMOUS_CSVCONTEXT), is("true"));
@@ -914,7 +914,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_defaultValue_false");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -928,7 +927,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_defaultValue_false_ignoreCase");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -942,7 +940,6 @@ public class BooleanCellProcessorBuilderTest {
             
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_defaultValue_failToFalse");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseBoolean.class));
@@ -955,7 +952,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildInput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildInputCellProcessor(boolean.class, annos);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(true));
@@ -984,7 +980,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildOutput_combine1() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(boolean.class, annos, false);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("ok"));
@@ -1013,7 +1008,6 @@ public class BooleanCellProcessorBuilderTest {
         public void testBuildOutput_combine1_ignoreValidation() {
             Annotation[] annos = getAnnotations(TestCsv.class, "boolean_combine1");
             CellProcessor cellProcessor = builder.buildOutputCellProcessor(boolean.class, annos, true);
-            
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("ok"));

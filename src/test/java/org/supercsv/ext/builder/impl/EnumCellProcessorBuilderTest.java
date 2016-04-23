@@ -174,6 +174,7 @@ public class EnumCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_default");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
         assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
@@ -243,6 +244,7 @@ public class EnumCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_optional");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
         assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
@@ -527,6 +529,7 @@ public class EnumCellProcessorBuilderTest {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
@@ -560,7 +563,6 @@ public class EnumCellProcessorBuilderTest {
     public void testBuildInput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_combine1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(TestEnum.class, annos);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
@@ -589,7 +591,6 @@ public class EnumCellProcessorBuilderTest {
     public void testBuildOutput_combine1() {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, false);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
@@ -618,7 +619,6 @@ public class EnumCellProcessorBuilderTest {
     public void testBuildOutput_combine1_ignoreValidation() {
         Annotation[] annos = getAnnotations(TestCsv.class, "enum_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, true);
-        
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
