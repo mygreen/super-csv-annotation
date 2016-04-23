@@ -1484,6 +1484,8 @@ public class IntegerCellProcessorBuilderTest {
         
         private static final String TEST_FORMATTED_PATTERN = "#,###";
         
+        private static final int TEST_VALUE_PRIMITIVE_INIT_OBJ = 0;
+        
         private static final int TEST_VALUE_1_OBJ = 12345;
         private static final String TEST_VALUE_1_STR_NORMAL = "12345";
         private static final String TEST_VALUE_1_STR_FORMATTED = "12,345";
@@ -1691,7 +1693,7 @@ public class IntegerCellProcessorBuilderTest {
             assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
             // null input (if primitive, return 0)
-            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(0));
+            assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_PRIMITIVE_INIT_OBJ));
             
         }
         
@@ -1709,7 +1711,7 @@ public class IntegerCellProcessorBuilderTest {
             
             assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
-            assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(0));
+            assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_PRIMITIVE_INIT_OBJ));
             
         }
         
@@ -1727,7 +1729,7 @@ public class IntegerCellProcessorBuilderTest {
             
             assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
                         
-            assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(0));
+            assertThat(cellProcessor.execute(TEST_VALUE_PRIMITIVE_INIT_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_PRIMITIVE_INIT_OBJ));
         }
         
         @Test
