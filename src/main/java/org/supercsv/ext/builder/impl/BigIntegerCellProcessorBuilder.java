@@ -3,11 +3,8 @@ package org.supercsv.ext.builder.impl;
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Currency;
-import java.util.Locale;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -24,28 +21,22 @@ public class BigIntegerCellProcessorBuilder extends AbstractNumberCellProcessorB
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
         
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
+        final BigInteger min = getParseValue(type, annos, getMin(converterAnno));
+        final BigInteger max = getParseValue(type, annos, getMax(converterAnno));
         
-        final BigInteger min = parseNumber(getMin(converterAnno), formatter);
-        final BigInteger max = parseNumber(getMax(converterAnno), formatter);
-        
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         if(formatter != null) {
-            cellProcessor = (cellProcessor == null ?
-                    new FormatLocaleNumber(formatter) : new FormatLocaleNumber(formatter, (StringCellProcessor) cellProcessor));
+            cp = (cp == null ?
+                    new FormatLocaleNumber(formatter) : new FormatLocaleNumber(formatter, (StringCellProcessor) cp));
         }
         
         if(!ignoreValidationProcessor) {
-            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+            cp = prependRangeProcessor(min, max, formatter, cp);
         }
         
-        return cellProcessor;
+        return cp;
         
     }
     
@@ -54,63 +45,49 @@ public class BigIntegerCellProcessorBuilder extends AbstractNumberCellProcessorB
             final CellProcessor processor) {
         
         final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
         final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
         
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
+        final BigInteger min = getParseValue(type, annos, getMin(converterAnno));
+        final BigInteger max = getParseValue(type, annos, getMax(converterAnno));
         
-        final BigInteger min = parseNumber(getMin(converterAnno), formatter);
-        final BigInteger max = parseNumber(getMax(converterAnno), formatter);
-        
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+        CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
         
         if(formatter != null) {
-            cellProcessor = (cellProcessor == null ?
-                    new ParseBigInteger() : new ParseBigInteger(cellProcessor));
+            cp = (cp == null ?
+                    new ParseBigInteger() : new ParseBigInteger(cp));
         } else {
-            cellProcessor = (cellProcessor == null ?
+            cp = (cp == null ?
                     new ParseLocaleNumber<BigInteger>(type, formatter, lenient) :
-                        new ParseLocaleNumber<BigInteger>(type, formatter, lenient, (StringCellProcessor)cellProcessor));                
+                        new ParseLocaleNumber<BigInteger>(type, formatter, lenient, cp));                
         }
         
-        return cellProcessor;
+        return cp;
     }
     
-    protected BigInteger parseNumber(final String value, final NumberFormat formatter) {
-        if(value.isEmpty()) {
+    @Override
+    public BigInteger getParseValue(final Class<BigInteger> type, final Annotation[] annos, final String strValue) {
+        
+        if(strValue.isEmpty()) {
             return null;
         }
         
+        final CsvNumberConverter converterAnno = getAnnotation(annos);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final String pattern = getPattern(converterAnno);
+        
         if(formatter != null) {
             try {
-                return ((BigDecimal) formatter.parse(value)).toBigIntegerExact();
+                return ((BigDecimal) formatter.parse(strValue)).toBigInteger();
             } catch(ParseException e) {
                 throw new SuperCsvInvalidAnnotationException(
-                        String.format(" value '%s' cannot parse to BigInteger",
-                                value, formatter), e);
+                        String.format(" value '%s' cannot parse to Number with pattern '%s'", strValue, pattern),
+                        e);
             }
+        } else {
+            return new BigInteger(strValue);
         }
-        
-        return new BigInteger(value);
-    }
-
-    @Override
-    public BigInteger getParseValue(final Class<BigInteger> type, final Annotation[] annos, final String defaultValue) {
-        
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
-        
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
-        
-        return parseNumber(defaultValue, formatter);
     }
     
 }

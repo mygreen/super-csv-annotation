@@ -9,6 +9,7 @@ import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.constraint.Strlen;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvStringConverter;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.constraint.Length;
@@ -104,6 +105,18 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         }
         
         return converterAnno.notEmpty();
+    }
+    
+    @Override
+    protected CellProcessor buildOutputCellProcessorWithConvertNullTo(final Class<String> type, final Annotation[] annos, final boolean ignoreValidationProcessor,
+            final CellProcessor processor, final CsvColumn csvColumnAnno) {
+        
+        if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
+            final String defaultValue = getParseValue(type, annos, csvColumnAnno.outputDefaultValue());
+            return prependConvertNullToProcessor(type, processor, defaultValue);
+        }
+        
+        return processor;
     }
     
     @Override

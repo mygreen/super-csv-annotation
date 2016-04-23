@@ -1,6 +1,7 @@
 package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -25,10 +26,6 @@ import org.supercsv.ext.util.Utils;
 public abstract class AbstractNumberCellProcessorBuilder<N extends Number & Comparable<N>> extends AbstractCellProcessorBuilder<N> {
     
     protected CsvNumberConverter getAnnotation(final Annotation[] annos) {
-        
-        if(annos == null || annos.length == 0) {
-            return null;
-        }
         
         for(Annotation anno : annos) {
             if(anno instanceof CsvNumberConverter) {
@@ -56,24 +53,6 @@ public abstract class AbstractNumberCellProcessorBuilder<N extends Number & Comp
         return converterAnno.lenient();
     }
     
-    protected String getMin(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
-        
-        return converterAnno.min();
-        
-    }
-    
-    protected String getMax(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
-        
-        return converterAnno.max();
-        
-    }
-    
     protected Locale getLocale(final CsvNumberConverter converterAnno) {
         if(converterAnno == null) {
             return Locale.getDefault();
@@ -93,53 +72,88 @@ public abstract class AbstractNumberCellProcessorBuilder<N extends Number & Comp
         return Currency.getInstance(converterAnno.currency());
     }
     
+    protected RoundingMode getRoundingMode(final CsvNumberConverter converterAnno) {
+        if(converterAnno == null) {
+            return null;
+            
+        }
+        
+        return converterAnno.roundingMode();
+    }
+    
+    protected String getMin(final CsvNumberConverter converterAnno) {
+        if(converterAnno == null) {
+            return "";
+        }
+        
+        return converterAnno.min();
+        
+    }
+    
+    protected String getMax(final CsvNumberConverter converterAnno) {
+        if(converterAnno == null) {
+            return "";
+        }
+        
+        return converterAnno.max();
+        
+    }
+    
     protected CellProcessor prependRangeProcessor(final N min, final N max, final NumberFormat formatter, final CellProcessor processor) {
         
-        CellProcessor cellProcessor = processor;
+        CellProcessor cp = processor;
         if(min != null && max != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new Range<N>(min, max).setFormatter(formatter);
+            if(cp == null) {
+                cp = new Range<N>(min, max).setFormatter(formatter);
             } else {
-                cellProcessor = new Range<N>(min, max, cellProcessor).setFormatter(formatter);
+                cp = new Range<N>(min, max, cp).setFormatter(formatter);
             }
         } else if(min != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new Min<N>(min).setFormatter(formatter);
+            if(cp == null) {
+                cp = new Min<N>(min).setFormatter(formatter);
             } else {
-                cellProcessor = new Min<N>(min, cellProcessor).setFormatter(formatter);
+                cp = new Min<N>(min, cp).setFormatter(formatter);
             }
         } else if(max != null) {
-            if(cellProcessor == null) {
-                cellProcessor = new Max<N>(max).setFormatter(formatter);
+            if(cp == null) {
+                cp = new Max<N>(max).setFormatter(formatter);
             } else {
-                cellProcessor = new Max<N>(max, cellProcessor).setFormatter(formatter);
+                cp = new Max<N>(max, cp).setFormatter(formatter);
             }
         }
         
-        return cellProcessor;
+        return cp;
     }
     
-    protected NumberFormat createNumberFormat(final String pattern, final boolean lenient,
-            final Currency currency, final DecimalFormatSymbols symbols) {
+    protected NumberFormat createNumberFormatter(final CsvNumberConverter converterAnno) {
+        
+        final String pattern = getPattern(converterAnno);
+        final boolean lenient = getLenient(converterAnno);
+        final Locale locale = getLocale(converterAnno);
+        final Currency currency = getCurrency(converterAnno);
+        final RoundingMode roundingMode = getRoundingMode(converterAnno);
+        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
+        
+        return createNumberFormatter(pattern, lenient, currency, symbols, roundingMode);
+        
+    }
+    
+    protected NumberFormat createNumberFormatter(final String pattern, final boolean lenient,
+            final Currency currency, final DecimalFormatSymbols symbols, final RoundingMode roundingMode) {
         
         if(pattern.isEmpty()) {
             return null;
         }
         
-        DecimalFormat value = null;
-        if(symbols != null) {
-            value = new DecimalFormat(pattern, symbols);
-        } else {
-            value = new DecimalFormat(pattern);
-        }
-        
-        value.setParseBigDecimal(true);
+        final DecimalFormat formatter = new DecimalFormat(pattern, symbols);
+        formatter.setParseBigDecimal(true);
+        formatter.setRoundingMode(roundingMode);
         
         if(currency != null) {
-            value.setCurrency(currency);
+            formatter.setCurrency(currency);
         }
         
-        return value;
+        return formatter;
     }
     
 }

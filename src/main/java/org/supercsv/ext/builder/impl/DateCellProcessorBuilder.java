@@ -180,20 +180,21 @@ public class DateCellProcessorBuilder extends AbstractCellProcessorBuilder<Date>
     
     @Override
     public Date getParseValue(final Class<Date> type, final Annotation[] annos, final String strValue) {
-        final CsvDateConverter converterAnno = getAnnotation(annos);
-        final DateFormat formatter = createDateFormatter(converterAnno);
-        final String pattern = getPattern(converterAnno);
         
         if(strValue.isEmpty()) {
             return null;
         }
         
+        final CsvDateConverter converterAnno = getAnnotation(annos);
+        final DateFormat formatter = createDateFormatter(converterAnno);
+        final String pattern = getPattern(converterAnno);
+        
         try {
             return formatter.parse(strValue);
         } catch (ParseException e) {
             throw new SuperCsvInvalidAnnotationException(
-                    String.format(" default '%s' value cannot parse to Date with pattern '%s'",
-                            strValue, pattern), e);
+                    String.format(" default '%s' value cannot parse to Date with pattern '%s'", strValue, pattern),
+                    e);
         }
     }
     

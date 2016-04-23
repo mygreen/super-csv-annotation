@@ -1,16 +1,14 @@
 package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Currency;
-import java.util.Locale;
 
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
 import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
@@ -19,20 +17,30 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 public class DoubleCellProcessorBuilder extends AbstractNumberCellProcessorBuilder<Double> {
     
     @Override
+    protected CellProcessor buildInputCellProcessorWithConvertNullTo(final Class<Double> type, final Annotation[] annos,
+            final CellProcessor cellProcessor, final CsvColumn csvColumnAnno) {
+        
+        // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、0に変換する。
+        if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
+            return prependConvertNullToProcessor(type, cellProcessor, 0.0d);
+            
+        } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
+            return prependConvertNullToProcessor(type, cellProcessor,
+                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
+        }
+        
+        return cellProcessor;
+    }
+    
+    @Override
     public CellProcessor buildOutputCellProcessor(final Class<Double> type, final Annotation[] annos, 
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
         
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
-        
-        final Double min = parseNumber(getMin(converterAnno), formatter);
-        final Double max = parseNumber(getMax(converterAnno), formatter);
+        final Double min = getParseValue(type, annos, getMin(converterAnno));
+        final Double max = getParseValue(type, annos, getMax(converterAnno));
         
         CellProcessor cellProcessor = processor;
         if(formatter != null) {
@@ -52,63 +60,50 @@ public class DoubleCellProcessorBuilder extends AbstractNumberCellProcessorBuild
             final CellProcessor processor) {
         
         final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
         final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
         
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
+        final Double min = getParseValue(type, annos, getMin(converterAnno));
+        final Double max = getParseValue(type, annos, getMax(converterAnno));
         
-        final Double min = parseNumber(getMin(converterAnno), formatter);
-        final Double max = parseNumber(getMax(converterAnno), formatter);
-        
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+        CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
         
         if(formatter != null) {
-            cellProcessor = (cellProcessor == null ?
+            cp = (cp == null ?
                     new ParseLocaleNumber<Double>(type, formatter, lenient) :
-                        new ParseLocaleNumber<Double>(type, formatter, lenient, (StringCellProcessor)cellProcessor));
+                        new ParseLocaleNumber<Double>(type, formatter, lenient, cp));
         } else {
-            cellProcessor = (cellProcessor == null ?
-                    new ParseDouble() : new ParseDouble((DoubleCellProcessor) cellProcessor));
+            cp = (cp == null ?
+                    new ParseDouble() : new ParseDouble((DoubleCellProcessor) cp));
         }
         
-        return cellProcessor;
+        return cp;
         
     }
     
-    protected Double parseNumber(final String value, final NumberFormat formatter) {
-        if(value.isEmpty()) {
+    @Override
+    public Double getParseValue(final Class<Double> type, final Annotation[] annos, final String strValue) {
+        
+        if(strValue.isEmpty()) {
             return null;
         }
         
+        final CsvNumberConverter converterAnno = getAnnotation(annos);
+        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final String pattern = getPattern(converterAnno);
+        
         if(formatter != null) {
             try {
-                return formatter.parse(value).doubleValue();
+                return formatter.parse(strValue).doubleValue();
             } catch(ParseException e) {
                 throw new SuperCsvInvalidAnnotationException(
-                        String.format(" value '%s' cannot parse to Double",
-                                value, formatter), e);
+                        String.format(" value '%s' cannot parse to Number with pattern '%s'", strValue, pattern),
+                        e);
             }
+        } else {
+            return Double.valueOf(strValue);
         }
-        
-        return Double.valueOf(value);
-    }
-
-    @Override
-    public Double getParseValue(final Class<Double> type, final Annotation[] annos, final String defaultValue) {
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
-        
-        final NumberFormat formatter = createNumberFormat(pattern, lenient, currency, symbols);
-        
-        return parseNumber(defaultValue, formatter);
     }
     
 }
