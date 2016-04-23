@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -230,6 +231,13 @@ public class TestUtils {
     public static final String format(final Date value, final String pattern) {
         
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        return formatter.format(value);
+        
+    }
+    
+    public static final String format(final Number value, final String pattern) {
+        
+        DecimalFormat formatter = new DecimalFormat(pattern);
         return formatter.format(value);
         
     }
