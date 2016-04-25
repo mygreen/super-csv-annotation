@@ -38,20 +38,6 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
  */
 public class EnumCellProcessorBuilderTest {
     
-    public enum TestEnum {
-        Red("赤(RED)"), Blue("青(BLUE)"), Yellow("黄(Yellow)");
-        
-        final String aliasName;
-        
-        private TestEnum(String aliasName) {
-            this.aliasName = aliasName;
-        }
-        
-        public String aliasName() {
-            return aliasName;
-        }
-    }
-    
     @Rule
     public TestName name = new TestName();
     
@@ -65,6 +51,38 @@ public class EnumCellProcessorBuilderTest {
         builder = new EnumCellProcessorBuilder<>();
     }
     
+    public enum TestEnum {
+        Red("赤(Red)"), Blue("青(Blue)"), Yellow("黄(Yellow)"), Green("緑(Green)");
+        
+        final String aliasName;
+        
+        private TestEnum(String aliasName) {
+            this.aliasName = aliasName;
+        }
+        
+        public String aliasName() {
+            return aliasName;
+        }
+    }
+    
+    private static final String TEST_VALUE_METHOD_NAME = "aliasName";
+    
+    private static final TestEnum TEST_VALUE_1_OBJ = TestEnum.Red;
+    private static final String TEST_VALUE_1_STR_NORMAL = "Red";
+    private static final String TEST_VALUE_1_STR_ALIAS = "赤(Red)";
+    
+    private static final TestEnum TEST_VALUE_2_OBJ = TestEnum.Blue;
+    private static final String TEST_VALUE_2_STR_NORMAL = "Blue";
+    private static final String TEST_VALUE_2_STR_ALIAS = "青(Blue)";
+    
+    private static final TestEnum TEST_VALUE_INPUT_DEFAULT_OBJ = TestEnum.Yellow;
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "Yellow";
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_ALIAS = "黄(Yellow)";
+    
+    private static final TestEnum TEST_VALUE_OUTPUT_DEFAULT_OBJ = TestEnum.Green;
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "Green";
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_ALIAS = "緑(Green)";
+    
     @CsvBean
     private static class TestCsv {
         
@@ -77,39 +95,41 @@ public class EnumCellProcessorBuilderTest {
         @CsvColumn(position=2, trim=true)
         TestEnum enum_trim;
         
-        @CsvColumn(position=3, inputDefaultValue="Red", outputDefaultValue="Blue")
+        @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
         TestEnum enum_defaultValue;
         
         @CsvColumn(position=4, inputDefaultValue="abc")
         TestEnum enum_defaultValue_invalid;
         
-        @CsvColumn(position=5, inputDefaultValue="BLUE")
+        @CsvColumn(position=5, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL)
         @CsvEnumConverter(ignoreCase=true)
         TestEnum enum_default_ignoreCase;
         
-        @CsvColumn(position=6, inputDefaultValue="青(BLUE)")
-        @CsvEnumConverter(valueMethodName="aliasName")
+        @CsvColumn(position=6, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_ALIAS)
+        @CsvEnumConverter(valueMethodName=TEST_VALUE_METHOD_NAME)
         TestEnum enum_default_valueMethod;
         
-        @CsvColumn(position=7, inputDefaultValue="青(BLUE)")
+        @CsvColumn(position=7, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_ALIAS)
         @CsvEnumConverter(valueMethodName="sample")
         TestEnum enum_default_valueMethod_wrongName;
         
-        @CsvColumn(position=8, inputDefaultValue="青(blue)")
-        @CsvEnumConverter(valueMethodName="aliasName", ignoreCase=true)
+        @CsvColumn(position=8, inputDefaultValue="黄(yELLOw)")
+        @CsvEnumConverter(valueMethodName=TEST_VALUE_METHOD_NAME, ignoreCase=true)
         TestEnum enum_default_valueMethod_ignoreCase;
         
-        @CsvColumn(position=9, equalsValue="Blue")
+        @CsvColumn(position=9, equalsValue=TEST_VALUE_1_STR_NORMAL)
         TestEnum enum_equalsValue;
         
-        @CsvColumn(position=10, equalsValue="青(BLUE)")
-        @CsvEnumConverter(valueMethodName="aliasName")
+        @CsvColumn(position=10, equalsValue=TEST_VALUE_1_STR_ALIAS)
+        @CsvEnumConverter(valueMethodName=TEST_VALUE_METHOD_NAME)
         TestEnum enum_equalsValue_valueMethod;
         
         @CsvColumn(position=11, unique=true)
         TestEnum enum_unique;
         
-        @CsvColumn(position=12, optional=true, trim=true, inputDefaultValue="Red", outputDefaultValue="Blue", equalsValue="Red", unique=true)
+        @CsvColumn(position=12, optional=true, trim=true,
+                inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
+                equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
         TestEnum enum_combine1;
         
         @CsvColumn(position=13)
@@ -117,15 +137,16 @@ public class EnumCellProcessorBuilderTest {
         TestEnum enum_ignoreCase;
         
         @CsvColumn(position=13)
-        @CsvEnumConverter(valueMethodName="aliasName")
+        @CsvEnumConverter(valueMethodName=TEST_VALUE_METHOD_NAME)
         TestEnum enum_valueMethod;
         
         @CsvColumn(position=13)
-        @CsvEnumConverter(valueMethodName="aliasName", ignoreCase=true)
+        @CsvEnumConverter(valueMethodName=TEST_VALUE_METHOD_NAME, ignoreCase=true)
         TestEnum enum_valueMethod_ignoreCase;
         
-        @CsvColumn(position=14, optional=true, trim=true, inputDefaultValue="赤(RED)", outputDefaultValue="青(BLUE)")
-        @CsvEnumConverter(ignoreCase=true, valueMethodName="aliasName")
+        @CsvColumn(position=14, optional=true, trim=true,
+                inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_ALIAS, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_ALIAS)
+        @CsvEnumConverter(ignoreCase=true, valueMethodName=TEST_VALUE_METHOD_NAME)
         TestEnum enum_combine2;
     }
     
@@ -142,7 +163,7 @@ public class EnumCellProcessorBuilderTest {
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         assertThat(cellProcessor, hasCellProcessor(ParseEnum.class));
         
-        assertThat(cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         assertThat(cellProcessor.execute("Blue", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
         
         // null input
@@ -177,8 +198,8 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // null input
         try {
@@ -203,8 +224,8 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // null input
         try {
@@ -229,7 +250,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
-        assertThat(cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -247,7 +268,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -265,7 +286,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -279,7 +300,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
         
-        assertThat(cellProcessor.execute("  Red ", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + " ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
     }
     
     @Test
@@ -290,7 +311,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("Red"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         
     }
     
@@ -302,7 +323,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("Red"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         
     }
     
@@ -314,7 +335,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
     }
     
     @Test
@@ -325,7 +346,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
     }
     
     @Test
@@ -336,7 +357,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
     }
     
     /**
@@ -361,7 +382,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
     }
     
     @Test
@@ -372,7 +393,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
     }
     
     @Test(expected=IllegalArgumentException.class)
@@ -390,7 +411,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
     }
     
     @Test
@@ -401,11 +422,11 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
-        assertThat(cellProcessor.execute("Blue", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
         try {
-            cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -421,11 +442,11 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
         try {
-            cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -441,10 +462,10 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
         
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
     }
     
@@ -456,11 +477,11 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
-        assertThat(cellProcessor.execute("青(BLUE)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_ALIAS, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
         try {
-            cellProcessor.execute("赤(RED)", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_STR_ALIAS, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -476,11 +497,11 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_ALIAS));
         
         // not quals input
         try {
-            cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -496,10 +517,10 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
         
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_ALIAS));
         
         // not quals input
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("赤(RED)"));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_ALIAS));
         
     }
     
@@ -511,12 +532,12 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
-        assertThat(cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("Blue", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // not unique input
         try {
-            cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -532,12 +553,12 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // not unique input
         try {
-            cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -553,9 +574,9 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
     }
     
@@ -565,12 +586,12 @@ public class EnumCellProcessorBuilderTest {
         CellProcessor cellProcessor = builder.buildInputCellProcessor(TestEnum.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("  Red  ", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+        assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not equals input
         try {
-            cellProcessor.execute("Blue", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -579,7 +600,7 @@ public class EnumCellProcessorBuilderTest {
         
         // not unique input
         try {
-            cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -593,12 +614,12 @@ public class EnumCellProcessorBuilderTest {
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("Red"));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         
         // not equals input
         try {
-            cellProcessor.execute(TestEnum.Yellow, ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -607,7 +628,7 @@ public class EnumCellProcessorBuilderTest {
         
         // not unique input
         try {
-            cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
@@ -621,14 +642,14 @@ public class EnumCellProcessorBuilderTest {
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(TestEnum.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("Blue"));
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("Red"));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         
         // not equals input
-        assertThat(cellProcessor.execute(TestEnum.Yellow, ANONYMOUS_CSVCONTEXT), is("Yellow"));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_NORMAL));
         
         // not unique input
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("Red"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
         
     }
     
@@ -640,8 +661,15 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ParseEnum.class));
         
-        assertThat(cellProcessor.execute("Red", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("BLUE", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        {
+            String str = toRandomCase(TEST_VALUE_1_STR_NORMAL);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        }
+        
+        {
+            String str = toRandomCase(TEST_VALUE_2_STR_NORMAL);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+        }
         
     }
     
@@ -653,7 +681,7 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, not(hasCellProcessor(FormatEnum.class)));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
     }
     
@@ -665,8 +693,8 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ParseEnum.class));
         
-        assertThat(cellProcessor.execute("赤(RED)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("青(BLUE)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_ALIAS, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_STR_ALIAS, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
     }
     
@@ -678,8 +706,8 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(FormatEnum.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("赤(RED)"));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_ALIAS));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_ALIAS));
         
     }
     
@@ -691,8 +719,15 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ParseEnum.class));
         
-        assertThat(cellProcessor.execute("赤(RED)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("青(BLUE)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        {
+            String str = toRandomCase(TEST_VALUE_1_STR_ALIAS);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        }
+        
+        {
+            String str = toRandomCase(TEST_VALUE_2_STR_ALIAS);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+        }
         
     }
     
@@ -704,8 +739,8 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(FormatEnum.class));
         
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("赤(RED)"));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_ALIAS));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_ALIAS));
         
     }
     
@@ -718,9 +753,17 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(ParseEnum.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("赤(RED)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Red));
-        assertThat(cellProcessor.execute("青(blue)", ANONYMOUS_CSVCONTEXT), is(TestEnum.Blue));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
+        
+        {
+            String str = toRandomCase(TEST_VALUE_1_STR_ALIAS);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        }
+        
+        {
+            String str = toRandomCase(TEST_VALUE_2_STR_ALIAS);
+            assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+        }
         
     }
     
@@ -732,9 +775,9 @@ public class EnumCellProcessorBuilderTest {
         
         assertThat(cellProcessor, hasCellProcessor(FormatEnum.class));
         
-        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
-        assertThat(cellProcessor.execute(TestEnum.Red, ANONYMOUS_CSVCONTEXT), is("赤(RED)"));
-        assertThat(cellProcessor.execute(TestEnum.Blue, ANONYMOUS_CSVCONTEXT), is("青(BLUE)"));
+        assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_ALIAS));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_ALIAS));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_ALIAS));
         
     }
     

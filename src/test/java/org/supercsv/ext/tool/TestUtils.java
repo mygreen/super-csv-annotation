@@ -3,6 +3,7 @@ package org.supercsv.ext.tool;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.security.SecureRandom;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -239,6 +240,32 @@ public class TestUtils {
         
         DecimalFormat formatter = new DecimalFormat(pattern);
         return formatter.format(value);
+        
+    }
+    
+    /**
+     * ランダムに、大文字、小文字に変換する。
+     * @param str
+     * @return
+     */
+    public static final String toRandomCase(final String str) {
+        
+        StringBuilder sb = new StringBuilder();
+        try {
+            SecureRandom random = new SecureRandom();
+            final int len = str.length();
+            for(int i=0; i < len; i++) {
+                char c = str.charAt(i);
+                if(random.nextBoolean()) {
+                    sb.append(String.valueOf(c).toLowerCase());
+                } else {
+                    sb.append(String.valueOf(c).toUpperCase());
+                }
+            }
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+        return sb.toString();
         
     }
 }
