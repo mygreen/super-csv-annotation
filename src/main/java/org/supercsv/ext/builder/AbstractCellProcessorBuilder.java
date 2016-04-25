@@ -56,21 +56,13 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
                     getParseValue(type, annos, csvColumnAnno.equalsValue()));
         }
         
-        if(csvColumnAnno.optional() && !type.isPrimitive()) {
+        if(csvColumnAnno.optional()) {
             cellProcessor = prependOptionalProcessor(cellProcessor);
         } else {
             cellProcessor = prependNotNullProcessor(cellProcessor, annos);
         }
         
-        if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
-            final Object defaultValue;
-            if(String.class.isAssignableFrom(type)) {
-                defaultValue = getParseValue(type, annos, csvColumnAnno.outputDefaultValue());
-            } else {
-                defaultValue = csvColumnAnno.outputDefaultValue();
-            }
-            cellProcessor = prependConvertNullToProcessor(type, cellProcessor, defaultValue);
-        }
+        cellProcessor = buildOutputCellProcessorWithConvertNullTo(type, annos, ignoreValidationProcessor, cellProcessor, csvColumnAnno);
         
         return cellProcessor;
     }
@@ -81,6 +73,7 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
         final CsvColumn csvColumnAnno = getCsvColumnAnnotation(annos);
         
         CellProcessor cellProcessor = null;
+        
         cellProcessor = buildInputCellProcessor(type, annos, cellProcessor);
         
         if(csvColumnAnno.unique()) {
@@ -89,21 +82,39 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
         
         if(!csvColumnAnno.equalsValue().isEmpty()) {
             cellProcessor = prependEqualsProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.equalsValue()));
+                    csvColumnAnno.equalsValue());
         }
-        
         if(csvColumnAnno.trim()) {
             cellProcessor = prependTrimProcessor(cellProcessor);
         }
         
-        if(csvColumnAnno.optional() && !type.isPrimitive()) {
+        if(csvColumnAnno.optional()) {
             cellProcessor = prependOptionalProcessor(cellProcessor);
         } else {
             cellProcessor = prependNotNullProcessor(cellProcessor, annos);
         }
         
+        cellProcessor = buildInputCellProcessorWithConvertNullTo(type, annos, cellProcessor, csvColumnAnno);
+        
+        return cellProcessor;
+    }
+    
+    protected CellProcessor buildOutputCellProcessorWithConvertNullTo(final Class<T> type, final Annotation[] annos, final boolean ignoreValidationProcessor,
+            final CellProcessor cellProcessor, final CsvColumn csvColumnAnno) {
+        
+        if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
+            final Object defaultValue = csvColumnAnno.outputDefaultValue();
+            return prependConvertNullToProcessor(type, cellProcessor, defaultValue);
+        }
+        
+        return cellProcessor;
+    }
+    
+    protected CellProcessor buildInputCellProcessorWithConvertNullTo(final Class<T> type, final Annotation[] annos,
+            final CellProcessor cellProcessor, final CsvColumn csvColumnAnno) {
+        
         if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
-            cellProcessor = prependConvertNullToProcessor(type, cellProcessor,
+            return prependConvertNullToProcessor(type, cellProcessor,
                     getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
         }
         

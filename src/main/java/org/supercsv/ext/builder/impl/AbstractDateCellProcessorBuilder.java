@@ -136,9 +136,9 @@ public abstract class AbstractDateCellProcessorBuilder<T extends Date> extends A
      * Get default format pattern.
      * @return
      */
-    public abstract String getDefaultPattern();
+    protected abstract String getDefaultPattern();
     
-    public Optional<Date> parseDate(final Annotation[] annos, final String strValue) {
+    protected Optional<Date> parseDate(final Annotation[] annos, final String strValue) {
         
         if(strValue.isEmpty()) {
             return Optional.empty();
