@@ -72,7 +72,7 @@ public class ByteCellProcessorBuilder extends AbstractNumberCellProcessorBuilder
         if(formatter != null) {
             cp = (cp == null ?
                     new ParseLocaleNumber<Byte>(type, formatter, lenient) :
-                        new ParseLocaleNumber<Byte>(type, formatter, lenient, (StringCellProcessor)cp));
+                        new ParseLocaleNumber<Byte>(type, formatter, lenient, cp));
         } else {
             cp = (cp == null ?
                     new ParseByte() : new ParseByte((LongCellProcessor) cp));
