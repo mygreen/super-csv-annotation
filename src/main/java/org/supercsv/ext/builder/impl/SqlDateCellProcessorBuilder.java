@@ -29,9 +29,7 @@ public class SqlDateCellProcessorBuilder extends AbstractDateCellProcessorBuilde
         final Date max = getParseValue(type, annos, getMax(converterAnno));
         
         CellProcessor cp = processor;
-        cp = (cp == null ? 
-                new FormatLocaleDate(formatter) : 
-                    new FormatLocaleDate(formatter, (StringCellProcessor) cp));
+        cp = (cp == null ? new FormatLocaleDate(formatter) : new FormatLocaleDate(formatter, (StringCellProcessor) cp));
         
         if(!ignoreValidationProcessor) {
             cp = prependRangeProcessor(min, max, formatter, cp);
@@ -52,9 +50,7 @@ public class SqlDateCellProcessorBuilder extends AbstractDateCellProcessorBuilde
         CellProcessor cp = processor;
         cp = prependRangeProcessor(min, max, formatter, cp);
         
-        cp = (cp == null ?
-                new ParseLocaleSqlDate(formatter) :
-                    new ParseLocaleSqlDate(formatter, (DateCellProcessor)cp));
+        cp = (cp == null ? new ParseLocaleSqlDate(formatter) : new ParseLocaleSqlDate(formatter, (DateCellProcessor)cp));
         
         return cp;
         

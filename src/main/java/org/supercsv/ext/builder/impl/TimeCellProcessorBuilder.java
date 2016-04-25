@@ -29,9 +29,7 @@ public class TimeCellProcessorBuilder extends AbstractDateCellProcessorBuilder<T
         final Time max = getParseValue(type, annos, getMax(converterAnno));
         
         CellProcessor cp = processor;
-        cp = (cp == null ? 
-                new FormatLocaleDate(formatter) : 
-                    new FormatLocaleDate(formatter, (StringCellProcessor) cp));
+        cp = (cp == null ? new FormatLocaleDate(formatter) : new FormatLocaleDate(formatter, (StringCellProcessor) cp));
         
         if(!ignoreValidationProcessor) {
             cp = prependRangeProcessor(min, max, formatter, cp);
@@ -51,9 +49,7 @@ public class TimeCellProcessorBuilder extends AbstractDateCellProcessorBuilder<T
         
         CellProcessor cp = processor;
         cp = prependRangeProcessor(min, max, formatter, cp);
-        cp = (cp == null ?
-                new ParseLocaleTime(formatter) :
-                    new ParseLocaleTime(formatter, (DateCellProcessor)cp));
+        cp = (cp == null ? new ParseLocaleTime(formatter) : new ParseLocaleTime(formatter, (DateCellProcessor)cp));
         
         return cp;
         
