@@ -17,7 +17,6 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.supercsv.cellprocessor.ConvertNullTo;
 import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.Equals;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.Unique;
@@ -28,6 +27,7 @@ import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
+import org.supercsv.ext.cellprocessor.ParseFloat;
 import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.cellprocessor.Trim;
 import org.supercsv.ext.cellprocessor.constraint.Max;
@@ -36,144 +36,144 @@ import org.supercsv.ext.cellprocessor.constraint.Range;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
- * Test the {@link IntegerCellProcessorBuilder} CellProcessor.
+ * Test the {@link FloatCellProcessorBuilder} CellProcessor.
  * 
  * @since 1.2
  * @author T.TSUCHIE
  *
  */
 @RunWith(Enclosed.class)
-public class IntegerCellProcessorBuilderTest {
+public class FloatCellProcessorBuilderTest {
     
     /**
-     * Tests for wrapper integer.
+     * Tests for wrapper float.
      *
      */
-    public static class IntegerTest {
+    public static class FloatTest {
     
         @Rule
         public TestName name = new TestName();
         
-        private IntegerCellProcessorBuilder builder;
+        private FloatCellProcessorBuilder builder;
         
         /**
          * Sets up the processor for the test using Combinations
          */
         @Before
         public void setUp() {
-            builder = new IntegerCellProcessorBuilder();
+            builder = new FloatCellProcessorBuilder();
         }
         
         /** for min/max diff value */
-        private static final Integer TEST_VALUE_DIFF = toInteger("1");
+        private static final Float TEST_VALUE_DIFF = toFloat("0.01");
         
-        private static final String TEST_FORMATTED_PATTERN = "#,###";
+        private static final String TEST_FORMATTED_PATTERN = "#,###.0#";
         
-        private static final Integer TEST_VALUE_1_OBJ = toInteger("12345");
-        private static final String TEST_VALUE_1_STR_NORMAL = "12345";
-        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345";
+        private static final Float TEST_VALUE_1_OBJ = toFloat("12345.67");
+        private static final String TEST_VALUE_1_STR_NORMAL = "12345.67";
+        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345.67";
         
-        private static final Integer TEST_VALUE_2_OBJ = toInteger("-23456");
-        private static final String TEST_VALUE_2_STR_NORMAL = "-23456";
-        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456";
+        private static final Float TEST_VALUE_2_OBJ = toFloat("-23456.78");
+        private static final String TEST_VALUE_2_STR_NORMAL = "-23456.78";
+        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456.78";
         
-        private static final Integer TEST_VALUE_INPUT_DEFAULT_OBJ = toInteger("112233");
-        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233";
-        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233";
+        private static final Float TEST_VALUE_INPUT_DEFAULT_OBJ = toFloat("112233.44");
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233.44";
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233.44";
         
-        private static final Integer TEST_VALUE_OUTPUT_DEFAULT_OBJ = toInteger("-223344");
-        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344";
-        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344";
+        private static final Float TEST_VALUE_OUTPUT_DEFAULT_OBJ = toFloat("-223344.55");
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344.55";
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344.55";
         
-        private static final Integer TEST_VALUE_MIN_OBJ = toInteger("-54321");
-        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321";
-        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321";
+        private static final Float TEST_VALUE_MIN_OBJ = toFloat("-54321.01");
+        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321.01";
+        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321.01";
         
-        private static final Integer TEST_VALUE_MAX_OBJ = toInteger("98765");
-        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765";
-        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765";
+        private static final Float TEST_VALUE_MAX_OBJ = toFloat("98765.43");
+        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765.43";
+        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765.43";
         
         @CsvBean
         private static class TestCsv {
             
             @CsvColumn(position=0)
-            Integer integer_default;
+            Float float_default;
             
             @CsvColumn(position=1, optional=true)
-            Integer integer_optional;
+            Float float_optional;
             
             @CsvColumn(position=2, trim=true)
-            Integer integer_trim;
+            Float float_trim;
             
             @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
-            Integer integer_defaultValue;
+            Float float_defaultValue;
             
             @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_defaultValue_format;
+            Float float_defaultValue_format;
             
             @CsvColumn(position=4, inputDefaultValue="abc12,345")
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_defaultValue_format_invalid;
+            Float float_defaultValue_format_invalid;
             
             @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
-            Integer integer_equalsValue;
+            Float float_equalsValue;
             
             @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_equalsValue_format;
+            Float float_equalsValue_format;
             
             @CsvColumn(position=7, unique=true)
-            Integer integer_unique;
+            Float float_unique;
             
             @CsvColumn(position=8, unique=true)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_unique_format;
+            Float float_unique_format;
             
             @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
                     equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
-            Integer integer_combine1;
+            Float float_combine1;
             
             @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
                     equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_combine_format1;
+            Float float_combine_format1;
             
             @CsvColumn(position=11)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL)
-            Integer integer_min;
+            Float float_min;
             
             @CsvColumn(position=12)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_min_format;
+            Float float_min_format;
             
             @CsvColumn(position=13)
             @CsvNumberConverter(max=TEST_VALUE_MAX_STR_NORMAL)
-            Integer integer_max;
+            Float float_max;
             
             @CsvColumn(position=14)
             @CsvNumberConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_max_format;
+            Float float_max_format;
             
             @CsvColumn(position=15)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
-            Integer integer_range;
+            Float float_range;
             
             @CsvColumn(position=16)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            Integer integer_range_format;
+            Float float_range_format;
             
             @CsvColumn(position=17)
             @CsvNumberConverter(pattern="#,##0.0##", lenient=true)
-            Integer integer_format_lenient;
+            Float float_format_lenient;
             
             @CsvColumn(position=18)
             @CsvNumberConverter(pattern="\u00A4 #,##0.0000", currency="USD")
-            Integer integer_format_currency;
+            Float float_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
-            Integer integer_format_roundingMode;
+            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            Float float_format_roundingMode;
             
         }
         
@@ -183,12 +183,12 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildInput_default() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
-            assertThat(cellProcessor, hasCellProcessor(ParseInt.class));
+            assertThat(cellProcessor, hasCellProcessor(ParseFloat.class));
             
             assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
@@ -207,7 +207,7 @@ public class IntegerCellProcessorBuilderTest {
                 fail();
             } catch(SuperCsvCellProcessorException e) {
                 CellProcessor errorProcessor = e.getProcessor();
-                assertThat(errorProcessor, is(instanceOf(ParseInt.class)));
+                assertThat(errorProcessor, is(instanceOf(ParseFloat.class)));
             }
             
         }
@@ -218,8 +218,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_default() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
@@ -243,8 +243,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_default_ignoreValidation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_default");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
@@ -267,8 +267,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildInput_optional() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
@@ -285,8 +285,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_optional() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
@@ -303,8 +303,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_optional_ignoreValidation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_optional");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
@@ -317,8 +317,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_trim() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -328,8 +328,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_trim() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -339,8 +339,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_trim_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_trim");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -350,8 +350,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_defaultValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -361,8 +361,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -372,8 +372,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -383,8 +383,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_defaultValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -394,8 +394,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -405,8 +405,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -420,8 +420,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test(expected=SuperCsvInvalidAnnotationException.class)
         public void testBuildInput_default_format_invalidAnnotation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_defaultValue_format_invalid");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format_invalid");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             
             cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT);
             fail();
@@ -430,8 +430,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_equalsValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -450,8 +450,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -470,8 +470,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
@@ -485,8 +485,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_equalsValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -505,8 +505,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -525,8 +525,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
@@ -540,8 +540,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_unique() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -561,8 +561,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
            
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -582,8 +582,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
@@ -596,8 +596,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_unique_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -617,8 +617,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -638,8 +638,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_unique_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
@@ -652,8 +652,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_combine1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -680,8 +680,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -708,8 +708,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine1_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -725,8 +725,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_combine_format1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -753,8 +753,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine_format1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -781,8 +781,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine_format1_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_combine_format1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -798,8 +798,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_min() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -808,7 +808,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
@@ -816,7 +816,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -830,8 +830,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -840,14 +840,14 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
             }
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -861,15 +861,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
             // less than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -879,8 +879,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_min_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -889,7 +889,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -897,7 +897,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -911,8 +911,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -921,7 +921,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -929,7 +929,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -943,15 +943,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_min_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
             // less than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -961,8 +961,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_max() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -971,7 +971,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -979,7 +979,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -993,8 +993,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -1003,7 +1003,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1011,7 +1011,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1025,15 +1025,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
             // greater than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1043,8 +1043,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_max_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -1053,7 +1053,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1061,7 +1061,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1075,8 +1075,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -1085,7 +1085,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1093,7 +1093,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1107,15 +1107,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_max_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
             // greater than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1126,8 +1126,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_range() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -1136,7 +1136,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
@@ -1144,7 +1144,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1159,7 +1159,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1167,7 +1167,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1181,8 +1181,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -1191,14 +1191,14 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
             }
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1212,7 +1212,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1220,7 +1220,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1235,15 +1235,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
             // less than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1251,7 +1251,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1260,15 +1260,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_range_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1276,7 +1276,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1290,7 +1290,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1298,7 +1298,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1312,8 +1312,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -1322,7 +1322,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1330,7 +1330,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1344,7 +1344,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1352,7 +1352,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1366,15 +1366,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_range_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
             // less than min value
             {
-                Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1382,7 +1382,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             {
-                Integer obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                Float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1393,210 +1393,210 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_format_lenient() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_lenient");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_lenient");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("12,345.567", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute("12,345.567", ANONYMOUS_CSVCONTEXT), is(toFloat("12345.567")));
+            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toFloat("12345.0")));
             
         }
         
         @Test
         public void testBuildOutput_format_lenient() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_lenient");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_lenient");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345.0"));
+            assertThat(cellProcessor.execute(toFloat("12345.67"), ANONYMOUS_CSVCONTEXT), is("12,345.67"));
             
         }
         
         @Test
         public void testBuildInput_format_currency() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_currency");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_currency");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("USD 12,345.0000", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute("USD 12,345.678", ANONYMOUS_CSVCONTEXT), is(toFloat("12345.678")));
             
         }
         
         @Test
         public void testBuildOutput_format_currency() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_currency");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_currency");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("USD 12,345.0000"));
+            assertThat(cellProcessor.execute(toFloat("12345.67"), ANONYMOUS_CSVCONTEXT), is("USD 12,345.6699"));
             
         }
         
         @Test
         public void testBuildInput_format_roundingMode() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_roundingMode");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(Integer.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_roundingMode");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(Float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toInteger("12345")));
+            assertThat(cellProcessor.execute("12,345.678", ANONYMOUS_CSVCONTEXT), is(toFloat("12345.678")));
             
         }
         
         @Test
         public void testBuildOutput_format_roundingMode() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "integer_format_roundingMode");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Integer.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_roundingMode");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(Float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(toInteger("12345"), ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(toFloat("12345.678"), ANONYMOUS_CSVCONTEXT), is("12,345.68"));
             
         }
     
     }
     
     /**
-     * Tests for primitive int.
+     * Tests for primitive float.
      *
      */
-    public static class PrivimiveIntTest {
+    public static class PrivimiveFloatTest {
         
         @Rule
         public TestName name = new TestName();
         
-        private IntegerCellProcessorBuilder builder;
+        private FloatCellProcessorBuilder builder;
         
         /**
          * Sets up the processor for the test using Combinations
          */
         @Before
         public void setUp() {
-            builder = new IntegerCellProcessorBuilder();
+            builder = new FloatCellProcessorBuilder();
         }
         
         /** for min/max diff value */
-        private static final int TEST_VALUE_DIFF = 1;
+        private static final float TEST_VALUE_DIFF = 0.01f;
         
-        private static final String TEST_FORMATTED_PATTERN = "#,###";
+        private static final String TEST_FORMATTED_PATTERN = "#,###.0#";
         
-        private static final int TEST_VALUE_PRIMITIVE_INIT_OBJ = 0;
+        private static final float TEST_VALUE_PRIMITIVE_INIT_OBJ = 0.0f;
         
-        private static final int TEST_VALUE_1_OBJ = 12345;
-        private static final String TEST_VALUE_1_STR_NORMAL = "12345";
-        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345";
+        private static final float TEST_VALUE_1_OBJ = 12345.67f;
+        private static final String TEST_VALUE_1_STR_NORMAL = "12345.67";
+        private static final String TEST_VALUE_1_STR_FORMATTED = "12,345.67";
         
-        private static final int TEST_VALUE_2_OBJ = -23456;
-        private static final String TEST_VALUE_2_STR_NORMAL = "-23456";
-        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456";
+        private static final float TEST_VALUE_2_OBJ = -23456.78f;
+        private static final String TEST_VALUE_2_STR_NORMAL = "-23456.78";
+        private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456.78";
         
-        private static final int TEST_VALUE_INPUT_DEFAULT_OBJ = 112233;
-        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233";
-        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233";
+        private static final float TEST_VALUE_INPUT_DEFAULT_OBJ = 112233.44f;
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233.44";
+        private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233.44";
         
-        private static final int TEST_VALUE_OUTPUT_DEFAULT_OBJ = -223344;
-        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344";
-        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344";
+        private static final float TEST_VALUE_OUTPUT_DEFAULT_OBJ = -223344.55f;
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344.55";
+        private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344.55";
         
-        private static final int TEST_VALUE_MIN_OBJ = -54321;
-        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321";
-        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321";
+        private static final float TEST_VALUE_MIN_OBJ = -54321.01f;
+        private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321.01";
+        private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321.01";
         
-        private static final int TEST_VALUE_MAX_OBJ = 98765;
-        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765";
-        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765";
+        private static final float TEST_VALUE_MAX_OBJ = 98765.43f;
+        private static final String TEST_VALUE_MAX_STR_NORMAL = "98765.43";
+        private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765.43";
         
         @CsvBean
         private static class TestCsv {
             
             @CsvColumn(position=0)
-            int int_default;
+            float float_default;
             
             @CsvColumn(position=1, optional=true)
-            int int_optional;
+            float float_optional;
             
             @CsvColumn(position=2, trim=true)
-            int int_trim;
+            float float_trim;
             
             @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
-            int int_defaultValue;
+            float float_defaultValue;
             
             @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            int int_defaultValue_format;
+            float float_defaultValue_format;
             
             @CsvColumn(position=4, inputDefaultValue="abc12,345")
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            int int_defaultValue_format_invalid;
+            float float_defaultValue_format_invalid;
             
             @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
-            int int_equalsValue;
+            float float_equalsValue;
             
             @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            int int_equalsValue_format;
+            float float_equalsValue_format;
             
             @CsvColumn(position=7, unique=true)
-            int int_unique;
+            float float_unique;
             
             @CsvColumn(position=8, unique=true)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            int int_unique_format;
+            float float_unique_format;
             
             @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
                     equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
-            int int_combine1;
+            float float_combine1;
             
             @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
                     equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
             @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
-            int int_combine_format1;
+            float float_combine_format1;
             
             @CsvColumn(position=11)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL)
-            int int_min;
+            float float_min;
             
             @CsvColumn(position=12)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            int int_min_format;
+            float float_min_format;
             
             @CsvColumn(position=13)
             @CsvNumberConverter(max=TEST_VALUE_MAX_STR_NORMAL)
-            int int_max;
+            float float_max;
             
             @CsvColumn(position=14)
             @CsvNumberConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            int int_max_format;
+            float float_max_format;
             
             @CsvColumn(position=15)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
-            int int_range;
+            float float_range;
             
             @CsvColumn(position=16)
             @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-            int int_range_format;
+            float float_range_format;
             
             @CsvColumn(position=17)
             @CsvNumberConverter(pattern="#,##0.0##", lenient=true)
-            int int_format_lenient;
+            float float_format_lenient;
             
             @CsvColumn(position=18)
             @CsvNumberConverter(pattern="\u00A4 #,##0.0000", currency="USD")
-            int int_format_currency;
+            float float_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
-            int int_format_roundingMode;
+            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            float float_format_roundingMode;
             
         }
         
@@ -1606,12 +1606,12 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildInput_default() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
-            assertThat(cellProcessor, hasCellProcessor(ParseInt.class));
+            assertThat(cellProcessor, hasCellProcessor(ParseFloat.class));
             
             assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
@@ -1630,7 +1630,7 @@ public class IntegerCellProcessorBuilderTest {
                 fail();
             } catch(SuperCsvCellProcessorException e) {
                 CellProcessor errorProcessor = e.getProcessor();
-                assertThat(errorProcessor, is(instanceOf(ParseInt.class)));
+                assertThat(errorProcessor, is(instanceOf(ParseFloat.class)));
             }
             
         }
@@ -1641,8 +1641,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_default() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
@@ -1666,8 +1666,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_default_ignoreValidation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_default");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_default");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(NotNull.class));
@@ -1690,8 +1690,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildInput_optional() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_optional");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1709,15 +1709,15 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_optional() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_optional");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
             
             assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
             
-            assertThat(cellProcessor.execute(0, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_PRIMITIVE_INIT_OBJ));
+            assertThat(cellProcessor.execute(0.0f, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_PRIMITIVE_INIT_OBJ));
             
         }
         
@@ -1727,8 +1727,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test
         public void testBuildOutput_optional_ignoreValidation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_optional");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_optional");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Optional.class));
@@ -1740,8 +1740,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_trim() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -1752,8 +1752,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_trim() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -1764,8 +1764,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_trim_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_trim");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_trim");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -1775,8 +1775,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_defaultValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1786,8 +1786,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1797,8 +1797,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1808,8 +1808,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_defaultValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1819,8 +1819,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
             
@@ -1829,8 +1829,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_defaultValue_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -1844,8 +1844,8 @@ public class IntegerCellProcessorBuilderTest {
         @Test(expected=SuperCsvInvalidAnnotationException.class)
         public void testBuildInput_default_format_invalidAnnotation() {
             
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_defaultValue_format_invalid");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_defaultValue_format_invalid");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             
             cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT);
             fail();
@@ -1854,8 +1854,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_equalsValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -1874,8 +1874,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -1894,8 +1894,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
@@ -1910,8 +1910,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_equalsValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -1930,8 +1930,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -1951,8 +1951,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_equalsValue_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_equalsValue_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_equalsValue_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
@@ -1967,8 +1967,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_unique() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -1988,8 +1988,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -2009,8 +2009,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
@@ -2023,8 +2023,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_unique_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -2044,8 +2044,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Unique.class));
@@ -2065,8 +2065,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_unique_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_unique_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_unique_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
@@ -2079,8 +2079,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_combine1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -2108,8 +2108,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -2136,8 +2136,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine1_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -2154,8 +2154,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_combine_format1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
@@ -2182,8 +2182,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine_format1() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -2210,8 +2210,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_combine_format1_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_combine_format1");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_combine_format1");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -2227,8 +2227,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_min() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -2237,7 +2237,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
@@ -2245,7 +2245,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2258,8 +2258,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -2268,14 +2268,14 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
             }
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2289,15 +2289,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
             // less than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2306,8 +2306,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_min_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -2316,7 +2316,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2324,7 +2324,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2337,8 +2337,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Min.class));
@@ -2347,7 +2347,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2355,7 +2355,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2368,15 +2368,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_min_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_min_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_min_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
             
             // less than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2385,8 +2385,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_max() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -2395,7 +2395,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2403,7 +2403,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2416,8 +2416,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -2426,7 +2426,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2434,7 +2434,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2448,15 +2448,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
             // greater than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2466,8 +2466,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_max_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -2476,7 +2476,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2484,7 +2484,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2498,8 +2498,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Max.class));
@@ -2508,7 +2508,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2516,7 +2516,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2529,15 +2529,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_max_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_max_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_max_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
             
             // greater than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2547,8 +2547,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_range() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -2557,7 +2557,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
@@ -2565,7 +2565,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2580,7 +2580,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2588,7 +2588,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2602,8 +2602,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -2612,14 +2612,14 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
             }
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2633,7 +2633,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2641,7 +2641,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2654,15 +2654,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
             // less than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2670,7 +2670,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2678,8 +2678,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_range_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range_format");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -2688,7 +2688,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2696,7 +2696,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2710,7 +2710,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -2718,7 +2718,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -2732,8 +2732,8 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_format() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, false);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, false);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(Range.class));
@@ -2742,7 +2742,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2750,7 +2750,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than min value
             try {
-                int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2764,7 +2764,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // less than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ - TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2772,7 +2772,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             try {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -2786,15 +2786,15 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildOutput_range_format_ignoreValidation() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_range_format");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_range_format");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
             
             // less than min value
             {
-                int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2802,7 +2802,7 @@ public class IntegerCellProcessorBuilderTest {
             
             // greater than max value
             {
-                int obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
+                float obj = TEST_VALUE_MAX_OBJ + TEST_VALUE_DIFF;
                 String str = format(obj, TEST_FORMATTED_PATTERN);
                 
                 assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -2812,74 +2812,74 @@ public class IntegerCellProcessorBuilderTest {
         
         @Test
         public void testBuildInput_format_lenient() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_lenient");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_lenient");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("12,345.567", ANONYMOUS_CSVCONTEXT), is(12345));
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute("12,345.567", ANONYMOUS_CSVCONTEXT), is(12345.567f));
+            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(12345.0f));
             
         }
         
         @Test
         public void testBuildOutput_format_lenient() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_lenient");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_lenient");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345.0"));
+            assertThat(cellProcessor.execute(12345.45, ANONYMOUS_CSVCONTEXT), is("12,345.45"));
             
         }
         
         @Test
         public void testBuildInput_format_currency() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_currency");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_currency");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("USD 12,345.0000", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute("USD 12,345.67", ANONYMOUS_CSVCONTEXT), is(12345.67f));
             
         }
         
         @Test
         public void testBuildOutput_format_currency() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_currency");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_currency");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("USD 12,345.0000"));
+            assertThat(cellProcessor.execute(12345.67d, ANONYMOUS_CSVCONTEXT), is("USD 12,345.6700"));
             
         }
         
         @Test
         public void testBuildInput_format_roundingMode() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_roundingMode");
-            CellProcessor cellProcessor = builder.buildInputCellProcessor(int.class, annos);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_roundingMode");
+            CellProcessor cellProcessor = builder.buildInputCellProcessor(float.class, annos);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
             
-            assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(12345));
+            assertThat(cellProcessor.execute("12,345.678", ANONYMOUS_CSVCONTEXT), is(12345.678f));
             
         }
         
         @Test
         public void testBuildOutput_format_roundingMode() {
-            Annotation[] annos = getAnnotations(TestCsv.class, "int_format_roundingMode");
-            CellProcessor cellProcessor = builder.buildOutputCellProcessor(int.class, annos, true);
+            Annotation[] annos = getAnnotations(TestCsv.class, "float_format_roundingMode");
+            CellProcessor cellProcessor = builder.buildOutputCellProcessor(float.class, annos, true);
             printCellProcessorChain(cellProcessor, name.getMethodName());
             
             assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
             
-            assertThat(cellProcessor.execute(12345, ANONYMOUS_CSVCONTEXT), is("12,345"));
+            assertThat(cellProcessor.execute(12345.678d, ANONYMOUS_CSVCONTEXT), is("12,345.68"));
             
         }
     }
