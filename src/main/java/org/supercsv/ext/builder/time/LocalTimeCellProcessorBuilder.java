@@ -2,11 +2,8 @@ package org.supercsv.ext.builder.time;
 
 import java.lang.annotation.Annotation;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -38,12 +35,9 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
     public LocalTime getParseValue(final Class<LocalTime> type, final Annotation[] annos, final String strValue) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final String pattern = getPattern(converterAnno);
-        final ResolverStyle style = getResolverStyle(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final ZoneId zone = getZoneId(converterAnno);
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, style, locale, zone);
         
         try {
             return LocalTime.parse(strValue, formatter);
@@ -61,12 +55,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final ResolverStyle style = getResolverStyle(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final ZoneId zone = getZoneId(converterAnno);
-        
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, style, locale, zone);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseTemporal(s, formatter));
         final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseTemporal(s, formatter));
@@ -86,12 +75,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
                 final CellProcessor processor) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final ResolverStyle style = getResolverStyle(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final ZoneId zone = getZoneId(converterAnno);
-        
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, style, locale, zone);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         CellProcessor cp = processor;
         cp = (cp == null ? new ParseLocalTime(formatter) : new ParseLocalTime(formatter, cp));

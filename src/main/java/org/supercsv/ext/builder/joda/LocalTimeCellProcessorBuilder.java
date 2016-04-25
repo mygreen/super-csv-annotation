@@ -1,10 +1,8 @@
 package org.supercsv.ext.builder.joda;
 
 import java.lang.annotation.Annotation;
-import java.util.Locale;
 import java.util.Optional;
 
-import org.joda.time.DateTimeZone;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -36,12 +34,9 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
     public LocalTime getParseValue(final Class<LocalTime> type, final Annotation[] annos, final String strValue) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final String pattern = getPattern(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final DateTimeZone zone = getDateTimeZone(converterAnno);
-        
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, locale, zone);
         
         try {
             return LocalTime.parse(strValue, formatter);
@@ -59,11 +54,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final DateTimeZone zone = getDateTimeZone(converterAnno);
-        
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, locale, zone);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
         final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
@@ -84,11 +75,7 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
             final CellProcessor processor) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
-        final String pattern = getPattern(converterAnno);
-        final Locale locale = getLocale(converterAnno);
-        final DateTimeZone zone = getDateTimeZone(converterAnno);
-        
-        final DateTimeFormatter formatter = createDateTimeFormatter(pattern, locale, zone);
+        final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
         final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
