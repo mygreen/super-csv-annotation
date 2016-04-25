@@ -56,11 +56,11 @@ public class BigIntegerCellProcessorBuilder extends AbstractNumberCellProcessorB
         
         if(formatter != null) {
             cp = (cp == null ?
-                    new ParseBigInteger() : new ParseBigInteger(cp));
-        } else {
-            cp = (cp == null ?
                     new ParseLocaleNumber<BigInteger>(type, formatter, lenient) :
                         new ParseLocaleNumber<BigInteger>(type, formatter, lenient, cp));                
+        } else {
+            cp = (cp == null ?
+                    new ParseBigInteger() : new ParseBigInteger(cp));
         }
         
         return cp;

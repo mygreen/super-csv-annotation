@@ -797,6 +797,7 @@ public class TimestampCellProcessorBuilderTest {
         {
             Timestamp obj = toTimestamp(plusMillseconds(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
+            
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
@@ -877,6 +878,7 @@ public class TimestampCellProcessorBuilderTest {
         {
             Timestamp obj = toTimestamp(plusMillseconds(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
+            
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         

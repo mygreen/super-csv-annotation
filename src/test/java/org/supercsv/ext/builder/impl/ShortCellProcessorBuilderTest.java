@@ -810,6 +810,7 @@ public class ShortCellProcessorBuilderTest {
             {
                 Short obj = (short) (TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF);
                 String str = obj.toString();
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -819,7 +820,7 @@ public class ShortCellProcessorBuilderTest {
                 Short obj = (short) (TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF);
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1147,7 +1148,7 @@ public class ShortCellProcessorBuilderTest {
                 Short obj = (short) (TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF);
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2248,7 +2249,7 @@ public class ShortCellProcessorBuilderTest {
                 short obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2559,6 +2560,7 @@ public class ShortCellProcessorBuilderTest {
             {
                 short obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -2568,7 +2570,7 @@ public class ShortCellProcessorBuilderTest {
                 short obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();

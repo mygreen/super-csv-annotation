@@ -6,9 +6,8 @@ import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.tool.HasCellProcessor.*;
 
 import java.lang.annotation.Annotation;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.supercsv.cellprocessor.ConvertNullTo;
 import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.constraint.Equals;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.Unique;
@@ -24,147 +24,148 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
 import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
-import org.supercsv.ext.annotation.CsvDateConverter;
-import org.supercsv.ext.cellprocessor.FormatLocaleDate;
-import org.supercsv.ext.cellprocessor.ParseLocaleDate;
+import org.supercsv.ext.annotation.CsvNumberConverter;
+import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
+import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.cellprocessor.Trim;
-import org.supercsv.ext.cellprocessor.constraint.DateRange;
-import org.supercsv.ext.cellprocessor.constraint.FutureDate;
-import org.supercsv.ext.cellprocessor.constraint.PastDate;
+import org.supercsv.ext.cellprocessor.constraint.Max;
+import org.supercsv.ext.cellprocessor.constraint.Min;
+import org.supercsv.ext.cellprocessor.constraint.Range;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
- * Test the {@link DateCellProcessorBuilder} CellProcessor.
+ * Test the {@link BigDecimalCellProcessorBuilder} CellProcessor.
  * 
  * @since 1.2
  * @author T.TSUCHIE
  *
  */
-public class DateCellProcessorBuilderTest {
+public class BigDecimalCellProcessorBuilderTest {
     
     @Rule
     public TestName name = new TestName();
     
-    private DateCellProcessorBuilder builder;
+    private BigDecimalCellProcessorBuilder builder;
     
     /**
      * Sets up the processor for the test using Combinations
      */
     @Before
     public void setUp() {
-        builder = new DateCellProcessorBuilder();
+        builder = new BigDecimalCellProcessorBuilder();
     }
     
-    private static final String TEST_NORMAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private static final String TEST_FORMATTED_PATTERN = "yy/M/d H:m:s";
+    /** for min/max diff value */
+    private static final BigDecimal TEST_VALUE_DIFF = toBigDecimal("0.02");
     
-    private static final Date TEST_VALUE_1_OBJ = toDate(2016, 2, 29, 7, 12, 1);
-    private static final String TEST_VALUE_1_STR_NORMAL = "2016-02-29 07:12:01";
-    private static final String TEST_VALUE_1_STR_FORMATTED = "16/2/29 7:12:1";
+    private static final String TEST_FORMATTED_PATTERN = "#,###.0##";
     
-    private static final Date TEST_VALUE_2_OBJ = toDate(2020, 1, 31, 10, 8, 35);
-    private static final String TEST_VALUE_2_STR_NORMAL = "2020-01-31 10:08:35";
-    private static final String TEST_VALUE_2_STR_FORMATTED = "20/1/31 10:8:35";
+    private static final BigDecimal TEST_VALUE_1_OBJ = toBigDecimal("12345.67");
+    private static final String TEST_VALUE_1_STR_NORMAL = "12345.67";
+    private static final String TEST_VALUE_1_STR_FORMATTED = "12,345.67";
     
-    private static final Date TEST_VALUE_INPUT_DEFAULT_OBJ = toDate(2000, 1, 1, 8, 2, 3);
-    private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "2000-01-01 08:02:03";
-    private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "00/1/1 8:2:3";
+    private static final BigDecimal TEST_VALUE_2_OBJ = toBigDecimal("-23456.78");
+    private static final String TEST_VALUE_2_STR_NORMAL = "-23456.78";
+    private static final String TEST_VALUE_2_STR_FORMATTED = "-23,456.78";
     
-    private static final Date TEST_VALUE_OUTPUT_DEFAULT_OBJ = toDate(2015, 12, 31, 12, 31, 1);
-    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "2015-12-31 12:31:01";
-    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "15/12/31 12:31:1";
+    private static final BigDecimal TEST_VALUE_INPUT_DEFAULT_OBJ = toBigDecimal("112233.44");
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "112233.44";
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "112,233.44";
     
-    private static final Date TEST_VALUE_MIN_OBJ = toDate(2000, 1, 1, 1, 0, 0);
-    private static final String TEST_VALUE_MIN_STR_NORMAL = "2000-01-01 01:00:00";
-    private static final String TEST_VALUE_MIN_STR_FORMATTED = "00/1/1 1:0:0";
+    private static final BigDecimal TEST_VALUE_OUTPUT_DEFAULT_OBJ = toBigDecimal("-223344.55");
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "-223344.55";
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "-223.344.55";
     
-    private static final Date TEST_VALUE_MAX_OBJ = toDate(2010, 12, 31, 4, 59, 59);
-    private static final String TEST_VALUE_MAX_STR_NORMAL = "2010-12-31 04:59:59";
-    private static final String TEST_VALUE_MAX_STR_FORMATTED = "10/12/31 4:59:59";
+    private static final BigDecimal TEST_VALUE_MIN_OBJ = toBigDecimal("-54321.01");
+    private static final String TEST_VALUE_MIN_STR_NORMAL = "-54321.01";
+    private static final String TEST_VALUE_MIN_STR_FORMATTED = "-54,321.01";
+    
+    private static final BigDecimal TEST_VALUE_MAX_OBJ = toBigDecimal("98765.43");
+    private static final String TEST_VALUE_MAX_STR_NORMAL = "98765.43";
+    private static final String TEST_VALUE_MAX_STR_FORMATTED = "98,765.43";
     
     @CsvBean
     private static class TestCsv {
         
         @CsvColumn(position=0)
-        Date date_default;
+        BigDecimal bigdecimal_default;
         
         @CsvColumn(position=1, optional=true)
-        Date date_optional;
+        BigDecimal bigdecimal_optional;
         
         @CsvColumn(position=2, trim=true)
-        Date date_trim;
+        BigDecimal bigdecimal_trim;
         
         @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
-        Date date_defaultValue;
+        BigDecimal bigdecimal_defaultValue;
         
         @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
-        @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_defaultValue_format;
+        @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_defaultValue_format;
         
-        @CsvColumn(position=4, inputDefaultValue="2000-01-01 08:02:03")
-        @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_defaultValue_format_invalid;
+        @CsvColumn(position=4, inputDefaultValue="abc12,345")
+        @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_defaultValue_format_invalid;
         
         @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
-        Date date_equalsValue;
+        BigDecimal bigdecimal_equalsValue;
         
         @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
-        @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_equalsValue_format;
+        @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_equalsValue_format;
         
         @CsvColumn(position=7, unique=true)
-        Date date_unique;
+        BigDecimal bigdecimal_unique;
         
         @CsvColumn(position=8, unique=true)
-        @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_unique_format;
+        @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_unique_format;
         
-        @CsvColumn(position=9, optional=true, trim=true,
-                inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
+        @CsvColumn(position=9, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
                 equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
-        Date date_combine1;
+        BigDecimal bigdecimal_combine1;
         
-        @CsvColumn(position=10, optional=true, trim=true,
-                inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
+        @CsvColumn(position=10, optional=true, trim=true, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
                 equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
-        @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_combine_format1;
+        @CsvNumberConverter(pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_combine_format1;
         
         @CsvColumn(position=11)
-        @CsvDateConverter(min=TEST_VALUE_MIN_STR_NORMAL)
-        Date date_min;
+        @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL)
+        BigDecimal bigdecimal_min;
         
         @CsvColumn(position=12)
-        @CsvDateConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_min_format;
+        @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_min_format;
         
         @CsvColumn(position=13)
-        @CsvDateConverter(max=TEST_VALUE_MAX_STR_NORMAL)
-        Date date_max;
+        @CsvNumberConverter(max=TEST_VALUE_MAX_STR_NORMAL)
+        BigDecimal bigdecimal_max;
         
         @CsvColumn(position=14)
-        @CsvDateConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_max_format;
+        @CsvNumberConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_max_format;
         
         @CsvColumn(position=15)
-        @CsvDateConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
-        Date date_range;
+        @CsvNumberConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
+        BigDecimal bigdecimal_range;
         
         @CsvColumn(position=16)
-        @CsvDateConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_range_format;
+        @CsvNumberConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
+        BigDecimal bigdecimal_range_format;
         
         @CsvColumn(position=17)
-        @CsvDateConverter(lenient=false)
-        Date date_lenient;
+        @CsvNumberConverter(pattern="#,##0.0##", lenient=true)
+        BigDecimal bigdecimal_format_lenient;
         
-        @CsvColumn(position=17)
-        @CsvDateConverter(pattern="GGGGyy年M月d日 H時m分s秒", locale="ja_JP_JP")
-        Date date_locale;
+        @CsvColumn(position=18)
+        @CsvNumberConverter(pattern="\u00A4 #,##0.0000", currency="USD")
+        BigDecimal bigdecimal_format_currency;
         
-        @CsvColumn(position=17)
-        @CsvDateConverter(timezone="GMT")
-        Date date_timezone;
+        @CsvColumn(position=19)
+        @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+        BigDecimal bigdecimal_format_roundingMode;
+        
     }
     
     /**
@@ -173,12 +174,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_default() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_default");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseBigDecimal.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
@@ -197,7 +198,7 @@ public class DateCellProcessorBuilderTest {
             fail();
         } catch(SuperCsvCellProcessorException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(ParseLocaleDate.class)));
+            assertThat(errorProcessor, is(instanceOf(ParseBigDecimal.class)));
         }
         
     }
@@ -208,13 +209,13 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_default() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_default");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         try {
@@ -233,13 +234,13 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_default_ignoreValidation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_default");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         try {
@@ -257,8 +258,8 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_optional() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_optional");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
@@ -275,13 +276,13 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_optional() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_optional");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -293,13 +294,13 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_optional_ignoreValidation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_optional");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Optional.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // null input
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(nullValue()));
@@ -307,8 +308,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_trim() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_trim");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -318,8 +319,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_trim() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_trim");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -329,8 +330,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_trim_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_trim");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Trim.class));
@@ -340,8 +341,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_defaultValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -351,8 +352,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -362,8 +363,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -373,8 +374,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_defaultValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -384,8 +385,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -395,8 +396,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(ConvertNullTo.class));
@@ -410,8 +411,8 @@ public class DateCellProcessorBuilderTest {
     @Test(expected=SuperCsvInvalidAnnotationException.class)
     public void testBuildInput_default_format_invalidAnnotation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format_invalid");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_defaultValue_format_invalid");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         
         cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT);
         fail();
@@ -420,8 +421,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_equalsValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -440,12 +441,13 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
+        
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
         try {
@@ -459,23 +461,23 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not quals input
-        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
     }
     
     @Test
     public void testBuildInput_equalsValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -494,8 +496,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -514,8 +516,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_equalsValue_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, not(hasCellProcessor(Equals.class)));
@@ -529,13 +531,14 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_unique() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // not unique input
         try {
@@ -549,13 +552,14 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
-        
+       
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
         // not unique input
         try {
@@ -569,30 +573,30 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
-        
-        // not quals input
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
     }
     
     @Test
     public void testBuildInput_unique_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_OBJ));
         
-        // not quals input
+        // not unique input
         try {
             cellProcessor.execute(TEST_VALUE_1_STR_FORMATTED, ANONYMOUS_CSVCONTEXT);
             fail();
@@ -604,15 +608,16 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(Unique.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
         
-        // not quals input
+        // not unique input
         try {
             cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT);
             fail();
@@ -624,27 +629,26 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_unique_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, not(hasCellProcessor(Unique.class)));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
-        
-        // not quals input
+        assertThat(cellProcessor.execute(TEST_VALUE_2_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_2_STR_FORMATTED));
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_FORMATTED));
         
     }
     
     @Test
     public void testBuildInput_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine1");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
-        assertThat(cellProcessor.execute("   " + TEST_VALUE_1_STR_NORMAL + "   ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_NORMAL + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not equals input
         try {
@@ -667,8 +671,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine1");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -695,8 +699,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine1_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine1");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL));
@@ -711,13 +715,13 @@ public class DateCellProcessorBuilderTest {
     }
     
     @Test
-    public void testBuildInput_format_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+    public void testBuildInput_combine_format1() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine_format1");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_INPUT_DEFAULT_OBJ));
-        assertThat(cellProcessor.execute("   " + TEST_VALUE_1_STR_FORMATTED + "   ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute("  " + TEST_VALUE_1_STR_FORMATTED + "  ", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         // not equals input
         try {
@@ -739,9 +743,9 @@ public class DateCellProcessorBuilderTest {
     }
     
     @Test
-    public void testBuildOutput_format_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+    public void testBuildOutput_combine_format1() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine_format1");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -768,8 +772,8 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine_format1_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_combine_format1");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED));
@@ -785,98 +789,99 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_min() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Min.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+        
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(FutureDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Min.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_min() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Min.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
-            
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
-        // less min value
+        // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ .subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(FutureDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Min.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_min_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(FutureDate.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
+        
     }
     
     @Test
     public void testBuildInput_min_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Min.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -884,31 +889,31 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(FutureDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Min.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_min_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FutureDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Min.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -916,129 +921,131 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(FutureDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Min.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_min_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_min_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(FutureDate.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Min.class)));
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
         }
+        
     }
     
     @Test
     public void testBuildInput_max() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(PastDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Max.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(PastDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Max.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_max() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(PastDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Max.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(PastDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Max.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_max_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(PastDate.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
+        
     }
     
     @Test
     public void testBuildInput_max_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(PastDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Max.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1046,31 +1053,31 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(PastDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Max.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_max_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(PastDate.class));
+        assertThat(cellProcessor, hasCellProcessor(Max.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1078,201 +1085,204 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(PastDate.class)));
+            assertThat(errorProcessor, is(instanceOf(Max.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_max_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_max_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(PastDate.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Max.class)));
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+        
         }
+        
     }
     
     @Test
     public void testBuildInput_range() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(DateRange.class));
+        assertThat(cellProcessor, hasCellProcessor(Range.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
+        
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
+        
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_range() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(DateRange.class));
+        assertThat(cellProcessor, hasCellProcessor(Range.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
-            
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
-        assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_NORMAL));
+        assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
+
         
     }
     
     @Test
     public void testBuildOutput_range_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(DateRange.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
-            String str = format(obj, TEST_NORMAL_PATTERN);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
+            String str = obj.toString();
             
-            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
+            assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(obj));
         }
     }
     
     @Test
     public void testBuildInput_range_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range_format");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
-        
-        assertThat(cellProcessor, hasCellProcessor(DateRange.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_OBJ));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
+            
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_STR_FORMATTED, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_OBJ));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1280,31 +1290,31 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
     }
     
     @Test
     public void testBuildOutput_range_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(DateRange.class));
+        assertThat(cellProcessor, hasCellProcessor(Range.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_MIN_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MIN_STR_FORMATTED));
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1312,21 +1322,21 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
         assertThat(cellProcessor.execute(TEST_VALUE_MAX_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_MAX_STR_FORMATTED));
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.subtract(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1334,29 +1344,29 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
             fail();
         } catch(SuperCsvConstraintViolationException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(DateRange.class)));
+            assertThat(errorProcessor, is(instanceOf(Range.class)));
         }
         
     }
     
     @Test
-    public void testBuildOutput_range_formatignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
+    public void testBuildOutput_range_format_ignoreValidation() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_range_format");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, not(hasCellProcessor(DateRange.class)));
+        assertThat(cellProcessor, not(hasCellProcessor(Range.class)));
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MIN_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1364,102 +1374,86 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            BigDecimal obj = TEST_VALUE_MAX_OBJ.add(TEST_VALUE_DIFF);
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
-        }
-    }
-    
-    @Test
-    public void testBuildInput_lenient() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_lenient");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
-        printCellProcessorChain(cellProcessor, name.getMethodName());
-        
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
-        
-        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
-        
-        try {
-            cellProcessor.execute("2016-02-31 07:12:01", ANONYMOUS_CSVCONTEXT);
-            fail();
-            
-        } catch(SuperCsvCellProcessorException e) {
-            CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(ParseLocaleDate.class)));
         }
         
     }
     
     @Test
-    public void testBuildOutput_lenient() {
-        
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_lenient");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+    public void testBuildInput_format_lenient() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_lenient");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FormatLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_STR_NORMAL));
+        assertThat(cellProcessor.execute("12,345.567", ANONYMOUS_CSVCONTEXT), is(toBigDecimal("12345.567")));
+        assertThat(cellProcessor.execute("12,345", ANONYMOUS_CSVCONTEXT), is(toBigDecimal("12345")));
         
     }
     
     @Test
-    public void testBuildInput_locale() {
-        
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_locale");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+    public void testBuildOutput_format_lenient() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_lenient");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
         
-        assertThat(cellProcessor.execute("平成28年2月29日 7時12分1秒", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute(toBigDecimal("12345.67"), ANONYMOUS_CSVCONTEXT), is("12,345.67"));
         
     }
     
     @Test
-    public void testBuildOutput_locale() {
-        
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_locale");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+    public void testBuildInput_format_currency() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_currency");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FormatLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is("平成28年2月29日 7時12分1秒"));
+        assertThat(cellProcessor.execute("USD 12,345.678", ANONYMOUS_CSVCONTEXT), is(toBigDecimal("12345.678")));
         
     }
     
     @Test
-    public void testBuildInput_timezone() {
-        
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_timezone");
-        CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
+    public void testBuildOutput_format_currency() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_currency");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
         
-        TimeZone tz = TimeZone.getDefault();
-        Date expected = plusHours(TEST_VALUE_1_OBJ, (int)TimeUnit.MILLISECONDS.toHours(tz.getRawOffset()));
-        assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(expected));
+        assertThat(cellProcessor.execute(toBigDecimal("12345.67"), ANONYMOUS_CSVCONTEXT), is("USD 12,345.6700"));
         
     }
     
     @Test
-    public void testBuildOutput_timezone() {
-        
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_timezone");
-        CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
+    public void testBuildInput_format_roundingMode() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_roundingMode");
+        CellProcessor cellProcessor = builder.buildInputCellProcessor(BigDecimal.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(FormatLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleNumber.class));
         
-        TimeZone tz = TimeZone.getDefault();
-        String expected = format(minusHours(TEST_VALUE_1_OBJ, (int)TimeUnit.MILLISECONDS.toHours(tz.getRawOffset())), TEST_NORMAL_PATTERN);
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(expected));
+        assertThat(cellProcessor.execute("12,345.678", ANONYMOUS_CSVCONTEXT), is(toBigDecimal("12345.678")));
         
     }
     
+    @Test
+    public void testBuildOutput_format_roundingMode() {
+        Annotation[] annos = getAnnotations(TestCsv.class, "bigdecimal_format_roundingMode");
+        CellProcessor cellProcessor = builder.buildOutputCellProcessor(BigDecimal.class, annos, true);
+        printCellProcessorChain(cellProcessor, name.getMethodName());
+        
+        assertThat(cellProcessor, hasCellProcessor(FormatLocaleNumber.class));
+        
+        assertThat(cellProcessor.execute(toBigDecimal("12345.678"), ANONYMOUS_CSVCONTEXT), is("12,345.68"));
+        
+    }
+
 }

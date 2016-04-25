@@ -810,6 +810,7 @@ public class FloatCellProcessorBuilderTest {
             {
                 Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -819,7 +820,7 @@ public class FloatCellProcessorBuilderTest {
                 Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1138,6 +1139,7 @@ public class FloatCellProcessorBuilderTest {
             {
                 Float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -1147,7 +1149,7 @@ public class FloatCellProcessorBuilderTest {
                 Float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2239,6 +2241,7 @@ public class FloatCellProcessorBuilderTest {
             {
                 float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -2248,7 +2251,7 @@ public class FloatCellProcessorBuilderTest {
                 float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2559,6 +2562,7 @@ public class FloatCellProcessorBuilderTest {
             {
                 float obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -2568,7 +2572,7 @@ public class FloatCellProcessorBuilderTest {
                 float obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();

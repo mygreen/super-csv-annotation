@@ -798,6 +798,7 @@ public class TimeCellProcessorBuilderTest {
         {
             Time obj = toTime(plusSeconds(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
+            
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
@@ -878,6 +879,7 @@ public class TimeCellProcessorBuilderTest {
         {
             Time obj = toTime(plusSeconds(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
+            
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         

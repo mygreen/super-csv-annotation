@@ -810,6 +810,7 @@ public class IntegerCellProcessorBuilderTest {
             {
                 Integer obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = obj.toString();
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -819,7 +820,7 @@ public class IntegerCellProcessorBuilderTest {
                 Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -1147,7 +1148,7 @@ public class IntegerCellProcessorBuilderTest {
                 Integer obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = obj.toString();
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2239,6 +2240,7 @@ public class IntegerCellProcessorBuilderTest {
             {
                 int obj = TEST_VALUE_MIN_OBJ + TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
+                
                 assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
             
             }
@@ -2248,7 +2250,7 @@ public class IntegerCellProcessorBuilderTest {
                 int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
@@ -2568,7 +2570,7 @@ public class IntegerCellProcessorBuilderTest {
                 int obj = TEST_VALUE_MIN_OBJ - TEST_VALUE_DIFF;
                 String str = Objects.toString(obj);
                 
-                cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
+                cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
                 fail();
             } catch(SuperCsvConstraintViolationException e) {
                 CellProcessor errorProcessor = e.getProcessor();
