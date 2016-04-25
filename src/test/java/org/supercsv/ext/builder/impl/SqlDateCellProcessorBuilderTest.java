@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.*;
 import static org.supercsv.ext.tool.HasCellProcessor.*;
 
 import java.lang.annotation.Annotation;
-import java.util.Date;
+import java.sql.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +26,7 @@ import org.supercsv.ext.annotation.CsvBean;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvDateConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleDate;
-import org.supercsv.ext.cellprocessor.ParseLocaleDate;
+import org.supercsv.ext.cellprocessor.ParseLocaleSqlDate;
 import org.supercsv.ext.cellprocessor.Trim;
 import org.supercsv.ext.cellprocessor.constraint.DateRange;
 import org.supercsv.ext.cellprocessor.constraint.FutureDate;
@@ -34,137 +34,138 @@ import org.supercsv.ext.cellprocessor.constraint.PastDate;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
- * Test the {@link DateCellProcessorBuilder} CellProcessor.
+ * Test the {@link SqlDateCellProcessorBuilder} CellProcessor.
  * 
  * @since 1.2
  * @author T.TSUCHIE
  *
  */
-public class DateCellProcessorBuilderTest {
+public class SqlDateCellProcessorBuilderTest {
+    
     
     @Rule
     public TestName name = new TestName();
     
-    private DateCellProcessorBuilder builder;
+    private SqlDateCellProcessorBuilder builder;
     
     /**
      * Sets up the processor for the test using Combinations
      */
     @Before
     public void setUp() {
-        builder = new DateCellProcessorBuilder();
+        builder = new SqlDateCellProcessorBuilder();
     }
     
-    private static final String TEST_NORMAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private static final String TEST_FORMATTED_PATTERN = "yy/M/d H:m:s";
+    private static final String TEST_NORMAL_PATTERN = "yyyy-MM-dd";
+    private static final String TEST_FORMATTED_PATTERN = "yy/M/d";
     
-    private static final Date TEST_VALUE_1_OBJ = toDate(2016, 2, 29, 7, 12, 1);
-    private static final String TEST_VALUE_1_STR_NORMAL = "2016-02-29 07:12:01";
-    private static final String TEST_VALUE_1_STR_FORMATTED = "16/2/29 7:12:1";
+    private static final Date TEST_VALUE_1_OBJ = toSqlDate(2016, 2, 29);
+    private static final String TEST_VALUE_1_STR_NORMAL = "2016-02-29";
+    private static final String TEST_VALUE_1_STR_FORMATTED = "16/2/29";
     
-    private static final Date TEST_VALUE_2_OBJ = toDate(2020, 1, 31, 10, 8, 35);
-    private static final String TEST_VALUE_2_STR_NORMAL = "2020-01-31 10:08:35";
-    private static final String TEST_VALUE_2_STR_FORMATTED = "20/1/31 10:8:35";
+    private static final Date TEST_VALUE_2_OBJ = toSqlDate(2020, 1, 31);
+    private static final String TEST_VALUE_2_STR_NORMAL = "2020-01-31";
+    private static final String TEST_VALUE_2_STR_FORMATTED = "20/1/31";
     
-    private static final Date TEST_VALUE_INPUT_DEFAULT_OBJ = toDate(2000, 1, 1, 8, 2, 3);
-    private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "2000-01-01 08:02:03";
-    private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "00/1/1 8:2:3";
+    private static final Date TEST_VALUE_INPUT_DEFAULT_OBJ = toSqlDate(2000, 1, 1);
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_NORMAL = "2000-01-01";
+    private static final String TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED = "00/1/1";
     
-    private static final Date TEST_VALUE_OUTPUT_DEFAULT_OBJ = toDate(2015, 12, 31, 12, 31, 1);
-    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "2015-12-31 12:31:01";
-    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "15/12/31 12:31:1";
+    private static final Date TEST_VALUE_OUTPUT_DEFAULT_OBJ = toSqlDate(2015, 12, 31);
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL = "2015-12-31";
+    private static final String TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED = "15/12/31";
     
-    private static final Date TEST_VALUE_MIN_OBJ = toDate(2000, 1, 1, 1, 0, 0);
-    private static final String TEST_VALUE_MIN_STR_NORMAL = "2000-01-01 01:00:00";
-    private static final String TEST_VALUE_MIN_STR_FORMATTED = "00/1/1 1:0:0";
+    private static final Date TEST_VALUE_MIN_OBJ = toSqlDate(2000, 1, 1);
+    private static final String TEST_VALUE_MIN_STR_NORMAL = "2000-01-01";
+    private static final String TEST_VALUE_MIN_STR_FORMATTED = "00/1/1";
     
-    private static final Date TEST_VALUE_MAX_OBJ = toDate(2010, 12, 31, 4, 59, 59);
-    private static final String TEST_VALUE_MAX_STR_NORMAL = "2010-12-31 04:59:59";
-    private static final String TEST_VALUE_MAX_STR_FORMATTED = "10/12/31 4:59:59";
+    private static final Date TEST_VALUE_MAX_OBJ = toSqlDate(2010, 12, 31);
+    private static final String TEST_VALUE_MAX_STR_NORMAL = "2010-12-31";
+    private static final String TEST_VALUE_MAX_STR_FORMATTED = "10/12/31";
     
     @CsvBean
     private static class TestCsv {
         
         @CsvColumn(position=0)
-        Date date_default;
+        Date sqldate_default;
         
         @CsvColumn(position=1, optional=true)
-        Date date_optional;
+        Date sqldate_optional;
         
         @CsvColumn(position=2, trim=true)
-        Date date_trim;
+        Date sqldate_trim;
         
         @CsvColumn(position=3, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL)
-        Date date_defaultValue;
+        Date sqldate_defaultValue;
         
         @CsvColumn(position=4, inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED)
         @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_defaultValue_format;
+        Date sqldate_defaultValue_format;
         
-        @CsvColumn(position=4, inputDefaultValue="2000-01-01 08:02:03")
+        @CsvColumn(position=4, inputDefaultValue="2000-01-01 08:02:03:123")
         @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_defaultValue_format_invalid;
+        Date sqldate_defaultValue_format_invalid;
         
         @CsvColumn(position=5, equalsValue=TEST_VALUE_1_STR_NORMAL)
-        Date date_equalsValue;
+        Date sqldate_equalsValue;
         
         @CsvColumn(position=6, equalsValue=TEST_VALUE_1_STR_FORMATTED)
         @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_equalsValue_format;
+        Date sqldate_equalsValue_format;
         
         @CsvColumn(position=7, unique=true)
-        Date date_unique;
+        Date sqldate_unique;
         
         @CsvColumn(position=8, unique=true)
         @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_unique_format;
+        Date sqldate_unique_format;
         
         @CsvColumn(position=9, optional=true, trim=true,
                 inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_NORMAL, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_NORMAL,
                 equalsValue=TEST_VALUE_1_STR_NORMAL, unique=true)
-        Date date_combine1;
+        Date sqldate_combine1;
         
         @CsvColumn(position=10, optional=true, trim=true,
                 inputDefaultValue=TEST_VALUE_INPUT_DEFAULT_STR_FORMATTED, outputDefaultValue=TEST_VALUE_OUTPUT_DEFAULT_STR_FORMATTED,
                 equalsValue=TEST_VALUE_1_STR_FORMATTED, unique=true)
         @CsvDateConverter(pattern=TEST_FORMATTED_PATTERN)
-        Date date_combine_format1;
+        Date sqldate_combine_format1;
         
         @CsvColumn(position=11)
         @CsvDateConverter(min=TEST_VALUE_MIN_STR_NORMAL)
-        Date date_min;
+        Date sqldate_min;
         
         @CsvColumn(position=12)
         @CsvDateConverter(min=TEST_VALUE_MIN_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_min_format;
+        Date sqldate_min_format;
         
         @CsvColumn(position=13)
         @CsvDateConverter(max=TEST_VALUE_MAX_STR_NORMAL)
-        Date date_max;
+        Date sqldate_max;
         
         @CsvColumn(position=14)
         @CsvDateConverter(max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_max_format;
+        Date sqldate_max_format;
         
         @CsvColumn(position=15)
         @CsvDateConverter(min=TEST_VALUE_MIN_STR_NORMAL, max=TEST_VALUE_MAX_STR_NORMAL)
-        Date date_range;
+        Date sqldate_range;
         
         @CsvColumn(position=16)
         @CsvDateConverter(min=TEST_VALUE_MIN_STR_FORMATTED, max=TEST_VALUE_MAX_STR_FORMATTED, pattern=TEST_FORMATTED_PATTERN)
-        Date date_range_format;
+        Date sqldate_range_format;
         
         @CsvColumn(position=17)
         @CsvDateConverter(lenient=false)
-        Date date_lenient;
+        Date sqldate_lenient;
         
         @CsvColumn(position=17)
-        @CsvDateConverter(pattern="GGGGyy年M月d日 H時m分s秒", locale="ja_JP_JP")
-        Date date_locale;
+        @CsvDateConverter(pattern="GGGGyy年M月d日", locale="ja_JP_JP")
+        Date sqldate_locale;
         
         @CsvColumn(position=17)
         @CsvDateConverter(timezone="GMT")
-        Date date_timezone;
+        Date sqldate_timezone;
     }
     
     /**
@@ -173,12 +174,12 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_default() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_default");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(NotNull.class));
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleSqlDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
@@ -197,7 +198,7 @@ public class DateCellProcessorBuilderTest {
             fail();
         } catch(SuperCsvCellProcessorException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(ParseLocaleDate.class)));
+            assertThat(errorProcessor, is(instanceOf(ParseLocaleSqlDate.class)));
         }
         
     }
@@ -208,7 +209,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_default() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_default");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -233,7 +234,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_default_ignoreValidation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_default");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_default");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -257,7 +258,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_optional() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_optional");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -275,7 +276,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_optional() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_optional");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -293,7 +294,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_optional_ignoreValidation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_optional");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_optional");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -307,7 +308,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_trim() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_trim");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -318,7 +319,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_trim() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_trim");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -329,7 +330,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_trim_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_trim");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_trim");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -340,7 +341,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_defaultValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -351,7 +352,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -362,7 +363,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -373,7 +374,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_defaultValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -384,7 +385,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -395,7 +396,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_defaultValue_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -410,7 +411,7 @@ public class DateCellProcessorBuilderTest {
     @Test(expected=SuperCsvInvalidAnnotationException.class)
     public void testBuildInput_default_format_invalidAnnotation() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_defaultValue_format_invalid");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_defaultValue_format_invalid");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         
         cellProcessor.execute(null, ANONYMOUS_CSVCONTEXT);
@@ -420,7 +421,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_equalsValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -440,7 +441,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         assertThat(cellProcessor, hasCellProcessor(Equals.class));
@@ -459,7 +460,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -474,7 +475,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_equalsValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -494,7 +495,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -514,7 +515,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_equalsValue_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_equalsValue_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_equalsValue_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -529,7 +530,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_unique() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -549,7 +550,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -569,7 +570,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -584,7 +585,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_unique_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -604,7 +605,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -624,7 +625,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_unique_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_unique_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_unique_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -639,7 +640,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -667,7 +668,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -695,7 +696,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine1_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -712,7 +713,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_format_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine_format1");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -740,7 +741,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_format_combine1() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine_format1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -768,7 +769,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_combine_format1_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_combine_format1");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_combine_format1");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -785,7 +786,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_min() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -795,14 +796,14 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -816,7 +817,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_min() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -826,7 +827,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -834,7 +835,7 @@ public class DateCellProcessorBuilderTest {
         
         // less min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -848,7 +849,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_min_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -856,7 +857,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -865,7 +866,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_min_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -875,14 +876,15 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
+            Date actual = cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -896,7 +898,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_min_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -906,7 +908,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -914,7 +916,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -928,7 +930,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_min_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_min_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_min_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -936,7 +938,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -945,7 +947,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_max() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -955,7 +957,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -963,7 +965,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -977,7 +979,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_max() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -987,7 +989,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -995,7 +997,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1009,7 +1011,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_max_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1017,7 +1019,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1026,7 +1028,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_max_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1036,7 +1038,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1044,7 +1046,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1058,7 +1060,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_max_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1068,7 +1070,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1076,7 +1078,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1090,7 +1092,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_max_format_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_max_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_max_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1098,7 +1100,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1107,7 +1109,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_range() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1117,14 +1119,14 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1138,7 +1140,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1146,7 +1148,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1160,7 +1162,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_range() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1170,7 +1172,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1178,7 +1180,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1192,7 +1194,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1200,7 +1202,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1214,7 +1216,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_range_ignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1222,7 +1224,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1230,7 +1232,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_NORMAL_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1239,7 +1241,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildInput_range_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range_format");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1249,14 +1251,14 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
         }
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1270,7 +1272,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT), is(obj));
@@ -1278,7 +1280,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(str, ANONYMOUS_CSVCONTEXT);
@@ -1292,7 +1294,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_range_format() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1302,7 +1304,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than min value
         {
-            Date obj = plusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1310,7 +1312,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         try {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1324,7 +1326,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than max value
         {
-            Date obj = minusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1332,7 +1334,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         try {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT);
@@ -1346,7 +1348,7 @@ public class DateCellProcessorBuilderTest {
     
     @Test
     public void testBuildOutput_range_formatignoreValidation() {
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_range_format");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_range_format");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, true);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1354,7 +1356,7 @@ public class DateCellProcessorBuilderTest {
         
         // less than min value
         {
-            Date obj = minusSeconds(TEST_VALUE_MIN_OBJ, 1);
+            Date obj = toSqlDate(minusDays(TEST_VALUE_MIN_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1362,7 +1364,7 @@ public class DateCellProcessorBuilderTest {
         
         // greater than max value
         {
-            Date obj = plusSeconds(TEST_VALUE_MAX_OBJ, 1);
+            Date obj = toSqlDate(plusDays(TEST_VALUE_MAX_OBJ, 1));
             String str = format(obj, TEST_FORMATTED_PATTERN);
             
             assertThat(cellProcessor.execute(obj, ANONYMOUS_CSVCONTEXT), is(str));
@@ -1372,21 +1374,21 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_lenient() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_lenient");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_lenient");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleSqlDate.class));
         
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
         try {
-            cellProcessor.execute("2016-02-31 07:12:01", ANONYMOUS_CSVCONTEXT);
+            cellProcessor.execute("2016-02-31", ANONYMOUS_CSVCONTEXT);
             fail();
             
         } catch(SuperCsvCellProcessorException e) {
             CellProcessor errorProcessor = e.getProcessor();
-            assertThat(errorProcessor, is(instanceOf(ParseLocaleDate.class)));
+            assertThat(errorProcessor, is(instanceOf(ParseLocaleSqlDate.class)));
         }
         
     }
@@ -1394,7 +1396,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_lenient() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_lenient");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_lenient");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1407,40 +1409,40 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildInput_locale() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_locale");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_locale");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleSqlDate.class));
         
-        assertThat(cellProcessor.execute("平成28年2月29日 7時12分1秒", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
+        assertThat(cellProcessor.execute("平成28年2月29日", ANONYMOUS_CSVCONTEXT), is(TEST_VALUE_1_OBJ));
         
     }
     
     @Test
     public void testBuildOutput_locale() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_locale");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_locale");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
         assertThat(cellProcessor, hasCellProcessor(FormatLocaleDate.class));
         
-        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is("平成28年2月29日 7時12分1秒"));
+        assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is("平成28年2月29日"));
         
     }
     
     @Test
     public void testBuildInput_timezone() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_timezone");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_timezone");
         CellProcessor cellProcessor = builder.buildInputCellProcessor(Date.class, annos);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
-        assertThat(cellProcessor, hasCellProcessor(ParseLocaleDate.class));
+        assertThat(cellProcessor, hasCellProcessor(ParseLocaleSqlDate.class));
         
         TimeZone tz = TimeZone.getDefault();
-        Date expected = plusHours(TEST_VALUE_1_OBJ, (int)TimeUnit.MILLISECONDS.toHours(tz.getRawOffset()));
+        Date expected = toSqlDate(plusHours(TEST_VALUE_1_OBJ, (int)TimeUnit.MILLISECONDS.toHours(tz.getRawOffset())));
         assertThat(cellProcessor.execute(TEST_VALUE_1_STR_NORMAL, ANONYMOUS_CSVCONTEXT), is(expected));
         
     }
@@ -1448,7 +1450,7 @@ public class DateCellProcessorBuilderTest {
     @Test
     public void testBuildOutput_timezone() {
         
-        Annotation[] annos = getAnnotations(TestCsv.class, "date_timezone");
+        Annotation[] annos = getAnnotations(TestCsv.class, "sqldate_timezone");
         CellProcessor cellProcessor = builder.buildOutputCellProcessor(Date.class, annos, false);
         printCellProcessorChain(cellProcessor, name.getMethodName());
         
@@ -1459,5 +1461,4 @@ public class DateCellProcessorBuilderTest {
         assertThat(cellProcessor.execute(TEST_VALUE_1_OBJ, ANONYMOUS_CSVCONTEXT), is(expected));
         
     }
-    
 }

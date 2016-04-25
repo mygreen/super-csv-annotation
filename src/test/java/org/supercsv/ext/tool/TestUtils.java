@@ -70,6 +70,10 @@ public class TestUtils {
         return new java.sql.Date(toDate(year, month, dayOfMonth).getTime());
     }
     
+    public static java.sql.Date toSqlDate(final Date date) {
+        return new java.sql.Date(date.getTime());
+    }
+    
     public static Timestamp toTimestamp(final int year, final int month, final int dayOfMonth,
             final int hour, final int minute, final int second, final int millsecond) {
         Calendar cal = Calendar.getInstance();
@@ -79,6 +83,10 @@ public class TestUtils {
         return new Timestamp(cal.getTimeInMillis());
     }
     
+    public static Timestamp toTimestamp(final Date date) {
+        return new Timestamp(date.getTime());
+    }
+    
     public static Time toTime(final int hour, final int minute, final int second) {
         
         Calendar cal = Calendar.getInstance();
@@ -86,6 +94,11 @@ public class TestUtils {
         cal.set(Calendar.MILLISECOND, 0);
         return new Time(cal.getTime().getTime());
     }
+    
+    public static Time toTime(final Date date) {
+        return new Time(date.getTime());
+    }
+
     
     public static Date plusDays(final Date date, final int daysToAdd) {
         
