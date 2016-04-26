@@ -1,12 +1,15 @@
 package org.supercsv.ext.builder.time;
 
 import java.lang.annotation.Annotation;
+import java.time.DateTimeException;
 import java.time.Period;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.FmtPeriod;
 import org.supercsv.cellprocessor.time.ParsePeriod;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.cellprocessor.Trim;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  *
@@ -15,7 +18,16 @@ import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
  *
  */
 public class PeriodCellProcessorBuilder extends AbstractCellProcessorBuilder<Period> {
-
+    
+    @Override
+    protected CellProcessor prependTrimProcessor(final CellProcessor processor) {
+        /*
+         * Because ParseZoneId not implemented StringCellProcessor,
+         * then used custom CellProcessor Trim
+         */
+        return (processor == null ? new Trim() : new Trim(processor));
+    }
+    
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Period> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
@@ -38,6 +50,14 @@ public class PeriodCellProcessorBuilder extends AbstractCellProcessorBuilder<Per
     
     @Override
     public Period getParseValue(final Class<Period> type, final Annotation[] annos, final String strValue) {
-        return Period.parse(strValue);
+        
+        try {
+            return Period.parse(strValue);
+            
+        } catch(DateTimeException e) {
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format("default '%s' value cannot parse to Period.", strValue), e);
+            
+        }
     }
 }

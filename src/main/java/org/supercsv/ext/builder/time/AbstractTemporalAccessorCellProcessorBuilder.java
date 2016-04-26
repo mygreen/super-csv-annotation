@@ -70,6 +70,7 @@ public abstract class AbstractTemporalAccessorCellProcessorBuilder<T extends Tem
     protected String getPattern(final Optional<CsvDateConverter> converterAnno) {
         
         return converterAnno.map(a -> a.pattern())
+                .map(s -> s.isEmpty() ? getDefaultPattern() : s)
                 .orElse(getDefaultPattern());
     }
     
@@ -88,7 +89,8 @@ public abstract class AbstractTemporalAccessorCellProcessorBuilder<T extends Tem
     
     protected ZoneId getZoneId(final Optional<CsvDateConverter> converterAnno) {
         
-        return converterAnno.map(a -> TimeZone.getTimeZone(a.timezone()).toZoneId())
+        return converterAnno.map(a -> a.timezone())
+                .map(s -> s.isEmpty() ? ZoneId.systemDefault() : TimeZone.getTimeZone(s).toZoneId())
                 .orElse(ZoneId.systemDefault());
     }
     
@@ -101,8 +103,6 @@ public abstract class AbstractTemporalAccessorCellProcessorBuilder<T extends Tem
         return converterAnno.map(a -> a.max())
                 .filter(s -> s.length() > 0);
     }
-    
-    protected abstract T parseTemporal(final String value, final DateTimeFormatter formatter);
     
     protected CellProcessor prependRangeProcessor(final Optional<T> min, final Optional<T> max,
             final DateTimeFormatter formatter, final CellProcessor processor) {

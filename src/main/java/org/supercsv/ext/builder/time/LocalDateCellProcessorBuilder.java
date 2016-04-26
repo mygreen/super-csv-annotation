@@ -23,12 +23,7 @@ public class LocalDateCellProcessorBuilder extends AbstractTemporalAccessorCellP
     
     @Override
     protected String getDefaultPattern() {
-        return "yyyy/MM/dd";
-    }
-    
-    @Override
-    protected LocalDate parseTemporal(final String value, final DateTimeFormatter formatter) {
-        return LocalDate.parse(value, formatter);
+        return "uuuu-MM-dd";
     }
     
     @Override
@@ -57,8 +52,8 @@ public class LocalDateCellProcessorBuilder extends AbstractTemporalAccessorCellP
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalDate> min = getMin(converterAnno).map(s -> parseTemporal(s, formatter));
-        final Optional<LocalDate> max = getMax(converterAnno).map(s -> parseTemporal(s, formatter));
+        final Optional<LocalDate> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDate> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtLocalDate(formatter) : new FmtLocalDate(formatter, cp));
@@ -77,7 +72,12 @@ public class LocalDateCellProcessorBuilder extends AbstractTemporalAccessorCellP
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
+        final Optional<LocalDate> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDate> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
+        
         CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
+        
         cp = (cp == null ? new ParseLocalDate(formatter) : new ParseLocalDate(formatter, cp));
         
         return cp;

@@ -27,11 +27,6 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
     }
     
     @Override
-    protected LocalTime parseTemporal(final String value, final DateTimeFormatter formatter) {
-        return LocalTime.parse(value, formatter);
-    }
-    
-    @Override
     public LocalTime getParseValue(final Class<LocalTime> type, final Annotation[] annos, final String strValue) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
@@ -57,8 +52,8 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseTemporal(s, formatter));
-        final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseTemporal(s, formatter));
+        final Optional<LocalTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtLocalTime(formatter) : new FmtLocalTime(formatter, cp));
@@ -77,7 +72,12 @@ public class LocalTimeCellProcessorBuilder extends AbstractTemporalAccessorCellP
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
+        final Optional<LocalTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
+        
         CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
+        
         cp = (cp == null ? new ParseLocalTime(formatter) : new ParseLocalTime(formatter, cp));
         
         return cp;

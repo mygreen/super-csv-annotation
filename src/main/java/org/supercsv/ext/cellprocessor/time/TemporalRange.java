@@ -22,11 +22,11 @@ import org.supercsv.util.CsvContext;
 public class TemporalRange<T extends TemporalAccessor & Comparable<? super T>>
         extends CellProcessorAdaptor implements DateCellProcessor, ValidationCellProcessor {
     
-    protected final T min;
+    private final T min;
     
-    protected final T max;
+    private final T max;
     
-    protected DateTimeFormatter formatter;
+    private DateTimeFormatter formatter;
     
     public TemporalRange(final T min, final T max) {
         super();
@@ -56,7 +56,7 @@ public class TemporalRange<T extends TemporalAccessor & Comparable<? super T>>
     
     @SuppressWarnings("unchecked")
     @Override
-    public T execute(final Object value, final CsvContext context) {
+    public Object execute(final Object value, final CsvContext context) {
         
         validateInputNotNull(value, context);
         

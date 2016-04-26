@@ -22,7 +22,7 @@ import org.supercsv.util.CsvContext;
 public class PastTemporal<T extends TemporalAccessor & Comparable<? super T>>
         extends CellProcessorAdaptor implements DateCellProcessor, ValidationCellProcessor {
     
-    protected final T max;
+    private final T max;
     
     private DateTimeFormatter formatter;
     

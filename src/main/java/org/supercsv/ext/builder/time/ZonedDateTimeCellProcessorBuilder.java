@@ -15,6 +15,7 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 /**
  * The cell processor builder for {@link ZonedDateTime}.
  *
+ * @since 1.2
  * @author T.TSUCHIE
  *
  */
@@ -22,12 +23,7 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
     
     @Override
     protected String getDefaultPattern() {
-        return "yyyy/MM/dd HH:mm:ss";
-    }
-    
-    @Override
-    protected ZonedDateTime parseTemporal(final String value, final DateTimeFormatter formatter) {
-        return ZonedDateTime.parse(value, formatter);
+        return "uuuu-MM-dd HH:mm:ssxxx'['VV']'";
     }
     
     @Override
@@ -56,8 +52,8 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> parseTemporal(s, formatter));
-        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> parseTemporal(s, formatter));
+        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtZonedDateTime(formatter) : new FmtZonedDateTime(formatter, cp));
@@ -76,7 +72,12 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
+        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
+        
         CellProcessor cp = processor;
+        cp = prependRangeProcessor(min, max, formatter, cp);
+        
         cp = (cp == null ? new ParseZonedDateTime(formatter) : new ParseZonedDateTime(formatter, cp));
         
         return cp;
