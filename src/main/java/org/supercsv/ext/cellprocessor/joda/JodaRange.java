@@ -69,7 +69,7 @@ public class JodaRange <T extends ReadablePartial>
             throw new SuperCsvConstraintViolationException(
                     String.format("%s does not lie between the min (%s) and max (%s) values (inclusive)", result, min, max),
                     context, this);
-        }   
+        }
         
         return next.execute(result, context);
         
