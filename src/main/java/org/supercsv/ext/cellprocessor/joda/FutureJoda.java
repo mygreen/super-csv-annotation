@@ -55,7 +55,7 @@ public class FutureJoda <T extends ReadablePartial>
             throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);
         }
         
-        final T result = ((T) value);
+        final T result = (T) value;
         
         if(result.compareTo(min) < 0) {
             throw new SuperCsvConstraintViolationException(

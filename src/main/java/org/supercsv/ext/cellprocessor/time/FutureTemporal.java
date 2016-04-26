@@ -69,7 +69,7 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
             throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);
         }
         
-        final T result = ((T) value);
+        final T result = (T) value;
         
         if(result.compareTo(min) < 0) {
             throw new SuperCsvConstraintViolationException(

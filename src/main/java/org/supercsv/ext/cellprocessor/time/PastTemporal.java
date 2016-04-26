@@ -55,7 +55,7 @@ public class PastTemporal<T extends TemporalAccessor & Comparable<? super T>>
             throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);
         }
         
-        final T result = ((T) value);
+        final T result = (T) value;
         
         if(result.compareTo(max) > 0) {
             throw new SuperCsvConstraintViolationException(

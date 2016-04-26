@@ -15,7 +15,7 @@ import org.supercsv.util.CsvContext;
 
 /**
  * 
- * @since 1.4
+ * @since 1.2
  * @author T.TSUCHIE
  *
  */
