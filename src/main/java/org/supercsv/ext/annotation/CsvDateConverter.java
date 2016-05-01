@@ -1,9 +1,3 @@
-/*
- * CsvDateConverter.java
- * created in 2013/03/05
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.annotation;
 
 import java.lang.annotation.Documented;
@@ -26,11 +20,11 @@ import java.util.Locale;
 public @interface CsvDateConverter {
     
     /**
-     * format pattern
-     * <p>default 'yyyy-MM-dd HH:mm:ss'
+     * format pattern.
+     * <p>指定しない場合は、クラスタイプにより自動的に決まります。
      * @return
      */
-    String pattern() default "yyyy-MM-dd HH:mm:ss";
+    String pattern() default "";
     
     /**
      * parsing date, lenient.
@@ -41,6 +35,7 @@ public @interface CsvDateConverter {
     
     /**
      * timezone id
+     * <p>LocalDateTime,LocalDate,LocalTimeの時は、指定しても意味がありません。
      * @return
      */
     String timezone() default "";

@@ -38,7 +38,7 @@ public @interface CsvNumberConverter {
     
     /**
      * formatting {@link Currency} Code(<a href="https://ja.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217 Code</a>)
-     * 
+     * <p>属性{@link #pattern()}を指定したときのみ有効になります。
      * @return
      */
     String currency() default "";
@@ -46,6 +46,7 @@ public @interface CsvNumberConverter {
     /**
      * formatting {@link Locale}.
      * ex. 'ja', 'ja_JP'
+     * <p>属性{@link #pattern()}を指定したときのみ有効になります。
      * @since 1.2
      * @return
      */
@@ -53,6 +54,7 @@ public @interface CsvNumberConverter {
     
     /**
      * Rounding mode
+     * <p>属性{@link #pattern()}を指定したときのみ有効になります。
      * @since 1.2
      * @return
      */
