@@ -1,9 +1,3 @@
-/*
- * SuperCsvInvalidAnnotationException.java
- * created in 2013/03/12
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.exception;
 
 

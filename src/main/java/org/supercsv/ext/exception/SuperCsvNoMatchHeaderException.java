@@ -1,9 +1,3 @@
-/*
- * SuperCsvNoMatchHeaderValueException.java
- * created in 2013/03/09
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.exception;
 
 import org.supercsv.exception.SuperCsvException;
