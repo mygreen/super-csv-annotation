@@ -8,7 +8,6 @@ import org.supercsv.cellprocessor.constraint.Equals;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.Unique;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.cellprocessor.Trim;
 
