@@ -60,6 +60,7 @@ public abstract class AbstractJodaCellProcessorBuilder<T extends ReadablePartial
     protected String getPattern(final Optional<CsvDateConverter> converterAnno) {
         
         return converterAnno.map(a -> a.pattern())
+                .map(s -> s.isEmpty() ? getDefaultPattern() : s)
                 .orElse(getDefaultPattern());
     }
     
@@ -91,8 +92,6 @@ public abstract class AbstractJodaCellProcessorBuilder<T extends ReadablePartial
         return converterAnno.map(a -> a.max())
                 .filter(s -> s.length() > 0);
     }
-    
-    protected abstract T parseJoda(final String value, final DateTimeFormatter formatter);
     
     protected CellProcessor prependRangeProcessor(final Optional<T> min, final Optional<T> max,
             final DateTimeFormatter formatter, final CellProcessor processor) {

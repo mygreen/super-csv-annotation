@@ -7,6 +7,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.FmtDateTimeZone;
 import org.supercsv.cellprocessor.joda.ParseDateTimeZone;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  * The cell processor builder for {@link DateTimeZone} with Joda-Time
@@ -15,7 +16,7 @@ import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
  *
  */
 public class DateTimeZoneCellProcessorBuilder extends AbstractCellProcessorBuilder<DateTimeZone> {
-
+    
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<DateTimeZone> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
@@ -38,6 +39,14 @@ public class DateTimeZoneCellProcessorBuilder extends AbstractCellProcessorBuild
     
     @Override
     public DateTimeZone getParseValue(final Class<DateTimeZone> type, final Annotation[] annos, final String strValue) {
-        return DateTimeZone.forID(strValue);
+        
+        try {
+            return DateTimeZone.forID(strValue);
+            
+        } catch(IllegalArgumentException e) {
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format("default '%s' value cannot parse to DateTimeZone.", strValue), e);
+            
+        }
     }
 }

@@ -107,6 +107,7 @@ public class CellProcessorBuilderContainer {
             
             registerBuilder(org.joda.time.Duration.class, new org.supercsv.ext.builder.joda.DurationCellProcessorBuilder());
             registerBuilder(org.joda.time.Interval.class, new org.supercsv.ext.builder.joda.IntervalCellProcessorBuilder());
+            registerBuilder(org.joda.time.Period.class, new org.supercsv.ext.builder.joda.PeriodCellProcessorBuilder());
             registerBuilder(org.joda.time.DateTimeZone.class, new org.supercsv.ext.builder.joda.DateTimeZoneCellProcessorBuilder());
             
         } catch(ClassNotFoundException e) {

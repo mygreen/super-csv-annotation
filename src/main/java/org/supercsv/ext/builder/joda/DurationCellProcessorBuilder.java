@@ -7,6 +7,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.joda.FmtDuration;
 import org.supercsv.cellprocessor.joda.ParseDuration;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
  * The cell processor builder for {@link Duration} with Joda-Time.
@@ -38,7 +39,15 @@ public class DurationCellProcessorBuilder extends AbstractCellProcessorBuilder<D
     
     @Override
     public Duration getParseValue(final Class<Duration> type, final Annotation[] annos, final String strValue) {
-        return Duration.parse(strValue);
+        
+        try {
+            return Duration.parse(strValue);
+            
+        } catch(IllegalArgumentException e) {
+            throw new SuperCsvInvalidAnnotationException(
+                    String.format("default '%s' value cannot parse to Duration.", strValue), e);
+            
+        }
     }
    
 }

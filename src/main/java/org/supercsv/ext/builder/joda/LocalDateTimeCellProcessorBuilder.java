@@ -22,12 +22,7 @@ public class LocalDateTimeCellProcessorBuilder extends AbstractJodaCellProcessor
     
     @Override
     protected String getDefaultPattern() {
-        return "yyyy/MM/dd HH:mm:ss";
-    }
-    
-    @Override
-    protected LocalDateTime parseJoda(final String value, final DateTimeFormatter formatter) {
-        return formatter.parseLocalDateTime(value);
+        return "yyyy-MM-dd HH:mm:ss";
     }
     
     @Override
@@ -56,8 +51,8 @@ public class LocalDateTimeCellProcessorBuilder extends AbstractJodaCellProcessor
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalDateTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalDateTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtLocalDateTime(formatter) : new FmtLocalDateTime(formatter, cp));
@@ -77,11 +72,12 @@ public class LocalDateTimeCellProcessorBuilder extends AbstractJodaCellProcessor
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalDateTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalDateTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = prependRangeProcessor(min, max, formatter, cp);
+        
         cp = (cp == null ? new ParseLocalDateTime(formatter) : new ParseLocalDateTime(formatter, cp));
         
         return cp;

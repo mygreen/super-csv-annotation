@@ -146,7 +146,7 @@ public abstract class AbstractCellProcessorBuilder<T> implements CellProcessorBu
     }
     
     protected CellProcessor prependTrimProcessor(final CellProcessor processor) {
-        return (processor == null ? new Trim() : new Trim((StringCellProcessor) processor));
+        return (processor == null ? new Trim() : new Trim(processor));
     }
     
     public abstract CellProcessor buildOutputCellProcessor(Class<T> type, Annotation[] annos, CellProcessor processor, boolean ignoreValidationProcessor);

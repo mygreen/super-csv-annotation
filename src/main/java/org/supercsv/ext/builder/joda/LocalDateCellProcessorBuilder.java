@@ -22,12 +22,7 @@ public class LocalDateCellProcessorBuilder extends AbstractJodaCellProcessorBuil
     
     @Override
     protected String getDefaultPattern() {
-        return "yyyy/MM/dd";
-    }
-    
-    @Override
-    protected LocalDate parseJoda(final String value, final DateTimeFormatter formatter) {
-        return formatter.parseLocalDate(value);
+        return "yyyy-MM-dd";
     }
     
     @Override
@@ -56,8 +51,8 @@ public class LocalDateCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalDate> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalDate> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalDate> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDate> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtLocalDate(formatter) : new FmtLocalDate(formatter, cp));
@@ -77,8 +72,8 @@ public class LocalDateCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalDate> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalDate> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalDate> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalDate> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = prependRangeProcessor(min, max, formatter, cp);

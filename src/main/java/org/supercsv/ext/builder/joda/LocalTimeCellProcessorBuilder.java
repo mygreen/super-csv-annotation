@@ -26,11 +26,6 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
     }
     
     @Override
-    protected LocalTime parseJoda(final String value, final DateTimeFormatter formatter) {
-        return formatter.parseLocalTime(value);
-    }
-    
-    @Override
     public LocalTime getParseValue(final Class<LocalTime> type, final Annotation[] annos, final String strValue) {
         
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
@@ -56,8 +51,8 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtLocalTime(formatter) : new FmtLocalTime(formatter, cp));
@@ -77,8 +72,8 @@ public class LocalTimeCellProcessorBuilder extends AbstractJodaCellProcessorBuil
         final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<LocalTime> min = getMin(converterAnno).map(s -> parseJoda(s, formatter));
-        final Optional<LocalTime> max = getMax(converterAnno).map(s -> parseJoda(s, formatter));
+        final Optional<LocalTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<LocalTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
         
         CellProcessor cp = processor;
         cp = prependRangeProcessor(min, max, formatter, cp);
