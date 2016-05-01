@@ -3,14 +3,20 @@ package org.supercsv.ext.tool;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.joda.time.ReadablePartial;
+import org.joda.time.format.DateTimeFormat;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.util.CsvContext;
@@ -27,12 +33,74 @@ public class TestUtils {
     public static final CsvContext  ANONYMOUS_CSVCONTEXT = new CsvContext(1, 2, 3);
     
     /**
+     * create Chracter from str.
+     * @param value
+     * @return
+     */
+    public static Character toCharacter(final String value) {
+        return value.charAt(0);
+    }
+    
+    /**
+     * create Byte from str.
+     * @param value
+     * @return
+     */
+    public static Byte toByte(final String value) {
+        return Byte.parseByte(value);
+    }
+    
+    /**
+     * create Intger from str.
+     * @param value
+     * @return
+     */
+    public static Short toShort(final String value) {
+        return Short.parseShort(value);
+    }
+    
+    /**
      * create Intger from str.
      * @param value
      * @return
      */
     public static Integer toInteger(final String value) {
         return Integer.parseInt(value);
+    }
+    
+    /**
+     * create Long from str.
+     * @param value
+     * @return
+     */
+    public static Long toLong(final String value) {
+        return Long.parseLong(value);
+    }
+    
+    /**
+     * create Long from str.
+     * @param value
+     * @return
+     */
+    public static Float toFloat(final String value) {
+        return Float.parseFloat(value);
+    }
+    
+    /**
+     * create Long from str.
+     * @param value
+     * @return
+     */
+    public static Double toDouble(final String value) {
+        return Double.parseDouble(value);
+    }
+    
+    public static BigDecimal toBigDecimal(final String value) {
+        return new BigDecimal(value);
+    }
+    
+    public static BigInteger toBigInteger(final String value) {
+        return new BigInteger(value);
     }
     
     /**
@@ -253,6 +321,20 @@ public class TestUtils {
         
         DecimalFormat formatter = new DecimalFormat(pattern);
         return formatter.format(value);
+        
+    }
+    
+    public static final String format(final TemporalAccessor value, final String pattern) {
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return formatter.format(value);
+        
+    }
+    
+    public static final String format(final ReadablePartial value, final String pattern) {
+        
+        org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
+        return formatter.print(value);
         
     }
     
