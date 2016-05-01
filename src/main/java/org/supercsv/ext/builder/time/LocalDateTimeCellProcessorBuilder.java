@@ -38,7 +38,7 @@ public class LocalDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
             
         } catch(DateTimeParseException e) {
             throw new SuperCsvInvalidAnnotationException(
-                    String.format("default '%s' value cannot parse to Date with pattern '%s'",
+                    String.format("default '%s' value cannot parse to LocalDateTime with pattern '%s'",
                             strValue, pattern), e);
             
         }

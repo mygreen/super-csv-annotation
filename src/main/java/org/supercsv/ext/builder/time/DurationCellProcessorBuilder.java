@@ -56,7 +56,7 @@ public class DurationCellProcessorBuilder extends AbstractCellProcessorBuilder<D
             
         } catch(DateTimeException e) {
             throw new SuperCsvInvalidAnnotationException(
-                    String.format("default '%s' value cannot parse to ZoneId.", strValue), e);
+                    String.format("default '%s' value cannot parse to Duration.", strValue), e);
             
         }
     }
