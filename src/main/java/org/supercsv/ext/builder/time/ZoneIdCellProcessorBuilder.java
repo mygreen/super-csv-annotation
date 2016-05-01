@@ -8,7 +8,6 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.FmtZoneId;
 import org.supercsv.cellprocessor.time.ParseZoneId;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
-import org.supercsv.ext.cellprocessor.Trim;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
@@ -18,15 +17,6 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
  *
  */
 public class ZoneIdCellProcessorBuilder extends AbstractCellProcessorBuilder<ZoneId> {
-    
-    @Override
-    protected CellProcessor prependTrimProcessor(final CellProcessor processor) {
-        /*
-         * Because ParseZoneId not implemented StringCellProcessor,
-         * then used custom CellProcessor Trim
-         */
-        return (processor == null ? new Trim() : new Trim(processor));
-    }
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<ZoneId> type, final Annotation[] annos,
