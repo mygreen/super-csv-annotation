@@ -77,11 +77,6 @@ public class TemporalRange<T extends TemporalAccessor & Comparable<? super T>>
     }
     
     @Override
-    public String getMessageCode() {
-        return TemporalRange.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         
         Map<String, Object> vars = new HashMap<>();

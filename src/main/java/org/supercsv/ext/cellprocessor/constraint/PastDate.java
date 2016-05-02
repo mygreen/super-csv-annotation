@@ -86,11 +86,6 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
     }
     
     @Override
-    public String getMessageCode() {
-        return PastDate.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("max", getMax());

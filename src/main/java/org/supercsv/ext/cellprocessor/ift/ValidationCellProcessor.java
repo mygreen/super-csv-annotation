@@ -1,9 +1,3 @@
-/*
- * ValidationCellProcessor.java
- * created in 2013/03/08
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor.ift;
 
 import java.util.Map;
@@ -11,7 +5,7 @@ import java.util.Map;
 
 /**
  * Validation系のCellProcessor.
- * <p>エラー時のメッセージ出力時に使用する。
+ * <p>エラー時のメッセージ出力する場合に、このインタフェースを実装する。</p>
  *
  * @author T.TSUCHIE
  *
@@ -24,7 +18,9 @@ public interface ValidationCellProcessor {
      * <P>例. org.supercsv.contrib.cellprocessor.constraint.StrMax.violated
      * @return
      */
-    String getMessageCode();
+    default String getMessageCode() {
+        return this.getClass().getCanonicalName() + ".violated";
+    }
     
     /**
      * メッセージ用の変数を取得する。
@@ -38,8 +34,8 @@ public interface ValidationCellProcessor {
     /**
      * メッセージに埋め込む際の値を取得する。
      * <p>java.util.Date型の時など、表記とそぐわない場合があるため。
-     * @param value
-     * @return
+     * @param value フォーマット対象の値。
+     * @return フォーマットした値。
      */
     String formatValue(Object value);
 }

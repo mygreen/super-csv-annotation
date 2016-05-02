@@ -81,11 +81,6 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
     }
     
     @Override
-    public String getMessageCode() {
-        return FutureTemporal.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

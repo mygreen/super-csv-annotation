@@ -73,11 +73,6 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
     }
     
     @Override
-    public String getMessageCode() {
-        return Max.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("max", getMax());

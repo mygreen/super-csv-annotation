@@ -66,11 +66,6 @@ public class PastTemporal<T extends TemporalAccessor & Comparable<? super T>>
         return next.execute(result, context);
     }
     
-   @Override
-    public String getMessageCode() {
-        return PastTemporal.class.getCanonicalName() + ".violated";
-    }
-    
     @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();

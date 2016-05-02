@@ -68,11 +68,6 @@ public class PastJoda <T extends ReadablePartial>
     }
     
     @Override
-    public String getMessageCode() {
-        return PastJoda.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("max", getMax());

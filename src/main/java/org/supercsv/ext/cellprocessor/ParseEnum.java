@@ -181,11 +181,6 @@ public class ParseEnum extends CellProcessorAdaptor
     }
     
     @Override
-    public String getMessageCode() {
-        return ParseEnum.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("type", getType().getCanonicalName());

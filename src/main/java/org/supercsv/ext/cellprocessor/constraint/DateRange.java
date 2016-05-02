@@ -97,11 +97,6 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
     }
     
     @Override
-    public String getMessageCode() {
-        return DateRange.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

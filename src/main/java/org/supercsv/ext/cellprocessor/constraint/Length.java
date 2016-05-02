@@ -88,11 +88,6 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
     }
     
     @Override
-    public String getMessageCode() {
-        return Length.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

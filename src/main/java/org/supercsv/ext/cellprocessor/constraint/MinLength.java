@@ -68,11 +68,6 @@ public class MinLength extends CellProcessorAdaptor implements StringCellProcess
     }
     
     @Override
-    public String getMessageCode() {
-        return MinLength.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

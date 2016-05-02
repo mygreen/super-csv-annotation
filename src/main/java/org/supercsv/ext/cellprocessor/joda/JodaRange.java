@@ -76,11 +76,6 @@ public class JodaRange <T extends ReadablePartial>
     }
     
     @Override
-    public String getMessageCode() {
-        return JodaRange.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

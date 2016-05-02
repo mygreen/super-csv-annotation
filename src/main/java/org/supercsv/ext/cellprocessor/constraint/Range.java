@@ -83,11 +83,6 @@ public class Range<T extends Number & Comparable<T>> extends CellProcessorAdapto
     }
     
     @Override
-    public String getMessageCode() {
-        return Range.class.getCanonicalName()+ ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

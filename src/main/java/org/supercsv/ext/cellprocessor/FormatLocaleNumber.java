@@ -66,11 +66,6 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
     }
     
     @Override
-    public String getMessageCode() {
-        return FormatLocaleNumber.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         

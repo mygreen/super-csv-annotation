@@ -104,11 +104,6 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
     }
     
     @Override
-    public String getMessageCode() {
-        return ParseLocaleNumber.class.getCanonicalName() + ".violated";
-    }
-
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("type", getType().getCanonicalName());

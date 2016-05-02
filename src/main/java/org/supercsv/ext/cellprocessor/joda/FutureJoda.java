@@ -68,11 +68,6 @@ public class FutureJoda <T extends ReadablePartial>
     }
     
     @Override
-    public String getMessageCode() {
-        return FutureJoda.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("min", getMin());

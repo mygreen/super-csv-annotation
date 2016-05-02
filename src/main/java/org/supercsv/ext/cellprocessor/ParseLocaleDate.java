@@ -86,14 +86,6 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
      * {@inheritDoc}
      */
     @Override
-    public String getMessageCode() {
-        return this.getClass().getCanonicalName() + ".violated";
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("pattern", formatter.getPattern());

@@ -145,11 +145,6 @@ public class ParseBoolean extends CellProcessorAdaptor implements StringCellProc
     }
     
     @Override
-    public String getMessageCode() {
-        return ParseBoolean.class.getCanonicalName() + ".violated";
-    }
-    
-    @Override
     public Map<String, ?> getMessageVariable() {
         Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("trueValues", getTrueValues());
