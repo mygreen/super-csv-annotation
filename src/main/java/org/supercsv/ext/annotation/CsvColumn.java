@@ -6,12 +6,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.supercsv.cellprocessor.ConvertNullTo;
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.constraint.Equals;
+import org.supercsv.cellprocessor.constraint.NotNull;
+import org.supercsv.cellprocessor.constraint.Unique;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.builder.CellProcessorBuilder;
 import org.supercsv.ext.builder.DefaultCellProcessorBuilder;
+import org.supercsv.ext.cellprocessor.Trim;
 
 
 /**
- * Annotation for CSV "Column".
+ * CSVのカラムを定義するためのアノテーション。
+ * <p>初期値や制約などを定義するためにも利用します。
  * 
  * @version 1.1
  * @since 1.0
@@ -24,67 +32,71 @@ import org.supercsv.ext.builder.DefaultCellProcessorBuilder;
 public @interface CsvColumn {
     
     /**
-     * index of column.
-     * <p>start with zero(0).
-     * @return
+     * カラムのインデックスを指定します。
+     * <p>他のカラムの値との重複や抜けは許可しません。</p>
+     * @return インデックスは0(ゼロ)から始まります。
      */
     int position();
     
     /**
-     * Header column label.
-     * <p>if label omiited, then using field name.
+     * 見出しとなるラベルを指定します。
+     * <p>省略した場合、フィールド名が利用されます。
      */
     String label() default "";
     
     /**
-     * optional colums.
-     * <p>if set the true, set CellProcessor for 'Optional'
-     * <p>if set the false, set CellProcessor for 'NotNull'
-     * @return
+     * カラムの値がnullを許可するか指定します。
+     * <p>trueの場合、{@link CellProcessor}の{@link Optional}が設定されます。</p>
+     * <p>falseの場合、{@link CellProcessor}の{@link NotNull}が設定されます。</p>
+     * 
+     * @return trueの場合、カラムの値としてnullまたは空を許可します。
      */
     boolean optional() default false;
     
     /**
-     * trimming on read/write
-     * <p>set CellProcessor for 'Trim'
-     * @return
+     * 値をトリムするか指定します。
+     * <p>trueの場合、{@link CellProcessor}の{@link Trim}が設定されます。</p>
+     * @return trueの場合、値をトリミングします。
      */
     boolean trim() default false;
     
     /**
-     * default value.
-     * <p>set CellProcessor for 'ConvertNullTo'
-     * <p>When type is 'String', set the magic value '@empty' as empty ''.
-     * @return
+     * 読み込み時のデフォルト値を指定します。
+     * <p>{@link CellProcessor}の{@link ConvertNullTo}が設定されます。</p>
+     * <p>文字列型の場合、空文字として読み込みたい場合は、特殊なマジックナンバー {@literal @empty} を指定します。
+     * @return カラムの値が空の時に代替となる値を指定します。
+     *    ただし、ブール型、数値や日時型の場合は、アノテーションで指定した書式に沿った値を指定する必要があります。
      */
     String inputDefaultValue() default "";
     
     /**
-     * default value.
-     * <p>set CellProcessor for 'ConvertNullTo'
-     * <p>When type is 'String', set the magic value '@empty' as empty ''.
-     * @return
+     * 書き込み時のデフォルト値を指定します。
+     * <p>{@link CellProcessor}の{@link ConvertNullTo}が設定されます。</p>
+     * <p>文字列型の場合、空文字として読み込みたい場合は、特殊なマジックナンバー {@literal @empty} を指定します。
+     * @return カラムの値が空の時に代替となる値を指定します。
+     * 
      */
     String outputDefaultValue() default "";
     
     
     /**
-     * unique column
-     * <p>set CellProcessor for 'Unique'
-     * @return
+     * カラムの値が他の行と比較してユニークであるかチェックするか指定します。
+     * <p>trueの場合、{@link CellProcessor}の{@link Unique}が設定されます。</p>
+     * @returnt trueの場合、値がユニークかチェックします。
      */
     boolean unique() default false;
     
     /**
-     * eqauals value
-     * <p>set CellProcessor for 'Equals'
-     * @return
+     * カラムの値が指定した値と等しいかどうかチェックするか指定します。
+     * <p>ブール型、数値や日時型の場合は、アノテーションで指定した書式に沿った値を指定する必要があります。</p>
+     * <p>trueの場合、{@link CellProcessor}の{@link Equals}が指定されます。</p>
+     * @returnt trueの場合、等しいかチェックします。
      */
     String equalsValue() default "";
     
     /**
-     * custom builder class
-     * @return
+     * 独自の{@link CellProcessorBuilder}を指定して{@link CellProcessor} を組み立てたい場合に指定します。
+     * @return {@link CellProcessorBuilder}を実装したクラスを指定します。
      */
     @SuppressWarnings("rawtypes")
     Class<? extends CellProcessorBuilder> builderClass() default DefaultCellProcessorBuilder.class;

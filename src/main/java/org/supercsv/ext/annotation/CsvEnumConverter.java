@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 
 
 /**
- * Enum formmating annotation.
+ * 列挙型の変換規則を指定するアノテーション。
  *
- * @version 1.2
+ * @version 1.1
  * @author T.TSUCHIE
  *
  */
@@ -20,13 +20,14 @@ import java.lang.annotation.Target;
 public @interface CsvEnumConverter {
     
     /**
-     * ignore lower/upper case.
-     * @return
+     * 読み込み時に、大文字・小文字を区別なく候補の値と比較して処理するか指定します。
+     * @return trueの場合、大文字・小文字の区別は行いません。
      */
     boolean ignoreCase() default false;
     
     /**
-     * your customize method name. ex. Color.label()
+     * 列挙型のをname()メソッド以外から取得するときに指定します。
+     * <p>例). Color.label()のlabel()メソッドを指定するときには、'label'と指定します。
      */
     String valueMethodName() default "";
 }

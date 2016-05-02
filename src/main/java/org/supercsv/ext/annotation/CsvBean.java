@@ -8,9 +8,8 @@ import java.lang.annotation.Target;
 
 
 /**
- * Annotation for CSV "Bean".
+ * CSVをマッピングするクラスに付与するアノテーション。
  * 
- * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -20,8 +19,9 @@ import java.lang.annotation.Target;
 public @interface CsvBean {
     
     /**
-     * has CSV Header column.
-     * @return
+     * ヘッダー行を持つかどうか指定する。
+     * <p>
+     * @return true ヘッダー行を持つ。
      */
     boolean header() default false;
     
