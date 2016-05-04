@@ -3,14 +3,18 @@ package org.supercsv.ext.builder.time;
 import java.lang.annotation.Annotation;
 import java.time.DateTimeException;
 import java.time.Duration;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.FmtDuration;
 import org.supercsv.cellprocessor.time.ParseDuration;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.builder.CellProcessorBuilder;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 /**
+ * {@link Duration}型の{@link CellProcessorBuilder}クラス。
  *
  * @since 1.2
  * @author T.TSUCHIE
@@ -39,10 +43,14 @@ public class DurationCellProcessorBuilder extends AbstractCellProcessorBuilder<D
     }
     
     @Override
-    public Duration getParseValue(final Class<Duration> type, final Annotation[] annos, final String strValue) {
+    public Optional<Duration> parseValue(final Class<Duration> type, final Annotation[] annos, final String strValue) {
+        
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
+        }
         
         try {
-            return Duration.parse(strValue);
+            return Optional.of(Duration.parse(strValue));
             
         } catch(DateTimeException e) {
             throw new SuperCsvInvalidAnnotationException(

@@ -163,7 +163,7 @@ public class BigDecimalCellProcessorBuilderTest {
         BigDecimal bigdecimal_format_currency;
         
         @CsvColumn(position=19)
-        @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+        @CsvNumberConverter(pattern="#,##0.0#", rounding=RoundingMode.HALF_UP)
         BigDecimal bigdecimal_format_roundingMode;
         
     }

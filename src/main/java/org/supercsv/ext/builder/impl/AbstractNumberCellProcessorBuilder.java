@@ -7,6 +7,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.annotation.CsvNumberConverter;
@@ -18,142 +19,186 @@ import org.supercsv.ext.util.Utils;
 
 
 /**
- *
- *
+ * 数値型の{@link CellProcessorBuilder}のテンプレートクラス。
+ * <p>基本的に、{@link Number}のサブクラスのビルダは、このクラスを継承して作成する。
+ * 
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public abstract class AbstractNumberCellProcessorBuilder<N extends Number & Comparable<N>> extends AbstractCellProcessorBuilder<N> {
     
-    protected CsvNumberConverter getAnnotation(final Annotation[] annos) {
+    /**
+     * アノテーション{@link CsvDateConverter} を取得する。
+     * @param annos アノテーションの一覧
+     * @return アノテーションの定義がない場合は空を返す。
+     */
+    protected Optional<CsvNumberConverter> getNumberConverterAnnotation(final Annotation[] annos) {
         
-        for(Annotation anno : annos) {
-            if(anno instanceof CsvNumberConverter) {
-                return (CsvNumberConverter) anno;
-            }
-        }
-        
-        return null;
+        return getAnnotation(annos, CsvNumberConverter.class);
         
     }
     
-    protected String getPattern(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
+    /**
+     * 数値の書式を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<String> getPattern(final Optional<CsvNumberConverter> converterAnno) {
         
-        return converterAnno.pattern();
+        return converterAnno.map(a -> a.pattern())
+                .filter(s -> s.length() > 0);
     }
     
-    protected boolean getLenient(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return false;
-        }
+    /**
+     * 読み込み時に数値の解析を厳密に行うか判定するかの設定を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、デフォルト値を返す。
+     */
+    protected boolean getLenient(final Optional<CsvNumberConverter> converterAnno) {
         
-        return converterAnno.lenient();
+        return converterAnno.map(a -> a.lenient())
+                .orElse(true);
     }
     
-    protected Locale getLocale(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return Locale.getDefault();
-        }
+    /**
+     * ロケールを取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、システムのデフォルト値を返す。
+     */
+    protected Locale getLocale(final Optional<CsvNumberConverter> converterAnno) {
         
-        return Utils.getLocale(converterAnno.locale());
+        return converterAnno.map(a -> Utils.getLocale(a.locale()))
+                .orElse(Locale.getDefault());
     }
     
-    protected Currency getCurrency(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
+    /**
+     * 通貨記号を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<Currency> getCurrency(final Optional<CsvNumberConverter> converterAnno) {
+        
+        return converterAnno.map(a -> a.currency())
+                .filter(s -> s.length() > 0)
+                .map(s -> Currency.getInstance(s));
+    }
+    
+    /**
+     * 数値の丸め方法を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<RoundingMode> getRounding(final Optional<CsvNumberConverter> converterAnno) {
+        
+       return converterAnno.map(a -> a.rounding());
+    }
+    
+    /**
+     * 指定された値以下かどうかをチェックするための最小値を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合や、値がない場合は、空を返す。
+     */
+    protected Optional<String> getMin(final Optional<CsvNumberConverter> converterAnno) {
+        
+        return converterAnno.map(a -> a.min())
+                .filter(s -> s.length() > 0);
+        
+    }
+    
+    /**
+     * 指定された値以上かどうかをチェックするための最大値を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合や、値がない場合は、空を返す。
+     */
+    protected Optional<String> getMax(final Optional<CsvNumberConverter> converterAnno) {
+        
+        return converterAnno.map(a -> a.max())
+                .filter(s -> s.length() > 0);
+    }
+    
+    /**
+     * 組み立て途中の{@link CellProcessor}に最小値/最大値/範囲をチェックするための{@link CellProcessor}を、Chainの前に追加する。
+     * 
+     * @param type フィールドのクラスタイプ。
+     * @param annos フィールドに付与された全てのアノテーション。
+     * @param cellProcessor 組み立て途中の{@link CellProcessor}
+     * @param min 最小値
+     * @param max 最大値
+     * @return 最小値、最大値の指定の仕方により、最小値、最大値、範囲のチェックを追加するかどうか変わる。
+     */
+    protected CellProcessor prependRangeProcessor(final Class<N> type, final Annotation[] annos, final CellProcessor cellProcessor,
+            final Optional<N> min, final Optional<N> max) {
+        
+        final Optional<NumberFormat> formatter = createNumberFormatter(getNumberConverterAnnotation(annos));
+        
+        if(min.isPresent() && max.isPresent()) {
             
-        } else if(converterAnno.currency().isEmpty()) {
-            return null;
-        }
-        
-        return Currency.getInstance(converterAnno.currency());
-    }
-    
-    protected RoundingMode getRoundingMode(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
+            final Range<N> cp;
+            if(cellProcessor == null) {
+                cp = new Range<N>(min.get(), max.get());
+            } else {
+                cp = new Range<N>(min.get(), max.get(), cellProcessor);
+            }
             
-        }
-        
-        return converterAnno.roundingMode();
-    }
-    
-    protected String getMin(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
-        
-        return converterAnno.min();
-        
-    }
-    
-    protected String getMax(final CsvNumberConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
-        
-        return converterAnno.max();
-        
-    }
-    
-    protected CellProcessor prependRangeProcessor(final N min, final N max, final NumberFormat formatter, final CellProcessor processor) {
-        
-        CellProcessor cp = processor;
-        if(min != null && max != null) {
-            if(cp == null) {
-                cp = new Range<N>(min, max).setFormatter(formatter);
+            formatter.ifPresent(f -> cp.setFormatter(f));
+            return cp;
+            
+        } else if(min.isPresent()) {
+            
+            final Min<N> cp;
+            if(cellProcessor == null) {
+                cp = new Min<N>(min.get());
             } else {
-                cp = new Range<N>(min, max, cp).setFormatter(formatter);
+                cp = new Min<N>(min.get(), cellProcessor);
             }
-        } else if(min != null) {
-            if(cp == null) {
-                cp = new Min<N>(min).setFormatter(formatter);
+            
+            formatter.ifPresent(f -> cp.setFormatter(f));
+            return cp;
+            
+        } else if(max.isPresent()) {
+            
+            final Max<N> cp;
+            if(cellProcessor == null) {
+                cp = new Max<N>(max.get());
             } else {
-                cp = new Min<N>(min, cp).setFormatter(formatter);
+                cp = new Max<N>(max.get(), cellProcessor);
             }
-        } else if(max != null) {
-            if(cp == null) {
-                cp = new Max<N>(max).setFormatter(formatter);
-            } else {
-                cp = new Max<N>(max, cp).setFormatter(formatter);
-            }
+            
+            formatter.ifPresent(f -> cp.setFormatter(f));
+            return cp;
         }
         
-        return cp;
+        return cellProcessor;
     }
     
-    protected NumberFormat createNumberFormatter(final CsvNumberConverter converterAnno) {
+    /**
+     * 変換規則から、{@link NumberFormat}のインスタンスを作成する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return 数値のフォーマッタ。アノテーションがなかったり、書式(pattern)が指定されていない場合は、空を返す。
+     */
+    protected Optional<NumberFormat> createNumberFormatter(final Optional<CsvNumberConverter> converterAnno) {
         
-        final String pattern = getPattern(converterAnno);
-        final boolean lenient = getLenient(converterAnno);
+        final Optional<String> pattern = getPattern(converterAnno);
+        
+        if(!pattern.isPresent()) {
+            return Optional.empty();
+        }
+        
+//        final boolean lenient = getLenient(converterAnno);
         final Locale locale = getLocale(converterAnno);
-        final Currency currency = getCurrency(converterAnno);
-        final RoundingMode roundingMode = getRoundingMode(converterAnno);
+        final Optional<Currency> currency = getCurrency(converterAnno);
+        final Optional<RoundingMode> roundingMode = getRounding(converterAnno);
         final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
         
-        return createNumberFormatter(pattern, lenient, currency, symbols, roundingMode);
+        final DecimalFormat formatter = new DecimalFormat(pattern.get(), symbols);
+        formatter.setParseBigDecimal(true);
         
+        roundingMode.ifPresent(r -> formatter.setRoundingMode(r));
+        currency.ifPresent(c -> formatter.setCurrency(c));
+        
+        return Optional.of(formatter);
     }
     
-    protected NumberFormat createNumberFormatter(final String pattern, final boolean lenient,
-            final Currency currency, final DecimalFormatSymbols symbols, final RoundingMode roundingMode) {
-        
-        if(pattern.isEmpty()) {
-            return null;
-        }
-        
-        final DecimalFormat formatter = new DecimalFormat(pattern, symbols);
-        formatter.setParseBigDecimal(true);
-        formatter.setRoundingMode(roundingMode);
-        
-        if(currency != null) {
-            formatter.setCurrency(currency);
-        }
-        
-        return formatter;
-    }
     
 }

@@ -104,9 +104,8 @@ public class Min<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         return formatter;
     }
     
-    public Min<T> setFormatter(NumberFormat formatter) {
+    public void setFormatter(NumberFormat formatter) {
         this.formatter = formatter;
-        return this;
     }
     
 }

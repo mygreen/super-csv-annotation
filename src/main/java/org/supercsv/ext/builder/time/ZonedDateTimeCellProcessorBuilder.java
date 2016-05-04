@@ -11,6 +11,7 @@ import org.supercsv.cellprocessor.time.FmtZonedDateTime;
 import org.supercsv.cellprocessor.time.ParseZonedDateTime;
 import org.supercsv.ext.annotation.CsvDateConverter;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 /**
  * The cell processor builder for {@link ZonedDateTime}.
@@ -27,15 +28,19 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
     }
     
     @Override
-    public ZonedDateTime getParseValue(final Class<ZonedDateTime> type, final Annotation[] annos, final String strValue) {
+    public Optional<ZonedDateTime> parseValue(final Class<ZonedDateTime> type, final Annotation[] annos, final String strValue) {
         
-        final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
+        }
+        
+        final Optional<CsvDateConverter> converterAnno = getDateConverterAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
         final String pattern = getPattern(converterAnno);
         
         try {
-            return ZonedDateTime.parse(strValue, formatter);
+            return Optional.of(ZonedDateTime.parse(strValue, formatter));
             
         } catch(DateTimeParseException e) {
             throw new SuperCsvInvalidAnnotationException(
@@ -49,17 +54,17 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
     public CellProcessor buildOutputCellProcessor(final Class<ZonedDateTime> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-        final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
+        final Optional<CsvDateConverter> converterAnno = getDateConverterAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
-        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> parseValue(type, annos, s).get());
+        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> parseValue(type, annos, s).get());
         
         CellProcessor cp = processor;
         cp = (cp == null ? new FmtZonedDateTime(formatter) : new FmtZonedDateTime(formatter, cp));
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, formatter, cp);
+            cp = prependRangeProcessor(type, annos, cp, min, max);
         }
         
         return cp;
@@ -69,14 +74,14 @@ public class ZonedDateTimeCellProcessorBuilder extends AbstractTemporalAccessorC
     public CellProcessor buildInputCellProcessor(final Class<ZonedDateTime> type, final Annotation[] annos,
                 final CellProcessor processor) {
         
-        final Optional<CsvDateConverter> converterAnno = getAnnotation(annos);
+        final Optional<CsvDateConverter> converterAnno = getDateConverterAnnotation(annos);
         final DateTimeFormatter formatter = createDateTimeFormatter(converterAnno);
         
-        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> getParseValue(type, annos, s));
-        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> getParseValue(type, annos, s));
+        final Optional<ZonedDateTime> min = getMin(converterAnno).map(s -> parseValue(type, annos, s).get());
+        final Optional<ZonedDateTime> max = getMax(converterAnno).map(s -> parseValue(type, annos, s).get());
         
         CellProcessor cp = processor;
-        cp = prependRangeProcessor(min, max, formatter, cp);
+        cp = prependRangeProcessor(type, annos, cp, min, max);
         
         cp = (cp == null ? new ParseZonedDateTime(formatter) : new ParseZonedDateTime(formatter, cp));
         

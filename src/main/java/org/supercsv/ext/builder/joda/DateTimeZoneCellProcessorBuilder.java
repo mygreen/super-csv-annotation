@@ -1,6 +1,7 @@
 package org.supercsv.ext.builder.joda;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.joda.time.DateTimeZone;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -10,7 +11,7 @@ import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 /**
- * The cell processor builder for {@link DateTimeZone} with Joda-Time
+ * Joda-Timeの{@link DateTimeZone}型の{@link CellProcessor}のビルダ。
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -38,10 +39,10 @@ public class DateTimeZoneCellProcessorBuilder extends AbstractCellProcessorBuild
     }
     
     @Override
-    public DateTimeZone getParseValue(final Class<DateTimeZone> type, final Annotation[] annos, final String strValue) {
+    public Optional<DateTimeZone> parseValue(final Class<DateTimeZone> type, final Annotation[] annos, final String strValue) {
         
         try {
-            return DateTimeZone.forID(strValue);
+            return Optional.of(DateTimeZone.forID(strValue));
             
         } catch(IllegalArgumentException e) {
             throw new SuperCsvInvalidAnnotationException(

@@ -80,9 +80,8 @@ public class PastDate<T extends Date> extends CellProcessorAdaptor implements Da
         return formatter;
     }
     
-    public PastDate<T> setFormatter(DateFormat formatter) {
+    public void setFormatter(DateFormat formatter) {
         this.formatter = formatter;
-        return this;
     }
     
     @Override

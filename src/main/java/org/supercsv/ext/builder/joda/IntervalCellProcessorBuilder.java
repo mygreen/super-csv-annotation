@@ -1,6 +1,7 @@
 package org.supercsv.ext.builder.joda;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.joda.time.Interval;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -8,6 +9,7 @@ import org.supercsv.cellprocessor.joda.FmtInterval;
 import org.supercsv.cellprocessor.joda.ParseInterval;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 /**
  * The cell processor builder for {@link Interval} with Joda-Time
@@ -38,10 +40,14 @@ public class IntervalCellProcessorBuilder extends AbstractCellProcessorBuilder<I
     }
     
     @Override
-    public Interval getParseValue(final Class<Interval> type, final Annotation[] annos, final String strValue) {
+    public Optional<Interval> parseValue(final Class<Interval> type, final Annotation[] annos, final String strValue) {
+        
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
+        }
         
         try {
-            return Interval.parse(strValue);
+            return Optional.of(Interval.parse(strValue));
             
         } catch(IllegalArgumentException e) {
             throw new SuperCsvInvalidAnnotationException(

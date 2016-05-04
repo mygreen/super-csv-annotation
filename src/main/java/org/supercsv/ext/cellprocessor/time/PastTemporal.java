@@ -98,9 +98,8 @@ public class PastTemporal<T extends TemporalAccessor & Comparable<? super T>>
         return formatter;
     }
     
-    public PastTemporal<T> setFormatter(DateTimeFormatter formatter) {
+    public void setFormatter(DateTimeFormatter formatter) {
         this.formatter = formatter;
-        return this;
     }
     
 }

@@ -173,7 +173,7 @@ public class ByteCellProcessorBuilderTest {
             Byte byte_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             Byte byte_format_roundingMode;
             
         }
@@ -1597,7 +1597,7 @@ public class ByteCellProcessorBuilderTest {
             byte byte_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             byte byte_format_roundingMode;
             
         }

@@ -172,7 +172,7 @@ public class FloatCellProcessorBuilderTest {
             Float float_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0.0#", rounding=RoundingMode.HALF_UP)
             Float float_format_roundingMode;
             
         }
@@ -1597,7 +1597,7 @@ public class FloatCellProcessorBuilderTest {
             float float_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0.0#", rounding=RoundingMode.HALF_UP)
             float float_format_roundingMode;
             
         }

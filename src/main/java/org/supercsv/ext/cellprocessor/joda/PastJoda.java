@@ -103,8 +103,7 @@ public class PastJoda <T extends ReadablePartial>
         return formatter;
     }
     
-    public PastJoda<T> setFormatter(DateTimeFormatter formatter) {
+    public void setFormatter(DateTimeFormatter formatter) {
         this.formatter = formatter;
-        return this;
     }
 }

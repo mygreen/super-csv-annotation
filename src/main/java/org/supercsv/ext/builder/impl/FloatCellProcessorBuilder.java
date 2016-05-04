@@ -3,6 +3,7 @@ package org.supercsv.ext.builder.impl;
 import java.lang.annotation.Annotation;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
@@ -14,6 +15,13 @@ import org.supercsv.ext.cellprocessor.ParseFloat;
 import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
+/**
+ * float/Float型の{@link CellProcessor}を組み立てるクラス。
+ *
+ * @version 1.2
+ * @author T.TSUCHIE
+ *
+ */
 public class FloatCellProcessorBuilder extends AbstractNumberCellProcessorBuilder<Float> {
     
     @Override
@@ -22,11 +30,11 @@ public class FloatCellProcessorBuilder extends AbstractNumberCellProcessorBuilde
         
         // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、0に変換する。
         if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor, 0.0f);
+            return prependConvertNullToProcessor(type, annos, cellProcessor, 0.0f);
             
         } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
+            Optional<Float> value = parseValue(type, annos, csvColumnAnno.inputDefaultValue());
+            return prependConvertNullToProcessor(type, annos, cellProcessor, value.get());
         }
         
         return cellProcessor;
@@ -36,20 +44,20 @@ public class FloatCellProcessorBuilder extends AbstractNumberCellProcessorBuilde
     public CellProcessor buildOutputCellProcessor(final Class<Float> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
         
-        final Float min = getParseValue(type, annos, getMin(converterAnno));
-        final Float max = getParseValue(type, annos, getMax(converterAnno));
+        final Optional<Float> min = getMin(converterAnno).map(n -> parseValue(type, annos, n).get());
+        final Optional<Float> max = getMax(converterAnno).map(n -> parseValue(type, annos, n).get());
         
         CellProcessor cp = processor;
-        if(formatter != null) {
+        if(formatter.isPresent()) {
             cp = (cp == null ?
-                    new FormatLocaleNumber(formatter) : new FormatLocaleNumber(formatter, (StringCellProcessor) cp));
+                    new FormatLocaleNumber(formatter.get()) : new FormatLocaleNumber(formatter.get(), (StringCellProcessor) cp));
         }
         
         if(!ignoreValidationProcessor) {
-            cp = prependRangeProcessor(min, max, formatter, cp);
+            cp = prependRangeProcessor(type, annos, cp, min, max);
         }
         
         return cp;
@@ -59,20 +67,20 @@ public class FloatCellProcessorBuilder extends AbstractNumberCellProcessorBuilde
     public CellProcessor buildInputCellProcessor(final Class<Float> type, final Annotation[] annos,
             final CellProcessor processor) {
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
         final boolean lenient = getLenient(converterAnno);
         
-        final Float min = getParseValue(type, annos, getMin(converterAnno));
-        final Float max = getParseValue(type, annos, getMax(converterAnno));
+        final Optional<Float> min = getMin(converterAnno).map(n -> parseValue(type, annos, n).get());
+        final Optional<Float> max = getMax(converterAnno).map(n -> parseValue(type, annos, n).get());
         
         CellProcessor cp = processor;
-        cp = prependRangeProcessor(min, max, formatter, cp);
+        cp = prependRangeProcessor(type, annos, cp, min, max);
         
-        if(formatter != null) {
+        if(formatter.isPresent()) {
             cp = (cp == null ?
-                    new ParseLocaleNumber<Float>(type, formatter, lenient) :
-                        new ParseLocaleNumber<Float>(type, formatter, lenient, cp));
+                    new ParseLocaleNumber<Float>(type, formatter.get(), lenient) :
+                        new ParseLocaleNumber<Float>(type, formatter.get(), lenient, cp));
                 
         } else {
             cp = (cp == null ?
@@ -84,26 +92,26 @@ public class FloatCellProcessorBuilder extends AbstractNumberCellProcessorBuilde
     }
     
     @Override
-    public Float getParseValue(final Class<Float> type, final Annotation[] annos, final String strValue) {
+    public Optional<Float> parseValue(final Class<Float> type, final Annotation[] annos, final String strValue) {
         
         if(strValue.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
-        final String pattern = getPattern(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
+        final Optional<String> pattern = getPattern(converterAnno);
         
-        if(formatter != null) {
+        if(formatter.isPresent()) {
             try {
-                return formatter.parse(strValue).floatValue();
+                return Optional.of(formatter.get().parse(strValue).floatValue());
             } catch(ParseException e) {
                 throw new SuperCsvInvalidAnnotationException(
                         String.format(" value '%s' cannot parse to Number with pattern '%s'", strValue, pattern),
                         e);
             }
         } else {
-            return Float.valueOf(strValue);
+            return Optional.of(Float.valueOf(strValue));
         }
     }
     

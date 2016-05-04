@@ -1,6 +1,7 @@
 package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.constraint.ForbidSubStr;
 import org.supercsv.cellprocessor.constraint.RequireSubStr;
@@ -12,108 +13,124 @@ import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.annotation.CsvStringConverter;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.builder.CellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.constraint.Length;
 import org.supercsv.ext.cellprocessor.constraint.MaxLength;
 import org.supercsv.ext.cellprocessor.constraint.MinLength;
+import org.supercsv.ext.util.Utils;
 
 
 /**
+ * String型の{@link CellProcessorBuilder}クラス。
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<String> {
     
+    /**
+     * 初期値を空文字として読み込むためのマジックナンバー。
+     */
     public static final String CONVERT_NULL_STRING_EMPTY = "@empty";
     
-    protected CsvStringConverter getAnnotation(final Annotation[] annos) {
+    /**
+     * アノテーション{@link CsvStringConverter} を取得する。
+     * @param annos アノテーションの一覧
+     * @return アノテーションがない場合は空を返す。
+     */
+    protected Optional<CsvStringConverter> getStringConverterAnnotation(final Annotation[] annos) {
         
-        for(Annotation anno : annos) {
-            if(anno instanceof CsvStringConverter) {
-                return (CsvStringConverter) anno;
-            }
-        }
-        
-        return null;
+        return getAnnotation(annos, CsvStringConverter.class);
         
     }
     
-    protected Integer getMinLength(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
-        }
+    /**
+     * 最小文字長を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<Integer> getMinLength(final Optional<CsvStringConverter> converterAnno) {
         
-        if(converterAnno.minLength() < 0) {
-            return null;
-        }
+        return converterAnno.map(a -> a.minLength())
+                .filter(n -> n >= 0);
         
-        return converterAnno.minLength();
     }
     
-    protected Integer getMaxLength(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
-        }
+    /**
+     * 最大文字長を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<Integer> getMaxLength(final Optional<CsvStringConverter> converterAnno) {
         
-        if(converterAnno.maxLength() < 0) {
-            return null;
-        }
-        
-        return converterAnno.maxLength();
+        return converterAnno.map(a -> a.maxLength())
+                .filter(n -> n >= 0);
     }
     
-    protected int[] getExactLength(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return null;
-        }
+    /**
+     * 文字長を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空の配列を返す。
+     */
+    protected int[] getExactLength(final Optional<CsvStringConverter> converterAnno) {
         
-        if(converterAnno.exactLength().length == 0) {
-            return null;
-        }
-        
-        return converterAnno.exactLength();
+        return converterAnno.map(a -> a.exactLength())
+                .orElse(new int[0]);
     }
     
-    protected String getRegex(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return "";
-        }
+    /**
+     * 正規表現を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空を返す。
+     */
+    protected Optional<String> getRegex(final Optional<CsvStringConverter> converterAnno) {
         
-        return converterAnno.regex();
+        return converterAnno.map(a -> a.regex())
+                .filter(s -> s.length() > 0);
     }
     
-    protected String[] getForbid(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return new String[]{};
-        }
+    /**
+     * 禁止語彙を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空の配列を返す。
+     */
+    protected String[] getForbid(final Optional<CsvStringConverter> converterAnno) {
         
-        return converterAnno.forbid();
+        return converterAnno.map(a -> a.forbid())
+                .orElse(new String[0]);
+        
     }
     
-    protected String[] getContain(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return new String[]{};
-        }
+    /**
+     * 必須語彙を取得する。
+     * @param converterAnno アノテーションの一覧
+     * @return アノテーションがない場合は、空の配列を返す。
+     */
+    protected String[] getContain(final Optional<CsvStringConverter> converterAnno) {
         
-        return converterAnno.contain();
+        return converterAnno.map(a -> a.contain())
+                .orElse(new String[0]);
     }
     
-    protected boolean getNotEmpty(final CsvStringConverter converterAnno) {
-        if(converterAnno == null) {
-            return false;
-        }
+    /**
+     * 値がnullか空文字を許可するかどうかの設定を取得します。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return trueの場合、nullか空文字を許可します。
+     */
+    protected boolean getNotEmpty(final Optional<CsvStringConverter> converterAnno) {
         
-        return converterAnno.notEmpty();
+        return converterAnno.map(a -> a.notEmpty())
+                .orElse(false);
     }
     
     @Override
-    protected CellProcessor buildOutputCellProcessorWithConvertNullTo(final Class<String> type, final Annotation[] annos, final boolean ignoreValidationProcessor,
-            final CellProcessor processor, final CsvColumn csvColumnAnno) {
+    protected CellProcessor buildOutputCellProcessorWithConvertNullTo(final Class<String> type, final Annotation[] annos, 
+            final CellProcessor processor, final boolean ignoreValidationProcessor, final CsvColumn csvColumnAnno) {
         
         if(!csvColumnAnno.outputDefaultValue().isEmpty()) {
-            final String defaultValue = getParseValue(type, annos, csvColumnAnno.outputDefaultValue());
-            return prependConvertNullToProcessor(type, processor, defaultValue);
+            final Optional<String> defaultValue = parseValue(type, annos, csvColumnAnno.outputDefaultValue());
+            return prependConvertNullToProcessor(type, annos, processor, defaultValue.get());
         }
         
         return processor;
@@ -123,11 +140,11 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     public CellProcessor buildOutputCellProcessor(final Class<String> type, final  Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-        final CsvStringConverter converterAnno = getAnnotation(annos);
-        final Integer minLength = getMinLength(converterAnno);
-        final Integer maxLength = getMaxLength(converterAnno);
+        final Optional<CsvStringConverter> converterAnno = getStringConverterAnnotation(annos);
+        final Optional<Integer> minLength = getMinLength(converterAnno);
+        final Optional<Integer> maxLength = getMaxLength(converterAnno);
         final int[] exactLength = getExactLength(converterAnno);
-        final String regex = getRegex(converterAnno);
+        final Optional<String> regex = getRegex(converterAnno);
         final String[] forbid = getForbid(converterAnno);
         final String[] contain = getContain(converterAnno);
         final boolean notEmpty = getNotEmpty(converterAnno);
@@ -149,11 +166,11 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     public CellProcessor buildInputCellProcessor(final Class<String> type, final Annotation[] annos,
             final CellProcessor processor) {
         
-        final CsvStringConverter converterAnno = getAnnotation(annos);
-        final Integer minLength = getMinLength(converterAnno);
-        final Integer maxLength = getMaxLength(converterAnno);
+        final Optional<CsvStringConverter> converterAnno = getStringConverterAnnotation(annos);
+        final Optional<Integer> minLength = getMinLength(converterAnno);
+        final Optional<Integer> maxLength = getMaxLength(converterAnno);
         final int[] exactLength = getExactLength(converterAnno);
-        final String regex = getRegex(converterAnno);
+        final Optional<String> regex = getRegex(converterAnno);
         final String[] forbid = getForbid(converterAnno);
         final String[] contain = getContain(converterAnno);
         final boolean notEmpty = getNotEmpty(converterAnno);
@@ -168,22 +185,30 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         return cp;
     }
     
+    /**
+     * 文字長をチェックする{@link CellProcessor}をChainの前に追加する。
+     * @param processor 組み立て途中の{@link CellProcessor}
+     * @param minLength 最小文字長
+     * @param maxLength 最大文字長
+     * @param exactLength 文字長
+     * @return 組み立てた{@link CellProcessor}
+     */
     protected CellProcessor prependLengthProcessor(final CellProcessor processor, 
-            final Integer minLength, final Integer maxLength, final int[] exactLength) {
+            final Optional<Integer> minLength, final Optional<Integer> maxLength, final int[] exactLength) {
         
-        if(minLength != null && maxLength != null) {
+        if(minLength.isPresent() && maxLength.isPresent()) {
             return (processor == null ? 
-                    new Length(minLength, maxLength) : new Length(minLength, maxLength, processor));
+                    new Length(minLength.get(), maxLength.get()) : new Length(minLength.get(), maxLength.get(), processor));
             
-        } else if(minLength != null) {
+        } else if(minLength.isPresent()) {
             return (processor == null ? 
-                    new MinLength(minLength) : new MinLength(minLength, processor));
+                    new MinLength(minLength.get()) : new MinLength(minLength.get(), processor));
             
-        } else if(maxLength != null) {
+        } else if(maxLength.isPresent()) {
             return (processor == null ? 
-                    new MaxLength(maxLength) : new MaxLength(maxLength, processor));
+                    new MaxLength(maxLength.get()) : new MaxLength(maxLength.get(), processor));
             
-        } else if(exactLength != null) {
+        } else if(exactLength.length > 0) {
             return (processor == null ? 
                     new Strlen(exactLength) : new Strlen(exactLength, processor));
             
@@ -192,38 +217,62 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
         return processor;
     }
     
-    protected CellProcessor prependRegExProcessor(final CellProcessor processor, final String regex) {
+    /**
+     * 指定した正規表現のパターンに一致するかチェックする{@link CellProcessor}をChainの前に追加する。
+     * @param cellProcessor 組み立て途中の{@link CellProcessor}
+     * @param regex 正規表現
+     * @return 組み立てた{@link CellProcessor}
+     */
+    protected CellProcessor prependRegExProcessor(final CellProcessor cellProcessor, final Optional<String> regex) {
         
-        if(regex.isEmpty()) {
-            return processor;
-        }
+        if(regex.isPresent()) {
+            return (cellProcessor == null ?
+                    new StrRegEx(regex.get()) : new StrRegEx(regex.get(), (StringCellProcessor) cellProcessor));
+            }
         
-        return (processor == null ?
-                new StrRegEx(regex) : new StrRegEx(regex, (StringCellProcessor) processor));
+        return cellProcessor;
     }
     
-    protected CellProcessor prependForbidProcessor(final CellProcessor processor, final String[] forbid) {
+    /**
+     * 指定した禁止語彙を含まないかチェックする{@link CellProcessor}をChainの前に追加する。
+     * @param cellProcessor 組み立て途中の{@link CellProcessor}
+     * @param forbid 禁止語彙
+     * @return 組み立てた{@link CellProcessor}
+     */
+    protected CellProcessor prependForbidProcessor(final CellProcessor cellProcessor, final String[] forbid) {
         
         if(forbid.length == 0) {
-            return processor;
+            return cellProcessor;
         }
         
-        return (processor == null ?
-                new ForbidSubStr(forbid) : new ForbidSubStr(forbid, (StringCellProcessor) processor));
+        return (cellProcessor == null ?
+                new ForbidSubStr(forbid) : new ForbidSubStr(forbid, (StringCellProcessor) cellProcessor));
         
     }
     
-    protected CellProcessor prependContainProcessor(final CellProcessor processor, final String[] contain) {
+    /**
+     * 指定した必須語彙を含むかチェックする{@link CellProcessor}をChainの前に追加する。
+     * @param cellProcessor 組み立て途中の{@link CellProcessor}
+     * @param contains 必須語彙
+     * @return 組み立てた{@link CellProcessor}
+     */
+    protected CellProcessor prependContainProcessor(final CellProcessor cellProcessor, final String[] contains) {
         
-        if(contain.length == 0) {
-            return processor;
+        if(contains.length == 0) {
+            return cellProcessor;
         }
         
-        return (processor == null ?
-                new RequireSubStr(contain) : new RequireSubStr(contain, (StringCellProcessor) processor));
+        return (cellProcessor == null ?
+                new RequireSubStr(contains) : new RequireSubStr(contains, (StringCellProcessor) cellProcessor));
         
     }
     
+    /**
+     * 文字がnullまたは空文字を許可しないかチェックする{@link CellProcessor}をChainの前に追加する。
+     * @param processor 組み立て途中の{@link CellProcessor}
+     * @param notEmpty nullまたは空文字を許可しないかどうか。
+     * @return 組み立てた{@link CellProcessor}
+     */
     protected CellProcessor prependNotEmptyProcessor(final CellProcessor processor, final boolean notEmpty) {
         
         if(!notEmpty) {
@@ -236,10 +285,15 @@ public class StringCellProcessorBuilder extends AbstractCellProcessorBuilder<Str
     }
     
     @Override
-    public String getParseValue(final Class<String> type, final Annotation[] annos, final String defaultValue) {
-        if(defaultValue.equals(CONVERT_NULL_STRING_EMPTY)) {
-            return "";
+    public Optional<String> parseValue(final Class<String> type, final Annotation[] annos, final String strValue) {
+        
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
         }
-        return defaultValue;
+        
+        if(strValue.equals(CONVERT_NULL_STRING_EMPTY)) {
+            return Optional.of("");
+        }
+        return Optional.of(strValue);
     }
 }

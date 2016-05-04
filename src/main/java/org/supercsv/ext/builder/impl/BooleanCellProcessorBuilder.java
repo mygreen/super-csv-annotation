@@ -1,6 +1,7 @@
 package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.FmtBool;
 import org.supercsv.cellprocessor.ift.BoolCellProcessor;
@@ -11,10 +12,12 @@ import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.ParseBoolean;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
 
 /**
- *
+ * boolean/Boolean型を{@link CellProcessor}を組み立てるためのクラス。
+ * 
  * @version 1.2
  * @author T.TSUCHIE
  *
@@ -27,81 +30,101 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         
         // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、falseに変換する。
         if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor, false);
+            return prependConvertNullToProcessor(type, annos, cellProcessor, false);
             
         } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
+            Optional<Boolean> value = parseValue(type, annos, csvColumnAnno.inputDefaultValue());
+            return prependConvertNullToProcessor(type, annos, cellProcessor, value.get());
         }
         
         return cellProcessor;
     }
     
-    protected CsvBooleanConverter getAnnotation(final Annotation[] annos) {
+    /**
+     * アノテーション{@link CsvBooleanConverter} を取得する。
+     * @param annos アノテーションの一覧
+     * @return アノテーションがない場合は空を返す。
+     */
+    protected Optional<CsvBooleanConverter> getBooleanConverterAnnotation(final Annotation[] annos) {
         
-        for(Annotation anno : annos) {
-            if(anno instanceof CsvBooleanConverter) {
-                return (CsvBooleanConverter) anno;
-            }
-        }
-        
-        return null;
+        return getAnnotation(annos, CsvBooleanConverter.class);
         
     }
     
-    protected String getOutputTrueValue(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return "true";
-        }
+    /**
+     * trueの値を出力するときの文字列を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、デフォルト値を返す。
+     */
+    protected String getOutputTrueValue(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.outputTrueValue();
+        return converterAnno.map(a -> a.outputTrueValue())
+                .orElse("true");
     }
     
-    protected String getOutputFalseValue(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return "false";
-        }
+    /**
+     * falseの値を出力するときの文字列を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、デフォルト値を返す。
+     */
+    protected String getOutputFalseValue(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.outputFalseValue();
+        return converterAnno.map(a -> a.outputFalseValue())
+                .orElse("false");
+        
     }
     
-    protected String[] getInputTrueValue(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return new String[]{"true", "1", "yes", "on", "y", "t"};
-        }
+    /**
+     * trueの値として読み込む文字列の候補を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、デフォルト値を返す。
+     */
+    protected String[] getInputTrueValue(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.inputTrueValue();
+        return converterAnno.map(a -> a.inputTrueValue())
+                .orElse(new String[]{"true", "1", "yes", "on", "y", "t"});
+        
     }
     
-    protected String[] getInputFalseValue(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return new String[]{"false", "0", "no", "off", "f", "n"};
-        }
+    /**
+     * falseの値として読み込む文字列の候補を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return アノテーションがない場合は、デフォルト値を返す。
+     */
+    protected String[] getInputFalseValue(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.inputFalseValue();
+        return converterAnno.map(a -> a.inputFalseValue())
+                .orElse(new String[]{"false", "0", "no", "off", "f", "n"});
+        
     }
     
-    protected boolean getIgnoreCase(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return false;
-        }
+    /**
+     * 大文字・小文字を無視して読み込むかの設定を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return trueの場合、大文字・小文字を無視して読み込む。
+     */
+    protected boolean getIgnoreCase(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.ignoreCase();
+        return converterAnno.map(a -> a.ignoreCase())
+                .orElse(false);
     }
     
-    protected boolean getFailToFalse(final CsvBooleanConverter converterAnno) {
-        if(converterAnno == null) {
-            return false;
-        }
+    /**
+     * 読み込み時に候補値に一致しない場合に、falseとして読み込むかの設定を取得する。
+     * @param converterAnno 変換規則を定義したアノテーション。
+     * @return trueの場合、大文字・小文字を無視して読み込む。
+     */
+    protected boolean getFailToFalse(final Optional<CsvBooleanConverter> converterAnno) {
         
-        return converterAnno.failToFalse();
+        return converterAnno.map(a -> a.failToFalse())
+                .orElse(false);
     }
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Boolean> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-        final CsvBooleanConverter converterAnno = getAnnotation(annos);
+        final Optional<CsvBooleanConverter> converterAnno = getBooleanConverterAnnotation(annos);
         final String trueValue = getOutputTrueValue(converterAnno);
         final String falseValue = getOutputFalseValue(converterAnno);
         
@@ -116,7 +139,7 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     public CellProcessor buildInputCellProcessor(final Class<Boolean> type, final Annotation[] annos,
             final CellProcessor processor) {
         
-        final CsvBooleanConverter converterAnno = getAnnotation(annos);
+        final Optional<CsvBooleanConverter> converterAnno = getBooleanConverterAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
         final boolean ignoreCase = getIgnoreCase(converterAnno);
@@ -131,9 +154,9 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
     }
     
     @Override
-    public Boolean getParseValue(final Class<Boolean> type, final Annotation[] annos, final String strValue) {
+    public Optional<Boolean> parseValue(final Class<Boolean> type, final Annotation[] annos, final String strValue) {
         
-        final CsvBooleanConverter converterAnno = getAnnotation(annos);
+        final Optional<CsvBooleanConverter> converterAnno = getBooleanConverterAnnotation(annos);
         final String[] trueValue = getInputTrueValue(converterAnno);
         final String[] falseValue = getInputFalseValue(converterAnno);
         final boolean ignoreCase = getIgnoreCase(converterAnno);
@@ -141,22 +164,26 @@ public class BooleanCellProcessorBuilder extends AbstractCellProcessorBuilder<Bo
         
         for(String trueStr : trueValue) {
             if(ignoreCase && trueStr.equalsIgnoreCase(strValue)) {
-                return Boolean.TRUE;
+                return Optional.of(Boolean.TRUE);
             } else if(!ignoreCase && trueStr.equals(strValue)) {
-                return Boolean.TRUE;
+                return Optional.of(Boolean.TRUE);
             }
         }
         
         for(String falseStr : falseValue) {
             if(ignoreCase && falseStr.equalsIgnoreCase(strValue)) {
-                return Boolean.FALSE;
+                return Optional.of(Boolean.FALSE);
             } else if(!ignoreCase && falseStr.equals(strValue)) {
-                return Boolean.FALSE;
+                return Optional.of(Boolean.FALSE);
             }
         }
         
+        if(Utils.isEmpty(strValue) && type.isAssignableFrom(Boolean.class)) {
+            return Optional.empty();
+        }
+        
         if(failToFalse) {
-            return Boolean.FALSE;
+            return Optional.of(Boolean.FALSE);
         }
         
         throw new SuperCsvInvalidAnnotationException(String.format("defaultValue '%s' cannot parse.", strValue));

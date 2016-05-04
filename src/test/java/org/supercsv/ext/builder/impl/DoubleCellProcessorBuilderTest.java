@@ -172,7 +172,7 @@ public class DoubleCellProcessorBuilderTest {
             Double double_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0.0#", rounding=RoundingMode.HALF_UP)
             Double double_format_roundingMode;
             
         }
@@ -1595,7 +1595,7 @@ public class DoubleCellProcessorBuilderTest {
             double double_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0.0#", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0.0#", rounding=RoundingMode.HALF_UP)
             double double_format_roundingMode;
             
         }

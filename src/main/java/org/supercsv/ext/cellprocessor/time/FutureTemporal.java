@@ -116,9 +116,8 @@ public class FutureTemporal<T extends TemporalAccessor & Comparable<? super T>>
         return formatter;
     }
     
-    public FutureTemporal<T> setFormatter(DateTimeFormatter formatter) {
+    public void setFormatter(DateTimeFormatter formatter) {
         this.formatter = formatter;
-        return this;
     }
     
 }

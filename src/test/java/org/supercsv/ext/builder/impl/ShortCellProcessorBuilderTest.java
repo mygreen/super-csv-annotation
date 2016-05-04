@@ -172,7 +172,7 @@ public class ShortCellProcessorBuilderTest {
             Short short_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             Short short_format_roundingMode;
             
         }
@@ -1596,7 +1596,7 @@ public class ShortCellProcessorBuilderTest {
             short short_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             short short_format_roundingMode;
             
         }

@@ -3,6 +3,7 @@ package org.supercsv.ext.builder.impl;
 import java.lang.annotation.Annotation;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -13,7 +14,15 @@ import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.cellprocessor.FormatLocaleNumber;
 import org.supercsv.ext.cellprocessor.ParseLocaleNumber;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
+import org.supercsv.ext.util.Utils;
 
+/**
+ * long/Long型の{@link CellProcessor}を組み立てるクラス。
+ *
+ * @version 1.2
+ * @author T.TSUCHIE
+ *
+ */
 public class LongCellProcessorBuilder extends AbstractNumberCellProcessorBuilder<Long> {
     
     @Override
@@ -22,11 +31,11 @@ public class LongCellProcessorBuilder extends AbstractNumberCellProcessorBuilder
         
         // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、0に変換する。
         if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor, 0l);
+            return prependConvertNullToProcessor(type, annos, cellProcessor, 0L);
             
         } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
+            Optional<Long> value = parseValue(type, annos, csvColumnAnno.inputDefaultValue());
+            return prependConvertNullToProcessor(type, annos, cellProcessor, value.get());
         }
         
         return cellProcessor;
@@ -36,74 +45,75 @@ public class LongCellProcessorBuilder extends AbstractNumberCellProcessorBuilder
     public CellProcessor buildOutputCellProcessor(final Class<Long> type, final Annotation[] annos,
             final CellProcessor processor, final boolean ignoreValidationProcessor) {
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
         
-        final Long min = getParseValue(type, annos, getMin(converterAnno));
-        final Long max = getParseValue(type, annos, getMax(converterAnno));
+        final Optional<Long> min = getMin(converterAnno).map(s -> parseValue(type, annos, s).get());
+        final Optional<Long> max = getMax(converterAnno).map(s -> parseValue(type, annos, s).get());
         
-        CellProcessor cellProcessor = processor;
-        if(formatter != null) {
-            cellProcessor = (cellProcessor == null ?
-                    new FormatLocaleNumber(formatter) : new FormatLocaleNumber(formatter, (StringCellProcessor) cellProcessor));
+        CellProcessor cp = processor;
+        if(formatter.isPresent()) {
+            cp = (cp == null ?
+                    new FormatLocaleNumber(formatter.get()) : new FormatLocaleNumber(formatter.get(), (StringCellProcessor) cp));
         }
         
         if(!ignoreValidationProcessor) {
-            cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+            cp = prependRangeProcessor(type, annos, cp, min, max);
         }
         
-        return cellProcessor;
+        return cp;
+        
     }
     
     @Override
-    public CellProcessor buildInputCellProcessor(final Class<Long> type,final  Annotation[] annos,
+    public CellProcessor buildInputCellProcessor(final Class<Long> type, final Annotation[] annos,
             final CellProcessor processor) {
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
         final boolean lenient = getLenient(converterAnno);
         
-        final Long min = getParseValue(type, annos, getMin(converterAnno));
-        final Long max = getParseValue(type, annos, getMax(converterAnno));
+        final Optional<Long> min = getMin(converterAnno).map(s -> parseValue(type, annos, s).get());
+        final Optional<Long> max = getMax(converterAnno).map(s -> parseValue(type, annos, s).get());
         
-        CellProcessor cellProcessor = processor;
-        cellProcessor = prependRangeProcessor(min, max, formatter, cellProcessor);
+        CellProcessor cp = processor;
+        cp = prependRangeProcessor(type, annos, cp, min, max);
         
-        if(formatter != null) {
-            cellProcessor = (cellProcessor == null ?
-                    new ParseLocaleNumber<Long>(type, formatter, lenient) :
-                        new ParseLocaleNumber<Long>(type, formatter, lenient, cellProcessor));
+        if(formatter.isPresent()) {
+            cp = (cp == null ?
+                    new ParseLocaleNumber<Long>(type, formatter.get(), lenient) :
+                        new ParseLocaleNumber<Long>(type, formatter.get(), lenient, cp));
         } else {
-            cellProcessor = (cellProcessor == null ?
-                    new ParseLong() : new ParseLong((LongCellProcessor) cellProcessor));
+            cp = (cp == null ?
+                    new ParseLong() : new ParseLong((LongCellProcessor)cp));
         }
         
-        return cellProcessor;
-        
+        return cp;
     }
     
     @Override
-    public Long getParseValue(final Class<Long> type, final Annotation[] annos, final String strValue) {
+    public Optional<Long> parseValue(final Class<Long> type, final Annotation[] annos, final String strValue) {
         
-        if(strValue.isEmpty()) {
-            return null;
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
         }
         
-        final CsvNumberConverter converterAnno = getAnnotation(annos);
-        final NumberFormat formatter = createNumberFormatter(converterAnno);
-        final String pattern = getPattern(converterAnno);
+        final Optional<CsvNumberConverter> converterAnno = getNumberConverterAnnotation(annos);
+        final Optional<NumberFormat> formatter = createNumberFormatter(converterAnno);
+        final Optional<String> pattern = getPattern(converterAnno);
         
-        if(formatter != null) {
+        if(formatter.isPresent()) {
             try {
-                return formatter.parse(strValue).longValue();
+                return Optional.of(formatter.get().parse(strValue).longValue());
             } catch(ParseException e) {
                 throw new SuperCsvInvalidAnnotationException(
-                        String.format(" value '%s' cannot parse to Number with pattern '%s'", strValue, pattern),
+                        String.format(" value '%s' cannot parse to Number with pattern '%s'", strValue, pattern.get()),
                         e);
             }
         } else {
-            return Long.valueOf(strValue);
+            return Optional.of(Long.valueOf(strValue));
         }
     }
     
 }
+

@@ -1,16 +1,18 @@
 package org.supercsv.ext.builder.impl;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ParseChar;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.ext.annotation.CsvColumn;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.util.Utils;import javafx.scene.control.Cell;
 
 
 /**
- *
+ * char/Character型の{@link CellProcessor}のビルダクラス。
  * 
  * @since 1.2
  * @author T.TSUCHIE
@@ -24,11 +26,11 @@ public class CharacterCellProcessorBuilder extends AbstractCellProcessorBuilder<
         
         // プリミティブ型の場合、オプションかつ初期値が与えられていない場合、'\u0000' に変換する。
         if(type.isPrimitive() && csvColumnAnno.optional() && csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor, '\u0000');
+            return prependConvertNullToProcessor(type, annos, cellProcessor, '\u0000');
             
         } else if(!csvColumnAnno.inputDefaultValue().isEmpty()) {
-            return prependConvertNullToProcessor(type, cellProcessor,
-                    getParseValue(type, annos, csvColumnAnno.inputDefaultValue()));
+            Optional<Character> value = parseValue(type, annos, csvColumnAnno.inputDefaultValue());
+            return prependConvertNullToProcessor(type, annos, cellProcessor, value.get());
         }
         
         return cellProcessor;
@@ -51,7 +53,12 @@ public class CharacterCellProcessorBuilder extends AbstractCellProcessorBuilder<
     }
     
     @Override
-    public Character getParseValue(final Class<Character> type, final Annotation[] annos, final String defaultValue) {
-        return defaultValue.charAt(0);
+    public Optional<Character> parseValue(final Class<Character> type, final Annotation[] annos, final String strValue) {
+        
+        if(Utils.isEmpty(strValue)) {
+            return Optional.empty();
+        }
+        
+        return Optional.of(strValue.charAt(0));
     }
 }

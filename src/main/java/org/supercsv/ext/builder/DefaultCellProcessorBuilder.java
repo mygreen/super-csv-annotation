@@ -1,12 +1,15 @@
 package org.supercsv.ext.builder;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
 
 /**
- *
+ * デフォルトの{@link CellProcessorBuilder}。
+ * <p>固有の{@link CellProcessor}の組み立ては行わない。
+ * 
  * @version 1.1
  * @author T.TSUCHIE
  *
@@ -17,19 +20,22 @@ public class DefaultCellProcessorBuilder extends AbstractCellProcessorBuilder<Cl
     
     @Override
     public CellProcessor buildOutputCellProcessor(final Class<Class<?>> type, final Annotation[] annos,
-            CellProcessor processor, final boolean ignoreValidationProcessor) {
-        return processor;
+            CellProcessor cllProcessor, final boolean ignoreValidationProcessor) {
+        return cllProcessor;
     }
     
     @Override
     public CellProcessor buildInputCellProcessor(final Class<Class<?>> type, final Annotation[] annos,
-            final CellProcessor processor) {
-        return processor;
+            final CellProcessor cellProcessor) {
+        return cellProcessor;
     }
     
+    /**
+     * 空の値を返す。
+     */
     @Override
-    public Class<?> getParseValue(final Class<Class<?>> type, final Annotation[] annos, final String defaultValue) {
-        return null;
+    public Optional<Class<?>> parseValue(final Class<Class<?>> type, final Annotation[] annos, final String defaultValue) {
+        return Optional.empty();
     }
     
 }

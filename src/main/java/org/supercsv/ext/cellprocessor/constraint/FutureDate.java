@@ -82,9 +82,8 @@ public class FutureDate<T extends Date> extends CellProcessorAdaptor
         return formatter;
     }
     
-    public FutureDate<T> setFormatter(DateFormat formatter) {
+    public void setFormatter(DateFormat formatter) {
         this.formatter = formatter;
-        return this;
     }
     
     @Override

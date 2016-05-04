@@ -172,7 +172,7 @@ public class LongCellProcessorBuilderTest {
             Long long_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             Long long_format_roundingMode;
             
         }
@@ -1596,7 +1596,7 @@ public class LongCellProcessorBuilderTest {
             long long_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             long long_format_roundingMode;
             
         }

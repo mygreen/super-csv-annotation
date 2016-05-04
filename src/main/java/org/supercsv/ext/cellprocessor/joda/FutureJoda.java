@@ -103,8 +103,7 @@ public class FutureJoda <T extends ReadablePartial>
         return formatter;
     }
     
-    public FutureJoda<T> setFormatter(DateTimeFormatter formatter) {
+    public void setFormatter(DateTimeFormatter formatter) {
         this.formatter = formatter;
-        return this;
     }
 }

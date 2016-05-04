@@ -91,9 +91,8 @@ public class DateRange<T extends Date> extends CellProcessorAdaptor
         return formatter;
     }
     
-    public DateRange<T> setFormatter(DateFormat formatter) {
+    public void setFormatter(DateFormat formatter) {
         this.formatter = formatter;
-        return this;
     }
     
     @Override

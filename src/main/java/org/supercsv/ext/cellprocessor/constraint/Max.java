@@ -103,9 +103,8 @@ public class Max<T extends Number & Comparable<T>> extends CellProcessorAdaptor
         return formatter;
     }
     
-    public Max<T> setFormatter(NumberFormat formatter) {
+    public void setFormatter(NumberFormat formatter) {
         this.formatter = formatter;
-        return this;
     }
     
 }

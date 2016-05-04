@@ -172,7 +172,7 @@ public class IntegerCellProcessorBuilderTest {
             Integer integer_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             Integer integer_format_roundingMode;
             
         }
@@ -1596,7 +1596,7 @@ public class IntegerCellProcessorBuilderTest {
             int int_format_currency;
             
             @CsvColumn(position=19)
-            @CsvNumberConverter(pattern="#,##0", roundingMode=RoundingMode.HALF_UP)
+            @CsvNumberConverter(pattern="#,##0", rounding=RoundingMode.HALF_UP)
             int int_format_roundingMode;
             
         }
