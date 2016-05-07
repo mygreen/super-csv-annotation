@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.FmtNumber;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
@@ -16,7 +17,9 @@ import org.supercsv.util.CsvContext;
 
 
 /**
- *
+ * 数値型をフォーマットするCellProcessor.
+ * 
+ * @version 1.2
  * @see {@link FmtNumber}
  * @author T.TSUCHIE
  *
@@ -26,12 +29,23 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
     
     protected final NumberFormatWrapper formatter;
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * @param formatter 数値のフォーマッタ。
+     * @throws NullPointerException if formatter is null.
+     */
     public FormatLocaleNumber(final NumberFormat formatter) {
         super();
         checkPreconditions(formatter);
         this.formatter = new NumberFormatWrapper(formatter);
     }
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * @param formatter 数値のフォーマッタ。
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     * @throws NullPointerException if formatter is null.
+     */
     public FormatLocaleNumber(final NumberFormat formatter, final StringCellProcessor next) {
         super(next);
         checkPreconditions(formatter);
@@ -40,11 +54,11 @@ public class FormatLocaleNumber extends CellProcessorAdaptor
     }
     
     /**
-     * Checks the preconditions for creating a new ParseDate processor.
+     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
      * @throws NullPointerException formatter is null.
      * 
      */
-    protected static void checkPreconditions(final NumberFormat formatter) {
+    private static void checkPreconditions(final NumberFormat formatter) {
         if(formatter == null) {
             throw new NullPointerException("formatter is null.");
         }

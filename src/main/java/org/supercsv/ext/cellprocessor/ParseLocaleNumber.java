@@ -1,9 +1,3 @@
-/*
- * ParseLocaleNumber.java
- * created in 2013/03/06
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor;
 
 import java.text.NumberFormat;
@@ -22,18 +16,31 @@ import org.supercsv.util.CsvContext;
 
 
 /**
- *
+ * 文字列を解析し、書式付きの数値に変換する{@link CellProcessor}.
+ * <p>解析する処理は、スレッドセーフです。</p>
  * 
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
 public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         implements StringCellProcessor, ValidationCellProcessor {
     
-    private Class<N> type;
+    /**
+     * 変換後のクラスタイプ。
+     */
+    private final Class<N> type;
     
     protected final NumberFormatWrapper formatter;
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * 
+     * @param type 変換後の数値のクラスタイプ。
+     * @param formatter 数値のフォーマッタ。
+     * @param lenient 厳密に解析しないかどうか。
+     * @throws NullPointerException if type or formatter is null.
+     */
     public ParseLocaleNumber(final Class<N> type, final NumberFormat formatter, final boolean lenient) {
         super();
         checkPreconditions(type, formatter);
@@ -41,6 +48,15 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         this.formatter = new NumberFormatWrapper(formatter, lenient);
     }
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * 
+     * @param type 変換後の数値のクラスタイプ。
+     * @param formatter 数値のフォーマッタ。
+     * @param lenient 厳密に解析しないかどうか。
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     * @throws NullPointerException if type or formatter is null.
+     */
     public ParseLocaleNumber(final Class<N> type, final NumberFormat formatter, final boolean lenient, final CellProcessor next) {
         super(next);
         checkPreconditions(type, formatter);
@@ -49,24 +65,39 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         
     }
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * <p>厳密に解析は行いません。</p>
+     * @param type 変換後の数値のクラスタイプ。
+     * @param formatter 数値のフォーマッタ。
+     */
     public ParseLocaleNumber(final Class<N> type, final NumberFormat formatter) {
         this(type, formatter, false);
     }
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * <p>厳密に解析は行いません。</p>
+     * @param type 変換後の数値のクラスタイプ。
+     * @param formatter 数値のフォーマッタ。
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     */
     public ParseLocaleNumber(final Class<N> type, final NumberFormat formatter, final CellProcessor next) {
         this(type, formatter, false, next);
         
     }
     
     /**
-     * Checks the preconditions for creating a new ParseDate processor.
+     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
+     * @param type 変換後のクラスタイプ。
+     * @param formatter 数値のフォーマッタ。
      * @throws NullPointerException type == null || formatter == null.
      * 
      */
-    protected static <N extends Number> void checkPreconditions(final Class<N> type, final NumberFormat formatter) {
+    private static <N extends Number> void checkPreconditions(final Class<N> type, final NumberFormat formatter) {
         
         if(type == null) {
-            throw new NullPointerException("formatter is null.");
+            throw new NullPointerException("type is null.");
         }
         
         if(formatter == null) {
@@ -95,14 +126,6 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         }
     }
     
-    public Class<N> getType() {
-        return type;
-    }
-    
-    public String getPattern() {
-        return formatter.getPattern();
-    }
-    
     @Override
     public Map<String, ?> getMessageVariable() {
         final Map<String, Object> vars = new HashMap<String, Object>();
@@ -125,6 +148,22 @@ public class ParseLocaleNumber<N extends Number> extends CellProcessorAdaptor
         }
         
         return value.toString();
+    }
+    
+    /**
+     * 変換後のクラスタイプを取得します。
+     * @return コンストラクタで渡したクラスタイプを返します。
+     */
+    public Class<N> getType() {
+        return type;
+    }
+    
+    /**
+     * 書式を取得します。
+     * @return 書式がない場合、nullを返します。
+     */
+    public String getPattern() {
+        return formatter.getPattern();
     }
     
 }

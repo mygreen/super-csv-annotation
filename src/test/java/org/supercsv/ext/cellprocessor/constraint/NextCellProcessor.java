@@ -2,6 +2,7 @@ package org.supercsv.ext.cellprocessor.constraint;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.util.CsvContext;
 
 /**
@@ -12,7 +13,7 @@ import org.supercsv.util.CsvContext;
  * @author T.TSUCHIE
  *
  */
-public class NextCellProcessor extends CellProcessorAdaptor implements DateCellProcessor {
+public class NextCellProcessor extends CellProcessorAdaptor implements DateCellProcessor, StringCellProcessor {
     
     public NextCellProcessor() {
         super();

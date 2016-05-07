@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
-import org.supercsv.cellprocessor.ParseDate;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
@@ -17,24 +17,35 @@ import org.supercsv.util.CsvContext;
 
 
 /**
+ * 文字列を解析し、{@link Date}型に変換する{@link CellProcessor}。
+ * <p>解析する処理は、スレッドセーフです。</p>
  * 
  * @version 1.2
- * @since 1.0.0
- * @see {@link ParseDate}
  * @author T.TSUCHIE
  *
  */
-public class ParseLocaleDate  extends CellProcessorAdaptor
+public class ParseLocaleDate extends CellProcessorAdaptor
         implements StringCellProcessor, ValidationCellProcessor {
     
     protected final DateFormatWrapper formatter;
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * @param formatter 日時のフォーマッタ。
+     * @throws NullPointerException if formatter is null.
+     */
     public ParseLocaleDate(final DateFormat formatter) {
         super();
         checkPreconditions(formatter);
         this.formatter = new DateFormatWrapper(formatter);
     }
     
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * @param formatter 日時のフォーマッタ。
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     * @throws NullPointerException if formatter or next is null.
+     */
     public ParseLocaleDate(final DateFormat formatter, final DateCellProcessor next) {
         super(next);
         checkPreconditions(formatter);
@@ -42,11 +53,11 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
     }
     
     /**
-     * Checks the preconditions for creating a new ParseDate processor.
+     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
      * @throws NullPointerException formatter is null.
      * 
      */
-    protected static void checkPreconditions(final DateFormat formatter) {
+    private static void checkPreconditions(final DateFormat formatter) {
         if(formatter == null) {
             throw new NullPointerException("formatter is null.");
         }
@@ -68,7 +79,7 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         }
         
         try {
-            Date result = parse((String) value);
+            final Date result = parse((String) value);
             return next.execute(result, context);
             
         } catch(ParseException e) {
@@ -78,8 +89,16 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         }
     }
     
+    /**
+     * 文字列を解析し{@link Date}に変換する。
+     * <p>{@link Date}のサブクラスの場合、このメソッドをオーバライドして処理を変更する。</p>
+     * 
+     * @param value 解析対象の文字列
+     * @return 変換した日時オブジェクト。
+     * @throws ParseException 解析に失敗した場合にスローする。
+     */
     protected Date parse(final String value) throws ParseException {
-        return formatter.parse((String) value);
+        return formatter.parse(value);
     }
     
     /**
@@ -109,6 +128,14 @@ public class ParseLocaleDate  extends CellProcessorAdaptor
         }
         
         return value.toString();
+    }
+    
+    /**
+     * 書式を取得します。
+     * @return 書式がない場合、nullを返します。
+     */
+    public String getPattern() {
+        return formatter.getPattern();
     }
 
 }

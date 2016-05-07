@@ -37,5 +37,11 @@ public interface ValidationCellProcessor {
      * @param value フォーマット対象の値。
      * @return フォーマットした値。
      */
-    String formatValue(Object value);
+    default String formatValue(final Object value) {
+        if(value == null) {
+            return "";
+        }
+        
+        return value.toString();
+    }
 }
