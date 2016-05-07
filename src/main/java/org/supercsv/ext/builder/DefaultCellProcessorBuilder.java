@@ -8,7 +8,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * デフォルトの{@link CellProcessorBuilder}。
- * <p>固有の{@link CellProcessor}の組み立ては行わない。
+ * <p>固有の{@link CellProcessor}の組み立ては行わない。</p>
  * 
  * @version 1.1
  * @author T.TSUCHIE

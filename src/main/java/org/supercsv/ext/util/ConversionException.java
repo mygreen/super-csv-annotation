@@ -1,7 +1,8 @@
 package org.supercsv.ext.util;
 
 /**
-*
+* 値の変換に失敗した際にスローされる例外です。
+* 
 * @since 1.2
 * @author T.TSUCHIE
 *

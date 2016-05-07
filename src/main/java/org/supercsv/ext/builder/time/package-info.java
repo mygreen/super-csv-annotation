@@ -1,7 +1,7 @@
 /**
- * The package is Cell processor builder for JSR-310(Java8).
+ * {@link org.supercsv.ext.builder.CellProcessorBuilder}の実装のうち、JSR-310(Date and Time API)に関する機能を提供します。
  * 
- * @since 1.4
+ * @since 1.2
  * @author T.TSUCHIE
  *
  */

@@ -9,7 +9,8 @@ import org.springframework.util.Assert;
 
 
 /**
- * create instance for CellProcessorBuilder via SpringFramework container.
+ * Springのコンテナで管理している{@link CellProcessorBuilder}を取得するクラス。
+ * <p>利用するには、このクラスをSpringのコンテナに登録しておく必要があります。</p>
  * 
  * @since 1.1
  * @author T.TSUCHIE

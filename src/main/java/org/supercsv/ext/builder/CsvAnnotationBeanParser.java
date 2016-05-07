@@ -1,9 +1,3 @@
-/*
- * CsvAnnotationBeanParser.java
- * created in 2013/03/05
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.builder;
 
 import java.lang.reflect.Field;
@@ -20,7 +14,8 @@ import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 
 
 /**
- *
+ * クラスに定義されているアノテーション情報を解析し、CellProcessor情報を解析するクラス。
+ * 
  * @version 1.1
  * @author T.TSUCHIE
  *
@@ -31,6 +26,10 @@ public class CsvAnnotationBeanParser {
     
     private CellProcessorBuilderFactory builderFactory;
     
+    /**
+     * {@link CsvAnnotationBeanParser}を生成するコンストラクタ。
+     * 
+     */
     public CsvAnnotationBeanParser() {
         this.builderContainer = new CellProcessorBuilderContainer();
         
@@ -44,29 +43,48 @@ public class CsvAnnotationBeanParser {
         };
     }
     
+    /**
+     * クラスに付与されたアノテーション情報を解析し、CSVのマッピング情報を作成する。
+     * 
+     * @param clazz クラスタイプ。
+     * @return アノテーションを元に作成したCSVのマッピング情報。
+     * @throws NullPointerException class is null.
+     * @throws SuperCsvInvalidAnnotationException アノテーションの定義が不正な場合。
+     *     クラスタイプにアノテーション{@link CsvBean}が付与されていない。
+     *     アノテーション{@link CsvColumn}のpositionの値が不正な場合。
+     */
     public <T> CsvBeanMapping<T> parse(final Class<T> clazz) {
         return parse(clazz, false);
     }
     
+    /**
+     * クラスに付与されたアノテーション情報を解析し、CSVのマッピング情報を作成する。
+     * @param clazz クラスタイプ。
+     * @param ignoreValidationProcessorOnOutput 書き込み用のCellProcessorから制約チェックを行うものを除外するかどうか。
+     * @return アノテーションを元に作成したCSVのマッピング情報。
+     * @throws NullPointerException class is null.
+     * @throws SuperCsvInvalidAnnotationException アノテーションの定義が不正な場合。
+     *     クラスタイプにアノテーション{@link CsvBean}が付与されていない。
+     *     アノテーション{@link CsvColumn}のpositionの値が不正な場合。
+     */
     public <T> CsvBeanMapping<T> parse(final Class<T> clazz, final boolean ignoreValidationProcessorOnOutput) {
         
         if(clazz == null) {
-            throw new IllegalArgumentException("clazz must be not null.");
+            throw new NullPointerException("clazz must be not null.");
         }
         
-        CsvBeanMapping<T> mappingBean = new CsvBeanMapping<T>(clazz);
+        final CsvBeanMapping<T> mappingBean = new CsvBeanMapping<T>(clazz);
         
         // @CsvBean
-        CsvBean csvBeanAnno = clazz.getAnnotation(CsvBean.class);
+        final CsvBean csvBeanAnno = clazz.getAnnotation(CsvBean.class);
         if(csvBeanAnno == null) {
             throw new SuperCsvInvalidAnnotationException("not found annotation 'CsvBean'");
         }
         
         mappingBean.setHeader(csvBeanAnno.header());
         
-        List<CsvColumnMapping> mappingColumns = new ArrayList<CsvColumnMapping>();
-        
         // @CsvColumn for all(public / private / default / protected)
+        final List<CsvColumnMapping> mappingColumns = new ArrayList<>();
         for(Field field : clazz.getDeclaredFields()) {
             
             CsvColumn csvColumnAnno = field.getAnnotation(CsvColumn.class);
@@ -193,18 +211,34 @@ public class CsvAnnotationBeanParser {
         
     }
     
+    /**
+     * {@link CellProcessorBuilder}を管理するコンテナクラスを取得する。
+     * @return {@link CellProcessorBuilder}のコンテナクラス。
+     */
     public CellProcessorBuilderContainer getBuilderContainer() {
         return builderContainer;
     }
     
+    /**
+     * {@link CellProcessorBuilder}を管理するコンテナクラスを設定する。
+     * @param {@link CellProcessorBuilder}のコンテナクラス。
+     */
     public void setBuilderContainer(final CellProcessorBuilderContainer builderContainer) {
         this.builderContainer = builderContainer;
     }
     
+    /**
+     * 独自の{@link CellProcessorBuilder}を指定したときのインスタンスを作成するクラスを取得する。
+     * @return {@link CellProcessorBuilder}のファクトリクラス。
+     */
     public CellProcessorBuilderFactory getBuilderFactory() {
         return builderFactory;
     }
     
+    /**
+     * 独自の{@link CellProcessorBuilder}を指定したときのインスタンスを作成するクラスを取得する。
+     * @param builderFactory {@link CellProcessorBuilder}のファクトリクラス。
+     */
     public void setBuilderFactory(CellProcessorBuilderFactory builderFactory) {
         this.builderFactory = builderFactory;
     }

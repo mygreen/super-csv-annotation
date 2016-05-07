@@ -1,5 +1,5 @@
 /**
- * Provides the building chain CellProcessor classes from CsvBean's annotation.
+ * {@link org.supercsv.cellprocessor.ift.CellProcessor}を組み立てる機能を提供します。
  * 
  * @author T.TSUCHIE
  * 

@@ -1,5 +1,5 @@
 /**
- * Provides the implimentations for building chain CellProcessor classes from CsvBean's annotation.
+ * {@link org.supercsv.ext.builder.CellProcessorBuilder}の実装クラスを提供します。
  * @since 1.2
  * @author T.TSUCHIE
  *

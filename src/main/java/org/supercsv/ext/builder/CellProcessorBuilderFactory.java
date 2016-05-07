@@ -12,9 +12,9 @@ public interface CellProcessorBuilderFactory {
     
     /**
      * 指定した{@link CellProcessorBuilder}のインスタンスを作成する。
-     * @param builderClass 作成する builderClass
-     * @return
-     * @throws Exception 
+     * @param builderClass 作成するクラスタイプ。
+     * @return 作成したインスタンス。
+     * @throws Exception インスタンスの作成に失敗した場合。
      */
     <T extends CellProcessorBuilder<?>> T create(Class<T> builderClass) throws Exception;
     
