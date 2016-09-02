@@ -23,13 +23,13 @@
 
 ** {前提環境}
 
- * SuperCSV 2.x
+ * SuperCSV 2.4.+
  
-   * 旧バージョンの Super CSV ver1.5を仕様する場合、{{{Super CSV Annotation for 2.x}https://mygreen.github.io/super-csv-annotation1}}を利用してください。
+   * 旧バージョンの Super CSV ver1.5を仕様する場合、{{{Super CSV Annotation for 1.x}https://mygreen.github.io/super-csv-annotation1}}を利用してください。
    
- * JDK1.6+
+ * JDK1.8+
   
-   * SuperCSV 2.xはJDK1.5以上に対応していますが、本ライブラリはJava1.6以上のみ対応しています。
+   * SuperCSV 2.4.0はJDK1.5以上に対応していますが、本ライブラリはJava1.8以上のみ対応しています。
    
  []
 
@@ -173,9 +173,9 @@ for(final SampleBean1 item : list) {
 
 * {基本的なアノテーションの仕様}
 
-** {@CsvEntity}
+** {@CsvBean}
 
- JavaBeanのクラスに「@CsvEntity」を付与することで、CSV用のJavaBeanとして定義します。
+ JavaBeanのクラスに「@CsvBean」を付与することで、CSV用のJavaBeanとして定義します。
 
  * 属性「header」の値により、読み込み時、書き込み時に見出し行を処理します。
  

@@ -12,6 +12,7 @@
 			<item name="拡張方法" href="extension.html" />
 			<item name="ダウンロード" href="download.html" />
 			<item name="リリース情報" href="release.html" />
+			<item name="Javadoc" href="apidocs/index.html" />
 		</menu>
 		<menu ref="reports" />
 	</body>
