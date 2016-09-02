@@ -1,2 +1,12 @@
-org.supercsv.ext
-org.supercsv.ext.spring
+org.supercsv.ext.builder
+org.supercsv.ext.builder.impl
+org.supercsv.ext.builder.joda
+org.supercsv.ext.builder.spring
+org.supercsv.ext.builder.time
+org.supercsv.ext.cellprocessor
+org.supercsv.ext.cellprocessor.constraint
+org.supercsv.ext.cellprocessor.joda
+org.supercsv.ext.cellprocessor.time
+org.supercsv.ext.io
+org.supercsv.ext.tool
+org.supercsv.ext.util
