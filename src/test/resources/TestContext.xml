@@ -25,10 +25,10 @@
 				<value>TestMessages</value>
 			</list>
 		</property>
- 	</bean>
- 	
- 	<bean id="springMessageResolver" class="org.supercsv.ext.localization.SpringMessageResolver">
+	</bean>
+	
+	<bean id="springMessageResolver" class="org.supercsv.ext.localization.SpringMessageResolver">
 		<constructor-arg><ref bean="messageSource" /></constructor-arg>
- 	</bean>
+	</bean>
 	
 </beans>
