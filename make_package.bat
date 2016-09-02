@@ -3,6 +3,8 @@
 %~d0
 cd %~p0
 
+set JAVA_HOME=%JAVA_HOME_8%
+
 call mvn clean
 call mvn compile -Dmaven.test.skip=true
 call mvn package -Dmaven.test.skip=true
