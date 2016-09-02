@@ -1,9 +1,3 @@
-/*
- * CsvAnnotationBeanReader.java
- * created in 2013/03/06
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.io;
 
 import java.io.IOException;
@@ -12,15 +6,15 @@ import java.io.Reader;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.ext.builder.CsvAnnotationBeanParser;
 import org.supercsv.ext.builder.CsvBeanMapping;
-import org.supercsv.ext.exception.SuperCsvNoMatchColumnSizeException;
 import org.supercsv.ext.exception.SuperCsvNoMatchHeaderException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.CsvContext;
 
 
 /**
- *
- *
+ * 
+ * 
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -63,7 +57,7 @@ public class CsvAnnotationBeanReader<T> extends ValidatableCsvBeanReader {
     }
     
     public String[] getHeader() throws IOException {
-        return super.getHeader(hasHeader());
+        return getHeader(hasHeader());
     }
     
     /**
@@ -72,13 +66,14 @@ public class CsvAnnotationBeanReader<T> extends ValidatableCsvBeanReader {
      * @return
      * @throws IOException
      */
-    public String[] readHeader(boolean checkedHeader) throws IOException {
+    @Override
+    public String[] getHeader(boolean checkedHeader) throws IOException {
         
         if(!getBeanMapping().isHeader()) {
             return null;
         }
         
-        final String[] originalHeader = super.getHeader(hasHeader());
+        final String[] originalHeader = super.getHeader(checkedHeader);
         if(checkedHeader) {
             try {
                 validateHeader(originalHeader, getDefinedHeader());
@@ -97,7 +92,7 @@ public class CsvAnnotationBeanReader<T> extends ValidatableCsvBeanReader {
         // check column size.
         if(sourceHeader.length != definedHeader.length) {
              final CsvContext context = new CsvContext(1, 1, 1);
-             throw new SuperCsvNoMatchColumnSizeException(sourceHeader.length, definedHeader.length, context);
+             throw new SuperCsvNoMatchHeaderException(sourceHeader, definedHeader, context);
         }
         
         // check header value

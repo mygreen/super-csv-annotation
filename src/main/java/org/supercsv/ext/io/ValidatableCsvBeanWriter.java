@@ -1,9 +1,3 @@
-/*
- * ValidatableCsvBeanWriter.java
- * created in 2013/03/09
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.io;
 
 import java.io.IOException;
@@ -30,7 +24,7 @@ import org.supercsv.util.Util;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -46,13 +40,17 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
     protected final MethodCache cache = new MethodCache();
     
     /** super csv exception converter */
-    protected final CsvExceptionConveter exceptionConverter = createExceptionConverter();
+    protected CsvExceptionConveter exceptionConverter = new CsvExceptionConveter();
     
     /** column errors */
     private final List<CsvMessage> errors = new ArrayList<CsvMessage>();
     
-    protected CsvExceptionConveter createExceptionConverter() {
-        return new CsvExceptionConveter();
+    public CsvExceptionConveter getExceptionConverter() {
+        return exceptionConverter;
+    }
+    
+    public void setExceptionConverter(CsvExceptionConveter exceptionConverter) {
+        this.exceptionConverter = exceptionConverter;
     }
     
     public boolean hasError() {
@@ -60,7 +58,7 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
     }
     
     public boolean hasNotError() {
-        return errors.isEmpty();
+        return !hasError();
     }
     
     public List<CsvMessage> getCsvErrors() {
@@ -145,7 +143,6 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
         
         // execute the processors for each column
         try {
-//        Util.executeCellProcessors(processedColumns, beanValues, processors, getLineNumber(), getRowNumber());
             executeCellProcessors(processedColumns, beanValues, processors, getLineNumber(), getRowNumber());
         } catch(SuperCsvRowException e) {
             throw e;
@@ -164,8 +161,6 @@ public class ValidatableCsvBeanWriter extends AbstractCsvWriter implements ICsvB
      */
     protected void executeCellProcessors(final List<Object> destination, final List<?> source,
             final CellProcessor[] processors, final int lineNo, final int rowNo) {
-        
-//        Util.executeCellProcessors(processedColumns, getColumns(), processors, getLineNumber(), getRowNumber());
         
         if( destination == null ) {
             throw new NullPointerException("destination should not be null");

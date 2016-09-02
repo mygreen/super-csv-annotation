@@ -1,9 +1,3 @@
-/*
- * CsvAnnotationBeanWriter.java
- * created in 2013/03/06
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.io;
 
 import java.io.IOException;
@@ -17,7 +11,7 @@ import org.supercsv.prefs.CsvPreference;
 
 /**
  *
- *
+ * @version 1.2
  * @author T.TSUCHIE
  *
  */
@@ -77,6 +71,11 @@ public class CsvAnnotationBeanWriter<T> extends ValidatableCsvBeanWriter {
     
     public BeanMappingCache getMappingCache() {
         return mappingCache;
+    }
+    
+    @Override
+    public String[] getDefinedHeader() {
+        return hasHeader() ? mappingCache.getHeader() : null;
     }
     
 }

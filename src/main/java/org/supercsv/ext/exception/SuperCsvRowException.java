@@ -1,5 +1,7 @@
 package org.supercsv.ext.exception;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import org.supercsv.util.CsvContext;
 
 
 /**
- *
+ * 行のエラーをまとめた例外。
  *
  * @author T.TSUCHIE
  *
@@ -71,5 +73,24 @@ public class SuperCsvRowException extends SuperCsvException {
     public boolean isNotEmptyColumnErrors() {
         return !isEmptyColumnErrors();
     }
+    
+    @Override
+    public void printStackTrace(final PrintStream s) {
+        
+        super.printStackTrace(s);
+        
+        columnErrors.stream().forEach(e -> e.printStackTrace(s));
+        
+    }
+    
+    @Override
+    public void printStackTrace(final PrintWriter s) {
+        
+        super.printStackTrace(s);
+        
+        columnErrors.stream().forEach(e -> e.printStackTrace(s));
+        
+    }
+    
     
 }

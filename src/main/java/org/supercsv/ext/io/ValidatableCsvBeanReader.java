@@ -1,9 +1,3 @@
-/*
- * ValidatableBeanReader.java
- * created in 2013/03/09
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.io;
 
 import java.io.IOException;
@@ -45,13 +39,17 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
     private final MethodCache cache = new MethodCache();
     
     /** exception converter */
-    protected final CsvExceptionConveter exceptionConverter = createExceptionConverter();
+    protected CsvExceptionConveter exceptionConverter = new CsvExceptionConveter();
     
     /** columns errors */
     private final List<CsvMessage> errors = new ArrayList<CsvMessage>();
     
-    protected CsvExceptionConveter createExceptionConverter() {
-        return new CsvExceptionConveter();
+    public CsvExceptionConveter getExceptionConverter() {
+        return exceptionConverter;
+    }
+    
+    public void setExceptionConverter(CsvExceptionConveter exceptionConverter) {
+        this.exceptionConverter = exceptionConverter;
     }
     
     public boolean hasError() {
@@ -59,7 +57,7 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
     }
     
     public boolean hasNotError() {
-        return errors.isEmpty();
+        return !hasError();
     }
     
     public List<CsvMessage> getCsvErrors() {
@@ -135,19 +133,15 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
      * Instantiates the bean (or creates a proxy if it's an interface), and maps the processed columns to the fields of
      * the bean.
      * 
-     * @param clazz
-     *            the bean class to instantiate (a proxy will be created if an interface is supplied), using the default
-     *            (no argument) constructor
+     * @param resultBean
+     *            the bean to populate
      * @param nameMapping
      *            the name mappings
      * @return the populated bean
      * @throws SuperCsvReflectionException
      *             if there was a reflection exception while populating the bean
      */
-    protected <T> T populateBean(final Class<T> clazz, final String[] nameMapping) {
-        
-        // instantiate the bean or proxy
-        final T resultBean = instantiateBean(clazz);
+    protected <T> T populateBean(final T resultBean, final String[] nameMapping) {
         
         // map each column to its associated field on the bean
         for( int i = 0; i < nameMapping.length; i++ ) {
@@ -169,15 +163,27 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
     }
     
     @Override
-    public <T> T read(T arg0, String... arg1) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public <T> T read(final T bean, final String... nameMapping) throws IOException {
+        
+        if(bean == null) {
+            throw new NullPointerException("bean should not be null");
+        } else if(nameMapping == null) {
+            throw new NullPointerException("nameMaping should not be null");
+        }
+        
+        return readInfoBean(bean, nameMapping, null);
     }
-
+    
     @Override
-    public <T> T read(T arg0, String[] arg1, CellProcessor... arg2) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    public <T> T read(final T bean, final String[] nameMapping, final CellProcessor... processors) throws IOException {
+        
+        if(bean == null) {
+            throw new NullPointerException("bean should not be null");
+        } else if(nameMapping == null) {
+            throw new NullPointerException("nameMaping should not be null");
+        }
+        
+        return readInfoBean(bean, nameMapping, processors);
     }
     
     /**
@@ -191,17 +197,7 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
             throw new NullPointerException("nameMapping should not be null");
         }
         
-        if( readRow() ) {
-            if( nameMapping.length != length() ) {
-                throw new IllegalArgumentException(String.format("the nameMapping array and the number of columns read "
-                    + "should be the same size (nameMapping length = %d, columns = %d)", nameMapping.length, length()));
-            }
-            processedColumns.clear();
-            processedColumns.addAll(getColumns());
-            return populateBean(clazz, nameMapping);
-        }
-        
-        return null; // EOF
+        return readInfoBean(instantiateBean(clazz), nameMapping, null);
     }
     
     /**
@@ -218,11 +214,17 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
             throw new NullPointerException("processors should not be null");
         }
         
+        return readInfoBean(instantiateBean(clazz), nameMapping, processors);
+    }
+    
+    private <T> T readInfoBean(final T bean, final String[] nameMapping, final CellProcessor[] processors) throws IOException {
+        
         if( readRow() ) {
+            
             try {
                 // execute the processors then populate the bean
                 executeCellProcessors(processedColumns, getColumns(), processors, getLineNumber(), getRowNumber());
-                return populateBean(clazz, nameMapping);
+                return populateBean(bean, nameMapping);
                 
             } catch(SuperCsvRowException e) {
 //                errors.addAll(exceptionConverter.convertCsvError(e, getDefinedHeader()));
@@ -242,8 +244,6 @@ public class ValidatableCsvBeanReader extends AbstractCsvReader implements ICsvB
      */
     protected void executeCellProcessors(final List<Object> destination, final List<?> source,
             final CellProcessor[] processors, final int lineNo, final int rowNo) {
-        
-//        Util.executeCellProcessors(processedColumns, getColumns(), processors, getLineNumber(), getRowNumber());
         
         if( destination == null ) {
             throw new NullPointerException("destination should not be null");

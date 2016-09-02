@@ -1,25 +1,20 @@
-/*
- * Color.java
- * created in 2013/03/08
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
-package org.supercsv.ext;
+package org.supercsv.ext.io;
 
 
 /**
- *
+ * テスト用の列挙型
  * 
+ * @since 1.2
  * @author T.TSUCHIE
  *
  */
-public enum Color {
+public enum SampleEnum {
     
     RED("赤"), BLUE("青"), YELLOW("黄");
     
     final String aliasName;
     
-    private Color(String aliasName) {
+    private SampleEnum(String aliasName) {
         this.aliasName = aliasName;
     }
     

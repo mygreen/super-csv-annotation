@@ -21,7 +21,11 @@ public class SuperCsvNoMatchColumnSizeException extends SuperCsvException {
     protected final int epxpectedColumnSize;
     
     public SuperCsvNoMatchColumnSizeException(final int actualColumnSize, final int epxpectedColumnSize, final CsvContext context) {
-        super(String.format("The number of columns to be processed (%d) must match the number of CellProcessors (%d): check that the number"
+        this("", actualColumnSize, epxpectedColumnSize, context);
+    }
+    
+    public SuperCsvNoMatchColumnSizeException(final String message, final int actualColumnSize, final int epxpectedColumnSize, final CsvContext context) {
+        super(message + String.format("The number of columns to be processed (%d) must match the number of CellProcessors (%d): check that the number"
                 + " of CellProcessors you have defined matches the expected number of columns being read/written",
             actualColumnSize, epxpectedColumnSize), context);
         

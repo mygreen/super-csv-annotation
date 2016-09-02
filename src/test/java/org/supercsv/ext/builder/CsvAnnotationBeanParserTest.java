@@ -1,4 +1,4 @@
-package org.supercsv.ext;
+package org.supercsv.ext.builder;
 
 import static org.junit.Assert.*;
 
