@@ -1,4 +1,4 @@
-package org.supercsv.ext.spring;
+package org.supercsv.ext.builder.spring;
 
 import java.lang.annotation.Annotation;
 
@@ -13,7 +13,7 @@ import org.supercsv.ext.builder.impl.StringCellProcessorBuilder;
  * @author T.TSUCHIE
  *
  */
-public class UserIdCellProcessorBuilder extends StringCellProcessorBuilder {
+public class UserNameCellProcessorBuilder extends StringCellProcessorBuilder {
     
     @Autowired
     private UserService userService;
@@ -32,9 +32,9 @@ public class UserIdCellProcessorBuilder extends StringCellProcessorBuilder {
         
         CellProcessor cellProcessor = processor;
         if(cellProcessor == null) {
-            cellProcessor = new UserIdExist(userService);
+            cellProcessor = new UserNameExist(userService);
         } else {
-            cellProcessor = new UserIdExist(userService, cellProcessor);
+            cellProcessor = new UserNameExist(userService, cellProcessor);
         }
         
         cellProcessor = super.buildInputCellProcessor(type, annos, cellProcessor);

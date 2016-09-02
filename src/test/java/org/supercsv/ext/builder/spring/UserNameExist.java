@@ -1,4 +1,4 @@
-package org.supercsv.ext.spring;
+package org.supercsv.ext.builder.spring;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,23 +17,18 @@ import org.supercsv.util.CsvContext;
  * @author T.TSUCHIE
  *
  */
-public class UserIdExist extends CellProcessorAdaptor 
+public class UserNameExist extends CellProcessorAdaptor 
         implements StringCellProcessor, ValidationCellProcessor {
     
     private UserService userService;
     
-    public UserIdExist(UserService userService) {
+    public UserNameExist(UserService userService) {
         this.userService = userService;
     }
     
-    public UserIdExist(UserService userService, final CellProcessor next) {
+    public UserNameExist(UserService userService, final CellProcessor next) {
         super(next);
         this.userService = userService;
-    }
-    
-    @Override
-    public String getMessageCode() {
-        return "UserIdExist";
     }
     
     @Override
@@ -56,8 +51,8 @@ public class UserIdExist extends CellProcessorAdaptor
         validateInputNotNull(value, context);
         
         final String stringValue = value.toString();
-        if( !userService.existByUserId(stringValue) ) {
-            throw new SuperCsvConstraintViolationException(String.format("not exist userId '%s'", stringValue),
+        if( !userService.existByUserName(stringValue) ) {
+            throw new SuperCsvConstraintViolationException(String.format("not exist userName '%s'", stringValue),
                     context, this);
         }
         
