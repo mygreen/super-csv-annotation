@@ -12,6 +12,7 @@ import org.supercsv.cellprocessor.constraint.RequireSubStr;
 import org.supercsv.cellprocessor.constraint.StrNotNullOrEmpty;
 import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.constraint.Strlen;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.cellprocessor.constraint.Length;
 import org.supercsv.ext.cellprocessor.constraint.MaxLength;
 import org.supercsv.ext.cellprocessor.constraint.MinLength;

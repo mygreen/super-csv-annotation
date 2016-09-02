@@ -14,7 +14,7 @@ public interface ValidationCellProcessor {
     
     /**
      * メッセージのコードを取得する。
-     * <p>基本は、<CellProcessorのクラス名> + ".violated"
+     * <p>基本は、{@literal <CellProcessorのクラス名> + ".violated"}
      * <P>例. org.supercsv.contrib.cellprocessor.constraint.StrMax.violated
      * @return
      */
@@ -26,7 +26,7 @@ public interface ValidationCellProcessor {
      * メッセージ用の変数を取得する。
      * <p>Map.key = message variable key
      * <p>Map.value = message variable value
-     * <p>ex. CellProcessor:NumberRange, Map.key = max, Map.vale = 5.
+     * <p>ex.{@literal CellProcessor:NumberRange, Map.key = max, Map.vale = 5.}
      * @return
      */
     Map<String, ?> getMessageVariable();

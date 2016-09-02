@@ -14,7 +14,6 @@ import org.supercsv.util.CsvContext;
 
 /**
  *
- * @see 'StrMaxMin'
  * @author T.TSUCHIE
  *
  */
@@ -46,7 +45,7 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
      * @param max
      *            the maximum String length
      * @throws IllegalArgumentException
-     *             if max < min, or min is < 0
+     *             {@literal if max < min, or min is < 0}
      */
     private static void checkPreconditions(final int min, final int max) {
         if( max < min ) {
@@ -62,9 +61,9 @@ public class Length extends CellProcessorAdaptor implements StringCellProcessor,
      * {@inheritDoc}
      * 
      * @throws SuperCsvCellProcessorException
-     *             if value is null
+     *             {@literal if value is null}
      * @throws SuperCsvConstraintViolationException
-     *             if length is < min or length > max
+     *             {@literal if length is < min or length > max}
      */
     @SuppressWarnings("unchecked")
     public Object execute(final Object value, final CsvContext context) {

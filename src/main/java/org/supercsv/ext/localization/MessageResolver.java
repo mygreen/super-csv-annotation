@@ -1,16 +1,9 @@
-/*
- * MessageResolver.java
- * created in 2013/03/09
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.localization;
 
 
 /**
  * Strategy interface for resolving messages.
  * 
- * @see 'OVal' net.sf.oval.localization.
  * @author T.TSUCHIE
  *
  */

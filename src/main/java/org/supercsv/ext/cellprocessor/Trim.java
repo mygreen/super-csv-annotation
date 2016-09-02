@@ -7,6 +7,7 @@ import org.supercsv.cellprocessor.ift.DateCellProcessor;
 import org.supercsv.cellprocessor.ift.DoubleCellProcessor;
 import org.supercsv.cellprocessor.ift.LongCellProcessor;
 import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 
 
@@ -33,7 +34,7 @@ public class Trim extends CellProcessorAdaptor implements BoolCellProcessor, Dat
      * calls the next processor in the chain.
      * 
      * @param next the next processor in the chain
-     * @throws NullPointerException if next is null
+     * @throws NullPointerException {@literal if next is null}
      */
     public Trim(final CellProcessor next) {
         super(next);
@@ -42,7 +43,7 @@ public class Trim extends CellProcessorAdaptor implements BoolCellProcessor, Dat
     /**
      * {@inheritDoc}
      * 
-     * @throws SuperCsvCellProcessorException if value is null
+     * @throws SuperCsvCellProcessorException {@literal if value is null}
      */
     @SuppressWarnings("unchecked")
     public Object execute(final Object value, final CsvContext context) {

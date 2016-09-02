@@ -1,9 +1,3 @@
-/*
- * PastDate.java
- * created in 2012/09/22
- *
- * (C) Copyright 2003-2012 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor.constraint;
 
 import java.text.DateFormat;
@@ -22,8 +16,9 @@ import org.supercsv.util.CsvContext;
 
 
 /**
+ * 指定した日時より過去かどうかチェックするプロセッサ。
+ * <p>{@link Max}の日時用。
  * 
- * @see {@link Max}
  * @author T.TSUCHIE
  *
  */

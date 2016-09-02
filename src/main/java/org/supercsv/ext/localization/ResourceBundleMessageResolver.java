@@ -1,9 +1,3 @@
-/*
- * ResourceBundleMessageResolver.java
- * created in 2013/03/09
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.localization;
 
 import java.util.ArrayList;
@@ -17,7 +11,6 @@ import java.util.ResourceBundle;
 /**
  * Default implementation that resolves messages based on the registered resource bundles.
  * 
- * @see net.sf.oval.localization.message.ResourceBundleMessageResolver
  * @version 1.1
  * @author T.TSUCHIE
  *

@@ -1,9 +1,3 @@
-/*
- * DateRange.java
- * created in 2012/09/22
- *
- * (C) Copyright 2003-2012 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.cellprocessor.constraint;
 
 import java.text.DateFormat;

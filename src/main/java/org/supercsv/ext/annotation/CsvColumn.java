@@ -82,7 +82,7 @@ public @interface CsvColumn {
     /**
      * カラムの値が他の行と比較してユニークであるかチェックするか指定します。
      * <p>trueの場合、{@link CellProcessor}の{@link Unique}が設定されます。</p>
-     * @returnt trueの場合、値がユニークかチェックします。
+     * @return trueの場合、値がユニークかチェックします。
      */
     boolean unique() default false;
     
@@ -90,7 +90,7 @@ public @interface CsvColumn {
      * カラムの値が指定した値と等しいかどうかチェックするか指定します。
      * <p>ブール型、数値や日時型の場合は、アノテーションで指定した書式に沿った値を指定する必要があります。</p>
      * <p>trueの場合、{@link CellProcessor}の{@link Equals}が指定されます。</p>
-     * @returnt trueの場合、等しいかチェックします。
+     * @return trueの場合、等しいかチェックします。
      */
     String equalsValue() default "";
     

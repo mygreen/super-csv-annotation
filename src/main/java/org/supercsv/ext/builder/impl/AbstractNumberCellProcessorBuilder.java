@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.ext.annotation.CsvNumberConverter;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.builder.CellProcessorBuilder;
 import org.supercsv.ext.cellprocessor.constraint.Max;
 import org.supercsv.ext.cellprocessor.constraint.Min;
 import org.supercsv.ext.cellprocessor.constraint.Range;
@@ -29,7 +30,7 @@ import org.supercsv.ext.util.Utils;
 public abstract class AbstractNumberCellProcessorBuilder<N extends Number & Comparable<N>> extends AbstractCellProcessorBuilder<N> {
     
     /**
-     * アノテーション{@link CsvDateConverter} を取得する。
+     * アノテーション{@link CsvNumberConverter} を取得する。
      * @param annos アノテーションの一覧
      * @return アノテーションの定義がない場合は空を返す。
      */

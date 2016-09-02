@@ -41,7 +41,7 @@ public @interface CsvBooleanConverter {
     String[] inputFalseValue() default {"false", "0", "no", "off", "f", "n"};
     
     /**
-     * 書き込み時に{@link true}の値を表現する値を指定します。
+     * 書き込み時に{@literal true}の値を表現する値を指定します。
      * <p>`true`以外の`○`など他の値として出力したい場合に指定します。</p>
      * <p>{@link CellProcessor}の{@link FmtBool}が設定されます。</p>
      * 
@@ -50,7 +50,7 @@ public @interface CsvBooleanConverter {
     String outputTrueValue() default "true";
     
     /**
-     * 書き込み時に{@link false}の値を表現する値を指定します。
+     * 書き込み時に{@literal false}の値を表現する値を指定します。
      * <p>`false`以外の`×`など他の値として出力したい場合に指定します。</p>
      * <p>{@link CellProcessor}の{@link FmtBool}が設定されます。</p>
      * 

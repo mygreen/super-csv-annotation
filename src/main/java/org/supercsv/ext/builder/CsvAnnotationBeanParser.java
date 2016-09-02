@@ -221,7 +221,7 @@ public class CsvAnnotationBeanParser {
     
     /**
      * {@link CellProcessorBuilder}を管理するコンテナクラスを設定する。
-     * @param {@link CellProcessorBuilder}のコンテナクラス。
+     * @param builderContainer {@link CellProcessorBuilder}のコンテナクラス。
      */
     public void setBuilderContainer(final CellProcessorBuilderContainer builderContainer) {
         this.builderContainer = builderContainer;

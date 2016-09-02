@@ -18,9 +18,9 @@ import org.supercsv.util.CsvContext;
 
 /**
  * {@link Date}型をフォーマットする{@link CellProcessor}。
+ * <p>{@link FmtDate}のロケール指定可能なプロセッサ。
  * 
  * @version 1.2
- * @see {@link FmtDate}
  * @author T.TSUCHIE
  *
  */

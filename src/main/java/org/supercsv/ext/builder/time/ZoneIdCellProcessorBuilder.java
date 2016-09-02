@@ -9,11 +9,12 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.cellprocessor.time.FmtZoneId;
 import org.supercsv.cellprocessor.time.ParseZoneId;
 import org.supercsv.ext.builder.AbstractCellProcessorBuilder;
+import org.supercsv.ext.builder.CellProcessorBuilder;
 import org.supercsv.ext.exception.SuperCsvInvalidAnnotationException;
 import org.supercsv.ext.util.Utils;
 
 /**
- * {@link ZonedId}型の{@link CellProcessorBuilder}クラス。
+ * {@link ZoneId}型の{@link CellProcessorBuilder}クラス。
  *
  * @since 1.2
  * @author T.TSUCHIE

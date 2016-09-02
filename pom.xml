@@ -137,7 +137,7 @@ Super CSV Annotation, And Localization Message
 					<charset>UTF-8</charset>
 					<encoding>UTF-8</encoding>
 					<docencoding>UTF-8</docencoding>
-					<locale>en</locale>
+					<locale>ja_JP</locale>
 					<maxmemory>512m</maxmemory>
 				</configuration>
 				<executions>
@@ -283,11 +283,7 @@ Super CSV Annotation, And Localization Message
 					<encoding>UTF-8</encoding>
 					<charset>UTF-8</charset>
 					<docencoding>UTF-8</docencoding>
-					<locales>en</locales>
-					<links>
-						<link>http://docs.oracle.com/javase/6/docs/api/</link>
-						<link>http://supercsv.sourceforge.net/apidocs/</link>
-					</links>
+					<locale>ja_JP</locale>
 				</configuration>
 			</plugin>
 			<plugin>

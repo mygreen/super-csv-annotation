@@ -66,7 +66,7 @@ public class JodaRangeTest {
     
     /**
      * Test constructor argument's with wrong values.
-     * min > max
+     * {@literal min > max}
      */
     @Test(expected=IllegalArgumentException.class)
     public void testCheckConditionsWithWrong_maxLessThanMin() {

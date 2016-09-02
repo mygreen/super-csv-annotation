@@ -1,9 +1,3 @@
-/*
- * MapVariableInterpolator.java
- * created in 2013/03/10
- *
- * (C) Copyright 2003-2013 GreenDay Project. All rights reserved.
- */
 package org.supercsv.ext.localization;
 
 import java.util.Map;
@@ -14,8 +8,6 @@ import java.util.Map.Entry;
  * <p>placeholder '${name}'
  * <p>warning : this class not support placeholder escape, so use should be Common-Lang 'StrSubstitutor'
  * 
- * @see org.apache.commons.lang.text.StrSubstitutor
- * @see net.sf.oval.internal.MessageRenderer
  * @author T.TSUCHIE
  *
  */

@@ -25,7 +25,7 @@ import org.supercsv.ext.cellprocessor.time.PastTemporal;
  *  <tr>
  *   <th>クラスタイプ</th>
  *   <th>標準の書式</th>
- *  </td>
+ *  </tr>
  *  <tr>
  *   <td>java.util.Date</td>
  *   <td>{@literal yyyy-MM-dd HH:mm:ss}</td>
@@ -58,6 +58,7 @@ import org.supercsv.ext.cellprocessor.time.PastTemporal;
  *   <td>java.time.ZonedDateTime</td>
  *   <td>{@literal uuuu-MM-dd HH:mm:ssxxx'['VV']'}</td>
  *  </tr>
+ *  <tr>
  *   <td>org.joda.time.LocalDateTime</td>
  *   <td>{@literal yyyy-MM-dd HH:mm:ss}</td>
  *  </tr>
@@ -99,7 +100,7 @@ public @interface CsvDateConverter {
     /**
      * タイムゾーンを指定します。
      * <p>{@link TimeZone#getTimeZone(String)}で解釈可能な値を指定する必要があります。</p>
-     * <p>{@link Asia/Tokyo, GMT, GMT+09:00}などの値を指定します。</p>
+     * <p>{@literal Asia/Tokyo, GMT, GMT+09:00}などの値を指定します。</p>
      * <p>ただし、オフセットを持たないクラス対タイプ{@literal LocalDateTime, LocalDate, LocalTime}の時は、指定しても意味がありません。</p>
      * @return 省略した場合、システム標準の値を使用します。
      */

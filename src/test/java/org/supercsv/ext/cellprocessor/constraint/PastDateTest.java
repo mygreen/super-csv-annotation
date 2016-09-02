@@ -15,7 +15,7 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvConstraintViolationException;
 
 /**
- * Tests the {@link PatDate} constraint.
+ * Tests the {@link PastDate} constraint.
  *
  * @since 1.2
  * @author T.TSUCHIE
