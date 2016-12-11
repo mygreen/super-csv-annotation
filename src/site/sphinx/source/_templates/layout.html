@@ -1,0 +1,39 @@
+{% extends "!layout.html" %}
+
+<!--{% set script_files = script_files + [ "_static/mytheme.js" ] %}-->
+{% set css_files    = css_files    + [ "_static/mycustom.css" ] %}
+
+{%- block extrahead %}
+{{ super() }}
+<!-- my theme custom extrahead beacon -->
+{%- endblock%}
+
+
+{%- block menu %}
+<p class="caption"><span class="caption-text">プロジェクト情報</span></p>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="#">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="http://mygreen.github.io/super-csv-annotation/apidocs/index.html">Javadoc</a></li>
+</ul>
+
+{{ super() }}
+<!-- my theme custom extramenu beacon -->
+{%- endblock%}
+
+
+{% block footer %}
+<!-- my theme custom extrahead beacon -->
+<script type="text/javascript" src="_static/jquery.externallink.js"></script>
+<script type="text/javascript" charset="UTF-8">
+	jQuery(function () {
+		// ナビゲーション用のアイコン
+		$('div.wy-menu').externalLink({cssClass : 'externalink-img', iconUrl:'_static/external-link-12.png'});
+		
+		// コンテンツ用
+		$('div.wy-nav-content').externalLink({cssClass : 'externalink', iconUrl:''});
+		
+	});
+</script>
+
+{{ super() }}
+{% endblock %}

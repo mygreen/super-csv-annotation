@@ -10,6 +10,11 @@
 		</layout>
 	</appender>
 	
+	<category name="com.github.mygreen.supercsv" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="debugAppender" />
+	</category>
+	
 	<!-- 全てのログ -->
 	<root>
 		<level value="WARN" />
