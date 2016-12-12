@@ -3,17 +3,38 @@
 	<skin>
 		<groupId>org.apache.maven.skins</groupId>
 		<artifactId>maven-fluido-skin</artifactId>
-		<version>1.3.1</version>
+		<version>1.6</version>
 	</skin>
 	<body>
-		<menu name="Document">
-			<item name="基本的な使い方" href="howtouse.html" />
-			<item name="メッセージ処理" href="validation.html" />
-			<item name="拡張方法" href="extension.html" />
-			<item name="ダウンロード" href="download.html" />
-			<item name="リリース情報" href="release.html" />
+		<footer>
+<![CDATA[ <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37313068-3', 'auto');
+  ga('send', 'pageview');
+
+</script> ]]>
+		</footer>
+		<menu name="ドキュメント">
+			<item name="基本的な使い方" href="sphinx/howtouse.html" />
+			<item name="機能概要" href="sphinx/basic.html" />
+			<item name="書式の指定方法" href="sphinx/format.html" />
+			<item name="値の変換方法" href="sphinx/configuration.html" />
+			<item name="値の検証方法" href="sphinx/validation.html" />
+			<item name="アノテーションの合成" href="sphinx/composition.html" />
+			<item name="部分的なカラムの読み書き" href="sphinx/partialization.html" />
+			<item name="独自のProcessorBuilderの作成" href="sphinx/processorbuilder.html" />
+			<item name="ライフサイクルイベントの管理" href="sphinx/lifecycle.html" />
+			<item name="Spring Frameworkとの連携" href="sphinx/spring.html" />
+			<item name="システム設定" href="sphinx/configuration.html" />
+			<item name="リリースノート" href="sphinx/release.html" />
 			<item name="Javadoc" href="apidocs/index.html" />
+			
 		</menu>
+		
 		<menu ref="reports" />
 	</body>
 </project>
