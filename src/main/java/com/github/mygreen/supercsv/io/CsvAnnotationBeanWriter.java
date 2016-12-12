@@ -112,7 +112,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
     }
     
     /**
-     * ヘッダー情報を出力する。
+     * ヘッダー情報を書き込みます。
      * <p>ただし、列番号を省略され、定義がされていないカラムは、{@literal column[カラム番号]}の形式となります。</p>
      * @throws IOException ファイルの出力に失敗した場合。
      */
@@ -170,7 +170,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
     }
     
     /**
-     * レコードを出力する。
+     * レコードを書き込みます。
      * 
      * @param source 書き込むレコード。
      * @throws NullPointerException source is null.

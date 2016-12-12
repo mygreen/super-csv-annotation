@@ -25,12 +25,6 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 public @interface CsvNullConvert {
     
     /**
-     * 適用するケースを指定します。
-     * @return 何も指定しない場合は全てのケースに適用されます。
-     */
-    BuildCase[] cases() default {};
-    
-    /**
      * 変換対象の値を指定します。
      * @return 変換対象となる値を指定します。
      * 
@@ -42,6 +36,12 @@ public @interface CsvNullConvert {
      * @return trueの場合、大文字・小文字の区別を行いません。
      */
     boolean ignoreCase() default false;
+    
+    /**
+     * 適用するケースを指定します。
+     * @return 何も指定しない場合は全てのケースに適用されます。
+     */
+    BuildCase[] cases() default {};
     
     /**
      * グループのクラスを指定します。

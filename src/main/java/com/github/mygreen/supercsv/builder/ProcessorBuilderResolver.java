@@ -57,6 +57,7 @@ public class ProcessorBuilderResolver {
     /**
      * 標準の{@link ProcessorBuilder}を登録緒する。
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void init() {
         
         register(String.class, new StringProcessorBuilder());
@@ -89,7 +90,7 @@ public class ProcessorBuilderResolver {
         register(Time.class, new TimeProcessorBuilder());
         register(Timestamp.class, new TimestampProcessorBuilder());
         
-        register(Enum.class, new EnumProcessorBuilder<>());
+        register(Enum.class, new EnumProcessorBuilder());
         
         // Java8 Date and Tiem API
         register(LocalDateTime.class, new LocalDateTimeProcessorBuilder());
