@@ -165,6 +165,13 @@ $(document).ready(function() {
   });
 });
 </script>
+
+<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
+});
+</script>
 ]]>
 					</header>
 				</configuration>
