@@ -17,15 +17,15 @@ CellProcessorの実装クラスの作成
 
 サンプルとして、最後が任意の文字で終わるか検証するCellProcessorを作成します。
 
-* 抽象クラス ``ValidationCellProcessor`` を継承して作成します。
+* 抽象クラス ``ValidationCellProcessor`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ValidationCellProcessor.html>`_ ] を継承して作成します。
 
   * *ValidationCellProcessor* は、値の検証に特化したCellProcessorの実装です。
   * CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。
 
-* インタフェースとして ``StringCellProcessor`` を実装します。
+* 今回は、文字列型の値を検証するため、インタフェースとして ``StringCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
 
   * この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
-  * 扱う値が数値型のときは ``LongCellProcessor`` などと、扱う値によって変更してください。
+  * 扱う値が数値型のときは ``LongCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html>`_ ]などと、扱う値によって変更してください。
 
 * コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
 
@@ -126,7 +126,7 @@ CellProcessorの実装クラスの作成
 
   * 内部クラスのアノテーションとして、 *List* を定義します。
 
-* 値の検証用のアノテーションと示すためのメタアノテーション ``@CsvConstraint`` を指定します。
+* 値の検証用のアノテーションと示すためのメタアノテーション ``@CsvConstraint`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvConstraint.html>`_ ]を指定します。
 * 共通の属性として、 ``cases`` と ``groups`` 、 ``order`` を定義します。
 * 固有の属性 として、``text`` を定義します。これはCellProcessorに渡す値となります。
 
@@ -181,7 +181,7 @@ CellProcessorの実装クラスの作成
 
 アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。
 
-* インタフェース ``ConstraintProcessorFactory`` を実装します。
+* インタフェース ``ConstraintProcessorFactory`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html>`_ ]を実装します。
 * アノテーションが検証対象のクラスタイプ以外に付与される場合があるため、その際は無視するようにします。
 * 独自のCellProcessorのCustomConstraintのインスタンスを作成します。
 * Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。

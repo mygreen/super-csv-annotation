@@ -20,7 +20,7 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
 
 
 --------------------------------------
-CSV用のJavaBeanクラスの定義
+CSV用のBeanクラスの定義
 --------------------------------------
 
 CSVの1レコード分をマッピングするためのPOJOクラスを作成します。
@@ -30,11 +30,11 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
   * 引数なしの ``public`` なコンストラクタが必要です。
   * コンストラクタを定義しない場合は、デフォルトコンストラクタでもかまいません。
   
-* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` をクラスに付与します。
+* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html>`_ ] をクラスに付与します。
 
   * 属性 ``header`` をtrueとすると、 *CsvAnnotationBeanReader#readAll(...)* と *CsvAnnotationBeanWriter#writeAll(...)* メソッドの呼び出し時に、ヘッダー行がある前提として処理します。
 
-* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` をフィールドに付与します。
+* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html>`_ ]をフィールドに付与します。
 
   * 属性 ``number`` で、マッピングするカラムの番号を指定します。カラムの番号は1から始まります。
   * 属性 ``label`` で、ヘッダー行のラベル名を指定することができます。省略した場合はフィールド名が適用されます。
@@ -43,6 +43,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 
 .. sourcecode:: java
     :linenos:
+    :caption: Beanクラスのサンプル
     
     import com.github.mygreen.supercsv.annotation.CsvBean;
     import com.github.mygreen.supercsv.annotation.CsvColumn;
@@ -91,12 +92,13 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 読み込み方法
 --------------------------------------
 
-* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` を使用します。
+* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
 * 一度に全レコードを読み込む場合は、メソッド ``readAll(...)`` を使用します。
 * 1件ずつ読み込む場合は、メソッド ``read(...)`` を使用します。
 
 .. sourcecode:: java
     :linenos:
+    :caption: 読み込むサンプル
     
     import com.github.mygreen.supercsv.io.CsvAnnotationBeanReader;
     
@@ -152,12 +154,13 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 書き込み方法
 --------------------------------------
 
-* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanWriter`` を使用します。
+* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanWriter`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html>`_ ]を使用します。
 * 一度に全レコードを書き込む場合は、メソッド ``writeAll(...)`` を使用します。
 * 1件ずつ書き込む場合は、メソッド ``write(...)`` を使用します。
 
 .. sourcecode:: java
     :linenos:
+    :caption: 書き込むサンプル
     
     import com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter;
     
@@ -224,4 +227,63 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             
         }
     }
+
+
+
+--------------------------------------
+値の加工方法
+--------------------------------------
+
+本ライブラリには、様々なアノテーションが用意されており、:doc:`書式の指定 <format>` 、:doc:`トリムなどの値の変換 <conversion>` 、 :doc:`値の検証 <validation>` を行うことができます。
+もちろん、独自のアノテーションを作成することもできます。
+
+また、値を変換するアノテーションと検証を行うアノテーションにおいては、適用順や読み込み／書き込み時に適用するケースを指定する属性がそれぞれ ``order`` 、 ``cases`` にて可能です。
+
+
+.. sourcecode:: java
+    :linenos:
+    :caption: 値を加工するアノテーションのサンプル
+    
+    import java.time.LocalDate;
+    
+    import com.github.mygreen.supercsv.annotation.CsvBean;
+    import com.github.mygreen.supercsv.annotation.CsvColumn;
+    import com.github.mygreen.supercsv.annotation.constraint.CsvNumberMin;
+    import com.github.mygreen.supercsv.annotation.constraint.CsvRequire;
+    import com.github.mygreen.supercsv.annotation.constraint.CsvUnique;
+    import com.github.mygreen.supercsv.annotation.conversion.CsvDefaultValue;
+    import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
+    import com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat;
+    import com.github.mygreen.supercsv.annotation.format.CsvNumberFormat;
+    import com.github.mygreen.supercsv.builder.BuildCase;
+    
+    @CsvBean
+    public class SampleCsv {
+        
+        @CsvColumn(number=1, label="ID")
+        @CsvRequire                        // 必須チェックを行う
+        @CsvUnique(order=1)                // 全レコード内で値がユニークかチェックする(順番指定)
+        @CsvNumberMin(value="0", order=2)  // 最小値かどかチェックする(順番指定)
+        private Integer id;
+        
+        @CsvColumn(number=2, label="名前")
+        private String name;
+        
+        @CsvColumn(number=3, label="誕生日")
+        @CsvDateTimeFormat(pattern="yyyy年MM月dd日")   // 日時の書式を指定する
+        private LocalDate birthday;
+        
+        @CsvColumn(number=4, label="給料")
+        @CsvNumberFormat(pattern="#,###0")                    // 数値の書式を指定する
+        @CsvDefaultValue(value="N/A", cases=BuildCase.Write)  // 書き込み時に値がnull(空)の場合、「N/A」として出力します。
+        @CsvNullConvert(value="N/A", cases=BuildCase.Read)    // 読み込み時に値が「N/A」のとき、nullとして読み込みます。
+        private Integer salary;
+        
+        // getter/setterは省略
+        
+    }
+    
+    
+
+
 

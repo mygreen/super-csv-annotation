@@ -8,12 +8,14 @@
 	
 		var settings = $.extend( {
 			cssClass : 'external',
-			iconUrl : 'images/externalink.png'
+			iconUrl : 'images/externalink.png',
+			startUrl : ''
 		}, options);
 		
 		$(this).find('a').each(function() {
 			var href = $(this).attr('href');
-			if(href.indexOf('http://') == 0 || href.indexOf('https://') == 0) {
+			if(href.indexOf('http://') == 0 || href.indexOf('https://') == 0
+					|| (settings.startUrl.length > 0 && href.indexOf(settings.startUrl) == 0) ) {
 				
 				$(this).attr("target", "_blank");
 				$(this).addClass(settings.cssClass);
