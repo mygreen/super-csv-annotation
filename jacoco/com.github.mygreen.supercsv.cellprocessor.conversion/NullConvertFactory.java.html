@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NullConvertFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">NullConvertFactory.java</span></div><h1>NullConvertFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
+
+import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
+import com.github.mygreen.supercsv.builder.Configuration;
+import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
+import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+
+/**
+ * アノテーション{@link CsvNullConvert}をハンドリングして、任意の値をnull変換するためのCellProcessor{@link NullConvert}を作成する。
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L24">public class NullConvertFactory implements ConversionProcessorFactory&lt;CsvNullConvert&gt; {</span>
+    
+    @Override
+    public Optional&lt;CellProcessor&gt; create(final CsvNullConvert anno, final Optional&lt;CellProcessor&gt; next,
+            final FieldAccessor field, final TextFormatter&lt;?&gt; formatter, final Configuration config) {
+        
+<span class="nc" id="L30">        final Set&lt;String&gt; tokens = Arrays.stream(anno.value())</span>
+<span class="nc" id="L31">                .collect(Collectors.toSet());</span>
+        
+<span class="nc" id="L33">        final NullConvert processor = next.map(n -&gt; new NullConvert(tokens, anno.ignoreCase(), (StringCellProcessor)n))</span>
+<span class="nc" id="L34">                .orElseGet(() -&gt; new NullConvert(tokens, anno.ignoreCase()));</span>
+        
+<span class="nc" id="L36">        return Optional.of(processor);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

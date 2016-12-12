@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemporalFormatWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">TemporalFormatWrapper.java</span></div><h1>TemporalFormatWrapper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.chrono.JapaneseDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+import com.github.mygreen.supercsv.util.Utils;
+
+/**
+ * Date and Time APIの{@link DateTimeFormatter}をラップしたクラス。
+ * &lt;p&gt;{@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}に対応している。&lt;/p&gt;
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class TemporalFormatWrapper&lt;T extends TemporalAccessor&gt; extends AbstractTextFormatter&lt;T&gt; {
+    
+    private final DateTimeFormatter formatter;
+    
+    private final Class&lt;T&gt; type;
+    
+    private String pattern;
+    
+    /**
+     * 
+     * @param formatter ラップする{@link DateTimeFormatter}を指定します。
+     * @param type {@link TemporalAccessor}の実装クラスである、
+     *        {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}の何れかを指定します。
+     * @throws NullPointerException {@literal if formatter or type is null.}
+     */
+<span class="fc" id="L41">    public TemporalFormatWrapper(final DateTimeFormatter formatter, final Class&lt;T&gt; type) {</span>
+<span class="fc" id="L42">        Objects.requireNonNull(formatter);</span>
+<span class="fc" id="L43">        Objects.requireNonNull(type);</span>
+        
+<span class="fc" id="L45">        this.formatter = formatter;</span>
+<span class="fc" id="L46">        this.type = type;</span>
+<span class="fc" id="L47">    }</span>
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}以外のクラスタイプの場合、
+     * 例外{@link TextParseException}がスローされます。
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public T parse(final String text) {
+        
+        try {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if(LocalDateTime.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L61">                return (T) LocalDateTime.parse(text, formatter);</span>
+                
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            } else if(LocalDate.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L64">                return (T) LocalDate.parse(text, formatter);</span>
+                
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            } else if(LocalTime.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L67">                return (T) LocalTime.parse(text, formatter);</span>
+                
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            } else if(ZonedDateTime.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L70">                return (T) ZonedDateTime.parse(text, formatter);</span>
+                
+            }
+<span class="fc" id="L73">        } catch(DateTimeParseException e) {</span>
+<span class="fc" id="L74">            throw new TextParseException(text, type, e);</span>
+<span class="nc" id="L75">        }</span>
+        
+<span class="nc" id="L77">        throw new TextParseException(text, type, &quot;Cannot suuport type.&quot;);</span>
+    }
+    
+    @Override
+    public String print(final T object) {
+        
+<span class="pc bpc" id="L83" title="3 of 4 branches missed.">        if(pattern.contains(&quot;G&quot;) &amp;&amp; formatter.getLocale().getLanguage().equals(&quot;ja&quot;)) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            if(LocalDate.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L85">                JapaneseDate date = JapaneseDate.from((LocalDate)object);</span>
+<span class="nc" id="L86">                return formatter.format(date);</span>
+            }
+        }
+        
+        
+<span class="fc" id="L91">        return formatter.format(object);</span>
+    }
+    
+    @Override
+    public Optional&lt;String&gt; getPattern() {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if(Utils.isEmpty(pattern)) {</span>
+<span class="nc" id="L97">            return Optional.empty();</span>
+        } else {
+<span class="fc" id="L99">            return Optional.of(pattern);</span>
+        }
+    }
+    
+    /**
+     * パースする際のエラーメッセージ中に利用する書式を指定します。
+     * @param pattern コンストラクタで指定した{@link DateTimeFormatter}に対応する書式を指定します。
+     */
+    public void setPattern(String pattern) {
+<span class="fc" id="L108">        this.pattern = pattern;</span>
+<span class="fc" id="L109">    }</span>
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+<span class="fc" id="L113">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L114">        getPattern().ifPresent(p -&gt; vars.put(&quot;pattern&quot;, p));</span>
+        
+<span class="fc" id="L116">        return vars;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

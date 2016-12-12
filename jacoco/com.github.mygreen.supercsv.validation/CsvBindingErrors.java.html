@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CsvBindingErrors.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.validation</a> &gt; <span class="el_source">CsvBindingErrors.java</span></div><h1>CsvBindingErrors.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.validation;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import com.github.mygreen.supercsv.util.ArgUtils;
+
+/**
+ * CSVのエラー情報を管理するためのクラス。
+ * &lt;p&gt;SpringFrameworkのBindingResultを参考。&lt;/p&gt;
+ * &lt;p&gt;現状、ネストしたフィールドはサポートしていないため、パスの機能を省略して実装する。&lt;/p&gt;
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class CsvBindingErrors implements Serializable {
+    
+    /** serialVersionUID */
+    private static final long serialVersionUID = -9014484172903397334L;
+    
+    /** パスの区切り文字 */
+    public static final String PATH_SEPARATOR = &quot;.&quot;;
+    
+    /** オブジェクト名 */
+    private final String objectName;
+    
+    /** エラーオブジェクト */
+<span class="fc" id="L34">    private final List&lt;CsvError&gt; errors = new ArrayList&lt;&gt;();</span>
+    
+    /** エラーコードの候補を生成するクラス */
+<span class="fc" id="L37">    private MessageCodeGenerator messageCodeGenerator = new MessageCodeGenerator();</span>
+    
+    /**
+     * オブジェクト名を指定するコンストラクタ。
+     * @param objectName メッセージオブジェクトを構成する際に、自動的に付与する名称。
+     * @throws NullPointerException {@link objectName is null.}
+     */
+<span class="fc" id="L44">    public CsvBindingErrors(final String objectName) {</span>
+<span class="fc" id="L45">        Objects.requireNonNull(objectName);</span>
+<span class="fc" id="L46">        this.objectName = objectName;</span>
+<span class="fc" id="L47">    }</span>
+    
+    /**
+     * クラス名を元にオブジェクト名を設定するコンストラクタ。
+     * @param clazz 検証対象のBeanのクラスタイプ。
+     */
+    public CsvBindingErrors(final Class&lt;?&gt; clazz) {
+<span class="fc" id="L54">        this(clazz.getSimpleName());</span>
+<span class="fc" id="L55">    }</span>
+    
+    /**
+     * オブジェクト名の取得
+     * @return コンストラクタで設定したオブジェクト名を取得する。
+     */
+    public String getObjectName() {
+<span class="fc" id="L62">        return objectName;</span>
+    }
+    
+    /**
+     * 全てのエラー情報を取得する。
+     * @return 現在のエラー情報
+     */
+    public List&lt;CsvError&gt; getAllErrors() {
+<span class="fc" id="L70">        return new ArrayList&lt;&gt;(errors);</span>
+    }
+    
+    /**
+     * エラーを追加する
+     * @param error
+     */
+    public void addError(final CsvError error) {
+<span class="fc" id="L78">        this.errors.add(error);</span>
+<span class="fc" id="L79">    }</span>
+    
+    /**
+     * 全てのエラー情報を追加する。
+     * @param errors 追加するエラー情報。
+     */
+    public void addAllErrors(Collection&lt;CsvError&gt; errors) {
+<span class="fc" id="L86">        this.errors.addAll(errors);</span>
+<span class="fc" id="L87">    }</span>
+    
+    /**
+     * 全てのエラー情報を削除する。
+     */
+    public void clearAllErrors() {
+<span class="nc" id="L93">        this.errors.clear();</span>
+<span class="nc" id="L94">    }</span>
+    
+    /**
+     * エラー情報が存在するかどうか確かめる。
+     * @return trueの場合、エラー情報が存在する。
+     */
+    public boolean hasErrors() {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        return !errors.isEmpty();</span>
+    }
+    
+    /**
+     * グローバルエラーを取得する
+     * @return エラーがない場合は空のリストを返す
+     */
+    public List&lt;CsvError&gt; getGlobalErrors() {
+<span class="nc" id="L109">        final List&lt;CsvError&gt; list = new ArrayList&lt;CsvError&gt;();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        for(CsvError item : this.errors) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            if(!(item instanceof CsvFieldError)) {</span>
+<span class="nc" id="L112">                list.add(item);</span>
+            }
+<span class="nc" id="L114">        }</span>
+        
+<span class="nc" id="L116">        return list;</span>
+    }
+    
+    /**
+     * 先頭のグローバルエラーを取得する。
+     * @return 存在しない場合は、nullを返す。
+     */
+    public CsvError getFirstGlobalError() {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        for(CsvError item : this.errors) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if(!(item instanceof CsvFieldError)) {</span>
+<span class="nc" id="L126">                return item;</span>
+            }
+<span class="nc" id="L128">        }</span>
+        
+<span class="nc" id="L130">        return null;</span>
+    }
+    
+    /**
+     * グローバルエラーがあるか確かめる。
+     * @return
+     */
+    public boolean hasGlobalErrors() {
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        return !getGlobalErrors().isEmpty();</span>
+    }
+    
+    /**
+     * グローバルエラーの件数を取得する
+     * @return
+     */
+    public int getGlobalErrorCount() {
+<span class="nc" id="L146">        return getGlobalErrors().size();</span>
+    }
+    
+    /**
+     * フィールドエラーを取得する
+     * @return エラーがない場合は空のリストを返す
+     */
+    public List&lt;CsvFieldError&gt; getFieldErrors() {
+<span class="nc" id="L154">        final List&lt;CsvFieldError&gt; list = new ArrayList&lt;CsvFieldError&gt;();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        for(CsvError item : this.errors) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if(item instanceof CsvFieldError) {</span>
+<span class="nc" id="L157">                list.add((CsvFieldError) item);</span>
+            }
+<span class="nc" id="L159">        }</span>
+        
+<span class="nc" id="L161">        return list;</span>
+    }
+    
+    /**
+     * 先頭のフィールドエラーを取得する
+     * @return エラーがない場合は空のリストを返す
+     */
+    public CsvFieldError getFirstFieldError() {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        for(CsvError item : this.errors) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            if(item instanceof CsvFieldError) {</span>
+<span class="nc" id="L171">                return (CsvFieldError) item;</span>
+            }
+<span class="nc" id="L173">        }</span>
+        
+<span class="nc" id="L175">        return null;</span>
+    }
+    
+    /**
+     * フィールドエラーが存在するか確かめる。
+     * @return true:フィールドエラーを持つ。
+     */
+    public boolean hasFieldErrors() {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        return !getFieldErrors().isEmpty();</span>
+    }
+    
+    /**
+     * フィールドエラーの件数を取得する。
+     * @return
+     */
+    public int getFieldErrorCount() {
+<span class="nc" id="L191">        return getFieldErrors().size();</span>
+    }
+    
+    /**
+     * パスを指定してフィールドエラーを取得する
+     * @param path 最後に'*'を付けるとワイルドカードが指定可能。
+     * @return
+     * @throws IllegalArgumentException {@literal if path is empty.}
+     */
+    public List&lt;CsvFieldError&gt; getFieldErrors(final String path) {
+<span class="fc" id="L201">        ArgUtils.notEmpty(path, &quot;path&quot;);</span>
+        
+<span class="fc" id="L203">        final List&lt;CsvFieldError&gt; list = new ArrayList&lt;CsvFieldError&gt;();</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        for(CsvError item : this.errors) {</span>
+<span class="pc bpc" id="L205" title="1 of 4 branches missed.">            if(item instanceof CsvFieldError &amp;&amp; isMatchingFieldError(path, (CsvFieldError) item)) {</span>
+<span class="fc" id="L206">                list.add((CsvFieldError) item);</span>
+            }
+<span class="fc" id="L208">        }</span>
+        
+<span class="fc" id="L210">        return list;</span>
+    }
+    
+    /**
+     * パスを指定して先頭のフィールドエラーを取得する
+     * @param path 最後に'*'を付けるとワイルドカードが指定可能。
+     * @return エラーがない場合は空のリストを返す
+     */
+    public CsvFieldError getFirstFieldError(final String path) {
+<span class="fc" id="L219">        ArgUtils.notEmpty(path, &quot;path&quot;);</span>
+        
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">        for(CsvError item : this.errors) {</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">            if(item instanceof CsvFieldError &amp;&amp; isMatchingFieldError(path, (CsvFieldError) item)) {</span>
+<span class="nc" id="L223">                return (CsvFieldError) item;</span>
+            }
+<span class="nc" id="L225">        }</span>
+        
+<span class="fc" id="L227">        return null;</span>
+    }
+    
+    /**
+     * 指定したパスのフィィールドエラーが存在するか確かめる。
+     * @param path 最後に'*'を付けるとワイルドカードが指定可能。
+     * @return true:エラーがある場合。
+     */
+    public boolean hasFieldErrors(final String path) {
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        return !getFieldErrors(path).isEmpty();</span>
+    }
+    
+    /**
+     * 指定したパスのフィィールドエラーの件数を取得する。
+     * @param path 最後に'*'を付けるとワイルドカードが指定可能。
+     * @return
+     */
+    public int getFieldErrorCount(final String path) {
+<span class="nc" id="L245">        return getFieldErrors(path).size();</span>
+    }
+    
+    /**
+     * 指定したパスがフィールドエラーのパスと一致するかチェックするかどうか。
+     * @param path 
+     * @param fieldError
+     * @return true: 一致する場合。
+     */
+    private boolean isMatchingFieldError(final String path, final CsvFieldError fieldError) {
+        
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (fieldError.getField().equals(path)) {</span>
+<span class="fc" id="L257">            return true;</span>
+        }
+        
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">        if(path.endsWith(&quot;*&quot;)) {</span>
+<span class="nc" id="L261">            String subPath = path.substring(0, path.length()-1);</span>
+<span class="nc" id="L262">            return fieldError.getField().startsWith(subPath);</span>
+        }
+        
+<span class="fc" id="L265">        return false;</span>
+    }
+    
+    /**
+     * グローバルエラーを登録する。
+     * @param errorCode エラーコード
+     */
+    public void reject(final String errorCode) {
+<span class="nc" id="L273">        reject(errorCode, Collections.emptyMap(), null);</span>
+<span class="nc" id="L274">    }</span>
+    
+    /**
+     * グローバルエラーを登録する。
+     * @param errorCode エラーコード
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void reject(final String errorCode, final String defaultMessage) {
+<span class="nc" id="L282">        reject(errorCode, Collections.emptyMap(), defaultMessage);</span>
+<span class="nc" id="L283">    }</span>
+    
+    /**
+     * グローバルエラーを登録する。
+     * @param errorCode エラーコード
+     * @param messageVariables メッセージ中の変数。
+     */
+    public void reject(final String errorCode, final Map&lt;String, Object&gt; messageVariables) {
+<span class="nc" id="L291">        reject(errorCode, messageVariables, null);</span>
+<span class="nc" id="L292">    }</span>
+    
+    /**
+     * グローバルエラーを登録する。
+     * @param errorCode エラーコード
+     * @param messageVariables メッセージ中の変数。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void reject(final String errorCode, final Map&lt;String, Object&gt; messageVariables, final String defaultMessage) {
+<span class="fc" id="L301">        final String[] codes = messageCodeGenerator.generateCodes(errorCode, getObjectName());</span>
+<span class="fc" id="L302">        addError(new CsvError(getObjectName(), codes, messageVariables, defaultMessage));</span>
+<span class="fc" id="L303">    }</span>
+    
+    /**
+     * フィールドエラーを登録します。
+     * @param field フィールドパス。
+     * @param errorCode エラーコード。
+     */
+    public void rejectValue(final String field, final String errorCode) {
+<span class="nc" id="L311">        rejectValue(field, null, errorCode, Collections.emptyMap(), null);</span>
+        
+<span class="nc" id="L313">    }</span>
+    
+    /**
+     * フィールドエラーを登録します。
+     * @param field フィールドパス。
+     * @param errorCode エラーコード。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void rejectValue(final String field, final String errorCode, final String defaultMessage) {
+<span class="nc" id="L322">        rejectValue(field, null, errorCode, Collections.emptyMap(), defaultMessage);</span>
+        
+<span class="nc" id="L324">    }</span>
+    
+    /**
+     * フィールドエラーを登録します。
+     * @param field フィールドパス。
+     * @param errorCode エラーコード。
+     * @param messageVariables メッセージ中の変数。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void rejectValue(final String field, final String errorCode, 
+            final Map&lt;String, Object&gt; messageVariables, final String defaultMessage) {
+        
+<span class="nc" id="L336">        rejectValue(field, null, errorCode, Collections.emptyMap(), defaultMessage);</span>
+        
+<span class="nc" id="L338">    }</span>
+    
+    /**
+     * フィールドエラーを登録します。
+     * @param field フィールドパス。
+     * @param fieldType フィールドのタイプ
+     * @param errorCode エラーコード。
+     * @param messageVariables メッセージ中の変数。
+     */
+    public void rejectValue(final String field, final Class&lt;?&gt; fieldType, final String errorCode, 
+            final Map&lt;String, Object&gt; messageVariables) {
+        
+<span class="fc" id="L350">        rejectValue(field, fieldType, errorCode, messageVariables, null);</span>
+        
+<span class="fc" id="L352">    }</span>
+    
+    /**
+     * フィールドエラーを登録します。
+     * @param field フィールドパス。
+     * @param fieldType フィールドのタイプ
+     * @param errorCode エラーコード。
+     * @param messageVariables メッセージ中の変数。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void rejectValue(final String field, final Class&lt;?&gt; fieldType, final String errorCode, 
+            final Map&lt;String, Object&gt; messageVariables, final String defaultMessage) {
+        
+<span class="fc" id="L365">        final String[] codes = messageCodeGenerator.generateCodes(errorCode, getObjectName(), field, fieldType);</span>
+<span class="fc" id="L366">        addError(new CsvFieldError(getObjectName(), field, false, codes, messageVariables, defaultMessage));</span>
+        
+<span class="fc" id="L368">    }</span>
+    
+    public MessageCodeGenerator getMessageCodeGenerator() {
+<span class="nc" id="L371">        return messageCodeGenerator;</span>
+    }
+    
+    public void setMessageCodeGenerator(MessageCodeGenerator messageCodeGenerator) {
+<span class="nc" id="L375">        this.messageCodeGenerator = messageCodeGenerator;</span>
+<span class="nc" id="L376">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

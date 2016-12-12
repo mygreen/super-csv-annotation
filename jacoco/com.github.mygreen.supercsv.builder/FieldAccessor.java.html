@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FieldAccessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">FieldAccessor.java</span></div><h1>FieldAccessor.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.supercsv.exception.SuperCsvReflectionException;
+
+import com.github.mygreen.supercsv.annotation.DefaultGroup;
+import com.github.mygreen.supercsv.util.Utils;
+
+/**
+ * フィールドに統一的にアクセスするためのクラス。
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class FieldAccessor {
+    
+    /**
+     * フィールドの実体
+     */
+    private final Field field;
+    
+    /**
+     * フィールドの名称
+     */
+    private final String name;
+    
+    /**
+     * フィールドのタイプ
+     */
+    private final Class&lt;?&gt; type;
+    
+    /**
+     * アノテーションの一覧
+     */
+<span class="fc" id="L44">    private final List&lt;ExpandedAnnotation&gt; expandedAnnos = new ArrayList&lt;&gt;();</span>
+    
+    /**
+     * フィールド情報を指定するコンストラクタ。
+     * @param field フィールド情報
+     * @param comparator アノテーションの順序を比較するためのコンパレータ。
+     * @throws NullPointerException {@literal field or comparator == null.}
+     */
+<span class="fc" id="L52">    public FieldAccessor(final Field field, final Comparator&lt;Annotation&gt; comparator) {</span>
+<span class="fc" id="L53">        Objects.requireNonNull(field);</span>
+<span class="fc" id="L54">        Objects.requireNonNull(comparator);</span>
+        
+<span class="fc" id="L56">        field.setAccessible(true);</span>
+        
+<span class="fc" id="L58">        this.field = field;</span>
+<span class="fc" id="L59">        this.type = field.getType();</span>
+<span class="fc" id="L60">        this.name = field.getName();</span>
+        
+<span class="fc" id="L62">        final AnnotationExpander expander = new AnnotationExpander(comparator);</span>
+<span class="fc" id="L63">        this.expandedAnnos.addAll(expander.expand(field.getAnnotations()));</span>
+<span class="fc" id="L64">    }</span>
+    
+    /**
+     * アノテーションのタイプを指定してアノテーションを取得します。
+     * &lt;p&gt;繰り返しのアノテーションの場合、初めに見つかったものを返します。&lt;/p&gt;
+     * 
+     * @param &lt;A&gt; 取得対象のアノテーションのタイプ
+     * @param annoClass 取得対象のアノテーションのタイプ。
+     * @return 指定したアノテーションが見つからない場合は、空を返します。
+     * @throws NullPointerException {@literal annoClass is null.}
+     */
+    public &lt;A extends Annotation&gt; Optional&lt;A&gt; getAnnotation(final Class&lt;A&gt; annoClass) {
+<span class="fc" id="L76">        Objects.requireNonNull(annoClass, &quot;annoClass should not be null.&quot;);</span>
+        
+<span class="fc" id="L78">        return getAnnotationsByType(expandedAnnos, annoClass).stream()</span>
+<span class="fc" id="L79">                .findFirst();</span>
+        
+    }
+    
+    /**
+     * アノテーションのタイプを指定してアノテーション一覧を取得します。
+     * &lt;p&gt;繰り返しのアノテーションの場合、初めに見つかったものを返します。&lt;/p&gt;
+     * 
+     * @param &lt;A&gt; 取得対象のアノテーションのタイプ
+     * @param annoClass 取得対象のアノテーションのタイプ。
+     * @return 指定したアノテーションが見つからない場合は、空のリスト返します。
+     * @throws NullPointerException {@literal annoClass is null.}
+     */
+    public &lt;A extends Annotation&gt; List&lt;A&gt; getAnnotations(final Class&lt;A&gt; annoClass) {
+<span class="fc" id="L93">        Objects.requireNonNull(annoClass, &quot;annoClass should not be null.&quot;);</span>
+        
+<span class="fc" id="L95">        return getAnnotationsByType(expandedAnnos, annoClass);</span>
+    }
+    
+    @SuppressWarnings({&quot;unchecked&quot;})
+    private static &lt;A extends Annotation&gt; List&lt;A&gt; getAnnotationsByType(
+            final List&lt;ExpandedAnnotation&gt; expanedAnnos, final Class&lt;A&gt; annoClass) {
+        
+<span class="fc" id="L102">        final List&lt;A&gt; list = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        for(ExpandedAnnotation anno : expanedAnnos) {</span>
+            
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if(anno.isAnnotationType(annoClass)) {</span>
+<span class="fc" id="L107">                list.add((A)anno.getOriginal());</span>
+            
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            } else if(anno.isComposed()) {</span>
+                
+<span class="fc" id="L111">                list.addAll(getAnnotationsByType(anno.getChilds(), annoClass));</span>
+                
+            }
+            
+            
+<span class="fc" id="L116">        }</span>
+        
+<span class="fc" id="L118">        return list;</span>
+        
+    }
+    
+    /**
+     * 指定したアノテーションと持つかどうか。
+     * &lt;p&gt;繰り返し可能なアノテーションの場合、初めに見つかったものを返します。&lt;/p&gt;
+     * 
+     * @param &lt;A&gt; 取得対象のアノテーションのタイプ
+     * @param annoClass 取得対象のアノテーションのタイプ。
+     * @return {@literal true}の場合、アノテーションを持ちます。
+     * @throws NullPointerException {@literal annoClass is null.}
+     */
+    public &lt;A extends Annotation&gt; boolean hasAnnotation(final Class&lt;A&gt; annoClass) {
+<span class="fc" id="L132">        return getAnnotation(annoClass).isPresent();</span>
+    }
+    
+    /**
+     * アノテーションのタイプとグループを指定してアノテーションを取得します。
+     * 
+     * @param &lt;A&gt; 取得対象のアノテーションのタイプ
+     * @param annoClass 取得対象のアノテーションのタイプ。
+     * @param groups グループ（クラスタイプ）による絞り込み。属性groupsが存在する場合に、絞り込みます。
+     * @return 指定したアノテーションが見つからない場合は、サイズ0のリストを返します。
+     * @throws NullPointerException {@literal annoClass is null.}
+     */
+    public &lt;A extends Annotation&gt; List&lt;A&gt; getAnnotationsByGroup(final Class&lt;A&gt; annoClass, final Class&lt;?&gt;... groups) {
+<span class="fc" id="L145">        Objects.requireNonNull(annoClass, &quot;annoClass should not be null.&quot;);</span>
+        
+<span class="fc" id="L147">        return getAnnotations(annoClass).stream()</span>
+<span class="fc" id="L148">                .filter(anno -&gt; hasGroups(anno, groups))</span>
+<span class="fc" id="L149">                .collect(Collectors.toList());</span>
+        
+    }
+    
+    /**
+     * グループを指定して指定したアノテーションを持つかどうか判定します。
+     * 
+     * @param &lt;A&gt; 取得対象のアノテーションのタイプ
+     * @param annoClass 判定対象のアノテーションのグループ
+     * @param groups グループ（クラスタイプ）による絞り込み。属性groupsが存在する場合に、絞り込みます。
+     * @return 指定したアノテーションが見つからない場合は、サイズ0のリストを返します。
+     */
+    public &lt;A extends Annotation&gt; boolean hasAnnotationByGroup(final Class&lt;A&gt; annoClass, final Class&lt;?&gt;... groups) {
+        
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        return getAnnotationsByGroup(annoClass, groups).size() &gt; 0;</span>
+        
+    }
+    
+    
+    /**
+     * 付与されているアノテーションの一覧を取得する。
+     * 
+     * @param groups グループ（クラスタイプ）による絞り込み。属性groupsが存在する場合に、絞り込みます。
+     * @return 指定したアノテーションが見つからない場合は、サイズ0のリストを返します。
+     */
+    public List&lt;Annotation&gt; getAnnotationsByGroup(final Class&lt;?&gt;... groups) {
+        
+<span class="fc" id="L176">        return getAnnotations(expandedAnnos).stream()</span>
+<span class="fc" id="L177">                .filter(anno -&gt; hasGroups(anno, groups))</span>
+<span class="fc" id="L178">                .collect(Collectors.toList());</span>
+        
+    }
+    
+    @SuppressWarnings({&quot;unchecked&quot;})
+    private static &lt;A extends Annotation&gt; List&lt;A&gt; getAnnotations(final List&lt;ExpandedAnnotation&gt; expanedAnnos) {
+        
+<span class="fc" id="L185">        final List&lt;A&gt; list = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        for(ExpandedAnnotation anno : expanedAnnos) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            if(anno.isComposed()) {</span>
+<span class="fc" id="L189">                list.addAll(getAnnotations(anno.getChilds()));</span>
+                
+            } else {
+<span class="fc" id="L192">                list.add((A)anno.getOriginal());</span>
+                
+            }
+<span class="fc" id="L195">        }</span>
+        
+<span class="fc" id="L197">        return list;</span>
+        
+    }
+    
+    /**
+     * アノテーションの属性{@literal groups} が指定したグループと一致するか比較します。
+     * &lt;p&gt;groups属性を持たない場合は、必ずfalseを返します。&lt;/p&gt;
+     * @param anno 検証対象のアノテーション。
+     * @param groups 比較対象のグループ情報。
+     * @return {@literal true}の場合、指定したグループを持ちます。
+     */
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    private boolean hasGroups(final Annotation anno, final Class&lt;?&gt;... groups) {
+        
+<span class="fc" id="L211">        final Optional&lt;Class[]&gt; targetGroups = Utils.getAnnotationAttribute(anno, &quot;groups&quot;, Class[].class);</span>
+        
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if(!targetGroups.isPresent()) {</span>
+            // groups属性を持たない場合
+<span class="fc" id="L215">            return false;</span>
+            
+        }
+        
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if(groups.length == 0) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            if(targetGroups.get().length == 0) {</span>
+                // グループの指定がない場合は、デフォルトグループとして処理。
+<span class="fc" id="L222">                return true;</span>
+                
+            } else {
+<span class="fc bfc" id="L225" title="All 2 branches covered.">                for(Class&lt;?&gt; targetGroup : targetGroups.get()) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">                    if(targetGroup.equals(DefaultGroup.class)) {</span>
+                        // デフォルトを直接指定している場合に、グループと一致。
+<span class="fc" id="L228">                        return true;</span>
+                    }
+                }
+            }
+            
+        } else {
+            // グループの指定がある場合
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            for(Class&lt;?&gt; group : groups) {</span>
+                
+<span class="fc bfc" id="L237" title="All 4 branches covered.">                if(group.equals(DefaultGroup.class) &amp;&amp; targetGroups.get().length == 0) {</span>
+                    // フィールド側にグループの指定がない場合は、デフォルトグループとして処理する。
+<span class="fc" id="L239">                    return true;</span>
+                }
+                
+<span class="fc bfc" id="L242" title="All 2 branches covered.">                for(Class&lt;?&gt; targetGroup : targetGroups.get()) {</span>
+                    // 一致するグループを持つか判定する。
+<span class="fc bfc" id="L244" title="All 2 branches covered.">                    if(targetGroup.equals(group)) {</span>
+<span class="fc" id="L245">                        return true;</span>
+                    }
+                }
+                
+            }
+            
+        }
+        
+<span class="fc" id="L253">        return false;</span>
+        
+    }
+    
+    /**
+     * フィールドの名称を取得する。
+     * @return フィールド名
+     */
+    public String getName() {
+<span class="fc" id="L262">        return name;</span>
+    }
+    
+    /**
+     * クラス名付きのフィールド名称を取得する。
+     * @return {@literal &lt;クラス名#フィールド名&gt;}の形式
+     */
+    public String getNameWithClass() {
+<span class="fc" id="L270">        return getDeclaredClass().getName() + &quot;#&quot; + getName();</span>
+    }
+    
+    /**
+     * フィールドのタイプを取得する。
+     * @return フィールドのクラスタイプ。
+     */
+    public Class&lt;?&gt; getType() {
+<span class="fc" id="L278">        return type;</span>
+    }
+    
+    /**
+     * フィールドのタイプのクラス名称を取得する。
+     * @return パッケージ名付きのFQDNの形式。
+     */
+    public String getTypeName() {
+<span class="fc" id="L286">        return getType().getName();</span>
+    }
+    
+    /**
+     * フィールドが定義されているクラス情報を取得する。
+     * 
+     * @see Field#getDeclaringClass()
+     * @return フィールドが定義されているクラス上方。
+     */
+    public Class&lt;?&gt; getDeclaredClass() {
+<span class="fc" id="L296">        return field.getDeclaringClass();</span>
+    }
+    
+    /**
+     * フィールドのタイプが指定してたタイプかどうか。
+     * &lt;p&gt;{@link Class#isAssignableFrom(Class)}により比較を行う。
+     * @param clazz 比較対象のクラスタイプ。
+     * @return タイプが一致する場合、{@literal true}を返す。
+     */
+    public boolean isTypeOf(final Class&lt;?&gt; clazz) {
+<span class="fc" id="L306">        return clazz.isAssignableFrom(getType());</span>
+    }
+    
+    /**
+     * フィールドの値を取得する。
+     * @param record レコードオブジェクト。
+     * @return フィールドの値。
+     * @throws IllegalArgumentException レコードのインスタンスがフィールドが定義されているクラスと異なる場合。
+     * @throws SuperCsvReflectionException フィールドの値の取得に失敗した場合。
+     */
+    public Object getValue(final Object record) {
+<span class="fc" id="L317">        Objects.requireNonNull(record);</span>
+        
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        if(!getDeclaredClass().equals(record.getClass())) {</span>
+<span class="fc" id="L320">            throw new IllegalArgumentException(String.format(&quot;not match record class type. expected=%s. actual=%s, &quot;,</span>
+<span class="fc" id="L321">                    type.getName(), record.getClass().getName()));</span>
+        }
+        
+        try {
+<span class="fc" id="L325">            return field.get(record);</span>
+<span class="nc" id="L326">        } catch (IllegalArgumentException | IllegalAccessException e) {</span>
+<span class="nc" id="L327">            throw new SuperCsvReflectionException(&quot;fail get field value.&quot;, e);</span>
+        }
+        
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

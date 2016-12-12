@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateFormatWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">DateFormatWrapper.java</span></div><h1>DateFormatWrapper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * スレッドセーフな{@link DateFormat}。
+ *
+ * @since 1.2
+ * @author T.TSUCHIE
+ *
+ */
+public class DateFormatWrapper&lt;T extends Date&gt; extends AbstractTextFormatter&lt;T&gt; {
+    
+    private final DateFormat formatter;
+    
+    private final Class&lt;T&gt; type;
+    
+    /**
+     * フォーマッタを指定してインスタンスを作成するコンストラクタ。
+     * @param formatter 日時のフォーマッタ。
+     * @param type 対応する日時のクラス。
+     * @throws NullPointerException if formatter is null.
+     */
+<span class="fc" id="L33">    public DateFormatWrapper(final DateFormat formatter, final Class&lt;T&gt; type) {</span>
+<span class="fc" id="L34">        Objects.requireNonNull(formatter);</span>
+<span class="fc" id="L35">        Objects.requireNonNull(type);</span>
+        
+<span class="fc" id="L37">        this.formatter = (DateFormat) formatter.clone();</span>
+<span class="fc" id="L38">        this.type = type;</span>
+        
+<span class="fc" id="L40">    }</span>
+    
+    /**
+     * 日時のクラス型を指定してインスタンスを作成するコンストラクタ。
+     * &lt;p&gt;書式は、指定したクラスタイプによりにより、自動的に決まります。&lt;/p&gt;
+     * &lt;ul&gt;
+     *  &lt;li&gt;{@link Timestamp}型の場合、書式は「yyyy-MM-dd HH:mm:ss.SSS」となります。&lt;/li&gt;
+     *  &lt;li&gt;{@link Time}型の場合、書式は「HH:mm:ss」となります。&lt;/li&gt;
+     *  &lt;li&gt;{@link java.sql.Date}型の場合、書式は「yyyy-MM-dd」となります。&lt;/li&gt;
+     *  &lt;li&gt;{@link Date}型の場合、書式は「yyyy-MM-dd HH:mm:ss」となります。&lt;/li&gt;
+     * &lt;/ul&gt;
+     * 
+     * @param type 日時型のクラスタイプ。
+     * @throws NullPointerException if dateClass is null.
+     */
+<span class="fc" id="L55">    public DateFormatWrapper(final Class&lt;T&gt; type) {</span>
+<span class="fc" id="L56">        Objects.requireNonNull(type);</span>
+<span class="fc" id="L57">        this.type = type;</span>
+        
+        final String pattern;
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if(Timestamp.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L61">            pattern = &quot;yyyy-MM-dd HH:mm:ss.SSS&quot;;</span>
+            
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        } else if(Time.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L64">            pattern = &quot;HH:mm:ss&quot;;</span>
+            
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        } else if(java.sql.Date.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L67">            pattern = &quot;yyyy-MM-dd&quot;;</span>
+            
+        } else {
+<span class="fc" id="L70">            pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;;</span>
+        }
+        
+<span class="fc" id="L73">        this.formatter = new SimpleDateFormat(pattern);</span>
+<span class="fc" id="L74">    }</span>
+    
+    /**
+     * 日時オブジェクトを文字列にフォーマットします。
+     * @param date 日時オブジェクト。
+     * @return フォーマットした文字列。
+     */
+    @Override
+    public synchronized String print(final Date date) {
+<span class="fc" id="L83">        return formatter.format(date);</span>
+        
+    }
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public synchronized T parse(final String text) throws TextParseException {
+        
+        final Date date;
+        try {
+<span class="fc" id="L93">            date = formatter.parse(text);</span>
+<span class="fc" id="L94">        } catch (ParseException e) {</span>
+<span class="fc" id="L95">            throw new TextParseException(text, Date.class);</span>
+<span class="fc" id="L96">        }</span>
+        
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if(Timestamp.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L99">            return (T)new Timestamp(date.getTime());</span>
+            
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        } else if(Time.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L102">            return (T)new Time(date.getTime());</span>
+            
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        } else if(java.sql.Date.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L105">            return (T)new java.sql.Date(date.getTime());</span>
+            
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        } else if(Date.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L108">            return (T)date;</span>
+            
+        } else {
+<span class="nc" id="L111">            throw new TextParseException(text, type, &quot;Cannot support type.&quot;);</span>
+        }
+    }
+    
+    @Override
+    public Optional&lt;String&gt; getPattern() {
+        
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if(formatter instanceof SimpleDateFormat) {</span>
+<span class="fc" id="L119">            SimpleDateFormat sdf = (SimpleDateFormat) formatter;</span>
+<span class="fc" id="L120">            return Optional.of(sdf.toPattern());</span>
+        }
+        
+<span class="nc" id="L123">        return Optional.empty();</span>
+        
+    }
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+        
+<span class="fc" id="L130">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L131">        getPattern().ifPresent(p -&gt; vars.put(&quot;pattern&quot;, p));</span>
+<span class="fc" id="L132">        return vars;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

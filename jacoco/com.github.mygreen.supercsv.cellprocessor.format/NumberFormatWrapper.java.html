@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberFormatWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">NumberFormatWrapper.java</span></div><h1>NumberFormatWrapper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * 書式を指定した数値のフォーマッタ。
+ * 
+ * @since 1.2
+ * @author T.TSUCHIE
+ *
+ */
+public class NumberFormatWrapper&lt;T extends Number&gt; extends AbstractTextFormatter&lt;T&gt; {
+    
+    private final NumberFormat formatter;
+    
+    private final Class&lt;T&gt; type;
+    
+    private final boolean lenient;
+    
+    public NumberFormatWrapper(final NumberFormat formatter, final Class&lt;T&gt; type) {
+<span class="fc" id="L30">        this(formatter, type, false);</span>
+<span class="fc" id="L31">    }</span>
+    
+<span class="fc" id="L33">    public NumberFormatWrapper(final NumberFormat formatter, final Class&lt;T&gt; type, final boolean lenient) {</span>
+<span class="fc" id="L34">        Objects.requireNonNull(formatter);</span>
+<span class="fc" id="L35">        Objects.requireNonNull(type);</span>
+        
+<span class="fc" id="L37">        this.formatter = (NumberFormat) formatter.clone();</span>
+<span class="fc" id="L38">        this.type = type;</span>
+<span class="fc" id="L39">        this.lenient = lenient;</span>
+        
+<span class="fc" id="L41">    }</span>
+    
+    @Override
+    public synchronized String print(final Number number) {
+<span class="fc" id="L45">        return formatter.format(number);</span>
+    }
+    
+    @Override
+    public T parse(final String text) {
+<span class="fc" id="L50">        return parse(type, text);</span>
+    }
+    
+    /**
+     * 指定した数値のクラスに文字列をパースする。
+     * &lt;p&gt;Java標準のクラスタイプをサポートします。&lt;/p&gt;
+     * 
+     * @param type 変換する数値のクラス。
+     * @param text パース対象の文字列。
+     * @return パースした数値のオブジェクト。
+     * @throws IllegalArgumentException サポートしていないクラスタイプが指定された場合。
+     * @throws TextParseException fail convert Number or BigDecimal.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    synchronized &lt;N extends Number&gt; N parse(final Class&lt;N&gt; type, final String text) {
+        
+        final Number result;
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(lenient) {</span>
+            try {
+<span class="fc" id="L69">                result = formatter.parse(text);</span>
+<span class="fc" id="L70">            } catch(ParseException e) {</span>
+<span class="fc" id="L71">                throw new TextParseException(text, type, e);</span>
+<span class="fc" id="L72">            }</span>
+        } else {
+<span class="fc" id="L74">            ParsePosition position = new ParsePosition(0);</span>
+<span class="fc" id="L75">            result = formatter.parse(text, position);</span>
+            
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if(position.getIndex() != text.length()) {</span>
+<span class="fc" id="L78">                throw new TextParseException(text, type, String.format(&quot;Cannot parse '%s' using fromat %s&quot;, text, getPattern()));</span>
+            }
+        }
+        
+        try {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if(result instanceof BigDecimal) {</span>
+                // if set DecimalFormat#setParseBigDecimal(true)
+<span class="fc" id="L85">                return (N) convertWithBigDecimal(type, (BigDecimal) result, text);</span>
+                
+            } else {
+<span class="fc" id="L88">                return (N) convertWithNumber(type, result, text);</span>
+            }
+<span class="fc" id="L90">        } catch(NumberFormatException | ArithmeticException e) {</span>
+<span class="fc" id="L91">            throw new TextParseException(text, type, e);</span>
+        }
+        
+    }
+    
+    private Number convertWithNumber(final Class&lt;? extends Number&gt; type, final Number number, final String str) {
+        
+<span class="fc bfc" id="L98" title="All 4 branches covered.">        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L99">            return number.byteValue();</span>
+            
+<span class="fc bfc" id="L101" title="All 4 branches covered.">        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L102">            return number.shortValue() ;</span>
+            
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L105">            return number.intValue();</span>
+            
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L108">            return number.longValue();</span>
+            
+<span class="fc bfc" id="L110" title="All 4 branches covered.">        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L111">            return number.floatValue();</span>
+            
+<span class="fc bfc" id="L113" title="All 4 branches covered.">        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L114">            return number.doubleValue();</span>
+            
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        } else if(type.isAssignableFrom(BigInteger.class)) {</span>
+<span class="fc" id="L117">            return new BigInteger(str);</span>
+            
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        } else if(type.isAssignableFrom(BigDecimal.class)) {</span>
+<span class="fc" id="L120">            return new BigDecimal(str);</span>
+            
+        }
+        
+<span class="fc" id="L124">        throw new IllegalArgumentException(String.format(&quot;not support class type : %s&quot;, type.getCanonicalName()));</span>
+    }
+    
+    private Number convertWithBigDecimal(final Class&lt;? extends Number&gt; type, final BigDecimal number, final String str) {
+        
+<span class="fc bfc" id="L129" title="All 4 branches covered.">        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            return lenient ? number.byteValue() : number.byteValueExact();</span>
+            
+<span class="fc bfc" id="L132" title="All 4 branches covered.">        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            return lenient ? number.shortValue() : number.shortValueExact();</span>
+            
+<span class="fc bfc" id="L135" title="All 4 branches covered.">        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            return lenient ? number.intValue() : number.intValueExact();</span>
+            
+<span class="fc bfc" id="L138" title="All 4 branches covered.">        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            return lenient ? number.longValue() : number.longValueExact();</span>
+            
+<span class="fc bfc" id="L141" title="All 4 branches covered.">        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L142">            return number.floatValue();</span>
+            
+<span class="fc bfc" id="L144" title="All 4 branches covered.">        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L145">            return number.doubleValue();</span>
+            
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        } else if(type.isAssignableFrom(BigInteger.class)) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            return lenient ? number.toBigInteger() : number.toBigIntegerExact();</span>
+            
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        } else if(type.isAssignableFrom(BigDecimal.class)) {</span>
+<span class="fc" id="L151">            return number;</span>
+            
+        }
+        
+<span class="fc" id="L155">        throw new IllegalArgumentException(String.format(&quot;not support class type : %s&quot;, type.getCanonicalName()));</span>
+        
+    }
+    
+    @Override
+    public Optional&lt;String&gt; getPattern() {
+        
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if(formatter instanceof DecimalFormat) {</span>
+<span class="fc" id="L163">            DecimalFormat df = (DecimalFormat) formatter;</span>
+<span class="fc" id="L164">            return Optional.of(df.toPattern());</span>
+        }
+        
+<span class="nc" id="L167">        return Optional.empty();</span>
+        
+    }
+    
+    /**
+     * パースする際に、数値に変換可能な部分のみ変換するかどうか。
+     * &lt;p&gt;例えば、trueのときは、{@literal 123abc} をパースする際に{@literal 123}を数値としてパースします。
+     *   &lt;br&gt;falseの場合は、例外{@link TextParseException}をスローします。
+     * &lt;/p&gt;
+     * @return trueの場合、曖昧にパースします。
+     */
+    public boolean isLenient() {
+<span class="fc" id="L179">        return lenient;</span>
+    }
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+        
+<span class="fc" id="L185">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L186">        getPattern().ifPresent(p -&gt; vars.put(&quot;pattern&quot;, p));</span>
+        
+<span class="fc" id="L188">        return vars;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

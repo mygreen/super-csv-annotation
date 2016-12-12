@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnumFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">EnumFormatter.java</span></div><h1>EnumFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+import com.github.mygreen.supercsv.util.ArgUtils;
+
+/**
+ * 列挙型をフォーマットするクラス。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class EnumFormatter&lt;T extends Enum&lt;T&gt;&gt; extends AbstractTextFormatter&lt;T&gt; {
+    
+    private final Class&lt;? extends Enum&lt;?&gt;&gt; type;
+    
+    private final boolean ignoreCase;
+    
+    private final Optional&lt;Method&gt; selectorMethod;
+    
+    /**
+     * キーが列挙型、値が文字列のマップ。
+     */
+    private final Map&lt;Enum&lt;?&gt;, String&gt; toStringMap;
+    
+    /**
+     * キーが文字列、値が列挙型のマップ
+     */
+    private final Map&lt;String, Enum&lt;?&gt;&gt; toObjectMap;
+    
+<span class="fc" id="L39">    public EnumFormatter(final Class&lt;T&gt; type, final boolean ignoreCase) {</span>
+<span class="fc" id="L40">        Objects.requireNonNull(type, &quot;type should not be null.&quot;);</span>
+        
+<span class="fc" id="L42">        this.type = type;</span>
+<span class="fc" id="L43">        this.ignoreCase = ignoreCase;</span>
+<span class="fc" id="L44">        this.selectorMethod = Optional.empty();</span>
+        
+<span class="fc" id="L46">        this.toStringMap = createToStringMap(type);</span>
+<span class="fc" id="L47">        this.toObjectMap = createToObjectMap(type, ignoreCase);</span>
+<span class="fc" id="L48">    }</span>
+    
+<span class="fc" id="L50">    public EnumFormatter(final Class&lt;T&gt; type, final boolean ignoreCase, final String selector) {</span>
+<span class="fc" id="L51">        Objects.requireNonNull(type, &quot;type should not be null.&quot;);</span>
+<span class="fc" id="L52">        ArgUtils.notEmpty(selector, &quot;selector&quot;);</span>
+        
+<span class="fc" id="L54">        this.type = type;</span>
+<span class="fc" id="L55">        this.ignoreCase = ignoreCase;</span>
+<span class="fc" id="L56">        this.selectorMethod = Optional.of(getEnumValueMethod(type, selector));</span>
+        
+<span class="fc" id="L58">        this.toStringMap = createToStringMap(type, selector);</span>
+<span class="fc" id="L59">        this.toObjectMap = createToObjectMap(type, ignoreCase, selector);</span>
+        
+<span class="fc" id="L61">    }</span>
+    
+    public EnumFormatter(final Class&lt;T&gt; type) {
+<span class="fc" id="L64">        this(type, false);</span>
+<span class="fc" id="L65">    }</span>
+    
+    public EnumFormatter(final Class&lt;T&gt; type, final String selector) {
+<span class="fc" id="L68">        this(type, false, selector);</span>
+<span class="fc" id="L69">    }</span>
+    
+    private static &lt;T extends Enum&lt;T&gt;&gt; Method getEnumValueMethod(final Class&lt;T&gt; enumClass, final String selector) {
+        
+        try {
+<span class="fc" id="L74">            final Method method = enumClass.getMethod(selector);</span>
+<span class="fc" id="L75">            method.setAccessible(true);</span>
+<span class="fc" id="L76">            return method;</span>
+            
+<span class="fc" id="L78">        } catch (ReflectiveOperationException e) {</span>
+<span class="fc" id="L79">            throw new IllegalArgumentException(String.format(&quot;not found method '%s'&quot;, selector), e);</span>
+        }
+        
+    }
+    
+    private static &lt;T extends Enum&lt;T&gt;&gt; Map&lt;Enum&lt;?&gt;, String&gt; createToStringMap(final Class&lt;T&gt; enumClass) {
+        
+<span class="fc" id="L86">        final EnumSet&lt;T&gt; set = EnumSet.allOf(enumClass);</span>
+        
+<span class="fc" id="L88">        final Map&lt;Enum&lt;?&gt;, String&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        for(T e : set) {</span>
+<span class="fc" id="L90">            map.put(e, e.name());</span>
+            
+<span class="fc" id="L92">        }</span>
+        
+<span class="fc" id="L94">        return Collections.unmodifiableMap(map);</span>
+    }
+    
+    private static &lt;T extends Enum&lt;T&gt;&gt; Map&lt;Enum&lt;?&gt;, String&gt; createToStringMap(final Class&lt;T&gt; enumClass, final String selector) {
+        
+<span class="fc" id="L99">        final Method method = getEnumValueMethod(enumClass, selector);</span>
+        
+<span class="fc" id="L101">        final Map&lt;Enum&lt;?&gt;, String&gt; map = new LinkedHashMap&lt;&gt;();</span>
+        try {
+<span class="fc" id="L103">            final EnumSet&lt;T&gt; set = EnumSet.allOf(enumClass);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            for(T e : set) {</span>
+<span class="fc" id="L105">                Object returnValue = method.invoke(e);</span>
+<span class="fc" id="L106">                map.put(e, returnValue.toString());</span>
+                
+<span class="fc" id="L108">            }</span>
+            
+<span class="nc" id="L110">        } catch(ReflectiveOperationException e) {</span>
+<span class="nc" id="L111">            throw new RuntimeException(&quot;fail get enum value.&quot;, e);</span>
+<span class="fc" id="L112">        }</span>
+        
+<span class="fc" id="L114">        return Collections.unmodifiableMap(map);</span>
+    }
+    
+    private static &lt;T extends Enum&lt;T&gt;&gt; Map&lt;String, Enum&lt;?&gt;&gt; createToObjectMap(final Class&lt;T&gt; enumClass, final boolean ignoreCase) {
+        
+<span class="fc" id="L119">        final EnumSet&lt;T&gt; set = EnumSet.allOf(enumClass);</span>
+        
+<span class="fc" id="L121">        final Map&lt;String, Enum&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for(T e : set) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            final String key = (ignoreCase ? e.name().toLowerCase() : e.name());</span>
+<span class="fc" id="L124">            map.put(key, e);</span>
+            
+<span class="fc" id="L126">        }</span>
+        
+<span class="fc" id="L128">        return Collections.unmodifiableMap(map);</span>
+    }
+    
+    private static &lt;T extends Enum&lt;T&gt;&gt; Map&lt;String, Enum&lt;?&gt;&gt; createToObjectMap(final Class&lt;T&gt; enumClass, final boolean ignoreCase,
+            final String selector) {
+        
+<span class="fc" id="L134">        final Method method = getEnumValueMethod(enumClass, selector);</span>
+        
+<span class="fc" id="L136">        final Map&lt;String, Enum&lt;?&gt;&gt; map = new LinkedHashMap&lt;&gt;();</span>
+        try {
+            
+<span class="fc" id="L139">            EnumSet&lt;T&gt; set = EnumSet.allOf(enumClass);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">            for(T e : set) {</span>
+<span class="fc" id="L141">                Object returnValue = method.invoke(e);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                final String key = (ignoreCase ? returnValue.toString().toLowerCase() : returnValue.toString());</span>
+                
+<span class="fc" id="L144">                map.put(key, e);</span>
+<span class="fc" id="L145">            }</span>
+            
+<span class="nc" id="L147">        } catch(ReflectiveOperationException e) {</span>
+<span class="nc" id="L148">            throw new RuntimeException(e);</span>
+<span class="fc" id="L149">        }</span>
+        
+<span class="fc" id="L151">        return Collections.unmodifiableMap(map);</span>
+    }
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public T parse(final String text) {
+        
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        final String keyText = ignoreCase ? text.toLowerCase() : text;</span>
+<span class="fc" id="L159">        final Optional&lt;T&gt; obj = Optional.ofNullable((T)toObjectMap.get(keyText));</span>
+        
+<span class="fc" id="L161">        return obj.orElseThrow(() -&gt; new TextParseException(text, type));</span>
+        
+    }
+    
+    @Override
+    public String print(final T object) {
+        
+<span class="fc" id="L168">        final Optional&lt;String&gt; text = Optional.ofNullable(toStringMap.get(object));</span>
+<span class="pc" id="L169">        return text.orElseGet(() -&gt; object.toString());</span>
+    }
+    
+    public Class&lt;? extends Enum&lt;?&gt;&gt; getType() {
+<span class="fc" id="L173">        return type;</span>
+    }
+    
+    public boolean isIgnoreCase() {
+<span class="fc" id="L177">        return ignoreCase;</span>
+    }
+    
+    public Optional&lt;Method&gt; getSelectorMethod() {
+<span class="fc" id="L181">        return selectorMethod;</span>
+    }
+    
+    public Map&lt;Enum&lt;?&gt;, String&gt; getToStringMap() {
+<span class="fc" id="L185">        return toStringMap;</span>
+    }
+    
+    public Map&lt;String, Enum&lt;?&gt;&gt; getToObjectMap() {
+<span class="nc" id="L189">        return toObjectMap;</span>
+    }
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+        
+<span class="fc" id="L195">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+        
+<span class="fc" id="L197">        vars.put(&quot;type&quot;, getType().getName());</span>
+<span class="fc" id="L198">        vars.put(&quot;ignoreCase&quot;, isIgnoreCase());</span>
+        
+<span class="fc" id="L200">        getSelectorMethod().ifPresent(method -&gt; vars.put(&quot;selector&quot;, method.getName()));</span>
+<span class="fc" id="L201">        vars.put(&quot;enums&quot;, getToStringMap().values());</span>
+        
+<span class="fc" id="L203">        return vars;</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

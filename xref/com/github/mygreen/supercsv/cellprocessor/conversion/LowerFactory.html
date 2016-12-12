@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>LowerFactory xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/LowerFactory.html">View Javadoc</a></div><pre>
+
+<a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.supercsv.cellprocessor.conversion;
+<a class="jxr_linenumber" name="2" href="#2">2</a>   
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> java.util.Optional;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> org.supercsv.cellprocessor.ift.CellProcessor;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> org.supercsv.cellprocessor.ift.StringCellProcessor;
+<a class="jxr_linenumber" name="7" href="#7">7</a>   
+<a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.conversion.CsvLower;
+<a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.Configuration;
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.FieldAccessor;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
+<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+<a class="jxr_linenumber" name="13" href="#13">13</a>  
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * アノテーション{@link CsvLower}をハンドリングして、{@link Lower}を作成する。</em>
+<a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * @since 2.0</em>
+<a class="jxr_linenumber" name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
+<a class="jxr_linenumber" name="19" href="#19">19</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="20" href="#20">20</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../com/github/mygreen/supercsv/cellprocessor/conversion/LowerFactory.html">LowerFactory</a> <strong class="jxr_keyword">implements</strong> ConversionProcessorFactory&lt;CsvLower&gt; {
+<a class="jxr_linenumber" name="22" href="#22">22</a>      
+<a class="jxr_linenumber" name="23" href="#23">23</a>      @Override
+<a class="jxr_linenumber" name="24" href="#24">24</a>      <strong class="jxr_keyword">public</strong> Optional&lt;CellProcessor&gt; create(<strong class="jxr_keyword">final</strong> <a href="../../../../../../com/github/mygreen/supercsv/annotation/conversion/CsvLower.html">CsvLower</a> anno, <strong class="jxr_keyword">final</strong> Optional&lt;CellProcessor&gt; next,
+<a class="jxr_linenumber" name="25" href="#25">25</a>              <strong class="jxr_keyword">final</strong> <a href="../../../../../../com/github/mygreen/supercsv/builder/FieldAccessor.html">FieldAccessor</a> field, <strong class="jxr_keyword">final</strong> TextFormatter&lt;?&gt; formatter, <strong class="jxr_keyword">final</strong> <a href="../../../../../../com/github/mygreen/supercsv/builder/Configuration.html">Configuration</a> config) {
+<a class="jxr_linenumber" name="26" href="#26">26</a>          
+<a class="jxr_linenumber" name="27" href="#27">27</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../../com/github/mygreen/supercsv/cellprocessor/conversion/Lower.html">Lower</a> processor = next.map(n -&gt;  <strong class="jxr_keyword">new</strong> Lower((StringCellProcessor) n))
+<a class="jxr_linenumber" name="28" href="#28">28</a>                  .orElseGet(() -&gt; <strong class="jxr_keyword">new</strong> Lower());
+<a class="jxr_linenumber" name="29" href="#29">29</a>          
+<a class="jxr_linenumber" name="30" href="#30">30</a>          <strong class="jxr_keyword">return</strong> Optional.of(processor);
+<a class="jxr_linenumber" name="31" href="#31">31</a>      }
+<a class="jxr_linenumber" name="32" href="#32">32</a>      
+<a class="jxr_linenumber" name="33" href="#33">33</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractJodaProcessorBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder.joda</a> &gt; <span class="el_source">AbstractJodaProcessorBuilder.java</span></div><h1>AbstractJodaProcessorBuilder.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder.joda;
+
+import java.util.Locale;
+import java.util.Optional;
+import java.util.TimeZone;
+
+import org.joda.time.Chronology;
+import org.joda.time.DateTimeZone;
+import org.joda.time.ReadablePartial;
+import org.joda.time.chrono.ISOChronology;
+import org.joda.time.chrono.LenientChronology;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import com.github.mygreen.supercsv.annotation.constraint.CsvDateTimeRange;
+import com.github.mygreen.supercsv.annotation.constraint.CsvDateTimeMin;
+import com.github.mygreen.supercsv.annotation.constraint.CsvDateTimeMax;
+import com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat;
+import com.github.mygreen.supercsv.builder.AbstractProcessorBuilder;
+import com.github.mygreen.supercsv.builder.Configuration;
+import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.cellprocessor.constraint.DateTimeRangeFactory;
+import com.github.mygreen.supercsv.cellprocessor.constraint.DateTimeMinFactory;
+import com.github.mygreen.supercsv.cellprocessor.constraint.DateTimeMaxFactory;
+import com.github.mygreen.supercsv.cellprocessor.format.JodaFormatWrapper;
+import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+import com.github.mygreen.supercsv.util.Utils;
+
+
+/**
+ * Joda-Time の{@link ReadablePartial}のテンプレートクラス。
+ * &lt;p&gt;基本的に、{@link ReadablePartial}のサブクラスのビルダは、このクラスを継承して作成する。&lt;/p&gt;
+ *
+ * @version 2.0
+ * @since 1.2
+ * @author T.TSUCHIE
+ *
+ */
+public abstract class AbstractJodaProcessorBuilder&lt;T&gt; extends AbstractProcessorBuilder&lt;T&gt; {
+    
+    public AbstractJodaProcessorBuilder() {
+<span class="fc" id="L42">        super();</span>
+        
+<span class="fc" id="L44">    }</span>
+    
+    @Override
+    protected void init() {
+<span class="fc" id="L48">        super.init();</span>
+        
+        // 制約のアノテーションの追加
+<span class="fc" id="L51">        registerForConstraint(CsvDateTimeRange.class, new DateTimeRangeFactory&lt;&gt;());</span>
+<span class="fc" id="L52">        registerForConstraint(CsvDateTimeMin.class, new DateTimeMinFactory&lt;&gt;());</span>
+<span class="fc" id="L53">        registerForConstraint(CsvDateTimeMax.class, new DateTimeMaxFactory&lt;&gt;());</span>
+        
+<span class="fc" id="L55">    }</span>
+    
+    /**
+     * 変換規則から、{@link DateTimeFormatter}のインスタンスを作成する。
+     * &lt;p&gt;アノテーション{@link CsvDateTimeFormat}が付与されていない場合は、各種タイプごとの標準の書式で作成する。&lt;/p&gt;
+     * @param field フィールド情報
+     * @param config システム設定
+     * @return {@link DateTimeFormatter}のインスタンス。
+     */
+    protected DateTimeFormatter createFormatter(final FieldAccessor field, final Configuration config) {
+        
+<span class="fc" id="L66">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(!formatAnno.isPresent()) {</span>
+<span class="fc" id="L68">            return DateTimeFormat.forPattern(getDefaultPattern());</span>
+        }
+        
+<span class="fc" id="L71">        String pattern = formatAnno.get().pattern();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if(pattern.isEmpty()) {</span>
+<span class="fc" id="L73">            pattern = getDefaultPattern();</span>
+        }
+        
+<span class="fc" id="L76">        final Locale locale = Utils.getLocale(formatAnno.get().locale());</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        final DateTimeZone zone = formatAnno.get().timezone().isEmpty() ? DateTimeZone.getDefault()</span>
+<span class="fc" id="L78">                : DateTimeZone.forTimeZone(TimeZone.getTimeZone(formatAnno.get().timezone()));</span>
+        
+<span class="fc" id="L80">        final DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern)</span>
+<span class="fc" id="L81">                .withLocale(locale)</span>
+<span class="fc" id="L82">                .withZone(zone);</span>
+        
+<span class="fc" id="L84">        final boolean lenient = formatAnno.get().lenient();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(lenient) {</span>
+<span class="fc" id="L86">            Chronology chronology = LenientChronology.getInstance(ISOChronology.getInstance());</span>
+<span class="fc" id="L87">            return formatter.withChronology(chronology);</span>
+            
+        } else {
+<span class="fc" id="L90">            return formatter;</span>
+        }
+        
+    }
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    protected TextFormatter&lt;T&gt; getDefaultFormatter(final FieldAccessor field, final Configuration config) {
+        
+<span class="fc" id="L99">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
+<span class="fc" id="L100">        final String pattern = getPattern(field);</span>
+<span class="fc" id="L101">        final DateTimeFormatter formatter = createFormatter(field, config);</span>
+        
+<span class="fc" id="L103">        final JodaFormatWrapper&lt;T&gt; wrapper = new JodaFormatWrapper&lt;&gt;(formatter, (Class&lt;T&gt;)field.getType());</span>
+<span class="fc" id="L104">        wrapper.setPattern(pattern);</span>
+<span class="fc" id="L105">        formatAnno.ifPresent(a -&gt; wrapper.setValidationMessage(a.message()));</span>
+<span class="fc" id="L106">        return wrapper;</span>
+    }
+    
+    /**
+     * アノテーション{@link CsvDateTimeFormat}が付与されている場合は、パターンを取得する。
+     * &lt;p&gt;ただし、アノテーションが付与されていない場合は、{@link #getDefaultPattern()}の値を返す。&lt;/p&gt;
+     * &lt;p&gt;{@link DateTimeFormatter}のインスタンスからは、元となったパターンは直接取得できないため、
+     *    別途取得して利用するために使用する。&lt;/p&gt;
+     * @param field フィールド情報。
+     * @return 日時の書式パターン。
+     */
+    protected String getPattern(final FieldAccessor field) {
+<span class="fc" id="L118">        return field.getAnnotation(CsvDateTimeFormat.class)</span>
+<span class="fc" id="L119">                .map(a -&gt; a.pattern())</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                .filter(p -&gt; !p.isEmpty())</span>
+<span class="fc" id="L121">                .orElse(getDefaultPattern());</span>
+    }
+    
+    /**
+     * 変換規則用のアノテーションが定義されていないときの標準の書式を取得する。
+     * 
+     * @return {@link DateTimeFormatter}で解析可能な日時の書式。
+     */
+    protected abstract String getDefaultPattern();
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

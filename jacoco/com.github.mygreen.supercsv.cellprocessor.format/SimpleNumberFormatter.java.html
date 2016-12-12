@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleNumberFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">SimpleNumberFormatter.java</span></div><h1>SimpleNumberFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * 書式がない数値のフォーマッタ。
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class SimpleNumberFormatter&lt;T extends Number&gt; extends AbstractTextFormatter&lt;T&gt; {
+    
+    private final Class&lt;T&gt; type;
+    
+    private final boolean lenient;
+    
+    private final MathContext mathContext;
+    
+    /**
+     * デフォルトコンストラクタ
+     * @param type 数値のクラスタイプ
+     * @param lenient 曖昧にパースするかどうか。
+     * @throws NullPointerException {@literal type is null.}
+     * 
+     */
+    public SimpleNumberFormatter(final Class&lt;T&gt; type, final boolean lenient) {
+<span class="fc" id="L33">        this(type, lenient, null);</span>
+        
+<span class="fc" id="L35">    }</span>
+    
+    /**
+     * デフォルトコンストラクタ
+     * @param type 数値のクラスタイプ
+     * @param lenient 曖昧にパースするかどうか。
+     * @param mathContext 丸めの方法を指定します。nullを渡すと省略できます。
+     * @throws NullPointerException {@literal type is null.}
+     * 
+     */
+<span class="fc" id="L45">    public SimpleNumberFormatter(final Class&lt;T&gt; type, final boolean lenient, final MathContext mathContext) {</span>
+<span class="fc" id="L46">        Objects.requireNonNull(type);</span>
+        
+<span class="fc" id="L48">        this.type = type;</span>
+<span class="fc" id="L49">        this.lenient = lenient;</span>
+<span class="fc" id="L50">        this.mathContext = mathContext;</span>
+        
+<span class="fc" id="L52">    }</span>
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public T parse(final String text) {
+        
+        try {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            final BigDecimal number = mathContext == null ? new BigDecimal(text) : new BigDecimal(text, mathContext);</span>
+<span class="fc" id="L60">            return (T) parseFromBigDecimal(type, number);</span>
+            
+<span class="fc" id="L62">        } catch(NumberFormatException | ArithmeticException e) {</span>
+<span class="fc" id="L63">            throw new TextParseException(text, type, e);</span>
+        }
+    }
+    
+    private Number parseFromBigDecimal(final Class&lt;? extends Number&gt; type, final BigDecimal number) {
+        
+<span class="fc bfc" id="L69" title="All 4 branches covered.">        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">            return lenient ? number.byteValue() : number.byteValueExact();</span>
+            
+<span class="fc bfc" id="L72" title="All 4 branches covered.">        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            return lenient ? number.shortValue() : number.shortValueExact();</span>
+            
+<span class="fc bfc" id="L75" title="All 4 branches covered.">        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            return lenient ? number.intValue() : number.intValueExact();</span>
+            
+<span class="pc bpc" id="L78" title="2 of 4 branches missed.">        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            return lenient ? number.longValue() : number.longValueExact();</span>
+            
+<span class="fc bfc" id="L81" title="All 4 branches covered.">        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L82">            return number.floatValue();</span>
+            
+<span class="fc bfc" id="L84" title="All 4 branches covered.">        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L85">            return number.doubleValue();</span>
+            
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        } else if(type.isAssignableFrom(BigInteger.class)) {</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            return lenient ? number.toBigInteger() : number.toBigIntegerExact();</span>
+            
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        } else if(type.isAssignableFrom(BigDecimal.class)) {</span>
+<span class="fc" id="L91">            return number;</span>
+            
+        }
+        
+<span class="nc" id="L95">        throw new IllegalArgumentException(String.format(&quot;Not support class type : %s&quot;, type.getCanonicalName()));</span>
+        
+    }
+    
+    @Override
+    public String print(final T object) {
+        
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if(mathContext != null) {</span>
+<span class="fc" id="L103">            return printNumber(object);</span>
+        }
+        
+<span class="fc" id="L106">        return object.toString();</span>
+    }
+    
+    private String printNumber(final Object object) {
+        
+<span class="pc bpc" id="L111" title="2 of 4 branches missed.">        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L112">            return new BigDecimal((byte)object, mathContext).toPlainString();</span>
+            
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L115">            return new BigDecimal((short)object, mathContext).toPlainString();</span>
+            
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L118">            return new BigDecimal((int)object, mathContext).toPlainString();</span>
+            
+<span class="nc bnc" id="L120" title="All 4 branches missed.">        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L121">            return new BigDecimal((long)object, mathContext).toPlainString();</span>
+            
+<span class="nc bnc" id="L123" title="All 4 branches missed.">        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L124">            return new BigDecimal((float)object, mathContext).toPlainString();</span>
+            
+<span class="nc bnc" id="L126" title="All 4 branches missed.">        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L127">            return new BigDecimal((double)object, mathContext).toPlainString();</span>
+            
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        } else if(BigInteger.class.isAssignableFrom(type)) {</span>
+<span class="nc" id="L130">            return new BigDecimal((BigInteger)object, mathContext).toPlainString();</span>
+            
+        } else {
+<span class="nc" id="L133">            return object.toString();</span>
+        }
+    }
+    
+    /**
+     * パースする際に、数値に変換可能な部分のみ変換するかどうか。
+     * &lt;p&gt;例えば、trueのときは、{@literal 123abc} をパースする際に{@literal 123}を数値としてパースします。
+     *   &lt;br&gt;falseの場合は、例外{@link TextParseException}をスローします。
+     * &lt;/p&gt;
+     * @return trueの場合、曖昧にパースします。
+     */
+    public boolean isLenient() {
+<span class="nc" id="L145">        return lenient;</span>
+    }
+    
+    /**
+     * パースする際の数値の丸め方法の指定情報を取得します。
+     * @return 数値の丸め方法
+     */
+    public MathContext getMathContext() {
+<span class="nc" id="L153">        return mathContext;</span>
+    }
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+        
+<span class="fc" id="L159">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if(mathContext != null) {</span>
+<span class="fc" id="L162">            vars.put(&quot;precision&quot;, mathContext.getPrecision());</span>
+        }
+        
+<span class="fc" id="L165">        return vars;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

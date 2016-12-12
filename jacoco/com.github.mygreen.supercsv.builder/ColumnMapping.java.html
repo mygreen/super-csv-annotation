@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnMapping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">ColumnMapping.java</span></div><h1>ColumnMapping.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+
+import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+
+/**
+ * 解析したカラムのマッピング情報です。
+ *
+ * @version 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L14">public class ColumnMapping implements Comparable&lt;ColumnMapping&gt; {</span>
+    
+    private FieldAccessor field;
+    
+    private String label;
+    
+    private int number;
+    
+    /**
+     * 部分的なカラムかどうか。
+     */
+    private boolean partialized;
+    
+    private CellProcessor cellProcessorForReading;
+    
+    private CellProcessor cellProcessorForWriting;
+    
+    private TextFormatter&lt;?&gt; formatter;
+    
+    /**
+     * {@link #number}の昇順。
+     * &lt;p&gt;{@link #number}が同じ場合は、フィールド名の昇順。&lt;/p&gt;
+     */
+    @Override
+    public int compareTo(final ColumnMapping o) {
+        
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if(this.number == o.number) {</span>
+<span class="fc" id="L41">            return this.field.getName().compareTo(o.field.getName());</span>
+            
+        } else {
+<span class="fc" id="L44">            return Integer.compare(number, o.number);</span>
+        }
+        
+    }
+    
+    /**
+     * カラムの名称を取得する。
+     * @return Beanに定義されているフィールドの名称を取得します。
+     *         部分的なカラムの場合はnullを返します。
+     */
+    public String getName() {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        return field != null ? field.getName() : null;</span>
+    }
+    
+    /**
+     * 
+     * @return 部分的なカラムの場合はnullを返します。
+     */
+    public FieldAccessor getField() {
+<span class="fc" id="L63">        return field;</span>
+    }
+    
+    public void setField(FieldAccessor field) {
+<span class="fc" id="L67">        this.field = field;</span>
+<span class="fc" id="L68">    }</span>
+    
+    public String getLabel() {
+<span class="fc" id="L71">        return label;</span>
+    }
+    
+    public void setLabel(String label) {
+<span class="fc" id="L75">        this.label = label;</span>
+<span class="fc" id="L76">    }</span>
+    
+    public int getNumber() {
+<span class="fc" id="L79">        return number;</span>
+    }
+    
+    public void setNumber(int number) {
+<span class="fc" id="L83">        this.number = number;</span>
+<span class="fc" id="L84">    }</span>
+    
+    /**
+     * 部分的なカラムかどうか判定する。
+     * @return trueの場合、部分的なカラムです。
+     */
+    public boolean isPartialized() {
+<span class="fc" id="L91">        return partialized;</span>
+    }
+    
+    /**
+     * 部分的なカラムかどうか設定する。
+     * @param partialized trueの場合、部分的なカラムです。
+     */
+    public void setPartialized(boolean partialized) {
+<span class="fc" id="L99">        this.partialized = partialized;</span>
+<span class="fc" id="L100">    }</span>
+    
+    public CellProcessor getCellProcessorForReading() {
+<span class="fc" id="L103">        return cellProcessorForReading;</span>
+    }
+    
+    public void setCellProcessorForReading(CellProcessor cellProcessorForReading) {
+<span class="fc" id="L107">        this.cellProcessorForReading = cellProcessorForReading;</span>
+<span class="fc" id="L108">    }</span>
+    
+    public CellProcessor getCellProcessorForWriting() {
+<span class="fc" id="L111">        return cellProcessorForWriting;</span>
+    }
+    
+    public void setCellProcessorForWriting(CellProcessor cellProcessorForWriting) {
+<span class="fc" id="L115">        this.cellProcessorForWriting = cellProcessorForWriting;</span>
+<span class="fc" id="L116">    }</span>
+    
+    /**
+     * フィールドのオブジェクトに対するフォーマッタ。
+     * @return 部分的なカラムの場合、nullを返す。
+     */
+    public TextFormatter&lt;?&gt; getFormatter() {
+<span class="fc" id="L123">        return formatter;</span>
+    }
+    
+    public void setFormatter(TextFormatter&lt;?&gt; formatter) {
+<span class="fc" id="L127">        this.formatter = formatter;</span>
+<span class="fc" id="L128">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

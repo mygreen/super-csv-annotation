@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateTimeMinFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.constraint</a> &gt; <span class="el_source">DateTimeMinFactory.java</span></div><h1>DateTimeMinFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.constraint;
+
+import java.util.Optional;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+
+import com.github.mygreen.supercsv.annotation.constraint.CsvDateTimeMin;
+import com.github.mygreen.supercsv.builder.Configuration;
+import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.cellprocessor.ConstraintProcessorFactory;
+import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+import com.github.mygreen.supercsv.cellprocessor.format.TextParseException;
+import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
+import com.github.mygreen.supercsv.localization.MessageBuilder;
+
+/**
+ * アノテーション{@link CsvDateTimeMin}をハンドリングして、{@link DateTimeMin}を作成する。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L23">public class DateTimeMinFactory&lt;T extends Comparable&lt;T&gt;&gt; implements ConstraintProcessorFactory&lt;CsvDateTimeMin&gt; {</span>
+    
+    @Override
+    public Optional&lt;CellProcessor&gt; create(final CsvDateTimeMin anno, final Optional&lt;CellProcessor&gt; next,
+            final FieldAccessor field, final TextFormatter&lt;?&gt; formatter, final Configuration config) {
+        
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L30">        final TextFormatter&lt;T&gt; typeFormatter = (TextFormatter&lt;T&gt;)formatter;</span>
+        
+        final T min;
+        try {
+<span class="nc" id="L34">            min = typeFormatter.parse(anno.value());</span>
+            
+<span class="nc" id="L36">        } catch(TextParseException e) {</span>
+<span class="nc" id="L37">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
+<span class="nc" id="L38">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
+<span class="nc" id="L39">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
+<span class="nc" id="L40">                    .var(&quot;attrName&quot;, &quot;value&quot;)</span>
+<span class="nc" id="L41">                    .var(&quot;attrValue&quot;, anno.value())</span>
+<span class="nc" id="L42">                    .varWithClass(&quot;type&quot;, field.getType())</span>
+<span class="nc" id="L43">                    .var(&quot;pattern&quot;, typeFormatter.getPattern().orElseGet(null))</span>
+<span class="nc" id="L44">                    .format(true), e);</span>
+<span class="nc" id="L45">        }</span>
+        
+<span class="nc" id="L47">        final DateTimeMin&lt;T&gt; processor = next.map(n -&gt; new DateTimeMin&lt;T&gt;(min, anno.inclusive(), typeFormatter, n))</span>
+<span class="nc" id="L48">                .orElseGet(() -&gt; new DateTimeMin&lt;T&gt;(min, anno.inclusive(), typeFormatter));</span>
+<span class="nc" id="L49">        processor.setValidationMessage(anno.message());</span>
+        
+<span class="nc" id="L51">        return Optional.of(processor);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

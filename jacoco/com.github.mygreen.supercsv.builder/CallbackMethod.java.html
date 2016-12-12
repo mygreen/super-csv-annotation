@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CallbackMethod.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">CallbackMethod.java</span></div><h1>CallbackMethod.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
+import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.util.CsvContext;
+
+import com.github.mygreen.supercsv.validation.CsvBindingErrors;
+import com.github.mygreen.supercsv.validation.ValidationContext;
+
+/**
+ * 
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class CallbackMethod implements Comparable&lt;CallbackMethod&gt; {
+    
+    protected final Method method;
+    
+<span class="fc" id="L24">    public CallbackMethod(final Method method) {</span>
+<span class="fc" id="L25">        Objects.requireNonNull(method);</span>
+        
+<span class="fc" id="L27">        method.setAccessible(true);</span>
+<span class="fc" id="L28">        this.method = method;</span>
+        
+<span class="fc" id="L30">    }</span>
+    
+    /**
+     * メソッドの実行
+     * @param record Beanのオブジェクト
+     * @param csvContext 現在のCSVのレコード情報
+     * @param bindingErrors エラー情報。
+     * @param beanMapping マッピング情報
+     * @throws SuperCsvReflectionException メソッドの実行に失敗した場合。
+     */
+    public void invoke(final Object record, final CsvContext csvContext, final CsvBindingErrors bindingErrors, 
+            final BeanMapping&lt;?&gt; beanMapping) {
+        
+        // 引数の組み立て
+<span class="fc" id="L44">        final Class&lt;?&gt;[] paramTypes = method.getParameterTypes();</span>
+<span class="fc" id="L45">        final Object[] paramValues =  new Object[paramTypes.length];</span>
+        
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for(int i=0; i &lt; paramTypes.length; i++) {</span>
+            
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if(CsvContext.class.isAssignableFrom(paramTypes[i])) {</span>
+<span class="fc" id="L50">                paramValues[i] = csvContext;</span>
+                
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            } else if(CsvBindingErrors.class.isAssignableFrom(paramTypes[i])) {</span>
+<span class="fc" id="L53">                paramValues[i] = bindingErrors;</span>
+                
+<span class="pc bpc" id="L55" title="1 of 4 branches missed.">            } else if(paramTypes[i].isArray() &amp;&amp; Class.class.isAssignableFrom(paramTypes[i].getComponentType())) {</span>
+<span class="fc" id="L56">                paramValues[i] = beanMapping.getGroups();</span>
+                
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            } else if(ValidationContext.class.isAssignableFrom(paramTypes[i])) {</span>
+<span class="fc" id="L59">                paramValues[i] = new ValidationContext&lt;&gt;(csvContext, beanMapping);</span>
+                
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            } else if(beanMapping.getType().isAssignableFrom(paramTypes[i])) {</span>
+<span class="fc" id="L62">                paramValues[i] = record;</span>
+                
+            } else {
+<span class="fc" id="L65">                paramValues[i] = null;</span>
+            }
+            
+        }
+        
+<span class="fc" id="L70">        execute(record, paramValues);</span>
+        
+<span class="fc" id="L72">    }</span>
+    
+    protected void execute(final Object record, final Object[] paramValues) {
+        try {
+<span class="fc" id="L76">            method.invoke(record, paramValues);</span>
+            
+<span class="nc" id="L78">        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            Throwable t = e.getCause() == null ? e : e.getCause();</span>
+<span class="nc" id="L80">            throw new SuperCsvReflectionException(</span>
+<span class="nc" id="L81">                    String.format(&quot;Fail execute method '%s#%s'.&quot;, record.getClass().getName(), method.getName()),</span>
+                    t);
+<span class="fc" id="L83">        }</span>
+        
+        
+<span class="fc" id="L86">    }</span>
+    
+    /**
+     * メソッド名の昇順
+     */
+    @Override
+    public int compareTo(final CallbackMethod o) {
+        
+<span class="fc" id="L94">        final String name1 = method.getDeclaringClass().getName() + &quot;#&quot; + method.getName();</span>
+<span class="fc" id="L95">        final String name2 = o.method.getDeclaringClass().getName() + &quot;#&quot; + o.method.getName();</span>
+        
+<span class="fc" id="L97">        return name1.compareTo(name2);</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

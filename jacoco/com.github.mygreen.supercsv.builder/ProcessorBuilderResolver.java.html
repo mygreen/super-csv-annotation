@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProcessorBuilderResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">ProcessorBuilderResolver.java</span></div><h1>ProcessorBuilderResolver.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.github.mygreen.supercsv.builder.standard.BigDecimalProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.BigIntegerProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.BooleanProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.ByteProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.CalendarProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.CharacterProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.DateProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.DoubleProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.EnumProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.FloatProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.IntegerProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.LongProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.ShortProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.SqlDateProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.StringProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.TimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.standard.TimestampProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.LocalDateProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.LocalDateTimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.LocalTimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.ZonedDateTimeProcessorBuilder;
+import com.github.mygreen.supercsv.util.Utils;
+
+/**
+ * 各タイプに対して、登録された{@link ProcessorBuilder}を解決するクラス。
+ * 
+ * @version 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class ProcessorBuilderResolver {
+    
+<span class="fc" id="L47">    private Map&lt;Class&lt;?&gt;, ProcessorBuilder&lt;?&gt;&gt; builderMap = new HashMap&lt;&gt;();</span>
+    
+    /**
+     * デフォルトコンストラクタ。
+     * &lt;p&gt;{@link #init()}メソッドが呼ばれる。
+     */
+<span class="fc" id="L53">    public ProcessorBuilderResolver() {</span>
+<span class="fc" id="L54">        init();</span>
+<span class="fc" id="L55">    }</span>
+    
+    /**
+     * 標準の{@link ProcessorBuilder}を登録緒する。
+     */
+    @SuppressWarnings({&quot;unchecked&quot;, &quot;rawtypes&quot;})
+    public void init() {
+        
+<span class="fc" id="L63">        register(String.class, new StringProcessorBuilder());</span>
+        
+<span class="fc" id="L65">        register(Character.class, new CharacterProcessorBuilder());</span>
+<span class="fc" id="L66">        register(char.class, new CharacterProcessorBuilder());</span>
+        
+<span class="fc" id="L68">        register(Boolean.class, new BooleanProcessorBuilder());</span>
+<span class="fc" id="L69">        register(boolean.class, new BooleanProcessorBuilder());</span>
+        
+<span class="fc" id="L71">        register(Byte.class, new ByteProcessorBuilder());</span>
+<span class="fc" id="L72">        register(byte.class, new ByteProcessorBuilder());</span>
+<span class="fc" id="L73">        register(Short.class, new ShortProcessorBuilder());</span>
+<span class="fc" id="L74">        register(short.class, new ShortProcessorBuilder());</span>
+<span class="fc" id="L75">        register(Integer.class, new IntegerProcessorBuilder());</span>
+<span class="fc" id="L76">        register(int.class, new IntegerProcessorBuilder());</span>
+<span class="fc" id="L77">        register(Long.class, new LongProcessorBuilder());</span>
+<span class="fc" id="L78">        register(long.class, new LongProcessorBuilder());</span>
+<span class="fc" id="L79">        register(Float.class, new FloatProcessorBuilder());</span>
+<span class="fc" id="L80">        register(float.class, new FloatProcessorBuilder());</span>
+<span class="fc" id="L81">        register(Double.class, new DoubleProcessorBuilder());</span>
+<span class="fc" id="L82">        register(double.class, new DoubleProcessorBuilder());</span>
+        
+<span class="fc" id="L84">        register(BigDecimal.class, new BigDecimalProcessorBuilder());</span>
+<span class="fc" id="L85">        register(BigInteger.class, new BigIntegerProcessorBuilder());</span>
+        
+<span class="fc" id="L87">        register(Calendar.class, new CalendarProcessorBuilder());</span>
+<span class="fc" id="L88">        register(java.util.Date.class, new DateProcessorBuilder());</span>
+<span class="fc" id="L89">        register(java.sql.Date.class, new SqlDateProcessorBuilder());</span>
+<span class="fc" id="L90">        register(Time.class, new TimeProcessorBuilder());</span>
+<span class="fc" id="L91">        register(Timestamp.class, new TimestampProcessorBuilder());</span>
+        
+<span class="fc" id="L93">        register(Enum.class, new EnumProcessorBuilder());</span>
+        
+        // Java8 Date and Tiem API
+<span class="fc" id="L96">        register(LocalDateTime.class, new LocalDateTimeProcessorBuilder());</span>
+<span class="fc" id="L97">        register(LocalDate.class, new LocalDateProcessorBuilder());</span>
+<span class="fc" id="L98">        register(LocalTime.class, new LocalTimeProcessorBuilder());</span>
+<span class="fc" id="L99">        register(ZonedDateTime.class, new ZonedDateTimeProcessorBuilder());</span>
+        
+        // Joda-Time
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if(Utils.isEnabledJodaTime()) {</span>
+<span class="fc" id="L103">            register(org.joda.time.LocalDateTime.class, new com.github.mygreen.supercsv.builder.joda.LocalDateTimeProcessorBuilder());</span>
+<span class="fc" id="L104">            register(org.joda.time.LocalDate.class, new com.github.mygreen.supercsv.builder.joda.LocalDateProcessorBuilder());</span>
+<span class="fc" id="L105">            register(org.joda.time.LocalTime.class, new com.github.mygreen.supercsv.builder.joda.LocalTimeProcessorBuilder());</span>
+<span class="fc" id="L106">            register(org.joda.time.DateTime.class, new com.github.mygreen.supercsv.builder.joda.DateTimeProcessorBuilder());</span>
+        }
+        
+<span class="fc" id="L109">    }</span>
+    
+    /**
+     * 指定したクラスタイプに対する{@link ProcessorBuilder}を取得する。
+     * 
+     * @param &lt;T&gt; 対象のオブジェクトタイプ
+     * @param type クラスタイプ。
+     * @return 解決できない場合は、{@literal null}を返す。
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;T&gt; ProcessorBuilder&lt;T&gt; resolve(final Class&lt;T&gt; type) {
+        
+<span class="fc" id="L121">        ProcessorBuilder&lt;?&gt; builder = builderMap.get(type);</span>
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        if(builder == null &amp;&amp; Enum.class.isAssignableFrom(type)) {</span>
+            // 列挙型の場合は、具象化されたクラスタイプである必要があるため、別途取得する
+<span class="fc" id="L124">            builder = builderMap.get(Enum.class);</span>
+        }
+        
+<span class="fc" id="L127">        return (ProcessorBuilder&lt;T&gt;) builder;</span>
+    }
+    
+    /**
+     * {@link ProcessorBuilder}を登録する。
+     * &lt;p&gt;既に登録済みのものがある場合、新しい値に置き換えられます。
+     * 
+     * @param &lt;T&gt; 対象のオブジェクトタイプ
+     * @param type クラスタイプ。
+     * @param builder {@link ProcessorBuilder}の実装。
+     * @return 以前に登録されている値を返す。登録済みのものが内場合は{@literal null}を返す。
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public &lt;T&gt; ProcessorBuilder&lt;T&gt; register(final Class&lt;T&gt; type, final ProcessorBuilder&lt;T&gt; builder) {
+<span class="fc" id="L141">        return (ProcessorBuilder&lt;T&gt;)this.builderMap.put(type, builder);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

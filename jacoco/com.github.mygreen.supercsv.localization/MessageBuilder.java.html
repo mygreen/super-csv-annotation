@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.localization</a> &gt; <span class="el_source">MessageBuilder.java</span></div><h1>MessageBuilder.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.localization;
+
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.github.mygreen.supercsv.util.ArgUtils;
+
+/**
+ * エラーメッセージを組み立てたりするためのユーティリティクラス。
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class MessageBuilder {
+    
+<span class="fc" id="L18">    private static final MessageResolver MESSAGE_RESOLVER = new ResourceBundleMessageResolver(&quot;com.github.mygreen.supercsv.localization.Messages&quot;, false);</span>
+<span class="fc" id="L19">    private static final MessageInterpolator MESSAGE_INTERPOLATOR = new MessageInterpolator();</span>
+    
+    private final String code;
+    
+<span class="fc" id="L23">    private Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+    
+    /**
+     * メッセージコードを指定してインスタンスを作成します。
+     * @param code メッセージコード
+     * @throws NullPointerException code is null.
+     * @throws IllegalArgumentException code is empty.
+     */
+<span class="fc" id="L31">    public MessageBuilder(final String code) {</span>
+<span class="fc" id="L32">        ArgUtils.notEmpty(code, &quot;code&quot;);</span>
+<span class="fc" id="L33">        this.code = code;</span>
+<span class="fc" id="L34">    }</span>
+    
+    /**
+     * メッセージ変数を追加する。
+     * @param key 変数名
+     * @param value 値
+     * @return 自身のインスタンス
+     */
+    public MessageBuilder var(final String key, final Object value) {
+<span class="fc" id="L43">        vars.put(key, value);</span>
+<span class="fc" id="L44">        return this;</span>
+    }
+    
+    /**
+     * メッセージ変数としてアノテーション名を追加する。
+     * @param key 変数名
+     * @param annoClass アノテーションのクラス名
+     * @return 自身のインスタンス
+     */
+    public MessageBuilder varWithAnno(final String key, final Class&lt;? extends Annotation&gt; annoClass) {
+<span class="fc" id="L54">        return var(key, &quot;@&quot; + annoClass.getSimpleName());</span>
+    }
+    
+    /**
+     * メッセージ変数として、クラス名を追加する。
+     * &lt;p&gt;クラス名は、FQCNの形式&lt;/p&gt;
+     * @param key 変数名
+     * @param clazz クラスタイプ
+     * @return 自身のインスタンス
+     */
+    public MessageBuilder varWithClass(final String key, final Class&lt;?&gt; clazz) {
+        
+        final String className;
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if(clazz.isArray()) {</span>
+            // 配列の場合
+<span class="nc" id="L69">            Class&lt;?&gt; elementType = clazz.getComponentType();</span>
+<span class="nc" id="L70">            className = elementType.getName() + &quot;[]&quot;;</span>
+            
+<span class="nc" id="L72">        } else {</span>
+<span class="fc" id="L73">            className = clazz.getName();</span>
+            
+        }
+        
+<span class="fc" id="L77">        return var(key, className);</span>
+    }
+    
+    /**
+     * メッセージをフォーマットして値を取得します。
+     * &lt;p&gt;変換したメッセージに対しても再帰的に処理しません。&lt;/p&gt;
+     * @return フォーマットしたメッセージ
+     * @throws IllegalArgumentException 指定したメッセージコードが見つからない場合
+     */
+    public String format() {
+        
+<span class="fc" id="L88">        return format(false);</span>
+    }
+    
+    /**
+     * メッセージをフォーマットして値を取得します。
+     * @param recusrsive 変換したメッセージに対しても再帰的に処理するかどうか。
+     * @return フォーマットしたメッセージ
+     * @throws IllegalArgumentException 指定したメッセージコードが見つからない場合
+     */
+    public String format(final boolean recusrsive) {
+        
+<span class="fc" id="L99">        final String message = MESSAGE_RESOLVER.getMessage(code)</span>
+<span class="pc" id="L100">                .orElseThrow(() -&gt; new IllegalStateException(String.format(&quot;not found message key=%s&quot;, code)));</span>
+        
+<span class="fc" id="L102">        return MESSAGE_INTERPOLATOR.interpolate(message, vars, recusrsive, MESSAGE_RESOLVER);</span>
+    }
+    
+    public static MessageBuilder create(final String code) {
+        
+<span class="fc" id="L107">        return new MessageBuilder(code);</span>
+        
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

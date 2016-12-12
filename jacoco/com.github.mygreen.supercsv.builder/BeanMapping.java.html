@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanMapping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">BeanMapping.java</span></div><h1>BeanMapping.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+
+import com.github.mygreen.supercsv.validation.CsvValidator;
+
+/**
+ * 解析したBeanのマッピング情報です。
+ *
+ * @param &lt;T&gt; Beanのクラスタイプ
+ * @version 2.0
+ * @author T.TSUCHIE
+ * 
+ */
+public class BeanMapping&lt;T&gt; {
+    
+    private final Class&lt;T&gt; type;
+    
+    private boolean header;
+    
+    private boolean validateHeader;
+    
+<span class="fc" id="L27">    private List&lt;CsvValidator&lt;T&gt;&gt; validators = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L29">    private List&lt;Object&gt; listeners = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L31">    private List&lt;ColumnMapping&gt; columns = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L33">    private List&lt;CallbackMethod&gt; preReadMethods = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L35">    private List&lt;CallbackMethod&gt; postReadMethods = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L37">    private List&lt;CallbackMethod&gt; preWriteMethods = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L39">    private List&lt;CallbackMethod&gt; postWriteMethods = new ArrayList&lt;&gt;();</span>
+    
+    private boolean skipValidationOnWrite;
+    
+    private Class&lt;?&gt;[] groups;
+    
+<span class="fc" id="L45">    public BeanMapping(final Class&lt;T&gt; type) {</span>
+<span class="fc" id="L46">        this.type = type;</span>
+<span class="fc" id="L47">    }</span>
+    
+    /**
+     * 指定した列番号を持つカラムのマッピング情報を取得する。
+     * @param columnNumber 列番号。1から始まる。
+     * @return 引数で指定した位置情報の値と一致するカラム情報。
+     */
+    public Optional&lt;ColumnMapping&gt; getColumnMapping(final int columnNumber) {
+<span class="fc" id="L55">        return columns.stream()</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                .filter(c -&gt; c.getNumber() == columnNumber)</span>
+<span class="fc" id="L57">                .findFirst();</span>
+    }
+    
+    /**
+     * 指定したカラム名を持つカラムのマッピング情報を取得する。
+     * @param columnName カラム名（フィールド名）を指定します。
+     * @return 引数で指定したカラム名の値と一致するカラム情報。
+     */
+    public Optional&lt;ColumnMapping&gt; getColumnMapping(final String columnName) {
+<span class="fc" id="L66">        return columns.stream()</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">                .filter(c -&gt; c.getName() != null &amp;&amp; c.getName().equals(columnName))</span>
+<span class="fc" id="L68">                .findFirst();</span>
+    }
+    
+    /**
+     * カラムのヘッダー一覧を取得する。
+     * @return カラムの位置順のヘッダー一覧。
+     */
+    public String[] getHeader() {
+        
+<span class="fc" id="L77">        return columns.stream()</span>
+<span class="fc" id="L78">            .map(c -&gt; c.getLabel())</span>
+<span class="fc" id="L79">            .toArray(n -&gt; new String[n]);</span>
+        
+    }
+    
+    /**
+     * フィールド名の一覧を取得する。
+     * &lt;p&gt;CSVのレコードを出力する際に利用する。&lt;/p&gt;
+     * @return カラムの位置順のフィールドの一覧。
+     */
+    public String[] getNameMapping() {
+        
+<span class="fc" id="L90">        return columns.stream()</span>
+<span class="fc" id="L91">                .map(c -&gt; c.getName())</span>
+<span class="fc" id="L92">                .toArray(n -&gt; new String[n]);</span>
+    }
+    
+    /**
+     * 読み込み用の{@link CellProcessor}を取得する。
+     * @return カラムの位置順に整列されている{@link CellProcessor}の一覧。
+     */
+    public CellProcessor[] getCellProcessorsForReading() {
+        
+<span class="fc" id="L101">        return columns.stream()</span>
+<span class="fc" id="L102">                .map(c -&gt; c.getCellProcessorForReading())</span>
+<span class="fc" id="L103">                .toArray(n -&gt; new CellProcessor[n]);</span>
+    }
+    
+    /**
+     * 書き込み用の{@link CellProcessor}を取得する。
+     * @return カラムの位置順に整列されている{@link CellProcessor}の一覧。
+     */
+    public CellProcessor[] getCellProcessorsForWriting() {
+        
+<span class="fc" id="L112">        return columns.stream()</span>
+<span class="fc" id="L113">                .map(c -&gt; c.getCellProcessorForWriting())</span>
+<span class="fc" id="L114">                .toArray(n -&gt; new CellProcessor[n]);</span>
+    }
+    
+    public Class&lt;T&gt; getType() {
+<span class="fc" id="L118">        return type;</span>
+    }
+    
+    /**
+     *
+     * @return  ヘッダーが存在するとして処理を行う
+     */
+    public boolean isHeader() {
+<span class="fc" id="L126">        return header;</span>
+    }
+    
+    public void setHeader(boolean header) {
+<span class="fc" id="L130">        this.header = header;</span>
+<span class="fc" id="L131">    }</span>
+    
+    public boolean isValidateHeader() {
+<span class="fc" id="L134">        return validateHeader;</span>
+    }
+    
+    public void setValidateHeader(boolean validateHeader) {
+<span class="fc" id="L138">        this.validateHeader = validateHeader;</span>
+<span class="fc" id="L139">    }</span>
+    
+    public List&lt;CsvValidator&lt;T&gt;&gt; getValidators() {
+<span class="fc" id="L142">        return validators;</span>
+    }
+    
+    public void addAllValidators(List&lt;CsvValidator&lt;T&gt;&gt; validators) {
+<span class="fc" id="L146">        this.validators.addAll(validators);</span>
+<span class="fc" id="L147">    }</span>
+    
+    public List&lt;Object&gt; getListeners() {
+<span class="fc" id="L150">        return listeners;</span>
+    }
+    
+    public void addAllListeners(List&lt;Object&gt; listeners) {
+<span class="fc" id="L154">        this.listeners.addAll(listeners);</span>
+<span class="fc" id="L155">    }</span>
+    
+    public List&lt;ColumnMapping&gt; getColumns() {
+<span class="fc" id="L158">        return columns;</span>
+    }
+    
+    public void addAllColumns(List&lt;ColumnMapping&gt; columns) {
+<span class="fc" id="L162">        this.columns.addAll(columns);</span>
+<span class="fc" id="L163">    }</span>
+    
+    public List&lt;CallbackMethod&gt; getPreReadMethods() {
+<span class="fc" id="L166">        return preReadMethods;</span>
+    }
+    
+    public void addPreReadMethod(final CallbackMethod method) {
+<span class="fc" id="L170">        this.preReadMethods.add(method);</span>
+<span class="fc" id="L171">    }</span>
+    
+    public List&lt;CallbackMethod&gt; getPostReadMethods() {
+<span class="fc" id="L174">        return postReadMethods;</span>
+    }
+    
+    public void addPostReadMethod(final CallbackMethod method) {
+<span class="fc" id="L178">        this.postReadMethods.add(method);</span>
+<span class="fc" id="L179">    }</span>
+    
+    public List&lt;CallbackMethod&gt; getPreWriteMethods() {
+<span class="fc" id="L182">        return preWriteMethods;</span>
+    }
+    
+    public void addPreWriteMethod(final CallbackMethod method) {
+<span class="fc" id="L186">        this.preWriteMethods.add(method);</span>
+<span class="fc" id="L187">    }</span>
+    
+    public List&lt;CallbackMethod&gt; getPostWriteMethods() {
+<span class="fc" id="L190">        return postWriteMethods;</span>
+    }
+    
+    public void addPostWriteMethod(final CallbackMethod method) {
+<span class="fc" id="L194">        this.postWriteMethods.add(method);</span>
+<span class="fc" id="L195">    }</span>
+    
+    public boolean isSkipValidationOnWrite() {
+<span class="fc" id="L198">        return skipValidationOnWrite;</span>
+    }
+    
+    public void setSkipValidationOnWrite(boolean skipValidationOnWrite) {
+<span class="fc" id="L202">        this.skipValidationOnWrite = skipValidationOnWrite;</span>
+<span class="fc" id="L203">    }</span>
+    
+    public Class&lt;?&gt;[] getGroups() {
+<span class="fc" id="L206">        return groups;</span>
+    }
+    
+    public void setGroups(Class&lt;?&gt;[] groups) {
+<span class="fc" id="L210">        this.groups = groups;</span>
+<span class="fc" id="L211">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextPrintException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">TextPrintException.java</span></div><h1>TextPrintException.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+
+/**
+ * オブジェクトを文字列にフォーマットする際にスローされる例外。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class TextPrintException extends RuntimeException {
+    
+    /** serialVersionUID */
+    private static final long serialVersionUID = -7227981380538624937L;
+    
+    /**
+     * 変換対象のオブジェクトの値
+     */
+    private final Object targetObject;
+    
+    public TextPrintException(final Object targetObject, final String message) {
+<span class="nc" id="L22">        super(message);</span>
+<span class="nc" id="L23">        this.targetObject = targetObject;</span>
+<span class="nc" id="L24">    }</span>
+    
+    public TextPrintException(final Object targetObject, final Throwable exception) {
+<span class="fc" id="L27">        super(exception);</span>
+<span class="fc" id="L28">        this.targetObject = targetObject;</span>
+<span class="fc" id="L29">    }</span>
+    
+    public TextPrintException(final Object targetObject, final String message, final Throwable exception) {
+<span class="nc" id="L32">        super(message, exception);</span>
+<span class="nc" id="L33">        this.targetObject = targetObject;</span>
+<span class="nc" id="L34">    }</span>
+    
+    /**
+     * フォーマットに失敗したオブジェクトの値を取得する。
+     * @return
+     */
+    public Object getTargetObject() {
+<span class="nc" id="L41">        return targetObject;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

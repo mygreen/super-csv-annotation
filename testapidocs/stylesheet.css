@@ -572,3 +572,96 @@ div.block div.block span.interfaceName {
 div.contentContainer ul.blockList li.blockList h2{
     padding-bottom:0px;
 }
+
+
+/**
+ * コードのシンタックスハイライトの基本枠
+ */
+pre.highlight {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 90%;
+	border: solid 1px #9eadc0;
+	background-color: #f9f9f9;
+}
+
+/**
+ * 説明用の見出し3
+ */
+h3.description {
+	margin-top: 30px;
+	font-size: 1.1em;
+	border-bottom: dotted 1px #9eadc0;
+	
+}
+
+/**
+ * 画像音基本枠
+ */
+div.picture {
+	text-align: center;
+	padding-bottom: 0px;
+	margin-bottom: 10px;
+}
+
+div.picture p {
+	font-size: 90%;
+	padding-bottom: 0px;
+	margin-bottom: 10px;
+	
+}
+
+/**
+ * 説明用の表
+ */
+table.description {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+table.description caption {
+	caption-side: top;
+	color: #353833 !important;
+	font-size: 110%;
+	font-weight: bold;
+	text-align: center !important;
+}
+
+table.description caption:before {
+	content: "表.";
+}
+
+
+table.description th {
+	text-align: center;
+	background-color: #dee3e9;
+	border: 1px solid #9eadc0;
+	padding: 8px 3px 3px 7px;
+	
+}
+
+table.description td {
+	border: 1px solid #9eadc0;
+	padding: 8px 3px 3px 8px;
+	
+}
+
+/**
+ * 外部リンクのアイコン
+ */
+img.icon_externallink {
+	margin-left: 3px;
+	margin-bottom: 3px;
+	
+	vertical-align: middle;
+}
+
+a.externalink[target="_blank"] {
+	padding-right:15px;
+	padding-top:3px !important;
+	margin-right: 3px;
+	background: url(resources/external-link-12.png)no-repeat right;
+}
+

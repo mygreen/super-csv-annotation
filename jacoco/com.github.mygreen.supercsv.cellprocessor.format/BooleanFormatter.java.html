@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BooleanFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">BooleanFormatter.java</span></div><h1>BooleanFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * Boolean型に対するフォーマッタ。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class BooleanFormatter extends AbstractTextFormatter&lt;Boolean&gt; {
+    
+<span class="fc" id="L19">    private static final String[] DEFAULT_READ_TRUE_VALUES = new String[] {&quot;true&quot;, &quot;1&quot;, &quot;yes&quot;, &quot;on&quot;, &quot;y&quot;, &quot;t&quot;};</span>
+<span class="fc" id="L20">    private static final String[] DEFAULT_READ_FALSE_VALUES = new String[] {&quot;false&quot;, &quot;0&quot;, &quot;no&quot;, &quot;off&quot;, &quot;f&quot;, &quot;n&quot;};</span>
+    
+    private static final String DEFAULT_WRITE_TRUE_VALUE = &quot;true&quot;;
+    private static final String DEFAULT_WRITE_FALSE_VALUE = &quot;false&quot;;
+    
+    private final Set&lt;String&gt; readTrueValues;
+    
+    private final Set&lt;String&gt; readFalseValues;
+    
+    private final String writeTrueValue;
+    
+    private final String writeFalseValue;
+    
+    private boolean ignoreCase;
+    
+    private boolean failToFalse;
+    
+    public BooleanFormatter() {
+<span class="fc" id="L38">        this(DEFAULT_READ_TRUE_VALUES, DEFAULT_READ_FALSE_VALUES,</span>
+                DEFAULT_WRITE_TRUE_VALUE, DEFAULT_WRITE_FALSE_VALUE,
+                false, false);
+<span class="fc" id="L41">    }</span>
+    
+    public BooleanFormatter(final String[] readTrueValues, final String[] readFalseValues,
+            final String writeTrueValue, final String writeFalseValue,
+<span class="fc" id="L45">            final boolean ignoreCase, boolean failToFalse) {</span>
+        
+<span class="fc" id="L47">        Objects.requireNonNull(readTrueValues);</span>
+<span class="fc" id="L48">        Objects.requireNonNull(readFalseValues);</span>
+        
+<span class="fc" id="L50">        this.readTrueValues = toSet(readTrueValues);</span>
+<span class="fc" id="L51">        this.readFalseValues = toSet(readFalseValues);</span>
+<span class="fc" id="L52">        this.writeTrueValue = writeTrueValue;</span>
+<span class="fc" id="L53">        this.writeFalseValue = writeFalseValue;</span>
+<span class="fc" id="L54">        this.ignoreCase = ignoreCase;</span>
+<span class="fc" id="L55">        this.failToFalse = failToFalse;</span>
+<span class="fc" id="L56">    }</span>
+    
+    private static Set&lt;String&gt; toSet(final String[] values) {
+        
+<span class="fc" id="L60">        Set&lt;String&gt; set = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L61">        Collections.addAll(set, values);</span>
+<span class="fc" id="L62">        return Collections.unmodifiableSet(set);</span>
+        
+    }
+    
+    @Override
+    public Boolean parse(final String text) {
+        
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if(contains(readTrueValues, text, ignoreCase) ) {</span>
+<span class="fc" id="L70">            return Boolean.TRUE;</span>
+            
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        } else if(contains(readFalseValues, text, ignoreCase) ) {</span>
+<span class="fc" id="L73">            return Boolean.FALSE;</span>
+            
+        } else {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if(failToFalse) {</span>
+<span class="fc" id="L77">                return Boolean.FALSE;</span>
+            } else {
+<span class="fc" id="L79">                throw new TextParseException(text, Boolean.class,</span>
+<span class="fc" id="L80">                        String.format(&quot;'%s' could not be parsed as a Boolean&quot;, text));</span>
+            }
+        }
+    }
+    
+    private static boolean contains(final Set&lt;String&gt; set, final String value, final boolean ignoreCase) {
+        
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if(ignoreCase) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            for(String element : set) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if(element.equalsIgnoreCase(value)) {</span>
+<span class="fc" id="L90">                    return true;</span>
+                }
+<span class="fc" id="L92">            }</span>
+            
+<span class="fc" id="L94">            return false;</span>
+        } else {
+<span class="fc" id="L96">            return set.contains(value);</span>
+        }
+        
+    }
+    
+    @Override
+    public String print(final Boolean object) {
+        
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        return object ? writeTrueValue : writeFalseValue;</span>
+        
+    }
+    
+    @Override
+    public Map&lt;String, Object&gt; getMessageVariables() {
+        
+<span class="fc" id="L111">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L112">        vars.put(&quot;trueValues&quot;, readTrueValues);</span>
+<span class="fc" id="L113">        vars.put(&quot;falseValues&quot;, readFalseValues);</span>
+        
+<span class="fc" id="L115">        vars.put(&quot;ignoreCase&quot;, ignoreCase);</span>
+<span class="fc" id="L116">        vars.put(&quot;failToFalse&quot;, failToFalse);</span>
+<span class="fc" id="L117">        return vars;</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

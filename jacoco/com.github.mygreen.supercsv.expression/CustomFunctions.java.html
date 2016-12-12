@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomFunctions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.expression</a> &gt; <span class="el_source">CustomFunctions.java</span></div><h1>CustomFunctions.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.expression;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
+
+/**
+ * EL式中で利用可なユーティリティ関数。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="nc" id="L17">public class CustomFunctions {</span>
+    
+    /**
+     * 文字列がnullの場合に空文字に変換する。
+     * &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;java&quot;&gt;
+     *     CustomFunctions.defaultString(null) = &quot;&quot;
+     *     CustomFunctions.defaultString(&quot;&quot;) = &quot;&quot;
+     *     CustomFunctions.defaultString(&quot;abc&quot;) = &quot;abc&quot;
+     * &lt;/code&gt;&lt;/pre&gt;
+     * 
+     * @param text 判定対象の文字列
+     * @return 非nullの場合は、引数の値をそのまま返す。
+     */
+    public static String defaultString(final String text) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(text == null) {</span>
+<span class="fc" id="L32">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L35">        return text;</span>
+    }
+    
+    /**
+     * int型の配列の値を結合する。
+     * @param array 結合対象の配列
+     * @param delimiter 区切り文字
+     * @return 結合した文字列を返す。結合の対象の配列がnulの場合、空文字を返す。
+     */
+    public static String join(final int[] array, final String delimiter) {
+        
+<span class="fc bfc" id="L46" title="All 4 branches covered.">        if(array == null || array.length == 0) {</span>
+<span class="fc" id="L47">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L50">        String value = Arrays.stream(array)</span>
+<span class="fc" id="L51">                .boxed()</span>
+<span class="fc" id="L52">                .map(String::valueOf)</span>
+<span class="fc" id="L53">                .collect(Collectors.joining(defaultString(delimiter)));</span>
+        
+<span class="fc" id="L55">        return value;</span>
+    }
+    
+    /**
+     * 配列の値を結合する。
+     * @param array 結合対象の配列
+     * @param delimiter 区切り文字
+     * @return 結合した文字列を返す。結合の対象の配列がnulの場合、空文字を返す。
+     */
+    public static String join(final Object[] array, final String delimiter) {
+        
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        if(array == null || array.length == 0) {</span>
+<span class="fc" id="L67">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L70">        String value = Arrays.stream(array)</span>
+<span class="fc" id="L71">                .map(v -&gt; v.toString())</span>
+<span class="fc" id="L72">                .collect(Collectors.joining(defaultString(delimiter)));</span>
+        
+<span class="fc" id="L74">        return value;</span>
+    }
+    
+    /**
+     * 配列の値を結合する。
+     * @param array 結合対象の配列
+     * @param delimiter 区切り文字
+     * @param printer 配列の要素の値のフォーマッタ
+     * @return 結合した文字列を返す。結合の対象の配列がnulの場合、空文字を返す。
+     * @throws NullPointerException {@literal printer is null.}
+     */
+    @SuppressWarnings({&quot;rawtypes&quot;, &quot;unchecked&quot;})
+    public static String join(final Object[] array, final String delimiter, final TextPrinter printer) {
+        
+<span class="fc" id="L88">        Objects.requireNonNull(printer);</span>
+        
+<span class="fc bfc" id="L90" title="All 4 branches covered.">        if(array == null || array.length == 0) {</span>
+<span class="fc" id="L91">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L94">        String value = Arrays.stream(array)</span>
+<span class="fc" id="L95">                .map(v -&gt; printer.print(v))</span>
+<span class="fc" id="L96">                .collect(Collectors.joining(defaultString(delimiter)));</span>
+        
+<span class="fc" id="L98">        return value;</span>
+    }
+    
+    /**
+     * コレクションの値を結合する。
+     * @param collection 結合対象のコレクション
+     * @param delimiter 区切り文字
+     * @return 結合した文字列を返す。結合の対象のコレクションがnulの場合、空文字を返す。
+     */
+    public static String join(final Collection&lt;?&gt; collection, final String delimiter) {
+        
+<span class="fc bfc" id="L109" title="All 4 branches covered.">        if(collection == null || collection.isEmpty()) {</span>
+<span class="fc" id="L110">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L113">        String value = collection.stream()</span>
+<span class="fc" id="L114">                .map(v -&gt; v.toString())</span>
+<span class="fc" id="L115">                .collect(Collectors.joining(defaultString(delimiter)));</span>
+        
+<span class="fc" id="L117">        return value;</span>
+    }
+    
+    /**
+     * コレクションの値を結合する。
+     * @param collection 結合対象のコレクション
+     * @param delimiter 区切り文字
+     * @param printer コレクションの要素の値のフォーマッタ
+     * @return 結合した文字列を返す。結合の対象のコレクションがnulの場合、空文字を返す。
+     * @throws NullPointerException {@literal printer is null.}
+     */
+    @SuppressWarnings({&quot;rawtypes&quot;, &quot;unchecked&quot;})
+    public static String join(final Collection&lt;?&gt; collection, final String delimiter, final TextPrinter printer) {
+        
+<span class="fc" id="L131">        Objects.requireNonNull(printer);</span>
+        
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        if(collection == null || collection.isEmpty()) {</span>
+<span class="fc" id="L134">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L137">        String value = collection.stream()</span>
+<span class="fc" id="L138">                .map(v -&gt; printer.print(v))</span>
+<span class="fc" id="L139">                .collect(Collectors.joining(defaultString(delimiter)));</span>
+        
+<span class="fc" id="L141">        return value;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegexReplaceFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">RegexReplaceFactory.java</span></div><h1>RegexReplaceFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import java.util.Optional;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
+
+import com.github.mygreen.supercsv.annotation.conversion.CsvRegexReplace;
+import com.github.mygreen.supercsv.builder.Configuration;
+import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
+import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
+import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
+import com.github.mygreen.supercsv.localization.MessageBuilder;
+import com.github.mygreen.supercsv.util.Utils;
+
+
+/**
+ * アノテーション{@link CsvRegexReplace}をハンドリングして、値を置換するCellProcessorの{@link RegexReplace}を追加する。
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L27">public class RegexReplaceFactory implements ConversionProcessorFactory&lt;CsvRegexReplace&gt; {</span>
+    
+    @Override
+    public Optional&lt;CellProcessor&gt; create(final CsvRegexReplace anno, final Optional&lt;CellProcessor&gt; next,
+            final FieldAccessor field, final TextFormatter&lt;?&gt; formatter, final Configuration config) {
+        
+<span class="fc" id="L33">        final int flags = Utils.buildRegexFlags(anno.flags());</span>
+        final Pattern pattern;
+        try {
+<span class="fc" id="L36">            pattern = Pattern.compile(anno.regex(), flags);</span>
+<span class="fc" id="L37">        } catch(PatternSyntaxException e) {</span>
+<span class="fc" id="L38">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
+<span class="fc" id="L39">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
+<span class="fc" id="L40">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
+<span class="fc" id="L41">                    .var(&quot;attrName&quot;, &quot;regex&quot;)</span>
+<span class="fc" id="L42">                    .var(&quot;attrValue&quot;, anno.regex())</span>
+<span class="fc" id="L43">                    .var(&quot;type&quot;, &quot;{key.regex}&quot;)</span>
+<span class="fc" id="L44">                    .format(true));</span>
+<span class="fc" id="L45">        }</span>
+        
+<span class="fc" id="L47">        final String replacement = anno.replacement();</span>
+        
+<span class="fc" id="L49">        final RegexReplace processor = next.map(n -&gt;  new RegexReplace(pattern, replacement, (StringCellProcessor) n))</span>
+<span class="fc" id="L50">                .orElseGet(() -&gt; new RegexReplace(pattern, replacement));</span>
+        
+<span class="fc" id="L52">        return Optional.of(processor);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

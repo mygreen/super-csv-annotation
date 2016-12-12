@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateProcessorBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder.standard</a> &gt; <span class="el_source">DateProcessorBuilder.java</span></div><h1>DateProcessorBuilder.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder.standard;
+
+import java.util.Date;
+
+/**
+ * {@link Date}型に対するビルダ。
+ * 
+ * @version 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L12">public class DateProcessorBuilder extends AbstractDateProcessorBuilder&lt;Date&gt; {</span>
+    
+    /**
+     * 標準の書式を取得する。
+     * @return 常に、'{@literal yyyy-MM-dd HH:mm:ss}' を返す。
+     */
+    @Override
+    protected String getDefaultPattern() {
+<span class="fc" id="L20">        return &quot;yyyy-MM-dd HH:mm:ss&quot;;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

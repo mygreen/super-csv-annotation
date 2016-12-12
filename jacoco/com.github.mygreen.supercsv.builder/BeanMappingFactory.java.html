@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanMappingFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">BeanMappingFactory.java</span></div><h1>BeanMappingFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.exception.SuperCsvReflectionException;
+
+import com.github.mygreen.supercsv.annotation.CsvBean;
+import com.github.mygreen.supercsv.annotation.CsvColumn;
+import com.github.mygreen.supercsv.annotation.CsvPartial;
+import com.github.mygreen.supercsv.annotation.CsvPostRead;
+import com.github.mygreen.supercsv.annotation.CsvPostWrite;
+import com.github.mygreen.supercsv.annotation.CsvPreRead;
+import com.github.mygreen.supercsv.annotation.CsvPreWrite;
+import com.github.mygreen.supercsv.annotation.DefaultGroup;
+import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
+import com.github.mygreen.supercsv.localization.MessageBuilder;
+import com.github.mygreen.supercsv.validation.CsvValidator;
+
+/**
+ * BeanからCSVのマッピング情報を作成するクラス。
+ * 
+ * @version 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class BeanMappingFactory {
+    
+<span class="fc" id="L38">    private Configuration configuration = new Configuration();</span>
+    
+    /**
+     * デフォルトコンストラクタ
+     */
+<span class="fc" id="L43">    public BeanMappingFactory() {</span>
+        
+<span class="fc" id="L45">    }</span>
+    
+    /**
+     * Beanクラスから、CSVのマッピング情報を作成します。
+     * 
+     * @param &lt;T&gt; Beanのタイプ
+     * @param beanType 作成元のBeanクラス。
+     * @param groups グループ情報。
+     *              アノテーションを指定したグループで切り替える際に指定します。
+     *              何も指定しない場合は、デフォルトグループの{@link DefaultGroup}のクラスが指定されたとして処理します。
+     * @return CSVのマッピング情報。
+     * @throws NullPointerException {@literal beanType == null.}
+     * @throws SuperCsvInvalidAnnotationException アノテーションの定義が不正な場合。
+     */
+    @SuppressWarnings({&quot;unchecked&quot;})
+    public &lt;T&gt; BeanMapping&lt;T&gt; create(final Class&lt;T&gt; beanType, final Class&lt;?&gt;... groups) {
+        
+<span class="fc" id="L62">        Objects.requireNonNull(beanType);</span>
+        
+<span class="fc" id="L64">        final BeanMapping&lt;T&gt; beanMapping = new BeanMapping&lt;&gt;(beanType);</span>
+        
+        // アノテーション @CsvBeanの取得
+<span class="fc" id="L67">        final CsvBean beanAnno = beanType.getAnnotation(CsvBean.class);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if(beanAnno == null) {</span>
+<span class="fc" id="L69">            throw new SuperCsvInvalidAnnotationException(beanAnno, MessageBuilder.create(&quot;anno.notFound&quot;)</span>
+<span class="fc" id="L70">                        .varWithClass(&quot;property&quot;, beanType)</span>
+<span class="fc" id="L71">                        .varWithAnno(&quot;anno&quot;, CsvBean.class)</span>
+<span class="fc" id="L72">                        .format());</span>
+        }
+        
+<span class="fc" id="L75">        beanMapping.setHeader(beanAnno.header());</span>
+<span class="fc" id="L76">        beanMapping.setValidateHeader(beanAnno.validateHeader());</span>
+        
+        // CsvValidatorの取得
+<span class="fc" id="L79">        final List&lt;CsvValidator&lt;T&gt;&gt; validators = Arrays.stream(beanAnno.validators())</span>
+<span class="fc" id="L80">                .map(v -&gt; (CsvValidator&lt;T&gt;)configuration.getBeanFactory().create(v))</span>
+<span class="fc" id="L81">                .collect(Collectors.toList());</span>
+<span class="fc" id="L82">        beanMapping.addAllValidators(validators);</span>
+        
+        // アノテーション @CsvColumn の取得
+<span class="fc" id="L85">        final List&lt;ColumnMapping&gt; columnMappingList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for(Field field : beanType.getDeclaredFields()) {</span>
+            
+<span class="fc" id="L88">            final CsvColumn columnAnno = field.getAnnotation(CsvColumn.class);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(columnAnno != null) {</span>
+<span class="fc" id="L90">                columnMappingList.add(createColumnMapping(field, columnAnno, configuration, groups));</span>
+            }
+            
+        }
+        
+        // カラムの位置順の並び変えと、位置のチェック
+<span class="fc" id="L96">        columnMappingList.sort(null);</span>
+<span class="fc" id="L97">        validateColumnAndSupplyPartialColumn(beanType, columnMappingList, Optional.ofNullable(beanType.getAnnotation(CsvPartial.class)));</span>
+<span class="fc" id="L98">        beanMapping.addAllColumns(columnMappingList);</span>
+        
+        // コールバック用のメソッドの取得
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        for(Method method : beanType.getDeclaredMethods()) {</span>
+            
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            if(method.getAnnotation(CsvPreRead.class) != null) {</span>
+<span class="fc" id="L104">                beanMapping.addPreReadMethod(new CallbackMethod(method));</span>
+            }
+            
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if(method.getAnnotation(CsvPostRead.class) != null) {</span>
+<span class="fc" id="L108">                beanMapping.addPostReadMethod(new CallbackMethod(method));</span>
+            }
+            
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if(method.getAnnotation(CsvPreWrite.class) != null) {</span>
+<span class="fc" id="L112">                beanMapping.addPreWriteMethod(new CallbackMethod(method));</span>
+            }
+            
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            if(method.getAnnotation(CsvPostWrite.class) != null) {</span>
+<span class="fc" id="L116">                beanMapping.addPostWriteMethod(new CallbackMethod(method));</span>
+            }
+        }
+        
+        // リスナークラスの取得
+<span class="fc" id="L121">        final List&lt;Object&gt; listeners = Arrays.stream(beanAnno.listeners())</span>
+<span class="fc" id="L122">                .map(l -&gt; configuration.getBeanFactory().create(l))</span>
+<span class="fc" id="L123">                .collect(Collectors.toList());</span>
+<span class="fc" id="L124">        beanMapping.addAllListeners(listeners);</span>
+        
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for(Object listener : listeners) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            for(Method method : listener.getClass().getDeclaredMethods()) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                if(method.getAnnotation(CsvPreRead.class) != null) {</span>
+<span class="fc" id="L129">                    beanMapping.addPreReadMethod(new ListenerCallbackMethod(listener, method));</span>
+                }
+                
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if(method.getAnnotation(CsvPostRead.class) != null) {</span>
+<span class="fc" id="L133">                    beanMapping.addPostReadMethod(new ListenerCallbackMethod(listener, method));</span>
+                }
+                
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                if(method.getAnnotation(CsvPreWrite.class) != null) {</span>
+<span class="fc" id="L137">                    beanMapping.addPreWriteMethod(new ListenerCallbackMethod(listener, method));</span>
+                }
+                
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                if(method.getAnnotation(CsvPostWrite.class) != null) {</span>
+<span class="fc" id="L141">                    beanMapping.addPostWriteMethod(new ListenerCallbackMethod(listener, method));</span>
+                }
+            }
+<span class="fc" id="L144">        }</span>
+        
+<span class="fc" id="L146">        beanMapping.getPreReadMethods().sort(null);</span>
+<span class="fc" id="L147">        beanMapping.getPostReadMethods().sort(null);</span>
+<span class="fc" id="L148">        beanMapping.getPreWriteMethods().sort(null);</span>
+<span class="fc" id="L149">        beanMapping.getPostWriteMethods().sort(null);</span>
+        
+<span class="fc" id="L151">        beanMapping.setSkipValidationOnWrite(configuration.isSkipValidationOnWrite());</span>
+<span class="fc" id="L152">        beanMapping.setGroups(groups);</span>
+        
+<span class="fc" id="L154">        return beanMapping;</span>
+    }
+    
+    @SuppressWarnings({&quot;rawtypes&quot;, &quot;unchecked&quot;})
+    private ColumnMapping createColumnMapping(final Field field, final CsvColumn columnAnno,
+            final Configuration config, final Class&lt;?&gt;[] groups) {
+        
+<span class="fc" id="L161">        final FieldAccessor fieldAccessor = new FieldAccessor(field, config.getAnnoationComparator());</span>
+        
+<span class="fc" id="L163">        final ColumnMapping columnMapping = new ColumnMapping();</span>
+<span class="fc" id="L164">        columnMapping.setField(fieldAccessor);</span>
+<span class="fc" id="L165">        columnMapping.setNumber(columnAnno.number());</span>
+        
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if(columnAnno.label().isEmpty()) {</span>
+<span class="fc" id="L168">            columnMapping.setLabel(field.getName());</span>
+        } else {
+<span class="fc" id="L170">            columnMapping.setLabel(columnAnno.label());</span>
+        }
+        
+        // ProcessorBuilderの取得
+        ProcessorBuilder builder;
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if(columnAnno.builder().length == 0) {</span>
+            
+<span class="fc" id="L177">            builder = config.getBuilderResolver().resolve(fieldAccessor.getType());</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            if(builder == null) {</span>
+                // 不明なタイプの場合
+<span class="fc" id="L180">                builder = new GeneralProcessorBuilder();</span>
+            }
+            
+        } else {
+            // 直接Builderクラスが指定されている場合
+            try {
+<span class="fc" id="L186">                builder = (ProcessorBuilder) config.getBeanFactory().create(columnAnno.builder()[0]);</span>
+                
+<span class="nc" id="L188">            } catch(Throwable e) {</span>
+<span class="nc" id="L189">                throw new SuperCsvReflectionException(</span>
+<span class="nc" id="L190">                        String.format(&quot;Fail create instance of %s with attribute 'builderClass' of @CsvColumn&quot;,</span>
+<span class="nc" id="L191">                                columnAnno.builder()[0].getCanonicalName()), e);</span>
+<span class="fc" id="L192">            }</span>
+        }
+        
+        // CellProcessorの作成
+<span class="fc" id="L196">        columnMapping.setCellProcessorForReading(</span>
+<span class="fc" id="L197">                (CellProcessor)builder.buildForReading(field.getType(), fieldAccessor, config, groups).orElse(null));</span>
+        
+<span class="fc" id="L199">        columnMapping.setCellProcessorForWriting(</span>
+<span class="fc" id="L200">                (CellProcessor)builder.buildForWriting(field.getType(), fieldAccessor, config,  groups).orElse(null));</span>
+        
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if(builder instanceof AbstractProcessorBuilder) {</span>
+<span class="fc" id="L203">            columnMapping.setFormatter(((AbstractProcessorBuilder)builder).getFormatter(fieldAccessor, config));</span>
+        }
+        
+<span class="fc" id="L206">        return columnMapping;</span>
+        
+    }
+    
+    /**
+     * カラム情報の検証と、部分的に読み込む場合のカラム情報を補足する。
+     * @param beanType Beanのクラスタイプ
+     * @param list カラム番号の昇順に並び変えられたカラム情報。
+     * @param partialAnno アノテーション{@link CsvPartial}の情報
+     */
+    private void validateColumnAndSupplyPartialColumn(final Class&lt;?&gt; beanType, final List&lt;ColumnMapping&gt; list, 
+            final Optional&lt;CsvPartial&gt; partialAnno) {
+        
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if(list.isEmpty()) {</span>
+<span class="fc" id="L220">            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create(&quot;anno.notFound&quot;)</span>
+<span class="fc" id="L221">                    .varWithClass(&quot;property&quot;, beanType)</span>
+<span class="fc" id="L222">                    .varWithAnno(&quot;anno&quot;, CsvColumn.class)</span>
+<span class="fc" id="L223">                    .format());</span>
+        }
+        
+        // check duplicated column number value 
+<span class="fc" id="L227">        final Set&lt;Integer&gt; checkedNumber = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L228">        final Set&lt;Integer&gt; duplicateNumbers = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        for(ColumnMapping columnMapping : list) {</span>
+            
+<span class="fc bfc" id="L231" title="All 2 branches covered.">            if(checkedNumber.contains(columnMapping.getNumber())) {</span>
+<span class="fc" id="L232">                duplicateNumbers.add(columnMapping.getNumber());</span>
+            }
+<span class="fc" id="L234">            checkedNumber.add(columnMapping.getNumber());</span>
+            
+<span class="fc" id="L236">        }</span>
+        
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        if(!duplicateNumbers.isEmpty()) {</span>
+            // 重複している 属性 numberが存在する場合
+<span class="fc" id="L240">            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create(&quot;anno.attr.duplicated&quot;)</span>
+<span class="fc" id="L241">                    .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L242">                    .varWithAnno(&quot;anno&quot;, CsvColumn.class)</span>
+<span class="fc" id="L243">                    .var(&quot;attrName&quot;, &quot;number&quot;)</span>
+<span class="fc" id="L244">                    .var(&quot;attrValues&quot;, duplicateNumbers)</span>
+<span class="fc" id="L245">                    .format());</span>
+        }
+        
+        // カラム番号が1以上かのチェック
+<span class="fc" id="L249">        final int minColumnNumber = list.get(0).getNumber();</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        if(minColumnNumber &lt;= 0) {</span>
+<span class="fc" id="L251">            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create(&quot;anno.attr.min&quot;)</span>
+<span class="fc" id="L252">                    .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L253">                    .varWithAnno(&quot;anno&quot;, CsvColumn.class)</span>
+<span class="fc" id="L254">                    .var(&quot;attrName&quot;, &quot;number&quot;)</span>
+<span class="fc" id="L255">                    .var(&quot;attrValue&quot;, minColumnNumber)</span>
+<span class="fc" id="L256">                    .var(&quot;min&quot;, 1)</span>
+<span class="fc" id="L257">                    .format());</span>
+            
+        }
+        
+        // 定義されている列番号の最大値
+<span class="fc" id="L262">        final int maxColumnNumber = list.get(list.size()-1).getNumber();</span>
+        
+        // Beanに定義されていない欠けているカラム番号の取得
+<span class="fc" id="L265">        final Set&lt;Integer&gt; lackNumbers = new TreeSet&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        for(int i=1; i &lt;= maxColumnNumber; i++) {</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">            if(!checkedNumber.contains(i)) {</span>
+<span class="fc" id="L268">                lackNumbers.add(i);</span>
+            }
+        }
+        
+        // 定義されているカラム番号より、大きなカラム番号を持つカラム情報の補足
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        if(partialAnno.isPresent()) {</span>
+            
+<span class="fc" id="L275">            final int partialColumnSize = partialAnno.get().columnSize();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            if(maxColumnNumber &gt; partialColumnSize) {</span>
+<span class="fc" id="L277">                throw new SuperCsvInvalidAnnotationException(partialAnno.get(), MessageBuilder.create(&quot;anno.CsvPartial.columSizeMin&quot;)</span>
+<span class="fc" id="L278">                        .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L279">                        .var(&quot;columnSize&quot;, partialColumnSize)</span>
+<span class="fc" id="L280">                        .var(&quot;maxColumnNumber&quot;, maxColumnNumber)</span>
+<span class="fc" id="L281">                        .format());</span>
+                
+            }
+            
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">            if(maxColumnNumber &lt; partialColumnSize) {</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">                for(int i= maxColumnNumber+1; i &lt;= partialColumnSize; i++) {</span>
+<span class="fc" id="L287">                    lackNumbers.add(i);</span>
+                }
+            }
+            
+        }
+        
+        // 不足分のカラムがある場合は、部分的な読み書き用カラムとして追加する
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        if(lackNumbers.size() &gt; 0) {</span>
+            
+<span class="fc bfc" id="L296" title="All 2 branches covered.">            for(int number : lackNumbers) {</span>
+<span class="fc" id="L297">                list.add(createPartialColumnMapping(number, partialAnno));</span>
+<span class="fc" id="L298">            }</span>
+            
+<span class="fc" id="L300">            list.sort(null);</span>
+        }
+        
+<span class="fc" id="L303">    }</span>
+    
+    /**
+     * 部分的なカラムの場合の作成
+     * @param columnNumber 列番号
+     * @param partialAnno
+     * @return
+     */
+    private ColumnMapping createPartialColumnMapping(int columnNumber, final Optional&lt;CsvPartial&gt; partialAnno) {
+        
+<span class="fc" id="L313">        final ColumnMapping columnMapping = new ColumnMapping();</span>
+<span class="fc" id="L314">        columnMapping.setNumber(columnNumber);</span>
+<span class="fc" id="L315">        columnMapping.setPartialized(true);</span>
+        
+<span class="fc" id="L317">        String label = String.format(&quot;column%d&quot;, columnNumber);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        if(partialAnno.isPresent()) {</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">            for(CsvPartial.Header header : partialAnno.get().headers()) {</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">                if(header.number() == columnNumber) {</span>
+<span class="fc" id="L321">                    label = header.label();</span>
+                }
+            }
+        }
+<span class="fc" id="L325">        columnMapping.setLabel(label);</span>
+        
+<span class="fc" id="L327">        return columnMapping;</span>
+        
+    }
+    
+    /**
+     * システム情報を取得します。
+     * @return 既存のシステム情報を変更する際に取得します。
+     */
+    public Configuration getConfiguration() {
+<span class="fc" id="L336">        return configuration;</span>
+    }
+    
+    /**
+     * システム情報を取得します。
+     * @param configuraton 新しくシステム情報を変更する際に設定します。
+     */
+    public void setConfiguration(Configuration configuraton) {
+<span class="fc" id="L344">        this.configuration = configuraton;</span>
+<span class="fc" id="L345">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

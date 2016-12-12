@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringBeanFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">SpringBeanFactory.java</span></div><h1>SpringBeanFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.lang.reflect.Constructor;
+import java.util.Objects;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.util.BeanInterfaceProxy;
+
+/**
+ * Springのコンテナからインタンスを作成するためのクラスです。
+ * &lt;p&gt;利用するには、このクラスをSpringのコンテナに登録しておく必要があります。&lt;/p&gt;
+ * &lt;p&gt;Springのコンテナに登録されていないクラスは、通常のクラスとしてインスタンスを作成します。
+ *  &lt;br&gt;ただし、コンテナ管理外のクラスに対しても、アノテーション{@link Autowired}によるインジェクションが可能です。
+ * &lt;/p&gt;
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L30">public class SpringBeanFactory implements BeanFactory&lt;Class&lt;?&gt;, Object&gt;, ApplicationContextAware, InitializingBean {</span>
+
+    private AutowireCapableBeanFactory beanFactory;
+    
+    private ApplicationContext applicationContext;
+    
+    @Override
+    public Object create(final Class&lt;?&gt; clazz) {
+<span class="fc" id="L38">        Objects.requireNonNull(clazz, &quot;clazz should not be null.&quot;);</span>
+        
+<span class="fc" id="L40">        final String beanName = getBeanName(clazz);</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if(beanFactory.containsBean(beanName)) {</span>
+            // Spring管理のクラスの場合
+<span class="fc" id="L43">            return beanFactory.getBean(beanName, clazz);</span>
+            
+        } else {
+            // 通常のBeanクラスの場合
+            Object obj;
+            try {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                if(clazz.isInterface()) {</span>
+<span class="nc" id="L50">                    obj = BeanInterfaceProxy.createProxy(clazz);</span>
+                } else {
+<span class="nc" id="L52">                    Constructor&lt;?&gt; cons = clazz.getDeclaredConstructor();</span>
+<span class="nc" id="L53">                    cons.setAccessible(true);</span>
+<span class="nc" id="L54">                    obj = cons.newInstance();</span>
+                }
+                
+<span class="nc" id="L57">            } catch (ReflectiveOperationException  e) {</span>
+<span class="nc" id="L58">                throw new SuperCsvReflectionException(String.format(&quot;Fail create bean instance of '%s'&quot;, clazz.getName()), e);</span>
+<span class="nc" id="L59">            }</span>
+            
+            // Springコンテナ管理外でもインジェクションする。
+<span class="nc" id="L62">            beanFactory.autowireBean(obj);</span>
+            
+<span class="nc" id="L64">            return obj;</span>
+        }
+    }
+    
+    private String getBeanName(final Class&lt;?&gt; clazz) {
+        
+<span class="fc" id="L70">        final Component componentAnno = clazz.getAnnotation(Component.class);</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">        if(componentAnno != null &amp;&amp; !componentAnno.value().isEmpty()) {</span>
+<span class="nc" id="L72">            return componentAnno.value();</span>
+        }
+        
+<span class="fc" id="L75">        final Service serviceAnno = clazz.getAnnotation(Service.class);</span>
+<span class="pc bpc" id="L76" title="3 of 4 branches missed.">        if(serviceAnno != null &amp;&amp; !serviceAnno.value().isEmpty()) {</span>
+<span class="nc" id="L77">            return serviceAnno.value();</span>
+        }
+        
+<span class="fc" id="L80">        final Repository repositoryAnno = clazz.getAnnotation(Repository.class);</span>
+<span class="pc bpc" id="L81" title="3 of 4 branches missed.">        if(repositoryAnno != null &amp;&amp; !repositoryAnno.value().isEmpty()) {</span>
+<span class="nc" id="L82">            return repositoryAnno.value();</span>
+        }
+        
+<span class="fc" id="L85">        final Controller controllerAnno = clazz.getAnnotation(Controller.class);</span>
+<span class="pc bpc" id="L86" title="3 of 4 branches missed.">        if(controllerAnno != null &amp;&amp; !controllerAnno.value().isEmpty()) {</span>
+<span class="nc" id="L87">            return controllerAnno.value();</span>
+        }
+        
+        // ステレオタイプのアノテーションでBean名の指定がない場合は、クラス名の先頭を小文字にした名称とする。
+<span class="fc" id="L91">        return uncapitalize(clazz.getSimpleName());</span>
+    }
+    
+    /**
+     * 先頭の文字を小文字にする。
+     * @param str 変換対象の文字列
+     * @return 引数がnull、空文字の場合、そのまま返す。
+     */
+    private static String uncapitalize(final String str) {
+        final int strLen;
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">        if(str == null || (strLen = str.length()) == 0) {</span>
+<span class="nc" id="L102">            return str;</span>
+        }
+        
+<span class="fc" id="L105">        return new StringBuilder(strLen)</span>
+<span class="fc" id="L106">            .append(String.valueOf(str.charAt(0)).toLowerCase())</span>
+<span class="fc" id="L107">            .append(str.substring(1))</span>
+<span class="fc" id="L108">            .toString();</span>
+    }
+    
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">        if(applicationContext != null &amp;&amp; beanFactory == null) {</span>
+<span class="fc" id="L115">            this.beanFactory = applicationContext.getAutowireCapableBeanFactory();</span>
+        }
+        
+<span class="fc" id="L118">    }</span>
+    
+    public ApplicationContext getApplicationContext() {
+<span class="nc" id="L121">        return applicationContext;</span>
+    }
+    
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+<span class="fc" id="L126">        this.applicationContext = applicationContext;</span>
+<span class="fc" id="L127">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

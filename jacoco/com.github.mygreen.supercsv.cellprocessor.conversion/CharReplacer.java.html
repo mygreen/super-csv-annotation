@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharReplacer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">CharReplacer.java</span></div><h1>CharReplacer.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.github.mygreen.supercsv.util.ArgUtils;
+import com.github.mygreen.supercsv.util.Utils;
+
+/**
+ * 文字を置換するクラス
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L22">public class CharReplacer {</span>
+    
+    /** 置換元が1文字の場合 */
+<span class="fc" id="L25">    private final Map&lt;Character, String&gt; singles = new HashMap&lt;&gt;();</span>
+    
+    /** 置換元が複数の文字の場合 */
+<span class="fc" id="L28">    private final List&lt;ReplacedWord&gt; multi = new ArrayList&lt;&gt;();</span>
+    
+    /**
+     * 置換対象の文字を登録する。
+     * @param word 置換対象の文字
+     * @throws NullPointerException word is null.
+     */
+    public void register(final ReplacedWord word) {
+<span class="fc" id="L36">        ArgUtils.notNull(word, &quot;replacement&quot;);</span>
+        
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(word.getWord().length() == 1) {</span>
+<span class="fc" id="L39">            singles.computeIfAbsent(word.getWord().charAt(0), key -&gt; word.getReplacement());</span>
+            
+        } else {
+<span class="fc" id="L42">            multi.add(word);</span>
+        }
+        
+<span class="fc" id="L45">    }</span>
+    
+    /**
+     * 置換対象の文字を登録する。
+     * @param word 置換対象の文字
+     * @param replacement 置換後の文字
+     * @throws IllegalArgumentException word is empty.
+     * @throws NullPointerException replacement is null.
+     */
+    public void register(final String word, final String replacement) {
+<span class="fc" id="L55">        ArgUtils.notEmpty(word, &quot;word&quot;);</span>
+<span class="fc" id="L56">        ArgUtils.notNull(replacement, &quot;replacement&quot;);</span>
+        
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if(word.length() == 1) {</span>
+<span class="fc" id="L59">            singles.computeIfAbsent(word.charAt(0), key -&gt; replacement);</span>
+            
+        } else {
+<span class="fc" id="L62">            multi.add(new ReplacedWord(word, replacement));</span>
+        }
+        
+<span class="fc" id="L65">    }</span>
+    
+    /**
+     * 登録後に置換文字の整理を行うため、必ず実行すること。
+     */
+    public void ready() {
+        
+        // 複数の文字の場合、重複を排除する。
+<span class="fc" id="L73">        final Set&lt;String&gt; duplicatedWords = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L74">        final List&lt;ReplacedWord&gt; newMulti = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for(ReplacedWord word : multi) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if(duplicatedWords.contains(word.getWord())) {</span>
+<span class="fc" id="L77">                continue;</span>
+            }
+<span class="fc" id="L79">            duplicatedWords.add(word.getWord());</span>
+<span class="fc" id="L80">            newMulti.add(word);</span>
+<span class="fc" id="L81">        }</span>
+        
+        // 複数の文字の場合、文字長が長い順に並び替える。
+<span class="fc" id="L84">        Collections.sort(newMulti, new Comparator&lt;ReplacedWord&gt;() {</span>
+            
+            @Override
+            public int compare(final ReplacedWord o1, final ReplacedWord o2) {
+                
+<span class="fc" id="L89">                final int length1 = o1.getWord().length();</span>
+<span class="fc" id="L90">                final int length2 = o2.getWord().length();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                if(length1 &lt; length2) {</span>
+<span class="fc" id="L92">                    return 1;</span>
+                    
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                } else if(length1 &gt; length2) {</span>
+<span class="fc" id="L95">                    return -1;</span>
+                    
+                } else {
+<span class="fc" id="L98">                    return o1.getWord().compareTo(o2.getWord());</span>
+                }
+            }
+        });
+        
+<span class="fc" id="L103">        multi.clear();</span>
+<span class="fc" id="L104">        multi.addAll(newMulti);</span>
+        
+<span class="fc" id="L106">    }</span>
+    
+    /**
+     * 登録された文字を元に置換する。
+     * @param text 置換対象の文字
+     * @return 置換した文字。置換対象の文字がnullまたは空文字の場合、置換しない。
+     */
+    public String replace(final String text) {
+        
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if(Utils.isEmpty(text)) {</span>
+<span class="fc" id="L116">            return text;</span>
+        }
+        
+<span class="fc" id="L119">        final int length = text.length();</span>
+<span class="fc" id="L120">        StringBuilder replaced = new StringBuilder();</span>
+<span class="fc" id="L121">        int index = 0;</span>
+        
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        while(index &lt; length) {</span>
+<span class="fc" id="L124">            int multiIndex = replaceMulti(text, index, replaced);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            if(multiIndex &gt; index) {</span>
+<span class="fc" id="L126">                index = multiIndex;</span>
+<span class="fc" id="L127">                continue;</span>
+            }
+            
+<span class="fc" id="L130">            int singleIndex = replaceSingle(text, index, replaced);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            if(singleIndex &gt; index) {</span>
+<span class="fc" id="L132">                index = singleIndex;</span>
+<span class="fc" id="L133">                continue;</span>
+            }
+            
+            // 置換できるものがない場合
+<span class="fc" id="L137">            replaced.append(text.charAt(index));</span>
+<span class="fc" id="L138">            index++;</span>
+            
+<span class="fc" id="L140">        }</span>
+        
+<span class="fc" id="L142">        return replaced.toString();</span>
+    }
+    
+    private int replaceSingle(final String source, final int index, final StringBuilder replaced) {
+        
+<span class="fc" id="L147">        final char c = source.charAt(index);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if(singles.containsKey(c)) {</span>
+<span class="fc" id="L149">            replaced.append(singles.get(c));</span>
+<span class="fc" id="L150">            return index + 1;</span>
+        }
+        
+<span class="fc" id="L153">        return index;</span>
+        
+    }
+    
+    private int replaceMulti(final String source, final int index, final StringBuilder replaced) {
+        
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        for(ReplacedWord word : multi) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if(source.indexOf(word.getWord(), index) == index) {</span>
+<span class="fc" id="L161">                replaced.append(word.getReplacement());</span>
+<span class="fc" id="L162">                return index + word.getWord().length();</span>
+            }
+<span class="fc" id="L164">        }</span>
+        
+<span class="fc" id="L166">        return index;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
