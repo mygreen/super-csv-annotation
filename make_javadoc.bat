@@ -7,9 +7,7 @@ if NOT "%JAVA_HOME_8%" == "" (
     set JAVA_HOME="%JAVA_HOME_8%"
 )
 
-del javadoc.txt
-call mvn javadoc:javadoc 2>&1 > javadoc.txt
+call mvn javadoc:javadoc > target/javadoc.log 2>&1 
 
-start javadoc.txt
-
+start target/javadoc.log
 
