@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+/**
+ * 表内の改行のインデントを解除する
+ */
+td div.line-block {
+	margin-left: 0 !important;
+}
+
+/**
+ * ナビゲーションのキャプション
+ */
+div.wy-menu p.caption {
+	background-color: #AAAAAA;
+	margin-top: 10px;
+}
+
+/**
+ * 外部リンクのアイコン
+ */
+img.icon_externallink {
+	margin-left: 3px;
+	margin-bottom: 3px;
+	
+	vertical-align: middle;
+}
+
+a.externalink[target="_blank"] {
+	padding-right:15px;
+	background: url(external-link-12.png)no-repeat right;
+}
+
+

@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>1.2</version>
-	<name>super-csv-annotation</name>
+	<version>2.0</version>
+	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description>[<![CDATA[
-Super CSV Annotation, And Localization Message
+CSVのJavaライブラリであるSuperCSVに、アノテーション機能を追加したライブラリです。
 ]]>]</description>
 	
 	<issueManagement>
@@ -64,7 +64,8 @@ Super CSV Annotation, And Localization Message
 		<java.version>1.8</java.version>
 		<supercsv.version>2.4.0</supercsv.version>
 		<slf4j.version>1.7.1</slf4j.version>
-		<spring.version>3.2.17.RELEASE</spring.version>
+		<spring.version>4.3.2.RELEASE</spring.version>
+		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
 	</properties>
 	
 	<build>
@@ -109,11 +110,17 @@ Super CSV Annotation, And Localization Message
 		</pluginManagement>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
+					<failOnError>false</failOnError>
+					<!-- 
+					<compilerArgs>
+						<arg>-Xlint:unchecked</arg>
+					</compilerArgs>
+					-->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -132,6 +139,7 @@ Super CSV Annotation, And Localization Message
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<configuration>
 					<nohelp>true</nohelp>
 					<charset>UTF-8</charset>
@@ -139,6 +147,33 @@ Super CSV Annotation, And Localization Message
 					<docencoding>UTF-8</docencoding>
 					<locale>ja_JP</locale>
 					<maxmemory>512m</maxmemory>
+					<links>
+						<link>https://docs.oracle.com/javase/jp/8/docs/api/</link>
+						<link>http://super-csv.github.io/super-csv/apidocs/</link>
+					</links>
+					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+					<docfilessubdirs>true</docfilessubdirs>
+					<header>${project.name} ${project.version}
+<![CDATA[
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('pre.highlight code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
+});
+</script>
+]]>
+					</header>
 				</configuration>
 				<executions>
 					<execution>
@@ -157,12 +192,61 @@ Super CSV Annotation, And Localization Message
 			</plugin>
 			
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>3.6</version>
 				<configuration>
 					<locales>ja</locales>
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>sphinx-doc</id>
+						<phase>site</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>make_sphinx_html.bat</executable>
+							<arguments>
+								<argument>${project.version}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${jacocoArgs}</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+		        <groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.7.201606060606</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>jacocoArgs</propertyName>
+							<includes>
+								<include>${jacoco.include.package}</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			
 			<plugin>
@@ -193,17 +277,76 @@ Super CSV Annotation, And Localization Message
 		</dependency>
 		
 		<dependency>
-			<groupId>net.sf.supercsv</groupId>
-			<artifactId>super-csv-java8</artifactId>
-			<version>${supercsv.version}</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.4</version>
 			<scope>provided</scope>
 		</dependency>
 		
+		<!-- 式言語 -->
 		<dependency>
-			<groupId>net.sf.supercsv</groupId>
-			<artifactId>super-csv-joda</artifactId>
-			<version>${supercsv.version}</version>
+			<groupId>ognl</groupId>
+			<artifactId>ognl</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-jexl</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		
+		<!-- Bean Validation 1.1 -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.3.3.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>3.0.1-b08</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Bean Validation 1.0 -->
+		<!-- 
+		<dependency>
+		<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.2.Final</version>
+		</dependency>
+		-->
+		
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
 		
 		<!-- tester -->
@@ -225,24 +368,17 @@ Super CSV Annotation, And Localization Message
 			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.6.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-joda-time</artifactId>
+			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -251,7 +387,6 @@ Super CSV Annotation, And Localization Message
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -278,12 +413,41 @@ Super CSV Annotation, And Localization Message
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId> 
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<configuration>
-					<source>${java.version}</source>
-					<encoding>UTF-8</encoding>
+					<nohelp>true</nohelp>
 					<charset>UTF-8</charset>
+					<encoding>UTF-8</encoding>
 					<docencoding>UTF-8</docencoding>
 					<locale>ja_JP</locale>
+					<maxmemory>512m</maxmemory>
+					<links>
+						<link>https://docs.oracle.com/javase/jp/8/docs/api/</link>
+						<link>http://super-csv.github.io/super-csv/apidocs/</link>
+					</links>
+					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+					<docfilessubdirs>true</docfilessubdirs>
+					<header>${project.name} ${project.version}
+ <![CDATA[
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('pre.highlight code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
+});
+</script>
+]]>
+					</header>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -294,6 +458,15 @@ Super CSV Annotation, And Localization Message
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>

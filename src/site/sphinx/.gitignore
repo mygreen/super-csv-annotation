@@ -1,0 +1,8 @@
+## sphinx
+/build
+
+## for tmporary file.
+*~
+~*
+\#*\#
+

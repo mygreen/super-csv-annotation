@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	jxb:version="2.1">
+
+	<element name="sample">
+		<complexType mixed="true">
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element name="value" type="string" />
+			</sequence>
+			<attribute name="id" use="required" type="string"/>
+		</complexType>
+	</element>
+
+</schema>

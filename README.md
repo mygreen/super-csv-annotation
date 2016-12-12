@@ -1,27 +1,30 @@
-super-csv-annotation
+Supre CSV Annotation
 ====================
 
-'Super CSV' extention library for annotation
+This library 'Super CSV' extension library with annotation function.
 + this library automatic building for CellProcessor from Annotation with JavaBean.
 + and simply showing localized messages.
 
 # Depends
 ------------------------------
-+ Java1.8+
-    - (SuperCSV2.x is Java1.5+, but this library require Java1.8)
-+ SuperCSV 2.4.0+
++ Java1.8
+    - (SuperCSV2.x is Java1.6+, but this library require Java1.8)
++ SuperCSV 2.4+
 
 # Setup
 
-```xml
-<dependencies>
+```xml:pom.xml
   <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>super-csv-annotation</artifactId>
-    <version>1.2</version>
+    <version>2.0</version>
   </dependency>
-</dependencies>
 ```
 
 # Document
-http://mygreen.github.io/super-csv-annotation/howtouse.html
++ Project infomation
+ + http://mygreen.github.io/super-csv-annotation/index.html
++ Manual
+ + http://mygreen.github.io/super-csv-annotation/sphinx/index.html
++ Javadoc
+ + http://mygreen.github.io/super-csv-annotation/apidocs/index.html
