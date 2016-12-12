@@ -1,5 +1,5 @@
 /**
- * オブジェクトのフォーマットやパースを行うCellProcessorの提供を行います。
+ * 値をフォーマットする{@link org.supercsv.cellprocessor.ift.CellProcessor}の実装を提供します。
  * 
  * @since 2.0
  * @author T.TSUCHIE

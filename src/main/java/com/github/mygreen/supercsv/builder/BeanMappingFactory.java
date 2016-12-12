@@ -56,7 +56,7 @@ public class BeanMappingFactory {
      * @throws NullPointerException {@literal beanType == null.}
      * @throws SuperCsvInvalidAnnotationException アノテーションの定義が不正な場合。
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({"unchecked"})
     public <T> BeanMapping<T> create(final Class<T> beanType, final Class<?>... groups) {
         
         Objects.requireNonNull(beanType);
@@ -77,7 +77,7 @@ public class BeanMappingFactory {
         
         // CsvValidatorの取得
         final List<CsvValidator<T>> validators = Arrays.stream(beanAnno.validators())
-                .map(v -> (CsvValidator)configuration.getBeanFactory().create(v))
+                .map(v -> (CsvValidator<T>)configuration.getBeanFactory().create(v))
                 .collect(Collectors.toList());
         beanMapping.addAllValidators(validators);
         

@@ -100,34 +100,38 @@ public class SimpleNumberFormatter<T extends Number> extends AbstractTextFormatt
     public String print(final T object) {
         
         if(mathContext != null) {
-            if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
-                return new BigDecimal((byte)object, mathContext).toPlainString();
-                
-            } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
-                return new BigDecimal((short)object, mathContext).toPlainString();
-                
-            } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
-                return new BigDecimal((int)object, mathContext).toPlainString();
-                
-            } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
-                return new BigDecimal((long)object, mathContext).toPlainString();
-                
-            } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
-                return new BigDecimal((float)object, mathContext).toPlainString();
-                
-            } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
-                return new BigDecimal((double)object, mathContext).toPlainString();
-                
-            } else if(BigInteger.class.isAssignableFrom(type)) {
-                return new BigDecimal((BigInteger)object, mathContext).toPlainString();
-                
-            } else {
-                return object.toString();
-            }
-            
+            return printNumber(object);
         }
         
         return object.toString();
+    }
+    
+    private String printNumber(final Object object) {
+        
+        if(Byte.class.isAssignableFrom(type) || byte.class.isAssignableFrom(type)) {
+            return new BigDecimal((byte)object, mathContext).toPlainString();
+            
+        } else if(Short.class.isAssignableFrom(type) || short.class.isAssignableFrom(type)) {
+            return new BigDecimal((short)object, mathContext).toPlainString();
+            
+        } else if(Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type)) {
+            return new BigDecimal((int)object, mathContext).toPlainString();
+            
+        } else if(Long.class.isAssignableFrom(type) || long.class.isAssignableFrom(type)) {
+            return new BigDecimal((long)object, mathContext).toPlainString();
+            
+        } else if(Float.class.isAssignableFrom(type) || float.class.isAssignableFrom(type)) {
+            return new BigDecimal((float)object, mathContext).toPlainString();
+            
+        } else if(Double.class.isAssignableFrom(type) || double.class.isAssignableFrom(type)) {
+            return new BigDecimal((double)object, mathContext).toPlainString();
+            
+        } else if(BigInteger.class.isAssignableFrom(type)) {
+            return new BigDecimal((BigInteger)object, mathContext).toPlainString();
+            
+        } else {
+            return object.toString();
+        }
     }
     
     /**

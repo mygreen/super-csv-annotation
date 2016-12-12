@@ -22,7 +22,7 @@
 
   * 内部クラスのアノテーションとして、 *List* を定義します。
 
-* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` を指定します。
+* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html>`_ ]を指定します。
 
 
 .. sourcecode:: java
@@ -89,7 +89,7 @@
 属性の上書き
 --------------------------------------------------------
 
-合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` を使用します。
+合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html>`_ ]を使用します。
 
 * 属性 ``annotation`` で上書き対象のアノテーションを指定し、属性 ``name`` で属性名を指定します。
 * アノテーション ``@CsvOverridesAttribute`` を複数付与することで、1つの属性で複数の属性を上書きすることができます。

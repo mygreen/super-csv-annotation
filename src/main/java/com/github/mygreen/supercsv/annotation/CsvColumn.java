@@ -12,8 +12,8 @@ import com.github.mygreen.supercsv.builder.ProcessorBuilder;
 
 
 /**
- * CSVのカラムを定義するためのアノテーションです。
- * <p>列番号や見出し情報を指定します。</p>
+ * CSVのカラムであることを表現するためのアノテーションです。
+ * <p>フィールドに指定します。</p>
  * 
  * @version 2.0
  * @since 1.0

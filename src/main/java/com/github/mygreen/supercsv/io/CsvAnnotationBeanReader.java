@@ -265,9 +265,9 @@ public class CsvAnnotationBeanReader<T> extends AbstractCsvReader {
     }
     
     /**
-     * 1レコード分を読み込む。
+     * 1レコード分を読み込みます。
      * 
-     * @return Beanのレコード。読み込むレコードがない場合は、nullを返す。
+     * @return Beanのレコード。読み込むレコードがない場合は、nullを返します。
      * 
      * @throws IOException レコードの読み込みに失敗した場合。
      * @throws SuperCsvNoMatchColumnSizeException レコードのカラムサイズに問題がある場合

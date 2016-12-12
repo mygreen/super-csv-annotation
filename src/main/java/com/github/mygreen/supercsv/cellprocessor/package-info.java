@@ -1,5 +1,5 @@
 /**
- * CellProcessorの実装を提供します。
+ * {@link org.supercsv.cellprocessor.ift.CellProcessor}の実装を提供します。
  *
  * @author T.TSUCHIE
  *

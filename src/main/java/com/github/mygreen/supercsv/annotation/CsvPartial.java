@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 部分的にカラムをマッピングする際に、ファイルの情報を補完する際に使用するアノテーションです。
+ * 部分的にカラムをマッピングする際に、ファイルの情報を補完するためのアノテーションです。
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -26,7 +26,7 @@ public @interface CsvPartial {
     int columnSize();
     
     /**
-     * ヘッダー情報を定義します。
+     * ヘッダー情報を定義するためのアノテーションです。
      * @return Beanに定義されていないカラムのヘッダー情報を補足するために使用されます。
      */
     Header[] headers() default {};

@@ -7,7 +7,7 @@ if NOT "%JAVA_HOME_8%" == "" (
     set JAVA_HOME="%JAVA_HOME_8%"
 )
 
-call mvn javadoc:javadoc > target/javadoc.log 2>&1 
+call mvn site -Dgpg.skip=true > target/site.log 2>&1 
 
-start target/javadoc.log
+start target/site.log
 

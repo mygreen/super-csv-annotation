@@ -31,7 +31,7 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
 import com.github.mygreen.supercsv.util.Utils;
 
 /**
- * 繰り返しのアノテーション、合成のアノテーションを考慮して、アノテーションを展開するためのクラス。
+ * 繰り返しのアノテーション、合成のアノテーションを考慮して、アノテーションを展開します。
  * <p>並び順は、コンストラクタで指定されたものに並び変えられる。</p>
  * 
  * <p>繰り返しのアノテーション{@link Repeatable}が付与されたアノテーションの場合、

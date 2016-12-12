@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 import com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
 
 /**
- * 変換のアノテーションを表現するためのメタアノテーション。
+ * 変換のアノテーションを表現するためのメタアノテーションです。
  * <p>独自にアノテーションを作成する際に利用します。</p>
- *
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *

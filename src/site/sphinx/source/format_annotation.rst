@@ -13,19 +13,19 @@
      
    * - :doc:`@CsvBooleanFormat <format_annotation_boolean>`
      - ブール型に対する書式を指定します。
-     - Javadoc
+     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html>`_
 
    * - :doc:`@CsvNumberFormat <format_annotation_number>`
      - 数値型に対する書式を指定します。
-     - Javadoc
+     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_
 
    * - :doc:`@CsvDateTimeFormat <format_annotation_datetime>`
      - 日時型に対する書式を指定します。
-     - Javadoc
+     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvDateTimeFormat.html>`_
 
    * - :doc:`@CsvEnumFormat <format_annotation_enum>`
      - 列挙型に対する書式を指定します。
-     - Javadoc
+     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvEnumFormat.html>`_
 
 
 
