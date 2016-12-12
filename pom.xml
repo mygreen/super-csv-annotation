@@ -154,7 +154,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
 					<docfilessubdirs>true</docfilessubdirs>
 					<header>${project.name} ${project.version}
- <![CDATA[
+<![CDATA[
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -437,6 +437,13 @@ $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
+});
+</script>
+
+<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
 });
 </script>
 ]]>
