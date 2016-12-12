@@ -13,7 +13,8 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
 
 
 /**
- * CSVをマッピングするクラスに付与するアノテーションです。
+ * CSV用のBeanであることを表現するアノテーションです。
+ * <p>クラスに付与します。</p>
  * 
  * @version 2.0
  * @author T.TSUCHIE

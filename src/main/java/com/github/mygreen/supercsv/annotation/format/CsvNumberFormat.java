@@ -13,7 +13,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 
 /**
- * 数値型の書式を定義するアノテーション。
+ * 数値型の書式を定義するためのアノテーションです。
  * 
  * <p>対応する型は以下の通りです。</p>
  * <ul>

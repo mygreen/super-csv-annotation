@@ -11,7 +11,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 
 /**
- * boolean/Boolean型の書式を定義するアノテーションです。
+ * boolean/Boolean型の書式を定義するためのアノテーションです。
  *
  * @version 2.0
  * @author T.TSUCHIE

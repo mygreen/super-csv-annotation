@@ -11,8 +11,8 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 
 /**
- * 任意のタイプのフォーマッタを指定するアノテーション。
- * <p>このライブラリに対応していない書式や独自のタイプに対応する際に指定します。</p>
+ * 任意のタイプの書式を指定するためのアノテーションです。
+ * <p>このライブラリに対応していない書式や独自のタイプに対応する際に使用します。</p>
  *
  * @since 2.0
  * @author T.TSUCHIE

@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 合成のアノテーションを作成する場合、アノテーションの属性を特定して上書きするために使用するアノテーションです。
+ * 合成のアノテーションを作成する際に、アノテーションの属性を特定して上書きするためのアノテーションです。
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -35,7 +35,7 @@ public @interface CsvOverridesAttribute {
     String name() default "";
     
     /**
-     * 繰り返しのアノテーションが指定されている場合、番号で指定します。
+     * 複数同じアノテーションが指定されている場合に、インデックス番号で特定するために指定します。
      * @return 指定する場合は0から始めます。
      */
     int index() default -1;

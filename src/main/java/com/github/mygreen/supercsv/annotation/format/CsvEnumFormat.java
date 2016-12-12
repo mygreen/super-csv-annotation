@@ -11,7 +11,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 
 /**
- * 列挙型の書式を定義するアノテーション。
+ * 列挙型の書式を定義するためのアノテーションです。
  *
  * @version 2.0
  * @author T.TSUCHIE

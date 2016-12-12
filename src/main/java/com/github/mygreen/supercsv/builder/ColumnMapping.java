@@ -5,7 +5,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 
 /**
- *  解析したカラムのマッピング情報。
+ * 解析したカラムのマッピング情報です。
  *
  * @version 2.0
  * @author T.TSUCHIE

@@ -1,5 +1,5 @@
 /**
- * 制約のための{@link org.supercsv.cellprocessor.ift.CellProcessor}を提供します。
+ * 値の検証する{@link org.supercsv.cellprocessor.ift.CellProcessor}の実装を提供します。
  * 
  * @author T.TSUCHIE
  * 

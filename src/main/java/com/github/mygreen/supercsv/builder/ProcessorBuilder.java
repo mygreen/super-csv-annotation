@@ -9,6 +9,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
  * {@link CellProcessor}を組み立てるためのインタフェース。
  * 
  * @param <T> 処理対象のクラスタイプ。
+ * @version 2.0
  * @since 1.1
  * @author T.TSUCHIE
  *

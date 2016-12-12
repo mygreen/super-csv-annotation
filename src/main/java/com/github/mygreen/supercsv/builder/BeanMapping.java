@@ -9,7 +9,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.mygreen.supercsv.validation.CsvValidator;
 
 /**
- * 解析したBeanのマッピング情報。
+ * 解析したBeanのマッピング情報です。
  *
  * @param <T> Beanのクラスタイプ
  * @version 2.0

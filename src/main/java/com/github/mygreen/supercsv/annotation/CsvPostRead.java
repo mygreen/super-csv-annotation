@@ -7,8 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * レコードの読み込み後に、このアノテーションを付与した任意のメソッドが実行されます。 
- *
+ * ライフサイクルイベントをハンドリングするためのアノテーションです。
+ * <p>レコードの読み込み後に、このアノテーションを付与した任意のメソッドが実行されます。</p>
+ * 
+ * 
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *
