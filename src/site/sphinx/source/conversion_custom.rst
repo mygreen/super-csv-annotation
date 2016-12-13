@@ -31,7 +31,7 @@ CellProcessorの実装クラスの作成
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
   * nullの場合、次の処理に委譲するようにします。
-    SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+    Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
     本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。
   
   * 変換した値を次の処理に渡します。

@@ -27,7 +27,7 @@
     
   * Javaのクラス ``java.util.Currency`` で解釈可能なコードを指定します。
 
-* 書式に合わない値をパースした場合、例外 ``SupreCsvValidationException`` が発生します。
+* 書式に合わない値をパースした場合、例外 ``SuperCsvValidationException`` が発生します。
 
 .. sourcecode:: java
     :linenos:

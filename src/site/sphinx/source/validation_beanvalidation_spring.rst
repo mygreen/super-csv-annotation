@@ -57,7 +57,7 @@ XMLによる設定方法を説明します。
             </property>
         </bean>
         
-        <!-- Supre CSV Annotation 用のMessgeResolverの定義 -->
+        <!-- Super CSV Annotation 用のMessgeResolverの定義 -->
         <bean id="springMessageResolver" class="com.github.mygreen.supercsv.localization.SpringMessageResolver">
             <property name="messageSource" ref="messageSource" />
         </bean>

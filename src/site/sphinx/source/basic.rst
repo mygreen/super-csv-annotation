@@ -2,7 +2,7 @@
 機能概要
 ======================================
 
-本ライブラリは、JavaのCSVファイルのライブラリ「 `Supre CSV <http://super-csv.github.io/super-csv/>`_ 」に、
+本ライブラリは、JavaのCSVファイルのライブラリ「 `Super CSV <http://super-csv.github.io/super-csv/>`_ 」に、
 アノテーション機能を追加したものです。
 
 アノテーションを利用することで、煩わしいCellProcessorの組み立てを簡略化ですることがきます。

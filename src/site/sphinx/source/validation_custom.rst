@@ -32,14 +32,14 @@ CellProcessorの実装クラスの作成
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
   * nullの場合、次の処理に委譲するようにします。
-    SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+    Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
     本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。
   
   * 検証対象のクラスタイプが不正な場合は、例外 ``SuperCsvCellProcessorException`` をスローします。
     アノテーションを間違った型に付与した場合に発生する場合がありますが、ファクトリクラスの段階で弾いてもかまいません。
   
   * 正常な値であれば、次の処理に渡します。
-  * 問題がある場合、例外 ``SupreCsvValidationException`` をスローします。
+  * 問題がある場合、例外 ``SuperCsvValidationException`` をスローします。
     その際に、メソッド *createValidationException(...)* を呼び出して、ビルダクラスを利用して例外クラスを組み立てます。
 
 

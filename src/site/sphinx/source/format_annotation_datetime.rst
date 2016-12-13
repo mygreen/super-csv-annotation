@@ -72,7 +72,7 @@
   * Asia/Tokyo, GMT, GMT+09:00などの値を指定します。  
   * ただし、オフセットを持たないクラスタイプ「LocalDateTime, LocalDate, LocalTime」の時は、指定しても意味がありません。
 
-* 書式に合わない値をパースした場合、例外 ``SupreCsvValidationException`` が発生します。
+* 書式に合わない値をパースした場合、例外 ``SuperCsvValidationException`` が発生します。
 
 .. sourcecode:: java
     :linenos:

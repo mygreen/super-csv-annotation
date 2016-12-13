@@ -10,7 +10,7 @@ CellProcessorを直接組み立てる場合
 その場合は、 ``ProcessorBuilder`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html>`_ ]を実装します。
 
 
-Integer型に対するCellProcessorをSupreCSVの既存のCellProcessorを使って組み立てる例を示します。
+Integer型に対するCellProcessorをSuper CSVの既存のCellProcessorを使って組み立てる例を示します。
 
 .. sourcecode:: java
     :linenos:
