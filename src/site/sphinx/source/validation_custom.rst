@@ -25,21 +25,22 @@ CellProcessorの実装クラスの作成
 * 今回は、文字列型の値を検証するため、インタフェースとして ``StringCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
 
   * この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
+    CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。
   * 扱う値が数値型のときは ``LongCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html>`_ ]などと、扱う値によって変更してください。
 
-* コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
+* コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
 
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
   * nullの場合、次の処理に委譲するようにします。
-    SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+    Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
     本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。
   
   * 検証対象のクラスタイプが不正な場合は、例外 ``SuperCsvCellProcessorException`` をスローします。
     アノテーションを間違った型に付与した場合に発生する場合がありますが、ファクトリクラスの段階で弾いてもかまいません。
   
   * 正常な値であれば、次の処理に渡します。
-  * 問題がある場合、例外 ``SupreCsvValidationException`` をスローします。
+  * 問題がある場合、例外 ``SuperCsvValidationException`` をスローします。
     その際に、メソッド *createValidationException(...)* を呼び出して、ビルダクラスを利用して例外クラスを組み立てます。
 
 
@@ -152,7 +153,7 @@ CellProcessorの実装クラスの作成
     @CsvConstraint(CustomConstratinFactory.class)  // ファクトリクラスを指定
     public static @interface CsvCustomConstraint {
         
-        // 固有の属性 - 追加する値を指定します。
+        // 固有の属性 - チェックすることとなる最後の文字を指定します。
         String text();
         
         // 共通の属性 - ケース

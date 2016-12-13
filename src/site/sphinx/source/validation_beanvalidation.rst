@@ -45,7 +45,7 @@ Bean Validation 1.1(JSR-349)を利用する場合は、Hibernate Validator5.x系
 
 
 Bean Validation 1.0(JSR-303)を利用する場合は、Hibernate Validator4.x系を利用します。
-BeanValidation 1.0では、メッセージ中EL式は利用できませんが、本ライブラリの機能を使用すれば、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ が利用できます。
+Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ が利用できます。
 
 .. sourcecode:: xml
     :linenos:
@@ -185,7 +185,7 @@ Bean Validationのカスタマイズ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 本ライブラリ用のメッセージソースや `JEXL <http://commons.apache.org/proper/commons-jexl/>`_ に切り替える場合、
-BeanValdiationのインスタンスを変更する必要があります。
+Bean Validationのインスタンスを変更する必要があります。
 
 その場合は、``@CsvBean(validators=CsvBeanValidator.class)`` で指定するのではなく、
 メソッド ``CsvAnnotationBeanReader#addValidators(...)`` 、``CsvAnnotationBeanWriter#addValidators(...)`` で直接追加します。

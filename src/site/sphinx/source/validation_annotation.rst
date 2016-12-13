@@ -190,13 +190,13 @@
 
 属性 ``groups`` で、グループ用クラスを指定することで、属性 *cases* より柔軟に適用するケースをを限定することができます。
 
-* BeanValidation* のgroupと同じような考え方ですが、適用される順序は関係ありません。
+* Bean Validation のgroupと同じような考え方ですが、適用される順序は関係ありません。
 
   * 本ライブラリでは、順序を指定したいときは、属性 *order* を指定します。
   
 * 属性を指定しない（空の）場合は、デフォルトのグループ ``com.github.mygreen.supercsv.annotation.DefaultGroup`` が適用されたと同じ意味になります。
   
-  * BeanValidationのデフォルトグループ ``javax.validation.groups.Default`` とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。
+  * Bean Validationのデフォルトグループ ``javax.validation.groups.Default`` とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。
   
 * グループ用クラスは、実装が必要ないため、通常はインタフェースで作成します。
 
