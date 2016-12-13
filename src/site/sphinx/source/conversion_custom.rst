@@ -24,9 +24,10 @@ CellProcessorの実装クラスの作成
 * インタフェースとして ``StringCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
 
   * この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
+    CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。
   * 変換処理は、必ず文字列に対して行うため実装しておきます。
 
-* コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
+* コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
 
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
