@@ -106,8 +106,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">2. 機能概要</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basic.html#id2">2.1. 前提条件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id3">2.2. 対応しているクラスタイプ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.3. 処理の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.2. 対応しているクラスタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id5">2.3. 処理の流れ</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
@@ -221,7 +221,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lifecycle.html">9. ライフサイクルイベントの管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">9.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id6">9.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">9.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spring.html">10. Spring Frameworkとの連携</a><ul>
@@ -256,9 +256,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.1. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-5-1-2016-10-30">12.2. ver.1.5.1 - 2016-10-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.3. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.4. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.2. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.3. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -328,14 +327,15 @@
 </div></blockquote>
 <ul class="simple">
 <li>インタフェースとして <code class="docutils literal"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">Javadoc</a> ] を実装します。<ul>
-<li>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。</li>
+<li>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
+CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。</li>
 <li>変換処理は、必ず文字列に対して行うため実装しておきます。</li>
 </ul>
 </li>
-<li>コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
+<li>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
 <li>メソッド <code class="docutils literal"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
 <li>nullの場合、次の処理に委譲するようにします。
-SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
 本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</li>
 <li>変換した値を次の処理に渡します。</li>
 </ul>
@@ -593,7 +593,7 @@ SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を�
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, T.TSUCHIE.
-      最終更新: 2016-12-12 18:51:22
+      最終更新: 2016-12-14 02:48:01
 
     </p>
   </div>

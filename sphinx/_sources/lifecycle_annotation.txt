@@ -48,13 +48,13 @@
    * - 指定可能な引数のタイプ
      - 説明
    
-   * - ``org.supercsv.util.CsvContext``
+   * - ``org.supercsv.util.CsvContext`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/util/CsvContext.html>`_ ]
      - CSVの1レコード分の情報。
    
-   * - ``com.github.mygreen.supercsv.validation.CsvBindingErrors``
+   * - ``com.github.mygreen.supercsv.validation.CsvBindingErrors`` [`Javadoc <../apidocs/com/github/mygreen/supercsv/validation/CsvBindingErrors.html>`_ ]
      - CSVの1レコード分のエラー情報。
    
-   * - ``com.github.mygreen.supercsv.validation.ValidationContext``
+   * - ``com.github.mygreen.supercsv.validation.ValidationContext`` [`Javadoc <../apidocs/com/github/mygreen/supercsv/validation/ValidationContext.html>`_ ]
      - 値の検証用の情報。
    
    * - ``Class[]``

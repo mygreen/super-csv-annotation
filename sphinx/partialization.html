@@ -108,8 +108,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">2. 機能概要</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basic.html#id2">2.1. 前提条件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id3">2.2. 対応しているクラスタイプ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.3. 処理の流れ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.2. 対応しているクラスタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id5">2.3. 処理の流れ</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
@@ -223,7 +223,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lifecycle.html">9. ライフサイクルイベントの管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">9.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id6">9.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">9.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spring.html">10. Spring Frameworkとの連携</a><ul>
@@ -258,9 +258,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.1. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-5-1-2016-10-30">12.2. ver.1.5.1 - 2016-10-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.3. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.4. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.2. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.3. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -310,6 +309,7 @@
             
   <div class="section" id="id1">
 <h1>7. 部分的なカラムの読み書き<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Beanに定義しているカラムのみ処理する方法を説明します。</p>
 <div class="section" id="id2">
 <h2>7.1. 部分的なカラムの読み込み<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CSVファイルで一部のカラムを読み込みたい場合は、フィールドの定義を単純に行わなければマッピングできます。</p>
@@ -340,7 +340,8 @@
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="o">;</span>
 
@@ -360,6 +361,7 @@
     <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="o">)</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
 
+    <span class="c1">// カラム番号5を読み込まない場合は、定義を行いません。</span>
 <span class="o">}</span>
 </pre></div>
 </td></tr></table></div>
@@ -397,7 +399,7 @@
 
 <span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> <span class="n">validateHeader</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span> <span class="c1">// ヘッダー行の検証を行う</span>
 <span class="nd">@CsvPartial</span><span class="o">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">headers</span><span class="o">={</span>          <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
+    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
     <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="o">)</span>
 <span class="o">})</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
@@ -462,7 +464,7 @@
 
 <span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
 <span class="nd">@CsvPartial</span><span class="o">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">headers</span><span class="o">={</span>   <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
+    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
     <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="o">)</span>
 <span class="o">})</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
@@ -506,7 +508,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, T.TSUCHIE.
-      最終更新: 2016-12-12 18:51:22
+      最終更新: 2016-12-14 02:48:01
 
     </p>
   </div>
