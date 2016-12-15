@@ -14,7 +14,8 @@ import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
- * アノテーション{@link CsvWordReplace}をハンドリングして、CellProcessorの{@link WordReplace}を作成する。
+ * アノテーション{@link CsvWordReplace}をハンドリングして、CellProcessorの{@link WordReplace}を作成します。
+ * 
  * 
  * @since 2.0
  * @author T.TSUCHIE

@@ -13,9 +13,29 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * カラムの値の文字長が指定した長さかどうかチェックします。
+ * 文字長が指定した長さと等しいか検証するためのアノテーションです。
  * <p>文字列型に指定可能です。</p>
- *
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #value()}で、文字長を指定します。
+ *    <br>複数指定した場合は、何れかの文字長に一致すれば問題ありません。
+ *   </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvLengthExact({2, 5, 10})}
+ *     private String value;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *

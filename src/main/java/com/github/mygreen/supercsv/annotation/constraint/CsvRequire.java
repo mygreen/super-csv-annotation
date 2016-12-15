@@ -13,9 +13,43 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * カラムの値を必須に指定します。
+ * 値が必須かどうか検証するためのアノテーションです。
  * <p>全ての型に指定可能です。</p>
- *
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * <ul>
+ *   <li>オブジェクト型の場合、nullでないかどうか検証します。
+ *     <br>プリミティブ型のように必ず初期値が存在する場合は、エラーとなりません。
+ *   </li>
+ *   <li>文字列型の場合、属性{@link #considerEmpty()}、{@link #considerBlank()}を指定することで、
+ *     空文字、空白文字かどうか判定することができます。
+ *     <ul>
+ *       <li>属性{@link #considerEmpty()}で、長さが0の空文字も考慮するか指定します。
+ *         <br>trueの場合、空文字でもエラーとなります。</li>
+ *       <li>属性{@link #considerBlank()}で、半角スペースのみの空白文字も考慮するか指定します。
+ *         <br>trueの場合、空白文字でもエラーとなります。
+ *       </li>
+ *     </ul>
+ *   </li>
+ * </ul>
+ * 
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvRequire}
+ *     private Integer id;
+ *     
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvRequire(considerBlank=true)}
+ *     private String name;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *

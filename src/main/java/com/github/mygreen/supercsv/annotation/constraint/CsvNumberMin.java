@@ -14,8 +14,41 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 
 /**
- * カラムの値が指定した値以上（最小値）かどうかチェックします。
- * <p>数値に指定可能です。</p>
+ * 値が指定した下限値以上かどうか検証するためのアノテーションです。
+ * <p>数値型に指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #value()}で、下限値を指定します。
+ *     <br>値は、クラスタイプや指定した書式に沿った形式で指定する必要があります。
+ *   </li>
+ *   <li>属性{@link #inclusive()}で、値の検証時に属性{@link #value()}の値を含むかどうか指定します。
+ *     <br>初期値はtrueで、指定した値を含みます。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvNumberMin("0")}
+ *     private long id;
+ *     
+ *     // 値は書式に沿った形式で入力します。
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvNumberFormat(pattern="#,##0")}
+ *     {@literal @CsvNumberMin("1,000")}
+ *     private Integer salary;
+ *     
+ *     // 比較する際には指定した値より大きいかどうかで判定します。
+ *     {@literal @CsvColumn(number=3)}
+ *     {@literal @CsvNumberMin(value="0.0", inclusive=false)}
+ *     private Double rate;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -29,7 +62,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 public @interface CsvNumberMin {
     
     /**
-     * 最小値を指定します。
+     * 下限値となる最小値を指定します。
      * @return 値は、クラスタイプやアノテーションで指定した書式に沿った値を指定する必要があります。
      */
     String value();

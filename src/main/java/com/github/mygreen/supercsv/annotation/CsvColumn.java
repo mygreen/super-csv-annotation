@@ -13,10 +13,33 @@ import com.github.mygreen.supercsv.builder.ProcessorBuilder;
 
 /**
  * CSVのカラムであることを表現するためのアノテーションです。
- * <p>フィールドに指定します。</p>
+ * <p>フィールドに付与します。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * <ul>
+ *   <li>属性{@link #number()}でカラムの番号を指定します。
+ *     <br>値は1から始まります。
+ *   </li>
+ *   <li>ヘッダー行が存在する場合、属性{@link #label()}で見出しの値を指定します。
+ *     <br>省略した場合、フィールド名が適用されます。
+ *   </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     private int no;
+ *     
+ *     {@literal @CsvColumn(number=2, label="名前")}
+ *     private String name;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @version 2.0
- * @since 1.0
  * @author T.TSUCHIE
  *
  */

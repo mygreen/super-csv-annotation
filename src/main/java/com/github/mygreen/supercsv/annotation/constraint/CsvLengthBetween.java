@@ -13,8 +13,27 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * カラムの値の文字長が指定した範囲内の長さかどうかチェックします。
+ * 文字長が指定した範囲以内かどうか検証するためのアノテーションです。
  * <p>文字列型に指定可能です。</p>
+ *
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #min()}で、最小文字長を指定します。</li>
+ *   <li>属性{@link #max()}で、最大文字長を指定します。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvLengthBetween(min=2, max=20)}
+ *     private String name;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE

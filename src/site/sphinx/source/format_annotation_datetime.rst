@@ -4,7 +4,8 @@
 
 日時型に対する書式を指定する際に利用するアノテーションです。
 
-対応するJavaのクラスタイプとデフォルトの書式は以下の通りです。
+アノテーションを付与しないときや属性 ``pattern`` を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
+対応するJavaのクラスタイプと標準の書式は以下の通りです。
 
 .. list-table:: 対応する日時型
    :widths: 50 50
@@ -139,7 +140,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvDateTimeFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvDateTimeFormat.html>`_ を参照してください。
 
 
 .. sourcecode:: java

@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
+import org.supercsv.quote.AlwaysQuoteMode;
 
 import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BeanMapping;
@@ -111,6 +112,43 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_normal.csv", Charset.forName("UTF-8"));
+        assertThat(actual, is(expected));
+        
+        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        
+        csvWriter.close();
+        
+    }
+    
+    /**
+     * 書き込みのテスト - {@link CsvPreference}のカスタマイズ
+     */
+    @Test
+    public void testWriteAll_custom_preference() throws IOException {
+        
+        // テストデータの作成
+        final List<SampleNormalBean> list = createNormalData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        // タブ区切り、改行コード「LF」、必ずダブルクウォートで囲む設定
+        final CsvPreference preference = new CsvPreference.Builder('\"', '\t', "\n")
+                .useQuoteMode(new AlwaysQuoteMode())
+                .build();
+        
+        CsvAnnotationBeanWriter<SampleNormalBean> csvWriter = new CsvAnnotationBeanWriter<>(
+                SampleNormalBean.class,
+                strWriter,
+                preference,
+                DefaultGroup.class, SampleNormalBean.WriteGroup.class);
+        
+        csvWriter.writeAll(list, true);
+        csvWriter.flush();
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_tab.csv", Charset.forName("UTF-8"));
         assertThat(actual, is(expected));
         
         assertThat(csvWriter.getErrorMessages(), hasSize(0));

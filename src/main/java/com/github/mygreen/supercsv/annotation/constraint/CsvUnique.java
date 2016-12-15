@@ -14,7 +14,27 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 
 /**
- * カラムの値が他の行と比較してユニークであるかチェックします。
+ * 値が他の行と異なるか検証するためのアノテーションです。
+ * <p>全てのクラスタイプに指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * <p>値を比較する際には、各要素の値のequals()メソッドを用いて判定します。</p>
+ * <p>比較する際に、オブジェクト値をキャッシュするため、レコード数やオブジェクトのサイズによってはメモリをより多く消費します。
+ *   そのような場合は、ハッシュ値で検証する{@link CsvUniqueHashCode}を利用してください。
+ * </p>
+ *
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvUnique}
+ *     private long id;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  *
  * @since 2.0
  * @author T.TSUCHIE

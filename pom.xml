@@ -165,13 +165,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
-});
-</script>
 ]]>
 					</header>
 				</configuration>
@@ -437,13 +430,6 @@ $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
-});
-</script>
-
-<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
 });
 </script>
 ]]>

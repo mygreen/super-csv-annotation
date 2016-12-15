@@ -31,7 +31,7 @@
 			<item name="Spring Frameworkとの連携" href="sphinx/spring.html" />
 			<item name="システム設定" href="sphinx/configuration.html" />
 			<item name="リリースノート" href="sphinx/release.html" />
-			<item name="Javadoc" href="apidocs/index.html" />
+			<item name="JavaDoc" href="apidocs/index.html" />
 			
 		</menu>
 		
