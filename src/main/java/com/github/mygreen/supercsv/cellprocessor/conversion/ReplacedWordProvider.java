@@ -1,9 +1,11 @@
 package com.github.mygreen.supercsv.cellprocessor.conversion;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import com.github.mygreen.supercsv.annotation.conversion.CsvWordReplace;
 import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.util.ArgUtils;
 
 /**
  * {@link CsvWordReplace}による語彙による置換処理をを個ナウ際の語彙を提供するためのインタフェースです。
@@ -22,7 +24,7 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  * public class FileReplacedWordProvider implements ReplacedWordProvider {
  *     
  *     {@literal @Override}
- *     public {@literal Collection<String>} getReplacedWords(final FieldAccessor field) {
+ *     public {@literal Collection<Word>} getReplacedWords(final FieldAccessor field) {
  *         
  *         final String path;
  *         if(field.getDeclaredClass().equals(AdminCsv.class)) {
@@ -41,10 +43,10 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  *             throw new RuntimeException("fail reading the replaced words file.", e);
  *         }
  *         
- *         // 読み込んだ各行の値を分割して、ReplacedWord クラスに変換する。
+ *         // 読み込んだ各行の値を分割して、ReplacedWordProvider.Word クラスに変換する。
  *         return lines.stream()
  *             .map(l {@literal ->} l.split(","))
- *             .map(s {@literal ->} new ReplacedWord(s[0], s[1]))
+ *             .map(s {@literal ->} new Word(s[0], s[1]))
  *             .collect(Collectors.toLit());
  *         
  *     }
@@ -68,7 +70,7 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  *     private ReplacedWordRepository replacedWordRepository;
  *     
  *     {@literal @Override}
- *     public {@literal Collection<String>} getReplacedWords(final FieldAccessor field) {
+ *     public {@literal Collection<Word>} getReplacedWords(final FieldAccessor field) {
  *         
  *         final Role role;
  *         if(field.getDeclaredClass().equals(AdminCsv.class)) {
@@ -78,7 +80,7 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  *         }
  *         
  *         return loadWords(role).stream()
- *             .map(dto {@literal ->} new ReplacedWord(dto.getWord(), dto.getReplacement()))
+ *             .map(dto {@literal ->} new Word(dto.getWord(), dto.getReplacement()))
  *             .collect(Collectors.toList());
  *         
  *     }
@@ -111,6 +113,55 @@ public interface ReplacedWordProvider {
      * @param field フィールド情報
      * @return 語彙を返します。チェック対象の文字がない場合は、空のリストを返します。
      */
-    Collection<ReplacedWord> getReplacedWords(FieldAccessor field);
+    Collection<Word> getReplacedWords(FieldAccessor field);
+    
+    /**
+     * 置換語彙を表現するクラス。
+     *
+     * @since 2.0.1
+     * @author T.TSUCHIE
+     *
+     */
+    public static class Word implements Serializable {
+        
+        /** serialVersionUID */
+        private static final long serialVersionUID = 1L;
+        
+        private final String word;
+        
+        private final String replacement;
+        
+        /**
+         * 置換語彙のコンストラクタ。
+         * @param word 置換対象の文字。
+         * @param replacement 置換後の文字。
+         * @throws NullPointerException word or replacement is null.
+         * @throws IllegalArgumentException word is empty.
+         */
+        public Word(final String word, final String replacement) {
+            ArgUtils.notEmpty(word, "word");
+            ArgUtils.notNull(replacement, "replacement");
+            
+            this.word = word;
+            this.replacement = replacement;
+        }
+        
+        /**
+         * 置換対象の語彙を取得する。
+         * @return 置換対象の語彙。
+         */
+        public String getWord() {
+            return word;
+        }
+        
+        /**
+         * 置換後の文字列を返します。
+         * @return 置換語彙の文字列
+         */
+        public String getReplacement() {
+            return replacement;
+        }
+        
+    }
     
 }

@@ -64,7 +64,7 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.ReplacedWordProvider
  * public class FileReplacedWordProvider implements ReplacedWordProvider {
  *     
  *     {@literal @Override}
- *     public {@literal Collection<ReplacedWord>} getReplacedWords(final FieldAccessor field) {
+ *     public {@literal Collection<Word>} getReplacedWords(final FieldAccessor field) {
  *         
  *         // ファイルから語彙の定義を読み込む
  *         {@literal List<String>} lines;
@@ -77,10 +77,10 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.ReplacedWordProvider
  *             throw new RuntimeException("fail reading the replaced words file.", e);
  *         }
  *         
- *         // 読み込んだ各行の値を分割して、ReplacedWord クラスに変換する。
+ *         // 読み込んだ各行の値を分割して、ReplacedWordProvider.Word クラスに変換する。
  *         return lines.stream()
  *             .map(l {@literal ->} l.split(","))
- *             .map(s {@literal ->} new ReplacedWord(s[0], s[1]))
+ *             .map(s {@literal ->} new Word(s[0], s[1]))
  *             .collect(Collectors.toLit());
  *         
  *     }
