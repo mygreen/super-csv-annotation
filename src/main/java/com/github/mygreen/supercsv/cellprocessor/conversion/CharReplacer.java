@@ -15,6 +15,7 @@ import com.github.mygreen.supercsv.util.Utils;
 /**
  * 文字を置換するクラス
  * 
+ * @version 2.0.1
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -24,22 +25,22 @@ public class CharReplacer {
     /** 置換元が1文字の場合 */
     private final Map<Character, String> singles = new HashMap<>();
     
-    /** 置換元が複数の文字の場合 */
-    private final List<ReplacedWord> multi = new ArrayList<>();
+    /** 置換元が2文字以上の文字の場合 */
+    private final List<MultiChar> multi = new ArrayList<>();
     
     /**
-     * 置換対象の文字を登録する。
-     * @param word 置換対象の文字
-     * @throws NullPointerException word is null.
+     * 置換元の文字が2文字以上の場合
+     *
      */
-    public void register(final ReplacedWord word) {
-        ArgUtils.notNull(word, "replacement");
+    private static class MultiChar {
         
-        if(word.getWord().length() == 1) {
-            singles.computeIfAbsent(word.getWord().charAt(0), key -> word.getReplacement());
-            
-        } else {
-            multi.add(word);
+        private final String word;
+        
+        private final String replacement;
+        
+        private MultiChar(final String word, final String replacement) {
+            this.word = word;
+            this.replacement = replacement;
         }
         
     }
@@ -59,7 +60,7 @@ public class CharReplacer {
             singles.computeIfAbsent(word.charAt(0), key -> replacement);
             
         } else {
-            multi.add(new ReplacedWord(word, replacement));
+            multi.add(new MultiChar(word, replacement));
         }
         
     }
@@ -71,23 +72,23 @@ public class CharReplacer {
         
         // 複数の文字の場合、重複を排除する。
         final Set<String> duplicatedWords = new HashSet<>();
-        final List<ReplacedWord> newMulti = new ArrayList<>();
-        for(ReplacedWord word : multi) {
-            if(duplicatedWords.contains(word.getWord())) {
+        final List<MultiChar> newMulti = new ArrayList<>();
+        for(MultiChar word : multi) {
+            if(duplicatedWords.contains(word.word)) {
                 continue;
             }
-            duplicatedWords.add(word.getWord());
+            duplicatedWords.add(word.word);
             newMulti.add(word);
         }
         
         // 複数の文字の場合、文字長が長い順に並び替える。
-        Collections.sort(newMulti, new Comparator<ReplacedWord>() {
+        Collections.sort(newMulti, new Comparator<MultiChar>() {
             
             @Override
-            public int compare(final ReplacedWord o1, final ReplacedWord o2) {
+            public int compare(final MultiChar o1, final MultiChar o2) {
                 
-                final int length1 = o1.getWord().length();
-                final int length2 = o2.getWord().length();
+                final int length1 = o1.word.length();
+                final int length2 = o2.word.length();
                 if(length1 < length2) {
                     return 1;
                     
@@ -95,7 +96,7 @@ public class CharReplacer {
                     return -1;
                     
                 } else {
-                    return o1.getWord().compareTo(o2.getWord());
+                    return o1.word.compareTo(o2.word);
                 }
             }
         });
@@ -156,10 +157,10 @@ public class CharReplacer {
     
     private int replaceMulti(final String source, final int index, final StringBuilder replaced) {
         
-        for(ReplacedWord word : multi) {
-            if(source.indexOf(word.getWord(), index) == index) {
-                replaced.append(word.getReplacement());
-                return index + word.getWord().length();
+        for(MultiChar word : multi) {
+            if(source.indexOf(word.word, index) == index) {
+                replaced.append(word.replacement);
+                return index + word.word.length();
             }
         }
         

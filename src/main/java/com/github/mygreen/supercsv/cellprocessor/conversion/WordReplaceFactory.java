@@ -50,7 +50,7 @@ public class WordReplaceFactory implements ConversionProcessorFactory<CsvWordRep
             final ReplacedWordProvider provider = (ReplacedWordProvider) config.getBeanFactory().create(anno.provider()[0]);
             provider.getReplacedWords(field)
                 .stream()
-                .forEach(word -> replacer.register(word));
+                .forEach(word -> replacer.register(word.getWord(), word.getReplacement()));
         }
         
         if(words.length == 0 && anno.provider().length == 0) {

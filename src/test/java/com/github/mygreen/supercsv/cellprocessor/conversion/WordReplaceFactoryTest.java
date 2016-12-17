@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +88,7 @@ public class WordReplaceFactoryTest {
     private static class FileReplacedWordProvider implements ReplacedWordProvider {
         
         @Override
-        public Collection<ReplacedWord> getReplacedWords(final FieldAccessor field) {
+        public Collection<Word> getReplacedWords(final FieldAccessor field) {
             
             // ファイルから語彙の定義を読み込む
             final List<String> lines;
@@ -104,7 +103,7 @@ public class WordReplaceFactoryTest {
             // 読み込んだ各行の値を分割して、ReplacedWord クラスに変換する。
             return lines.stream()
                     .map(l -> l.split(","))
-                    .map(s -> new ReplacedWord(s[0], s[1]))
+                    .map(s -> new Word(s[0], s[1]))
                     .collect(Collectors.toList());
         }
         
