@@ -12,7 +12,44 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.conversion.CharCategory;
 
 /**
- * 半角文字を日本語の全角文字に変換します。
+ * 半角文字を日本語の全角文字に変換するためのアノテーションです。
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性 {@link #categories()}で、変換対象の文字の種類を指定することができます。
+ *      <ul>
+ *        <li>指定しない場合は、全ての文字が変換対象となります。</li>
+ *        <li>文字の種類は、「英字のアルファベット」「数値」「空白」「記号」「片仮名」があります。</li>
+ *        <li>特に片仮名については、濁点・半濁点の場合、半角から全角に変換すると文字数が変わるので注意してください。</li>
+ *      </ul>
+ *   </li>
+ *   <li>アノテーション{@link CsvHalfChar}と併用する際には、処理結果が互いに変換対象となるため、
+ *      属性{@link #cases()}や{@link #groups()}で適用するケースを分けるようにしてください。
+ *   </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvFullChar}
+ *     private Integer number;
+ *     
+ *     // 文字種別を限定する場合
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvFullChar(categories={CharCategory.Alpha, CharCategory.Number})}
+ *     private String name;
+ *     
+ *     // 書き込み時のみ適用する場合
+ *     {@literal @CsvColumn(number=3)}
+ *     {@literal @CsvFullChar(cases=BuildCase.Write)}
+ *     private String comment;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE

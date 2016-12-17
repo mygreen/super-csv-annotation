@@ -22,7 +22,7 @@
 
   * 内部クラスのアノテーションとして、 *List* を定義します。
 
-* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html>`_ ]を指定します。
+* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html>`_ ]を指定します。
 
 
 .. sourcecode:: java
@@ -48,7 +48,7 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition                                      // 合成のアノテーションを表現するために指定します。
-    @CsvNumberFormat(pattern="#,###0")                   // 書式の指定用のアノテーション
+    @CsvNumberFormat(pattern="#,##0")                   // 書式の指定用のアノテーション
     @CsvDefaultValue(value="0", groups=ReadGroup.class)  // 値の変換用のアノテーション
     @CsvRequire                                          // 値の検証用のアノテーション（必須チェック）
     @CsvNumberRange(min="0", max="100,000,000" groups=NormalGroup.class)          // 値の検証用のアノテーション（範囲チェック）
@@ -89,7 +89,7 @@
 属性の上書き
 --------------------------------------------------------
 
-合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html>`_ ]を使用します。
+合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html>`_ ]を使用します。
 
 * 属性 ``annotation`` で上書き対象のアノテーションを指定し、属性 ``name`` で属性名を指定します。
 * アノテーション ``@CsvOverridesAttribute`` を複数付与することで、1つの属性で複数の属性を上書きすることができます。
@@ -117,10 +117,10 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition
-    @CsvNumberFormat(pattern="#,###0")
+    @CsvNumberFormat(pattern="#,##0")
     @CsvDefaultValue(value="0", groups=ReadGroup.class)  // 上書き対象のアノテーション
     @CsvRequire                                          // 上書き対象のアノテーション
-    @CsvNumberRange(min="0", max="100,000,000" groups=NormalGroup.class)
+    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)
     @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class)
     public @interface CsvSalary {
         
@@ -172,10 +172,10 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition
-    @CsvNumberFormat(pattern="#,###0")
+    @CsvNumberFormat(pattern="#,##0")
     @CsvDefaultValue(value="0", groups=ReadGroup.class)
     @CsvRequire
-    @CsvNumberRange(min="0", max="100,000,000" groups=NormalGroup.class)       // 1番目（index=0）のアノテーション
+    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)       // 1番目（index=0）のアノテーション
     @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class) // 2番目（index=1）のアノテーション
     public @interface CsvSalary {
         
@@ -223,10 +223,10 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition
-    @CsvNumberFormat(pattern="#,###0")                                           // 共通の属性messageを持つ
+    @CsvNumberFormat(pattern="#,##0")                                           // 共通の属性messageを持つ
     @CsvDefaultValue(value="0", groups=ReadGroup.class)                          // 共通の属性groupsを持つ
     @CsvRequire                                                                  // 共通の属性message, groupsを持つ
-    @CsvNumberRange(min="0", max="100,000,000" groups=NormalGroup.class)         // 共通の属性message, groupsを持つ
+    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)         // 共通の属性message, groupsを持つ
     @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class)   // 共通の属性message, groupsを持つ
     public @interface CsvSalary {
         
@@ -274,10 +274,10 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition
-    @CsvNumberFormat(pattern="#,###0")                                           // 共通の属性messageを持つ
+    @CsvNumberFormat(pattern="#,##0")                                           // 共通の属性messageを持つ
     @CsvDefaultValue(value="0", groups=ReadGroup.class)                          // 共通の属性groupsを持つ
     @CsvRequire                                                                  // 共通の属性message, groupsを持つ
-    @CsvNumberRange(min="0", max="100,000,000" groups=NormalGroup.class)         // 共通の属性message, groupsを持つ
+    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)         // 共通の属性message, groupsを持つ
     @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class)   // 共通の属性message, groupsを持つ
     public @interface CsvSalary {
         

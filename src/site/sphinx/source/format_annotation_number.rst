@@ -107,7 +107,7 @@
   
   * 値は、列挙型 ``java.math.RoundingMode`` を設定します。
   * デフォルトでは、``RoundingMode.HALF_EVEN`` です。
-    詳細は、 `RoundingModeのJavadoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`_ を参照してください。
+    詳細は、 `RoundingModeのJavaDoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`_ を参照してください。
   * 属性patternを指定した場合は、書式自身が精度を表現しており、属性roundingで丸めの方法を指定することができます。
 
 
@@ -147,7 +147,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_ を参照してください。
 
 
 .. sourcecode:: java

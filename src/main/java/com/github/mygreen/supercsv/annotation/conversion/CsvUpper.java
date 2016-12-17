@@ -11,8 +11,33 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * 大文字に変換します。
- *
+ * 英字のアルファベットの小文字を大文字に変換します。
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>アノテーション{@link CsvLower}と併用する際には、処理結果が互いに変換対象となるため、
+ *      属性{@link #cases()}や{@link #groups()}で適用するケースを分けるようにしてください。
+ *   </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvUpper}
+ *     private Integer name;
+ *     
+ *     // 書き込み時のみ適用する場合
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvUpper(cases=BuildCase.Write)}
+ *     private String comment;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *

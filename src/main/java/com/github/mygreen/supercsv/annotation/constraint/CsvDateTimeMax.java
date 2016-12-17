@@ -14,8 +14,37 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 
 /**
- * カラムの値が指定した日時より過去日（最大値）かどうかチェックします。
+ * 値が指定した日時より過去（上限値以下）かどうか検証するためのアノテーションです。
  * <p>日時型に指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #value()}で、上限値としての日時を指定します。
+ *     <br>値は、クラスタイプや指定した書式に沿った形式で指定する必要があります。
+ *   </li>
+ *   <li>属性{@link #inclusive()}で、値の検証時に属性{@link #value()}の値を含むかどうか指定します。
+ *     <br>初期値はtrueで、指定した値を含みます。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     // 値は書式に沿った形式で入力します。
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvDateTimeFormat(pattern="yyyy/MM/dd")}
+ *     {@literal @CsvDateTimeMax("2050/12/31")}
+ *     private LocalDate birthday;
+ *     
+ *     // 比較する際には指定した値より前かどうかで判定します。
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvDateTimeMax(value="9999-12-31 23:59:59.999", inclusive=false)}
+ *     private Timestamp registerTime;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -29,9 +58,8 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 public @interface CsvDateTimeMax {
     
     /**
-     * 過去日（最大値）を指定します。
-     * <p>{@literal {key}}の書式の場合、プロパティファイルから取得した値を指定できます。</p>
-     * @return 値は、クラスタイプやアノテーションで指定した書式に沿った値を指定する必要があります。
+     * 上限値となる日時を指定します。
+     * @return 値は、クラスタイプやアノテーションで指定した書式に沿った形式で指定する必要があります。
      */
     String value();
     

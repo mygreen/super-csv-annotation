@@ -10,7 +10,7 @@
 読み込み時の値の指定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-属性 ``readForTrue`` 、 ``readForFalse`` で読み込み時のtrueまたはfalseと判断するの候補の値を指定します。
+属性 ``readForTrue`` 、 ``readForFalse`` で読み込み時のtrueまたはfalseと判定する候補の値を指定します。
    
 * 属性readForTrueとreadForFalseの値に重複がある場合、readForTrueの定義が優先されまます。
   
@@ -128,7 +128,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html>`_ を参照してください。
 
 
 .. sourcecode:: java

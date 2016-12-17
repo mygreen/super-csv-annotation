@@ -11,9 +11,29 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * 指定した文字長よりも長い場合、先頭から最大文字長分切り取り、さらに、接尾語を追加します。
+ * 指定した最大文字長よりも長い場合、先頭から最大文字長分切り取るためのアノテーションです。
  * <p>例えば、入力が「あいうえお」の場合、最大文字長を3、接尾語を「...」と指定したとき、「あいう...」という値となります。</p>
  *
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性 {@link #maxSize()}で、最大文字長を指定します。</li>
+ *   <li>属性{@link #suffix()}で切り取り後に付与する接尾語を指定します。省略可能です。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvTruncate(maxSize=20, suffix="...")}
+ *     private String comment;
+ *     
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -27,15 +47,15 @@ public @interface CsvTruncate {
     
     /**
      * 最大文字長を指定します。
-     * 
-     * @return 1以上の値を指定します。
+     * <p>1以上の値を指定します。</p>
+     * @return 最大文字長。
      */
     int maxSize();
     
     /**
-     * 接尾語を指定します。
+     * 切り取り後に付与する接尾語を指定します。
      * 
-     * @return 省略可能です。
+     * @return 接尾語。
      */
     String suffix() default "";
     

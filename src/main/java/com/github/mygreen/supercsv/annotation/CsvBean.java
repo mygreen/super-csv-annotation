@@ -13,8 +13,25 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
 
 
 /**
- * CSV用のBeanであることを表現するアノテーションです。
+ * CSVのBeanであることを表現するためのアノテーションです。
  * <p>クラスに付与します。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * CSVをマッピングするBeanのクラスに付与します。
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     private int no;
+ *     
+ *     {@literal @CsvColumn(number=2, label="名前")}
+ *     private String name;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @version 2.0
  * @author T.TSUCHIE
@@ -34,7 +51,7 @@ public @interface CsvBean {
     
     /**
      * ヘッダー行の読み込み時に、値の検証を行うか指定します。
-     * <p>部分的にカラムの読み込みを行うときは、falseに設定してください。</p>
+     * <p>部分的にカラムの読み込みを行う際、アノテーション{@link CsvPartial}で省略した見出しを定義していない場合は、属性の値をfalseに設定してください。</p>
      * 
      * @since 2.0
      * @return trueの場合、ヘッダー行の値が定義されている値と同じかどうか検証を行います。
@@ -44,7 +61,7 @@ public @interface CsvBean {
     
     /**
      * レコードに対する値の検証を行うクラスを指定します。
-     * <p>カラム間の相関チェックやBeanValidationを使用する際に指定します。</p>
+     * <p>カラム間の相関チェックやBean Validationを使用する際に指定します。</p>
      * 
      * @since 2.0
      * @return {@link CsvValidator}を実装したクラスを指定します。

@@ -13,8 +13,26 @@ import com.github.mygreen.supercsv.annotation.DefaultGroup;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * カラムの値の文字長が指定した長さ以上（最小長）かどうかチェックします。
+ * 文字長が指定した長さ以上（最小文字長）かどうか検証するためのアノテーションです。
  * <p>文字列型に指定可能です。</p>
+ *
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #value()}で、最小文字長を指定します。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvLengthMin(2)}
+ *     private String name;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  *
  * @since 2.0
  * @author T.TSUCHIE

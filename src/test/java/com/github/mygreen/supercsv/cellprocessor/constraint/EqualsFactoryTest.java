@@ -5,12 +5,17 @@ import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -97,7 +102,7 @@ public class EqualsFactoryTest {
         
         @CsvColumn(number=3)
         @CsvNumberFormat(pattern=TEST_FORMATTED_PATTERN)
-        @CsvEquals(provider=MyEqualsProvider.class)
+        @CsvEquals(provider=FileEqualedValueProvider.class)
         private Integer col_privider;
         
         @CsvColumn(number=10)
@@ -137,13 +142,26 @@ public class EqualsFactoryTest {
         
     }
     
-    private static class MyEqualsProvider implements EqualedValueProvider<Integer> {
+    // ファイルから読み込む場合
+    private static class FileEqualedValueProvider implements EqualedValueProvider<Integer> {
         
         @Override
         public Collection<Integer> getEqualedValues(final FieldAccessor field) {
-            return Arrays.asList(-1000, 1000);
+            
+            final List<String> lines;
+            try {
+                lines = Files.readAllLines(
+                        new File("src/test/data/data_eaualed_value.txt").toPath(), Charset.forName("UTF-8"));
+                
+            } catch (IOException e) {
+                throw new RuntimeException("fail reading the equaled value file.", e);
+            }
+            
+            return lines.stream()
+                    .map(l -> Integer.valueOf(l))
+                    .collect(Collectors.toList());
+            
         }
-        
     }
     
     @Test

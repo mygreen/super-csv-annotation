@@ -5,7 +5,11 @@ import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -83,7 +87,7 @@ public class WordRequireFactoryTest {
         private String col_default;
         
         @CsvColumn(number=2)
-        @CsvWordRequire(provider=MyRequireWordProvider.class)
+        @CsvWordRequire(provider=FileRequiredWordProvider.class)
         private String col_provider;
         
         @CsvColumn(number=10)
@@ -114,13 +118,21 @@ public class WordRequireFactoryTest {
         
     }
     
-    private static class MyRequireWordProvider implements RequiredWordProvider {
+    // ファイルから読み込む場合
+    private static class FileRequiredWordProvider implements RequiredWordProvider {
         
         @Override
         public Collection<String> getRequiredWords(final FieldAccessor field) {
-            return Arrays.asList("今日", "天気", "よろしく");
+            
+            try {
+                return Files.readAllLines(
+                        new File("src/test/data/data_required_word.txt").toPath(), Charset.forName("UTF-8"));
+                
+            } catch (IOException e) {
+                throw new RuntimeException("fail reading the required file.", e);
+            }
+            
         }
-        
     }
     
     @Test

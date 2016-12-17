@@ -7,7 +7,41 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 部分的にカラムをマッピングする際に、ファイルの情報を補完するためのアノテーションです。
+ * 部分的にカラムをマッピングする際のカラム情報を補完するためのアノテーションです。
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>部分的にマッピングする際には、単純に、マッピングしないカラムの定義を省略します。</li>
+ *   <li>ただし、定義している最大のカラム番号が、実ファイルのカラム番号よりも小さい場合は、
+ *       属性{@link #columnSize()}で、実際のカラムサイズを指定します。
+ *   </li>
+ *   <li>見出し行がある場合、定義していない見出しを属性{@link #headers()}で定義します。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean(header=true, validateHeader=true)}
+ * {@literal @CsvPartial}(columnSize=5, headers={
+ *     {@literal @CsvPartial.Header(number=3, label="電話番号")},
+ *     {@literal @CsvPartial.Header(number=5, label="生年月日")})
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     private int id;
+ *
+ *     {@literal @CsvColumn(number=2, label="氏名")}
+ *     private String name;
+ *
+ *     // カラム番号3は読み込まない場合は、定義を行いません。
+ *
+ *     {@literal @CsvColumn(number=4, label="メールアドレス")}
+ *     private String email;
+ *
+ *     // カラム番号5はマッピングしない場合は、定義を行いません。
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE

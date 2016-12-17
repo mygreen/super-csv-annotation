@@ -13,7 +13,10 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 /**
  * 日時型の書式を定義するためのアノテーションです。
  * 
- * <p>対応しているクラスタイプと標準の書式は以下の通りです。</p>
+ * <p>アノテーションを付与しないときや属性{@link #pattern()}を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
+ *  <br>対応しているクラスタイプと標準の書式は以下の通りです。
+ * </p>
+ * 
  * <table class="description">
  *  <caption>対応している日時のクラスタイプ</caption>
  *  <thead>

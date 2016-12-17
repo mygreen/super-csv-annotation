@@ -14,8 +14,23 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 
 /**
- * カラムの値が他の行と比較してユニークであるかチェックします。
- * <p>比較する際には、ハッシュ値で比較します。</p>
+ * 値が他の行と異なるか検証するためのアノテーションです。
+ * <p>全てのクラスタイプに指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * <p>値を比較する際には、各要素の値のhashCode()メソッドで取得したハッシュ値にて判定します。</p>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvUniqueHashCode}
+ *     private long id;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE

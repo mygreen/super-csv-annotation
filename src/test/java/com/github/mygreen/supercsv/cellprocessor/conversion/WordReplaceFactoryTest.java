@@ -2,9 +2,15 @@ package com.github.mygreen.supercsv.cellprocessor.conversion;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
@@ -62,7 +68,7 @@ public class WordReplaceFactoryTest {
         private String col_default;
         
         @CsvColumn(number=2)
-        @CsvWordReplace(provider=MyReplacedWordProvider.class)
+        @CsvWordReplace(provider=FileReplacedWordProvider.class)
         private String col_provider;
         
     }
@@ -80,11 +86,26 @@ public class WordReplaceFactoryTest {
         
     }
     
-    private static class MyReplacedWordProvider implements ReplacedWordProvider {
+    private static class FileReplacedWordProvider implements ReplacedWordProvider {
         
         @Override
         public Collection<ReplacedWord> getReplacedWords(final FieldAccessor field) {
-            return Arrays.asList(new ReplacedWord("下さい", "ください"), new ReplacedWord("御願い", "お願い"));
+            
+            // ファイルから語彙の定義を読み込む
+            final List<String> lines;
+            try {
+                lines = Files.readAllLines(
+                        new File("src/test/data/data_replaced_word.txt").toPath(), Charset.forName("UTF-8"));
+                        
+            } catch(IOException e) {
+                throw new RuntimeException("fail reading the replaced words file.", e);
+            }
+            
+            // 読み込んだ各行の値を分割して、ReplacedWord クラスに変換する。
+            return lines.stream()
+                    .map(l -> l.split(","))
+                    .map(s -> new ReplacedWord(s[0], s[1]))
+                    .collect(Collectors.toList());
         }
         
     }
