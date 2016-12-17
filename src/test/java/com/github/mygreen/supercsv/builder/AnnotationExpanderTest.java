@@ -458,6 +458,7 @@ public class AnnotationExpanderTest {
                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
             }
             
             {
@@ -473,6 +474,7 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
             }
             
             {
@@ -488,6 +490,7 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
             }
             
             {
@@ -550,6 +553,7 @@ public class AnnotationExpanderTest {
                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly();
             }
             
             {
@@ -565,6 +569,7 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
             }
             
             {
@@ -580,6 +585,7 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("範囲内に設定してください");
                 assertThat(anno.groups()).containsExactly(Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Write);
             }
             
             {
@@ -642,6 +648,7 @@ public class AnnotationExpanderTest {
                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
                 assertThat(anno.message()).isEqualTo("必須です");
                 assertThat(anno.groups()).containsExactly(Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Write);
             }
             
             {
@@ -657,6 +664,8 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("{com.github.mygreen.supercsv.annotation.constraint.CsvNumberRange.message}");
                 assertThat(anno.groups()).hasSize(0);
+                assertThat(anno.cases()).hasSize(0);
+                
             }
             
             {
@@ -672,6 +681,8 @@ public class AnnotationExpanderTest {
                 
                 assertThat(anno.message()).isEqualTo("値は不正です");
                 assertThat(anno.groups()).containsExactly(DefaultGroup.class, Group2.class);
+                assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+
             }
             
             {
@@ -867,14 +878,14 @@ public class AnnotationExpanderTest {
         @ComposeOverrideCustom(value="override-custom", max1="5")
         private Integer composeOverrideCustom;
         
-        @ComposeOverrideDefault1(value="override-default-1", message="値は不正です", groups={DefaultGroup.class, Group2.class})
+        @ComposeOverrideDefault1(value="override-default-1", message="値は不正です", groups={DefaultGroup.class, Group2.class}, cases={BuildCase.Read, BuildCase.Write})
         private Integer composeOverrideDefault1;
         
         @ComposeOverrideDefault2(value="override-default-2", message="値は不正です", groups={DefaultGroup.class, Group2.class},
-                rangeMessage="範囲内に設定してください", rangeGroups={Group2.class})
+                rangeMessage="範囲内に設定してください", rangeGroups={Group2.class}, rangeCases={BuildCase.Read, BuildCase.Write})
         private Integer composeOverrideDefault2;
         
-        @ComposeOverrideDefault3(value="override-default-3", message="値は不正です", groups={DefaultGroup.class, Group2.class})
+        @ComposeOverrideDefault3(value="override-default-3", message="値は不正です", groups={DefaultGroup.class, Group2.class}, cases={BuildCase.Read, BuildCase.Write})
         private Integer composeOverrideDefault3;
         
         @ComposeOverrideDefault4(value="override-default-4", max="5")
@@ -963,7 +974,7 @@ public class AnnotationExpanderTest {
     /**
      * 合成のアノテーション
      * <p>属性の上書きあり</p>
-     * <p>messageやgroupsの共通の属性をオーバーライドする</p>
+     * <p>共通の属性 message groups casesのをオーバーライドする</p>
      *
      */
     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
@@ -972,8 +983,8 @@ public class AnnotationExpanderTest {
     @Repeatable(ComposeOverrideDefault1.List.class)
     @CsvComposition
     @CsvRequire(message="必須です", groups={Group2.class})
-    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class})
-    @CsvNumberRange(min="0", max="30", order=1)
+    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class}, cases=BuildCase.Read)
+    @CsvNumberRange(min="0", max="30", order=1, cases=BuildCase.Write)
     public static @interface ComposeOverrideDefault1 {
         
         String value();
@@ -981,6 +992,8 @@ public class AnnotationExpanderTest {
         String message() default "";
         
         Class<?>[] groups() default {};
+        
+        BuildCase[] cases() default {};
         
         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
         @Retention(RetentionPolicy.RUNTIME)
@@ -995,7 +1008,7 @@ public class AnnotationExpanderTest {
     /**
      * 合成のアノテーション
      * <p>属性の上書きあり</p>
-     * <p>messageやgroupsの共通の属性をオーバーライドする</p>
+     * <p>共通の属性のmessage, groups, casesをオーバーライドする</p>
      * <p>1部のみを書き換える。</p>
      *
      */
@@ -1005,8 +1018,8 @@ public class AnnotationExpanderTest {
     @Repeatable(ComposeOverrideDefault2.List.class)
     @CsvComposition
     @CsvRequire(message="必須です", groups={Group2.class})
-    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class})
-    @CsvNumberRange(min="0", max="30", order=1)
+    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class}, cases=BuildCase.Write)
+    @CsvNumberRange(min="0", max="30", order=1, cases=BuildCase.Read)
     public static @interface ComposeOverrideDefault2 {
         
         String value();
@@ -1021,6 +1034,9 @@ public class AnnotationExpanderTest {
         @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="groups", index=0)
         Class<?>[] rangeGroups() default {};
         
+        @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="cases", index=1)
+        BuildCase[] rangeCases() default {};
+        
         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
         @Retention(RetentionPolicy.RUNTIME)
         @Documented
@@ -1034,7 +1050,7 @@ public class AnnotationExpanderTest {
     /**
      * 合成のアノテーション
      * <p>属性の上書きあり</p>
-     * <p>messageやgroupsの共通の属性をオーバーライドする</p>
+     * <p>cases、messageやgroupsの共通の属性をオーバーライドする</p>
      * <p>1部のみを書き換える。</p>
      *
      */
@@ -1043,8 +1059,8 @@ public class AnnotationExpanderTest {
     @Documented
     @Repeatable(ComposeOverrideDefault3.List.class)
     @CsvComposition
-    @CsvRequire(message="必須です", groups={Group2.class})
-    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class})
+    @CsvRequire(message="必須です", groups={Group2.class}, cases={BuildCase.Write})
+    @CsvNumberRange(min="0", max="20", order=2, groups={Group1.class}, cases={BuildCase.Read})
     @CsvNumberRange(min="0", max="30", order=1)
     public static @interface ComposeOverrideDefault3 {
         
@@ -1052,6 +1068,9 @@ public class AnnotationExpanderTest {
         
         @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="message", index=0)
         String message() default "";
+        
+        @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="cases", index=0)
+        BuildCase[] cases() default {};
         
         @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="groups", index=0)
         Class<?>[] groups() default {};

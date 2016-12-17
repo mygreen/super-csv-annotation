@@ -399,6 +399,17 @@ public class AnnotationExpander {
             }
         }
         
+        // cases 属性の取得。
+        // 既に取得していたり、@CsvOverridesAttributeが付与されている場合はスキップする。
+        if(!overrideAttrs.containsKey("cases") && !overrideMethodNames.contains("cases")
+                && Utils.hasAnnotationAttribute(originalAnno, "cases", BuildCase[].class)) {
+            
+            final Optional<BuildCase[]> casesAttr = Utils.getAnnotationAttribute(compositionAnno, "cases", BuildCase[].class);
+            if(casesAttr.isPresent() && Utils.isNotEmpty(casesAttr.get())) {
+                overrideAttrs.put("cases", casesAttr.get());
+            }
+        }
+        
         return overrideAttrs;
     }
     
