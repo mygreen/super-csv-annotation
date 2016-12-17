@@ -198,7 +198,7 @@
 共通の属性の上書き
 --------------------------------------------------------
 
-共通の属性である ``groups`` , ``message`` は、アノテーション *@CsvOverridesAttribute* が無くても上書きすることができます。
+共通の属性である ``cases``, ``groups`` , ``message`` は、アノテーション *@CsvOverridesAttribute* が無くても上書きすることができます。
 
 .. sourcecode:: java
     :linenos:
@@ -216,6 +216,7 @@
     import com.github.mygreen.supercsv.annotation.constraint.*;
     import com.github.mygreen.supercsv.annotation.conversion.*;
     import com.github.mygreen.supercsv.annotation.format.*;
+    import com.github.mygreen.supercsv.builder.BuildCase;
     
     
     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
@@ -232,6 +233,9 @@
         
         // 共通の属性 - エラーメッセージ
         String message() default "";
+        
+        // 共通の属性 - ケース
+        BuildCase[] cases() default {};
         
         // 共通の属性 - グループ
         Class<?>[] groups() default {};
@@ -247,9 +251,9 @@
 
 
 
-もちろん、共通の属性 *message* と *groups* も、アノテーション *@CsvOverridesAttribute* を使用して、特定のアノテーションの属性を上書きすることができます。
+もちろん、共通の属性 *cases* 、 *message* 、 *groups* も、アノテーション *@CsvOverridesAttribute* を使用して、特定のアノテーションの属性を上書きすることができます。
 
-下記の例の場合、*@CsvOverridesAttribute* で上書きされていないアノテーションの属性 *message* と *groups* は、共通の属性 *message* と *groups* で上書きされます。
+下記の例の場合、*@CsvOverridesAttribute* で上書きされていないアノテーションの属性 *cases* 、 *message* 、 *groups* は、共通の属性 *cases* 、 *message* 、 *groups* で上書きされます。
 
 .. sourcecode:: java
     :linenos:
@@ -274,11 +278,11 @@
     @Documented
     @Repeatable(CsvSalary.List.class)
     @CsvComposition
-    @CsvNumberFormat(pattern="#,##0")                                           // 共通の属性messageを持つ
-    @CsvDefaultValue(value="0", groups=ReadGroup.class)                          // 共通の属性groupsを持つ
-    @CsvRequire                                                                  // 共通の属性message, groupsを持つ
-    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)         // 共通の属性message, groupsを持つ
-    @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class)   // 共通の属性message, groupsを持つ
+    @CsvNumberFormat(pattern="#,##0")                                            // 共通の属性messageを持つ
+    @CsvDefaultValue(value="0", groups=ReadGroup.class)                          // 共通の属性cases, groupsを持つ
+    @CsvRequire                                                                  // 共通の属性cases, message, groupsを持つ
+    @CsvNumberRange(min="0", max="100,000,000", groups=NormalGroup.class)        // 共通の属性cases, message, groupsを持つ
+    @CsvNumberRange(min="0", max="100,000,000,000", groups=ManagerGroup.class)   // 共通の属性cases, message, groupsを持つ
     public @interface CsvSalary {
         
         // 共通の属性 - エラーメッセージ
@@ -287,6 +291,13 @@
         // 2番目（index=1）の@CsvNumberRangeの属性messageの上書き
         @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="message", index=1)
         String rangeMessage() default "管理者の場合の給料は、{min}～{max}の範囲内で設定してください。";
+        
+        // 共通の属性 - ケース
+        BuildCase[] cases() default {};
+        
+        // 1番目（index=0）の@CsvNumberRangeの属性casesの上書き
+        @CsvOverridesAttribute(annotation=CsvNumberRange.class, name="cases", index=0)
+        BuildCases[] normalRangeCases() default {};
         
         // 共通の属性 - グループ
         Class<?>[] groups() default {};
