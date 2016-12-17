@@ -13,7 +13,7 @@ This library 'Super CSV' extension library with annotation function.
 
 # Setup
 
-```xml:pom.xml
+```xml
   <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>super-csv-annotation</artifactId>
