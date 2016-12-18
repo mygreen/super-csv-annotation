@@ -286,10 +286,10 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
     
 
 --------------------------------------
-タブ区切りなどCSVファイルへの対応
+タブ区切りCSVファイルへの対応
 --------------------------------------
 
-本ライブラリは、CSVの処理はSuper CSVの機能をそのまま呼び出しているため、
+本ライブラリは、CSVの処理はSuper CSVの機能をそのまま使用しているため、
 *CsvAnnotationBeanReader/CsvAnnotationBeanWriter* に渡す `CsvPreference <http://super-csv.github.io/super-csv/preferences.html>`_ をカスタマイズすることで、タブ区切りなどに対応できます。
 
 .. sourcecode:: java
@@ -321,7 +321,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             CsvAnnotationBeanWriter<UserCsv> csvReader = new CsvAnnotationBeanWriter<>(
                     UserCsv.class,
                     Files.newBufferedReader(new File("sample.csv").toPath(), Charset.forName("Windows-31j")),
-                    CsvPreference.STANDARD_PREFERENCE);
+                    preference);
             
             // 省略
         }
