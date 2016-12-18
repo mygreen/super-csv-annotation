@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.io;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class CsvAnnotationBeanWriterTest {
                 "boolean1", "boolean2"};
         
         final String[] definitionHeaders = csvWriter.getDefinedHeader();
-        assertThat(definitionHeaders, arrayContaining(expectedHeaders));
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
         
         csvWriter.writeHeader();
         csvWriter.flush();
@@ -80,9 +80,9 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_normal.csv", Charset.forName("UTF-8"));
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
         
-        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
         
@@ -112,9 +112,9 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_normal.csv", Charset.forName("UTF-8"));
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
         
-        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
         
@@ -149,9 +149,9 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_tab.csv", Charset.forName("UTF-8"));
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
         
-        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
         
@@ -194,14 +194,16 @@ public class CsvAnnotationBeanWriterTest {
             fail();
             
         } catch(SuperCsvException e) {
-            e.printStackTrace();
+            assertThat(e).isInstanceOf(SuperCsvBindingException.class);
+//            e.printStackTrace();
             
-            assertThat(e, instanceOf(SuperCsvBindingException.class));
         }
         
         // convert error messages.
         List<String> messages = csvWriter.getErrorMessages();
-        assertThat(messages, hasSize(2));
+        assertThat(messages).hasSize(2)
+            .contains("[2行, 2列] : 項目「数字1」の値（1,000,000）は、999,999以下の値でなければなりません。"
+                    , "[2行, 4列] : 項目「string1」の値は必須です。");
         messages.forEach(System.out::println);
         
         csvWriter.close();
@@ -246,9 +248,9 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_ignore_constaint.csv", Charset.forName("UTF-8"));
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
         
-        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
         
@@ -280,7 +282,7 @@ public class CsvAnnotationBeanWriterTest {
                 "boolean1", "boolean2"};
         
         final String[] definitionHeaders = csvWriter.getDefinedHeader();
-        assertThat(definitionHeaders, arrayContaining(expectedHeaders));
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
         
         csvWriter.writeHeader();
         csvWriter.flush();
@@ -294,9 +296,9 @@ public class CsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_partial.csv", Charset.forName("UTF-8"));
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
         
-        assertThat(csvWriter.getErrorMessages(), hasSize(0));
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
         

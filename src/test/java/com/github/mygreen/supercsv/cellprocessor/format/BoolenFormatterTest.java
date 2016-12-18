@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.format;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Map;
 
@@ -42,8 +42,8 @@ public class BoolenFormatterTest {
     
     @Test
     public void testParse() {
-        assertThat(formatter.parse("true"), is(true));
-        assertThat(formatter.parse("false"), is(false));
+        assertThat(formatter.parse("true")).isEqualTo(true);
+        assertThat(formatter.parse("false")).isEqualTo(false);
         
     }
     
@@ -67,8 +67,8 @@ public class BoolenFormatterTest {
     
     @Test
     public void testParseWithCustomValue() {
-        assertThat(customValueFormatter.parse("○"), is(true));
-        assertThat(customValueFormatter.parse("×"), is(false));
+        assertThat(customValueFormatter.parse("○")).isEqualTo(true);
+        assertThat(customValueFormatter.parse("×")).isEqualTo(false);
     }
     
     @Test(expected=TextParseException.class)
@@ -78,34 +78,34 @@ public class BoolenFormatterTest {
     
     @Test
     public void testParseWithCustomValueIgnoreCase() {
-        assertThat(customValueIgnoreCaseFormatter.parse("OK"), is(true));
-        assertThat(customValueIgnoreCaseFormatter.parse("CANCEL"), is(false));
+        assertThat(customValueIgnoreCaseFormatter.parse("OK")).isEqualTo(true);
+        assertThat(customValueIgnoreCaseFormatter.parse("CANCEL")).isEqualTo(false);
         
         // failToFalse
-        assertThat(customValueIgnoreCaseFormatter.parse("aaaa"), is(false));
+        assertThat(customValueIgnoreCaseFormatter.parse("aaaa")).isEqualTo(false);
     }
     
     @Test
     public void testPrint() {
-        assertThat(formatter.print(true), is("true"));
-        assertThat(formatter.print(false), is("false"));
+        assertThat(formatter.print(true)).isEqualTo("true");
+        assertThat(formatter.print(false)).isEqualTo("false");
     }
     
     @Test
     public void testPrintWithCustomValue() {
-        assertThat(customValueFormatter.print(true), is("○"));
-        assertThat(customValueFormatter.print(false), is("×"));
+        assertThat(customValueFormatter.print(true)).isEqualTo("○");
+        assertThat(customValueFormatter.print(false)).isEqualTo("×");
     }
     
     @Test
     public void testSetAndGetValidationMessage() {
         
         // default (no set)
-        assertThat(formatter.getValidationMessage().isPresent(), is(false));
+        assertThat(formatter.getValidationMessage().isPresent()).isEqualTo(false);
         
         // set
         formatter.setValidationMessage(VALIDATION_MESSAGE);
-        assertThat(formatter.getValidationMessage().get(), is(VALIDATION_MESSAGE));
+        assertThat(formatter.getValidationMessage().get()).isEqualTo(VALIDATION_MESSAGE);
         
         
     }
@@ -115,11 +115,11 @@ public class BoolenFormatterTest {
         
         Map<String, Object> vars = customValueFormatter.getMessageVariables();
         
-        assertThat(vars, hasKey("trueValues"));
-        assertThat(vars, hasKey("falseValues"));
+        assertThat(vars).containsKey("trueValues")
+            .containsKey("falseValues")
+            .containsEntry("ignoreCase", false)
+            .containsEntry("failToFalse", false);
         
-        assertThat(vars, hasEntry("ignoreCase", false));
-        assertThat(vars, hasEntry("failToFalse", false));
         
     }
     
