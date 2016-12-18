@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.format;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 
 import java.sql.Time;
@@ -82,22 +82,22 @@ public class DateFormatWrapperTest {
     
     @Test
     public void testGetPattern() {
-        assertThat(formatter.getPattern().get(), is("yyyy/MM/dd HH:mm:ss"));
+        assertThat(formatter.getPattern().get()).isEqualTo("yyyy/MM/dd HH:mm:ss");
         
-        assertThat(utilDateFormatter.getPattern().get(), is("yyyy-MM-dd HH:mm:ss"));
-        assertThat(sqlDateFormatter.getPattern().get(), is("yyyy-MM-dd"));
-        assertThat(timestampFormatter.getPattern().get(), is("yyyy-MM-dd HH:mm:ss.SSS"));
-        assertThat(timeFormatter.getPattern().get(), is("HH:mm:ss"));
+        assertThat(utilDateFormatter.getPattern().get()).isEqualTo("yyyy-MM-dd HH:mm:ss");
+        assertThat(sqlDateFormatter.getPattern().get()).isEqualTo("yyyy-MM-dd");
+        assertThat(timestampFormatter.getPattern().get()).isEqualTo("yyyy-MM-dd HH:mm:ss.SSS");
+        assertThat(timeFormatter.getPattern().get()).isEqualTo("HH:mm:ss");
     }
     
     @Test
     public void testPrintWithValid() {
-        assertThat(formatter.print(normalDateValue), is(normalDateStr));
+        assertThat(formatter.print(normalDateValue)).isEqualTo(normalDateStr);
         
-        assertThat(utilDateFormatter.print(utilDateValue), is(utilDateStr));
-        assertThat(sqlDateFormatter.print(sqlDateValue), is(sqlDateStr));
-        assertThat(timeFormatter.print(timeValue), is(timeStr));
-        assertThat(timestampFormatter.print(timestampValue), is(timestampStr));
+        assertThat(utilDateFormatter.print(utilDateValue)).isEqualTo(utilDateStr);
+        assertThat(sqlDateFormatter.print(sqlDateValue)).isEqualTo(sqlDateStr);
+        assertThat(timeFormatter.print(timeValue)).isEqualTo(timeStr);
+        assertThat(timestampFormatter.print(timestampValue)).isEqualTo(timestampStr);
     }
     
     @Test(expected=NullPointerException.class)
@@ -114,12 +114,12 @@ public class DateFormatWrapperTest {
     @Test
     public void testParseWithValid() throws Exception {
         
-        assertThat(formatter.parse(normalDateStr), is(normalDateValue));
+        assertThat(formatter.parse(normalDateStr)).isEqualTo(normalDateValue);
         
-        assertThat(utilDateFormatter.parse(utilDateStr), is(utilDateValue));
-        assertThat(sqlDateFormatter.parse(sqlDateStr), is(sqlDateValue));
-        assertThat(timeFormatter.parse(timeStr), is(timeValue));
-        assertThat(timestampFormatter.parse(timestampStr), is(timestampValue));
+        assertThat(utilDateFormatter.parse(utilDateStr)).isEqualTo(utilDateValue);
+        assertThat(sqlDateFormatter.parse(sqlDateStr)).isEqualTo(sqlDateValue);
+        assertThat(timeFormatter.parse(timeStr)).isEqualTo(timeValue);
+        assertThat(timestampFormatter.parse(timestampStr)).isEqualTo(timestampValue);
         
     }
     
@@ -137,7 +137,7 @@ public class DateFormatWrapperTest {
             try {
                 String str = formatter.print(d);
                 Date date = formatter.parse(str);
-                assertThat(date, is(d));
+                assertThat(date).isEqualTo(d);
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -155,7 +155,7 @@ public class DateFormatWrapperTest {
                     try {
                         String str = formatter.print(d);
                         Date date = formatter.parse(str);
-                        assertThat(date, is(d));
+                        assertThat(date).isEqualTo(d);
                         
                     } catch (Exception e) {
                         fail();
