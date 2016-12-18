@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReplacedWordProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">ReplacedWordProvider.java</span></div><h1>ReplacedWordProvider.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import java.io.Serializable;
+import java.util.Collection;
+
+import com.github.mygreen.supercsv.annotation.conversion.CsvWordReplace;
+import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.util.ArgUtils;
+
+/**
+ * {@link CsvWordReplace}による語彙による置換処理をを個ナウ際の語彙を提供するためのインタフェースです。
+ * &lt;p&gt;語彙を別ファイルやDBから取得する時などサービスクラスとして実装します。&lt;/p&gt;
+ * 
+ * &lt;p&gt;基本的な使い方は、 {@link CsvWordReplace}のJavaDocを参照してください。&lt;/p&gt;
+ * 
+ * &lt;h3 class=&quot;description&quot;&gt;フィールドごとにリソースを切り替えたい場合&lt;/h3&gt;
+ * &lt;p&gt;フィールドごとにリソースを切り替えたい場合は、メソッドの引数{@link FieldAccessor}で判定を行います。&lt;/p&gt;
+ * &lt;p&gt;また、独自のパラメータを渡したい時は、独自のアノテーションを作成し、それをフィールドに付与して、
+ *    引数{@link FieldAccessor}から取得して判定します。
+ * &lt;/p&gt;
+ * 
+ * &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;java&quot;&gt;
+ * // 読み込むリソースを定義されているフィールドやクラスで分ける場合
+ * public class FileReplacedWordProvider implements ReplacedWordProvider {
+ *     
+ *     {@literal @Override}
+ *     public {@literal Collection&lt;Word&gt;} getReplacedWords(final FieldAccessor field) {
+ *         
+ *         final String path;
+ *         if(field.getDeclaredClass().equals(AdminCsv.class)) {
+ *             path = &quot;replaced_word_admin.txt&quot;;
+ *         } else {
+ *             path = &quot;replaced_word.txt&quot;;
+ *         }
+ *         
+ *         // ファイルから語彙の定義を読み込む
+ *         {@literal List&lt;String&gt;} lines;
+ *         try {
+ *              
+ *              lines = Files.readAllLines(new File(path).toPath(), Charset.forName(&quot;UTF-8&quot;));
+ *              
+ *         } catch (IOException e) {
+ *             throw new RuntimeException(&quot;fail reading the replaced words file.&quot;, e);
+ *         }
+ *         
+ *         // 読み込んだ各行の値を分割して、ReplacedWordProvider.Word クラスに変換する。
+ *         return lines.stream()
+ *             .map(l {@literal -&gt;} l.split(&quot;,&quot;))
+ *             .map(s {@literal -&gt;} new Word(s[0], s[1]))
+ *             .collect(Collectors.toLit());
+ *         
+ *     }
+ * }
+ * &lt;/code&gt;&lt;/pre&gt;
+ * 
+ * &lt;h3 class=&quot;description&quot;&gt;Spring Frameworkと連携する場合&lt;/h3&gt;
+ * &lt;p&gt;Springと連携している場合は、プロバイダクラスをSpringBeanとして登録しておくことでインジェクションできます。&lt;/p&gt;
+ * &lt;p&gt;また、メソッド{@link ReplacedWordProvider#getReplacedWords(FieldAccessor)}は、定義したフィールド単位に呼ばれるため、多数のフィールドで定義していると何度も呼ばれ、効率が悪くなる場合があります。
+ *   &lt;br&gt;このようなときは、Spring Framework3.1から追加された Cache Abstraction(キャッシュの抽象化)機能を使うと改善できます。
+ * &lt;/p&gt;
+ * 
+ * &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;java&quot;&gt;
+ * // SpringBeanとして登録する場合。
+ * {@literal @Service}
+ * {@literal @Transactional}
+ * public class ReplacedWordProviderImpl implements ReplacedWordProvider {
+ *     
+ *     // リポジトリのインジェクション
+ *     {@literal @Autowired}
+ *     private ReplacedWordRepository replacedWordRepository;
+ *     
+ *     {@literal @Override}
+ *     public {@literal Collection&lt;Word&gt;} getReplacedWords(final FieldAccessor field) {
+ *         
+ *         final Role role;
+ *         if(field.getDeclaredClass().equals(AdminCsv.class)) {
+ *             role = Role.admin;
+ *         } else {
+ *             role = Role.normal;
+ *         }
+ *         
+ *         return loadWords(role).stream()
+ *             .map(dto {@literal -&gt;} new Word(dto.getWord(), dto.getReplacement()))
+ *             .collect(Collectors.toList());
+ *         
+ *     }
+ *     
+ *     // リポジトリから取得した内容をキャッシュする。
+ *     // 引数 role をキーにして、区別する。
+ *     {@literal @Transactional(readOnly = true)}
+ *     {@literal @Cacheable(cacheNames=&quot;replacedWords&quot;, key=&quot;#role&quot;)}
+ *     public {@literal List&lt;WordDto&gt;} loadWords(Role role) {
+ *          
+ *          if(role.euals(Role.admin)) {
+ *              return replacedWordRepository.findByRole(role);
+ *          } else {
+ *              return replacedWordRepository.findAll();
+ *          }
+ *          
+ *     }
+ * }
+ * &lt;/code&gt;&lt;/pre&gt;
+ * 
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+@FunctionalInterface
+public interface ReplacedWordProvider {
+    
+    /**
+     * 語彙の一覧を取得する。
+     * @param field フィールド情報
+     * @return 語彙を返します。チェック対象の文字がない場合は、空のリストを返します。
+     */
+    Collection&lt;Word&gt; getReplacedWords(FieldAccessor field);
+    
+    /**
+     * 置換語彙を表現するクラス。
+     *
+     * @since 2.0.1
+     * @author T.TSUCHIE
+     *
+     */
+    public static class Word implements Serializable {
+        
+        /** serialVersionUID */
+        private static final long serialVersionUID = 1L;
+        
+        private final String word;
+        
+        private final String replacement;
+        
+        /**
+         * 置換語彙のコンストラクタ。
+         * @param word 置換対象の文字。
+         * @param replacement 置換後の文字。
+         * @throws NullPointerException word or replacement is null.
+         * @throws IllegalArgumentException word is empty.
+         */
+<span class="fc" id="L141">        public Word(final String word, final String replacement) {</span>
+<span class="fc" id="L142">            ArgUtils.notEmpty(word, &quot;word&quot;);</span>
+<span class="fc" id="L143">            ArgUtils.notNull(replacement, &quot;replacement&quot;);</span>
+            
+<span class="fc" id="L145">            this.word = word;</span>
+<span class="fc" id="L146">            this.replacement = replacement;</span>
+<span class="fc" id="L147">        }</span>
+        
+        /**
+         * 置換対象の語彙を取得する。
+         * @return 置換対象の語彙。
+         */
+        public String getWord() {
+<span class="fc" id="L154">            return word;</span>
+        }
+        
+        /**
+         * 置換後の文字列を返します。
+         * @return 置換語彙の文字列
+         */
+        public String getReplacement() {
+<span class="fc" id="L162">            return replacement;</span>
+        }
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

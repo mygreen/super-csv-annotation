@@ -468,705 +468,724 @@
 <a class="jxr_linenumber" name="458" href="#458">458</a>                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
 <a class="jxr_linenumber" name="459" href="#459">459</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
 <a class="jxr_linenumber" name="460" href="#460">460</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="461" href="#461">461</a>             }
-<a class="jxr_linenumber" name="462" href="#462">462</a>             
-<a class="jxr_linenumber" name="463" href="#463">463</a>             {
-<a class="jxr_linenumber" name="464" href="#464">464</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
-<a class="jxr_linenumber" name="465" href="#465">465</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="466" href="#466">466</a>                 
-<a class="jxr_linenumber" name="467" href="#467">467</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
-<a class="jxr_linenumber" name="468" href="#468">468</a>                 
-<a class="jxr_linenumber" name="469" href="#469">469</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="470" href="#470">470</a>                 assertThat(anno.order()).isEqualTo(1);
-<a class="jxr_linenumber" name="471" href="#471">471</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="472" href="#472">472</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
-<a class="jxr_linenumber" name="473" href="#473">473</a>                 
-<a class="jxr_linenumber" name="474" href="#474">474</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
-<a class="jxr_linenumber" name="475" href="#475">475</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="476" href="#476">476</a>             }
-<a class="jxr_linenumber" name="477" href="#477">477</a>             
-<a class="jxr_linenumber" name="478" href="#478">478</a>             {
-<a class="jxr_linenumber" name="479" href="#479">479</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
-<a class="jxr_linenumber" name="480" href="#480">480</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="481" href="#481">481</a>                 
-<a class="jxr_linenumber" name="482" href="#482">482</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="461" href="#461">461</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+<a class="jxr_linenumber" name="462" href="#462">462</a>             }
+<a class="jxr_linenumber" name="463" href="#463">463</a>             
+<a class="jxr_linenumber" name="464" href="#464">464</a>             {
+<a class="jxr_linenumber" name="465" href="#465">465</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
+<a class="jxr_linenumber" name="466" href="#466">466</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="467" href="#467">467</a>                 
+<a class="jxr_linenumber" name="468" href="#468">468</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
+<a class="jxr_linenumber" name="469" href="#469">469</a>                 
+<a class="jxr_linenumber" name="470" href="#470">470</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="471" href="#471">471</a>                 assertThat(anno.order()).isEqualTo(1);
+<a class="jxr_linenumber" name="472" href="#472">472</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="473" href="#473">473</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
+<a class="jxr_linenumber" name="474" href="#474">474</a>                 
+<a class="jxr_linenumber" name="475" href="#475">475</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
+<a class="jxr_linenumber" name="476" href="#476">476</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="477" href="#477">477</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+<a class="jxr_linenumber" name="478" href="#478">478</a>             }
+<a class="jxr_linenumber" name="479" href="#479">479</a>             
+<a class="jxr_linenumber" name="480" href="#480">480</a>             {
+<a class="jxr_linenumber" name="481" href="#481">481</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
+<a class="jxr_linenumber" name="482" href="#482">482</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="483" href="#483">483</a>                 
-<a class="jxr_linenumber" name="484" href="#484">484</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="485" href="#485">485</a>                 assertThat(anno.order()).isEqualTo(2);
-<a class="jxr_linenumber" name="486" href="#486">486</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="487" href="#487">487</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
-<a class="jxr_linenumber" name="488" href="#488">488</a>                 
-<a class="jxr_linenumber" name="489" href="#489">489</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
-<a class="jxr_linenumber" name="490" href="#490">490</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="491" href="#491">491</a>             }
-<a class="jxr_linenumber" name="492" href="#492">492</a>             
-<a class="jxr_linenumber" name="493" href="#493">493</a>             {
-<a class="jxr_linenumber" name="494" href="#494">494</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
-<a class="jxr_linenumber" name="495" href="#495">495</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="496" href="#496">496</a>             }
-<a class="jxr_linenumber" name="497" href="#497">497</a>             
-<a class="jxr_linenumber" name="498" href="#498">498</a>             
-<a class="jxr_linenumber" name="499" href="#499">499</a>             {
-<a class="jxr_linenumber" name="500" href="#500">500</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
-<a class="jxr_linenumber" name="501" href="#501">501</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="502" href="#502">502</a>             }
-<a class="jxr_linenumber" name="503" href="#503">503</a>             
-<a class="jxr_linenumber" name="504" href="#504">504</a>             {
-<a class="jxr_linenumber" name="505" href="#505">505</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
-<a class="jxr_linenumber" name="506" href="#506">506</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="507" href="#507">507</a>             }
-<a class="jxr_linenumber" name="508" href="#508">508</a>             
-<a class="jxr_linenumber" name="509" href="#509">509</a>             {
-<a class="jxr_linenumber" name="510" href="#510">510</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
-<a class="jxr_linenumber" name="511" href="#511">511</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="512" href="#512">512</a>             }
-<a class="jxr_linenumber" name="513" href="#513">513</a>             
-<a class="jxr_linenumber" name="514" href="#514">514</a>             {
-<a class="jxr_linenumber" name="515" href="#515">515</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
-<a class="jxr_linenumber" name="516" href="#516">516</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="517" href="#517">517</a>             }
-<a class="jxr_linenumber" name="518" href="#518">518</a>             
-<a class="jxr_linenumber" name="519" href="#519">519</a>         }
-<a class="jxr_linenumber" name="520" href="#520">520</a>         
-<a class="jxr_linenumber" name="521" href="#521">521</a>     }
-<a class="jxr_linenumber" name="522" href="#522">522</a>     
-<a class="jxr_linenumber" name="523" href="#523">523</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="524" href="#524">524</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
-<a class="jxr_linenumber" name="525" href="#525">525</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性の上書き&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="526" href="#526">526</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="527" href="#527">527</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="528" href="#528">528</a>     @Test
-<a class="jxr_linenumber" name="529" href="#529">529</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault2() {
-<a class="jxr_linenumber" name="530" href="#530">530</a>         
-<a class="jxr_linenumber" name="531" href="#531">531</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault2"</span>);
-<a class="jxr_linenumber" name="532" href="#532">532</a>         
-<a class="jxr_linenumber" name="533" href="#533">533</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="534" href="#534">534</a>         
-<a class="jxr_linenumber" name="535" href="#535">535</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
-<a class="jxr_linenumber" name="536" href="#536">536</a>         
-<a class="jxr_linenumber" name="537" href="#537">537</a>         assertThat(actual).hasSize(1);
-<a class="jxr_linenumber" name="538" href="#538">538</a>         
-<a class="jxr_linenumber" name="539" href="#539">539</a>         {
-<a class="jxr_linenumber" name="540" href="#540">540</a>             ExpandedAnnotation expandedAnno = actual.get(0);
-<a class="jxr_linenumber" name="541" href="#541">541</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="542" href="#542">542</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="543" href="#543">543</a>             
-<a class="jxr_linenumber" name="544" href="#544">544</a>             assertThat(expandedAnno.getChilds()).hasSize(8);
-<a class="jxr_linenumber" name="545" href="#545">545</a>             
-<a class="jxr_linenumber" name="546" href="#546">546</a>             {
-<a class="jxr_linenumber" name="547" href="#547">547</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
-<a class="jxr_linenumber" name="548" href="#548">548</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvRequire.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="549" href="#549">549</a>                 
-<a class="jxr_linenumber" name="550" href="#550">550</a>                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
-<a class="jxr_linenumber" name="551" href="#551">551</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
-<a class="jxr_linenumber" name="552" href="#552">552</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="553" href="#553">553</a>             }
-<a class="jxr_linenumber" name="554" href="#554">554</a>             
-<a class="jxr_linenumber" name="555" href="#555">555</a>             {
-<a class="jxr_linenumber" name="556" href="#556">556</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
-<a class="jxr_linenumber" name="557" href="#557">557</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="558" href="#558">558</a>                 
-<a class="jxr_linenumber" name="559" href="#559">559</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
-<a class="jxr_linenumber" name="560" href="#560">560</a>                 
-<a class="jxr_linenumber" name="561" href="#561">561</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="562" href="#562">562</a>                 assertThat(anno.order()).isEqualTo(1);
-<a class="jxr_linenumber" name="563" href="#563">563</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="564" href="#564">564</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
-<a class="jxr_linenumber" name="565" href="#565">565</a>                 
-<a class="jxr_linenumber" name="566" href="#566">566</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
-<a class="jxr_linenumber" name="567" href="#567">567</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="568" href="#568">568</a>             }
-<a class="jxr_linenumber" name="569" href="#569">569</a>             
-<a class="jxr_linenumber" name="570" href="#570">570</a>             {
-<a class="jxr_linenumber" name="571" href="#571">571</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
-<a class="jxr_linenumber" name="572" href="#572">572</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="573" href="#573">573</a>                 
-<a class="jxr_linenumber" name="574" href="#574">574</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="575" href="#575">575</a>                 
-<a class="jxr_linenumber" name="576" href="#576">576</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="577" href="#577">577</a>                 assertThat(anno.order()).isEqualTo(2);
-<a class="jxr_linenumber" name="578" href="#578">578</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="579" href="#579">579</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
+<a class="jxr_linenumber" name="484" href="#484">484</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="485" href="#485">485</a>                 
+<a class="jxr_linenumber" name="486" href="#486">486</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="487" href="#487">487</a>                 assertThat(anno.order()).isEqualTo(2);
+<a class="jxr_linenumber" name="488" href="#488">488</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="489" href="#489">489</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
+<a class="jxr_linenumber" name="490" href="#490">490</a>                 
+<a class="jxr_linenumber" name="491" href="#491">491</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
+<a class="jxr_linenumber" name="492" href="#492">492</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="493" href="#493">493</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+<a class="jxr_linenumber" name="494" href="#494">494</a>             }
+<a class="jxr_linenumber" name="495" href="#495">495</a>             
+<a class="jxr_linenumber" name="496" href="#496">496</a>             {
+<a class="jxr_linenumber" name="497" href="#497">497</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
+<a class="jxr_linenumber" name="498" href="#498">498</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="499" href="#499">499</a>             }
+<a class="jxr_linenumber" name="500" href="#500">500</a>             
+<a class="jxr_linenumber" name="501" href="#501">501</a>             
+<a class="jxr_linenumber" name="502" href="#502">502</a>             {
+<a class="jxr_linenumber" name="503" href="#503">503</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
+<a class="jxr_linenumber" name="504" href="#504">504</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="505" href="#505">505</a>             }
+<a class="jxr_linenumber" name="506" href="#506">506</a>             
+<a class="jxr_linenumber" name="507" href="#507">507</a>             {
+<a class="jxr_linenumber" name="508" href="#508">508</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
+<a class="jxr_linenumber" name="509" href="#509">509</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="510" href="#510">510</a>             }
+<a class="jxr_linenumber" name="511" href="#511">511</a>             
+<a class="jxr_linenumber" name="512" href="#512">512</a>             {
+<a class="jxr_linenumber" name="513" href="#513">513</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
+<a class="jxr_linenumber" name="514" href="#514">514</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="515" href="#515">515</a>             }
+<a class="jxr_linenumber" name="516" href="#516">516</a>             
+<a class="jxr_linenumber" name="517" href="#517">517</a>             {
+<a class="jxr_linenumber" name="518" href="#518">518</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
+<a class="jxr_linenumber" name="519" href="#519">519</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="520" href="#520">520</a>             }
+<a class="jxr_linenumber" name="521" href="#521">521</a>             
+<a class="jxr_linenumber" name="522" href="#522">522</a>         }
+<a class="jxr_linenumber" name="523" href="#523">523</a>         
+<a class="jxr_linenumber" name="524" href="#524">524</a>     }
+<a class="jxr_linenumber" name="525" href="#525">525</a>     
+<a class="jxr_linenumber" name="526" href="#526">526</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="527" href="#527">527</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
+<a class="jxr_linenumber" name="528" href="#528">528</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性の上書き&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="529" href="#529">529</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="530" href="#530">530</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="531" href="#531">531</a>     @Test
+<a class="jxr_linenumber" name="532" href="#532">532</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault2() {
+<a class="jxr_linenumber" name="533" href="#533">533</a>         
+<a class="jxr_linenumber" name="534" href="#534">534</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault2"</span>);
+<a class="jxr_linenumber" name="535" href="#535">535</a>         
+<a class="jxr_linenumber" name="536" href="#536">536</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="537" href="#537">537</a>         
+<a class="jxr_linenumber" name="538" href="#538">538</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
+<a class="jxr_linenumber" name="539" href="#539">539</a>         
+<a class="jxr_linenumber" name="540" href="#540">540</a>         assertThat(actual).hasSize(1);
+<a class="jxr_linenumber" name="541" href="#541">541</a>         
+<a class="jxr_linenumber" name="542" href="#542">542</a>         {
+<a class="jxr_linenumber" name="543" href="#543">543</a>             ExpandedAnnotation expandedAnno = actual.get(0);
+<a class="jxr_linenumber" name="544" href="#544">544</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="545" href="#545">545</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="546" href="#546">546</a>             
+<a class="jxr_linenumber" name="547" href="#547">547</a>             assertThat(expandedAnno.getChilds()).hasSize(8);
+<a class="jxr_linenumber" name="548" href="#548">548</a>             
+<a class="jxr_linenumber" name="549" href="#549">549</a>             {
+<a class="jxr_linenumber" name="550" href="#550">550</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
+<a class="jxr_linenumber" name="551" href="#551">551</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvRequire.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="552" href="#552">552</a>                 
+<a class="jxr_linenumber" name="553" href="#553">553</a>                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
+<a class="jxr_linenumber" name="554" href="#554">554</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
+<a class="jxr_linenumber" name="555" href="#555">555</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="556" href="#556">556</a>                 assertThat(anno.cases()).containsExactly();
+<a class="jxr_linenumber" name="557" href="#557">557</a>             }
+<a class="jxr_linenumber" name="558" href="#558">558</a>             
+<a class="jxr_linenumber" name="559" href="#559">559</a>             {
+<a class="jxr_linenumber" name="560" href="#560">560</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
+<a class="jxr_linenumber" name="561" href="#561">561</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="562" href="#562">562</a>                 
+<a class="jxr_linenumber" name="563" href="#563">563</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
+<a class="jxr_linenumber" name="564" href="#564">564</a>                 
+<a class="jxr_linenumber" name="565" href="#565">565</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="566" href="#566">566</a>                 assertThat(anno.order()).isEqualTo(1);
+<a class="jxr_linenumber" name="567" href="#567">567</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="568" href="#568">568</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
+<a class="jxr_linenumber" name="569" href="#569">569</a>                 
+<a class="jxr_linenumber" name="570" href="#570">570</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
+<a class="jxr_linenumber" name="571" href="#571">571</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="572" href="#572">572</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+<a class="jxr_linenumber" name="573" href="#573">573</a>             }
+<a class="jxr_linenumber" name="574" href="#574">574</a>             
+<a class="jxr_linenumber" name="575" href="#575">575</a>             {
+<a class="jxr_linenumber" name="576" href="#576">576</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
+<a class="jxr_linenumber" name="577" href="#577">577</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="578" href="#578">578</a>                 
+<a class="jxr_linenumber" name="579" href="#579">579</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
 <a class="jxr_linenumber" name="580" href="#580">580</a>                 
-<a class="jxr_linenumber" name="581" href="#581">581</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"範囲内に設定してください"</span>);
-<a class="jxr_linenumber" name="582" href="#582">582</a>                 assertThat(anno.groups()).containsExactly(Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="583" href="#583">583</a>             }
-<a class="jxr_linenumber" name="584" href="#584">584</a>             
-<a class="jxr_linenumber" name="585" href="#585">585</a>             {
-<a class="jxr_linenumber" name="586" href="#586">586</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
-<a class="jxr_linenumber" name="587" href="#587">587</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="588" href="#588">588</a>             }
-<a class="jxr_linenumber" name="589" href="#589">589</a>             
+<a class="jxr_linenumber" name="581" href="#581">581</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="582" href="#582">582</a>                 assertThat(anno.order()).isEqualTo(2);
+<a class="jxr_linenumber" name="583" href="#583">583</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="584" href="#584">584</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
+<a class="jxr_linenumber" name="585" href="#585">585</a>                 
+<a class="jxr_linenumber" name="586" href="#586">586</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"範囲内に設定してください"</span>);
+<a class="jxr_linenumber" name="587" href="#587">587</a>                 assertThat(anno.groups()).containsExactly(Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="588" href="#588">588</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Write);
+<a class="jxr_linenumber" name="589" href="#589">589</a>             }
 <a class="jxr_linenumber" name="590" href="#590">590</a>             
 <a class="jxr_linenumber" name="591" href="#591">591</a>             {
-<a class="jxr_linenumber" name="592" href="#592">592</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
-<a class="jxr_linenumber" name="593" href="#593">593</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="592" href="#592">592</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
+<a class="jxr_linenumber" name="593" href="#593">593</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="594" href="#594">594</a>             }
 <a class="jxr_linenumber" name="595" href="#595">595</a>             
-<a class="jxr_linenumber" name="596" href="#596">596</a>             {
-<a class="jxr_linenumber" name="597" href="#597">597</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
-<a class="jxr_linenumber" name="598" href="#598">598</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="599" href="#599">599</a>             }
-<a class="jxr_linenumber" name="600" href="#600">600</a>             
-<a class="jxr_linenumber" name="601" href="#601">601</a>             {
-<a class="jxr_linenumber" name="602" href="#602">602</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
-<a class="jxr_linenumber" name="603" href="#603">603</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="604" href="#604">604</a>             }
-<a class="jxr_linenumber" name="605" href="#605">605</a>             
-<a class="jxr_linenumber" name="606" href="#606">606</a>             {
-<a class="jxr_linenumber" name="607" href="#607">607</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
-<a class="jxr_linenumber" name="608" href="#608">608</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="609" href="#609">609</a>             }
-<a class="jxr_linenumber" name="610" href="#610">610</a>             
-<a class="jxr_linenumber" name="611" href="#611">611</a>         }
-<a class="jxr_linenumber" name="612" href="#612">612</a>         
-<a class="jxr_linenumber" name="613" href="#613">613</a>     }
-<a class="jxr_linenumber" name="614" href="#614">614</a>     
-<a class="jxr_linenumber" name="615" href="#615">615</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="616" href="#616">616</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
-<a class="jxr_linenumber" name="617" href="#617">617</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性の上書き&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="618" href="#618">618</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="619" href="#619">619</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="620" href="#620">620</a>     @Test
-<a class="jxr_linenumber" name="621" href="#621">621</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault3() {
-<a class="jxr_linenumber" name="622" href="#622">622</a>         
-<a class="jxr_linenumber" name="623" href="#623">623</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault3"</span>);
-<a class="jxr_linenumber" name="624" href="#624">624</a>         
-<a class="jxr_linenumber" name="625" href="#625">625</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault3.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="626" href="#626">626</a>         
-<a class="jxr_linenumber" name="627" href="#627">627</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
+<a class="jxr_linenumber" name="596" href="#596">596</a>             
+<a class="jxr_linenumber" name="597" href="#597">597</a>             {
+<a class="jxr_linenumber" name="598" href="#598">598</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
+<a class="jxr_linenumber" name="599" href="#599">599</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="600" href="#600">600</a>             }
+<a class="jxr_linenumber" name="601" href="#601">601</a>             
+<a class="jxr_linenumber" name="602" href="#602">602</a>             {
+<a class="jxr_linenumber" name="603" href="#603">603</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
+<a class="jxr_linenumber" name="604" href="#604">604</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="605" href="#605">605</a>             }
+<a class="jxr_linenumber" name="606" href="#606">606</a>             
+<a class="jxr_linenumber" name="607" href="#607">607</a>             {
+<a class="jxr_linenumber" name="608" href="#608">608</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
+<a class="jxr_linenumber" name="609" href="#609">609</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="610" href="#610">610</a>             }
+<a class="jxr_linenumber" name="611" href="#611">611</a>             
+<a class="jxr_linenumber" name="612" href="#612">612</a>             {
+<a class="jxr_linenumber" name="613" href="#613">613</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
+<a class="jxr_linenumber" name="614" href="#614">614</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="615" href="#615">615</a>             }
+<a class="jxr_linenumber" name="616" href="#616">616</a>             
+<a class="jxr_linenumber" name="617" href="#617">617</a>         }
+<a class="jxr_linenumber" name="618" href="#618">618</a>         
+<a class="jxr_linenumber" name="619" href="#619">619</a>     }
+<a class="jxr_linenumber" name="620" href="#620">620</a>     
+<a class="jxr_linenumber" name="621" href="#621">621</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="622" href="#622">622</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
+<a class="jxr_linenumber" name="623" href="#623">623</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性の上書き&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="624" href="#624">624</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="625" href="#625">625</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="626" href="#626">626</a>     @Test
+<a class="jxr_linenumber" name="627" href="#627">627</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault3() {
 <a class="jxr_linenumber" name="628" href="#628">628</a>         
-<a class="jxr_linenumber" name="629" href="#629">629</a>         assertThat(actual).hasSize(1);
+<a class="jxr_linenumber" name="629" href="#629">629</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault3"</span>);
 <a class="jxr_linenumber" name="630" href="#630">630</a>         
-<a class="jxr_linenumber" name="631" href="#631">631</a>         {
-<a class="jxr_linenumber" name="632" href="#632">632</a>             ExpandedAnnotation expandedAnno = actual.get(0);
-<a class="jxr_linenumber" name="633" href="#633">633</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault3.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="634" href="#634">634</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="635" href="#635">635</a>             
-<a class="jxr_linenumber" name="636" href="#636">636</a>             assertThat(expandedAnno.getChilds()).hasSize(8);
-<a class="jxr_linenumber" name="637" href="#637">637</a>             
-<a class="jxr_linenumber" name="638" href="#638">638</a>             {
-<a class="jxr_linenumber" name="639" href="#639">639</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
-<a class="jxr_linenumber" name="640" href="#640">640</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvRequire.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="641" href="#641">641</a>                 
-<a class="jxr_linenumber" name="642" href="#642">642</a>                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
-<a class="jxr_linenumber" name="643" href="#643">643</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"必須です"</span>);
-<a class="jxr_linenumber" name="644" href="#644">644</a>                 assertThat(anno.groups()).containsExactly(Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="645" href="#645">645</a>             }
-<a class="jxr_linenumber" name="646" href="#646">646</a>             
-<a class="jxr_linenumber" name="647" href="#647">647</a>             {
-<a class="jxr_linenumber" name="648" href="#648">648</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
-<a class="jxr_linenumber" name="649" href="#649">649</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="650" href="#650">650</a>                 
-<a class="jxr_linenumber" name="651" href="#651">651</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
-<a class="jxr_linenumber" name="652" href="#652">652</a>                 
-<a class="jxr_linenumber" name="653" href="#653">653</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="654" href="#654">654</a>                 assertThat(anno.order()).isEqualTo(1);
-<a class="jxr_linenumber" name="655" href="#655">655</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="656" href="#656">656</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
+<a class="jxr_linenumber" name="631" href="#631">631</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault3.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="632" href="#632">632</a>         
+<a class="jxr_linenumber" name="633" href="#633">633</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
+<a class="jxr_linenumber" name="634" href="#634">634</a>         
+<a class="jxr_linenumber" name="635" href="#635">635</a>         assertThat(actual).hasSize(1);
+<a class="jxr_linenumber" name="636" href="#636">636</a>         
+<a class="jxr_linenumber" name="637" href="#637">637</a>         {
+<a class="jxr_linenumber" name="638" href="#638">638</a>             ExpandedAnnotation expandedAnno = actual.get(0);
+<a class="jxr_linenumber" name="639" href="#639">639</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault3.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="640" href="#640">640</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="641" href="#641">641</a>             
+<a class="jxr_linenumber" name="642" href="#642">642</a>             assertThat(expandedAnno.getChilds()).hasSize(8);
+<a class="jxr_linenumber" name="643" href="#643">643</a>             
+<a class="jxr_linenumber" name="644" href="#644">644</a>             {
+<a class="jxr_linenumber" name="645" href="#645">645</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
+<a class="jxr_linenumber" name="646" href="#646">646</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvRequire.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="647" href="#647">647</a>                 
+<a class="jxr_linenumber" name="648" href="#648">648</a>                 CsvRequire anno = (CsvRequire) childAnno.getOriginal();
+<a class="jxr_linenumber" name="649" href="#649">649</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"必須です"</span>);
+<a class="jxr_linenumber" name="650" href="#650">650</a>                 assertThat(anno.groups()).containsExactly(Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="651" href="#651">651</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Write);
+<a class="jxr_linenumber" name="652" href="#652">652</a>             }
+<a class="jxr_linenumber" name="653" href="#653">653</a>             
+<a class="jxr_linenumber" name="654" href="#654">654</a>             {
+<a class="jxr_linenumber" name="655" href="#655">655</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
+<a class="jxr_linenumber" name="656" href="#656">656</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="657" href="#657">657</a>                 
-<a class="jxr_linenumber" name="658" href="#658">658</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"{com.github.mygreen.supercsv.annotation.constraint.CsvNumberRange.message}"</span>);
-<a class="jxr_linenumber" name="659" href="#659">659</a>                 assertThat(anno.groups()).hasSize(0);
-<a class="jxr_linenumber" name="660" href="#660">660</a>             }
-<a class="jxr_linenumber" name="661" href="#661">661</a>             
-<a class="jxr_linenumber" name="662" href="#662">662</a>             {
-<a class="jxr_linenumber" name="663" href="#663">663</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
-<a class="jxr_linenumber" name="664" href="#664">664</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="665" href="#665">665</a>                 
-<a class="jxr_linenumber" name="666" href="#666">666</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="667" href="#667">667</a>                 
-<a class="jxr_linenumber" name="668" href="#668">668</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="669" href="#669">669</a>                 assertThat(anno.order()).isEqualTo(2);
-<a class="jxr_linenumber" name="670" href="#670">670</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="671" href="#671">671</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
-<a class="jxr_linenumber" name="672" href="#672">672</a>                 
-<a class="jxr_linenumber" name="673" href="#673">673</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
-<a class="jxr_linenumber" name="674" href="#674">674</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="675" href="#675">675</a>             }
-<a class="jxr_linenumber" name="676" href="#676">676</a>             
-<a class="jxr_linenumber" name="677" href="#677">677</a>             {
-<a class="jxr_linenumber" name="678" href="#678">678</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
-<a class="jxr_linenumber" name="679" href="#679">679</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="680" href="#680">680</a>             }
-<a class="jxr_linenumber" name="681" href="#681">681</a>             
-<a class="jxr_linenumber" name="682" href="#682">682</a>             
-<a class="jxr_linenumber" name="683" href="#683">683</a>             {
-<a class="jxr_linenumber" name="684" href="#684">684</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
-<a class="jxr_linenumber" name="685" href="#685">685</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="658" href="#658">658</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
+<a class="jxr_linenumber" name="659" href="#659">659</a>                 
+<a class="jxr_linenumber" name="660" href="#660">660</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="661" href="#661">661</a>                 assertThat(anno.order()).isEqualTo(1);
+<a class="jxr_linenumber" name="662" href="#662">662</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="663" href="#663">663</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
+<a class="jxr_linenumber" name="664" href="#664">664</a>                 
+<a class="jxr_linenumber" name="665" href="#665">665</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"{com.github.mygreen.supercsv.annotation.constraint.CsvNumberRange.message}"</span>);
+<a class="jxr_linenumber" name="666" href="#666">666</a>                 assertThat(anno.groups()).hasSize(0);
+<a class="jxr_linenumber" name="667" href="#667">667</a>                 assertThat(anno.cases()).hasSize(0);
+<a class="jxr_linenumber" name="668" href="#668">668</a>                 
+<a class="jxr_linenumber" name="669" href="#669">669</a>             }
+<a class="jxr_linenumber" name="670" href="#670">670</a>             
+<a class="jxr_linenumber" name="671" href="#671">671</a>             {
+<a class="jxr_linenumber" name="672" href="#672">672</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
+<a class="jxr_linenumber" name="673" href="#673">673</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="674" href="#674">674</a>                 
+<a class="jxr_linenumber" name="675" href="#675">675</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="676" href="#676">676</a>                 
+<a class="jxr_linenumber" name="677" href="#677">677</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="678" href="#678">678</a>                 assertThat(anno.order()).isEqualTo(2);
+<a class="jxr_linenumber" name="679" href="#679">679</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="680" href="#680">680</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"20"</span>);
+<a class="jxr_linenumber" name="681" href="#681">681</a>                 
+<a class="jxr_linenumber" name="682" href="#682">682</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"値は不正です"</span>);
+<a class="jxr_linenumber" name="683" href="#683">683</a>                 assertThat(anno.groups()).containsExactly(DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="684" href="#684">684</a>                 assertThat(anno.cases()).containsExactly(BuildCase.Read, BuildCase.Write);
+<a class="jxr_linenumber" name="685" href="#685">685</a> 
 <a class="jxr_linenumber" name="686" href="#686">686</a>             }
 <a class="jxr_linenumber" name="687" href="#687">687</a>             
 <a class="jxr_linenumber" name="688" href="#688">688</a>             {
-<a class="jxr_linenumber" name="689" href="#689">689</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
-<a class="jxr_linenumber" name="690" href="#690">690</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="689" href="#689">689</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
+<a class="jxr_linenumber" name="690" href="#690">690</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="691" href="#691">691</a>             }
 <a class="jxr_linenumber" name="692" href="#692">692</a>             
-<a class="jxr_linenumber" name="693" href="#693">693</a>             {
-<a class="jxr_linenumber" name="694" href="#694">694</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
-<a class="jxr_linenumber" name="695" href="#695">695</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="696" href="#696">696</a>             }
-<a class="jxr_linenumber" name="697" href="#697">697</a>             
-<a class="jxr_linenumber" name="698" href="#698">698</a>             {
-<a class="jxr_linenumber" name="699" href="#699">699</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
-<a class="jxr_linenumber" name="700" href="#700">700</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="701" href="#701">701</a>             }
-<a class="jxr_linenumber" name="702" href="#702">702</a>             
-<a class="jxr_linenumber" name="703" href="#703">703</a>         }
-<a class="jxr_linenumber" name="704" href="#704">704</a>         
-<a class="jxr_linenumber" name="705" href="#705">705</a>     }
-<a class="jxr_linenumber" name="706" href="#706">706</a>     
-<a class="jxr_linenumber" name="707" href="#707">707</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="708" href="#708">708</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
-<a class="jxr_linenumber" name="709" href="#709">709</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性名の省略&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="710" href="#710">710</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="711" href="#711">711</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="712" href="#712">712</a>     @Test
-<a class="jxr_linenumber" name="713" href="#713">713</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault4() {
-<a class="jxr_linenumber" name="714" href="#714">714</a>         
-<a class="jxr_linenumber" name="715" href="#715">715</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault4"</span>);
-<a class="jxr_linenumber" name="716" href="#716">716</a>         
-<a class="jxr_linenumber" name="717" href="#717">717</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault4.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="718" href="#718">718</a>         
-<a class="jxr_linenumber" name="719" href="#719">719</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
-<a class="jxr_linenumber" name="720" href="#720">720</a>         
-<a class="jxr_linenumber" name="721" href="#721">721</a>         assertThat(actual).hasSize(1);
-<a class="jxr_linenumber" name="722" href="#722">722</a>         
-<a class="jxr_linenumber" name="723" href="#723">723</a>         {
-<a class="jxr_linenumber" name="724" href="#724">724</a>             ExpandedAnnotation expandedAnno = actual.get(0);
-<a class="jxr_linenumber" name="725" href="#725">725</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault4.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="726" href="#726">726</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="727" href="#727">727</a>             
-<a class="jxr_linenumber" name="728" href="#728">728</a>             assertThat(expandedAnno.getChilds()).hasSize(7);
-<a class="jxr_linenumber" name="729" href="#729">729</a>             
-<a class="jxr_linenumber" name="730" href="#730">730</a>             {
-<a class="jxr_linenumber" name="731" href="#731">731</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
-<a class="jxr_linenumber" name="732" href="#732">732</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="733" href="#733">733</a>                 
-<a class="jxr_linenumber" name="734" href="#734">734</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
-<a class="jxr_linenumber" name="735" href="#735">735</a>                 
-<a class="jxr_linenumber" name="736" href="#736">736</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="737" href="#737">737</a>                 assertThat(anno.order()).isEqualTo(1);
-<a class="jxr_linenumber" name="738" href="#738">738</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="739" href="#739">739</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
-<a class="jxr_linenumber" name="740" href="#740">740</a>                 
-<a class="jxr_linenumber" name="741" href="#741">741</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"{com.github.mygreen.supercsv.annotation.constraint.CsvNumberRange.message}"</span>);
-<a class="jxr_linenumber" name="742" href="#742">742</a>                 assertThat(anno.groups()).hasSize(0);
-<a class="jxr_linenumber" name="743" href="#743">743</a>             }
-<a class="jxr_linenumber" name="744" href="#744">744</a>             
-<a class="jxr_linenumber" name="745" href="#745">745</a>             {
-<a class="jxr_linenumber" name="746" href="#746">746</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
-<a class="jxr_linenumber" name="747" href="#747">747</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="748" href="#748">748</a>                 
-<a class="jxr_linenumber" name="749" href="#749">749</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
-<a class="jxr_linenumber" name="750" href="#750">750</a>                 
-<a class="jxr_linenumber" name="751" href="#751">751</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
-<a class="jxr_linenumber" name="752" href="#752">752</a>                 assertThat(anno.order()).isEqualTo(2);
-<a class="jxr_linenumber" name="753" href="#753">753</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
-<a class="jxr_linenumber" name="754" href="#754">754</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"5"</span>);
-<a class="jxr_linenumber" name="755" href="#755">755</a>                 
-<a class="jxr_linenumber" name="756" href="#756">756</a>                 assertThat(anno.groups()).containsExactly(Group1.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="757" href="#757">757</a>             }
-<a class="jxr_linenumber" name="758" href="#758">758</a>             
-<a class="jxr_linenumber" name="759" href="#759">759</a>             {
-<a class="jxr_linenumber" name="760" href="#760">760</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
-<a class="jxr_linenumber" name="761" href="#761">761</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="762" href="#762">762</a>             }
-<a class="jxr_linenumber" name="763" href="#763">763</a>             
-<a class="jxr_linenumber" name="764" href="#764">764</a>             {
-<a class="jxr_linenumber" name="765" href="#765">765</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
-<a class="jxr_linenumber" name="766" href="#766">766</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="767" href="#767">767</a>             }
-<a class="jxr_linenumber" name="768" href="#768">768</a>             
-<a class="jxr_linenumber" name="769" href="#769">769</a>             {
-<a class="jxr_linenumber" name="770" href="#770">770</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
-<a class="jxr_linenumber" name="771" href="#771">771</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="772" href="#772">772</a>             }
-<a class="jxr_linenumber" name="773" href="#773">773</a>             
-<a class="jxr_linenumber" name="774" href="#774">774</a>             {
-<a class="jxr_linenumber" name="775" href="#775">775</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
-<a class="jxr_linenumber" name="776" href="#776">776</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="777" href="#777">777</a>             }
-<a class="jxr_linenumber" name="778" href="#778">778</a>             
-<a class="jxr_linenumber" name="779" href="#779">779</a>             {
-<a class="jxr_linenumber" name="780" href="#780">780</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
-<a class="jxr_linenumber" name="781" href="#781">781</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="782" href="#782">782</a>             }
-<a class="jxr_linenumber" name="783" href="#783">783</a>             
-<a class="jxr_linenumber" name="784" href="#784">784</a>         }
-<a class="jxr_linenumber" name="785" href="#785">785</a>         
-<a class="jxr_linenumber" name="786" href="#786">786</a>     }
-<a class="jxr_linenumber" name="787" href="#787">787</a>     
-<a class="jxr_linenumber" name="788" href="#788">788</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="789" href="#789">789</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 上書き対象の属性が見つからない場合</em>
-<a class="jxr_linenumber" name="790" href="#790">790</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="791" href="#791">791</a>     @Test
-<a class="jxr_linenumber" name="792" href="#792">792</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideNotFoundAttr1() {
-<a class="jxr_linenumber" name="793" href="#793">793</a>         
-<a class="jxr_linenumber" name="794" href="#794">794</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideAttrNotFound1"</span>);
-<a class="jxr_linenumber" name="795" href="#795">795</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideAttrNotFound1.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="693" href="#693">693</a>             
+<a class="jxr_linenumber" name="694" href="#694">694</a>             {
+<a class="jxr_linenumber" name="695" href="#695">695</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
+<a class="jxr_linenumber" name="696" href="#696">696</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="697" href="#697">697</a>             }
+<a class="jxr_linenumber" name="698" href="#698">698</a>             
+<a class="jxr_linenumber" name="699" href="#699">699</a>             {
+<a class="jxr_linenumber" name="700" href="#700">700</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
+<a class="jxr_linenumber" name="701" href="#701">701</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="702" href="#702">702</a>             }
+<a class="jxr_linenumber" name="703" href="#703">703</a>             
+<a class="jxr_linenumber" name="704" href="#704">704</a>             {
+<a class="jxr_linenumber" name="705" href="#705">705</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
+<a class="jxr_linenumber" name="706" href="#706">706</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="707" href="#707">707</a>             }
+<a class="jxr_linenumber" name="708" href="#708">708</a>             
+<a class="jxr_linenumber" name="709" href="#709">709</a>             {
+<a class="jxr_linenumber" name="710" href="#710">710</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(7);
+<a class="jxr_linenumber" name="711" href="#711">711</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="712" href="#712">712</a>             }
+<a class="jxr_linenumber" name="713" href="#713">713</a>             
+<a class="jxr_linenumber" name="714" href="#714">714</a>         }
+<a class="jxr_linenumber" name="715" href="#715">715</a>         
+<a class="jxr_linenumber" name="716" href="#716">716</a>     }
+<a class="jxr_linenumber" name="717" href="#717">717</a>     
+<a class="jxr_linenumber" name="718" href="#718">718</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="719" href="#719">719</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 属性のオーバーライドあり</em>
+<a class="jxr_linenumber" name="720" href="#720">720</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性名の省略&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="721" href="#721">721</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部の属性を上書き&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="722" href="#722">722</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="723" href="#723">723</a>     @Test
+<a class="jxr_linenumber" name="724" href="#724">724</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideDefault4() {
+<a class="jxr_linenumber" name="725" href="#725">725</a>         
+<a class="jxr_linenumber" name="726" href="#726">726</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideDefault4"</span>);
+<a class="jxr_linenumber" name="727" href="#727">727</a>         
+<a class="jxr_linenumber" name="728" href="#728">728</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideDefault4.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="729" href="#729">729</a>         
+<a class="jxr_linenumber" name="730" href="#730">730</a>         List&lt;ExpandedAnnotation&gt; actual = expander.expand(targetAnno);
+<a class="jxr_linenumber" name="731" href="#731">731</a>         
+<a class="jxr_linenumber" name="732" href="#732">732</a>         assertThat(actual).hasSize(1);
+<a class="jxr_linenumber" name="733" href="#733">733</a>         
+<a class="jxr_linenumber" name="734" href="#734">734</a>         {
+<a class="jxr_linenumber" name="735" href="#735">735</a>             ExpandedAnnotation expandedAnno = actual.get(0);
+<a class="jxr_linenumber" name="736" href="#736">736</a>             assertThat(expandedAnno.getOriginal()).isInstanceOf(ComposeOverrideDefault4.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="737" href="#737">737</a>             assertThat(expandedAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="738" href="#738">738</a>             
+<a class="jxr_linenumber" name="739" href="#739">739</a>             assertThat(expandedAnno.getChilds()).hasSize(7);
+<a class="jxr_linenumber" name="740" href="#740">740</a>             
+<a class="jxr_linenumber" name="741" href="#741">741</a>             {
+<a class="jxr_linenumber" name="742" href="#742">742</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(0);
+<a class="jxr_linenumber" name="743" href="#743">743</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="744" href="#744">744</a>                 
+<a class="jxr_linenumber" name="745" href="#745">745</a>                 assertThat(childAnno.getIndex()).isEqualTo(1);
+<a class="jxr_linenumber" name="746" href="#746">746</a>                 
+<a class="jxr_linenumber" name="747" href="#747">747</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="748" href="#748">748</a>                 assertThat(anno.order()).isEqualTo(1);
+<a class="jxr_linenumber" name="749" href="#749">749</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="750" href="#750">750</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"30"</span>);
+<a class="jxr_linenumber" name="751" href="#751">751</a>                 
+<a class="jxr_linenumber" name="752" href="#752">752</a>                 assertThat(anno.message()).isEqualTo(<span class="jxr_string">"{com.github.mygreen.supercsv.annotation.constraint.CsvNumberRange.message}"</span>);
+<a class="jxr_linenumber" name="753" href="#753">753</a>                 assertThat(anno.groups()).hasSize(0);
+<a class="jxr_linenumber" name="754" href="#754">754</a>             }
+<a class="jxr_linenumber" name="755" href="#755">755</a>             
+<a class="jxr_linenumber" name="756" href="#756">756</a>             {
+<a class="jxr_linenumber" name="757" href="#757">757</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(1);
+<a class="jxr_linenumber" name="758" href="#758">758</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvNumberRange.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="759" href="#759">759</a>                 
+<a class="jxr_linenumber" name="760" href="#760">760</a>                 assertThat(childAnno.getIndex()).isEqualTo(0);
+<a class="jxr_linenumber" name="761" href="#761">761</a>                 
+<a class="jxr_linenumber" name="762" href="#762">762</a>                 CsvNumberRange anno = (CsvNumberRange) childAnno.getOriginal();
+<a class="jxr_linenumber" name="763" href="#763">763</a>                 assertThat(anno.order()).isEqualTo(2);
+<a class="jxr_linenumber" name="764" href="#764">764</a>                 assertThat(anno.min()).isEqualTo(<span class="jxr_string">"0"</span>);
+<a class="jxr_linenumber" name="765" href="#765">765</a>                 assertThat(anno.max()).isEqualTo(<span class="jxr_string">"5"</span>);
+<a class="jxr_linenumber" name="766" href="#766">766</a>                 
+<a class="jxr_linenumber" name="767" href="#767">767</a>                 assertThat(anno.groups()).containsExactly(Group1.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="768" href="#768">768</a>             }
+<a class="jxr_linenumber" name="769" href="#769">769</a>             
+<a class="jxr_linenumber" name="770" href="#770">770</a>             {
+<a class="jxr_linenumber" name="771" href="#771">771</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(2);
+<a class="jxr_linenumber" name="772" href="#772">772</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(CsvComposition.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="773" href="#773">773</a>             }
+<a class="jxr_linenumber" name="774" href="#774">774</a>             
+<a class="jxr_linenumber" name="775" href="#775">775</a>             {
+<a class="jxr_linenumber" name="776" href="#776">776</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(3);
+<a class="jxr_linenumber" name="777" href="#777">777</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Documented.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="778" href="#778">778</a>             }
+<a class="jxr_linenumber" name="779" href="#779">779</a>             
+<a class="jxr_linenumber" name="780" href="#780">780</a>             {
+<a class="jxr_linenumber" name="781" href="#781">781</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(4);
+<a class="jxr_linenumber" name="782" href="#782">782</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Repeatable.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="783" href="#783">783</a>             }
+<a class="jxr_linenumber" name="784" href="#784">784</a>             
+<a class="jxr_linenumber" name="785" href="#785">785</a>             {
+<a class="jxr_linenumber" name="786" href="#786">786</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(5);
+<a class="jxr_linenumber" name="787" href="#787">787</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Retention.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="788" href="#788">788</a>             }
+<a class="jxr_linenumber" name="789" href="#789">789</a>             
+<a class="jxr_linenumber" name="790" href="#790">790</a>             {
+<a class="jxr_linenumber" name="791" href="#791">791</a>                 ExpandedAnnotation childAnno = expandedAnno.getChilds().get(6);
+<a class="jxr_linenumber" name="792" href="#792">792</a>                 assertThat(childAnno.getOriginal()).isInstanceOf(Target.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="793" href="#793">793</a>             }
+<a class="jxr_linenumber" name="794" href="#794">794</a>             
+<a class="jxr_linenumber" name="795" href="#795">795</a>         }
 <a class="jxr_linenumber" name="796" href="#796">796</a>         
-<a class="jxr_linenumber" name="797" href="#797">797</a>         assertThatThrownBy(() -&gt; expander.expand(targetAnno))
-<a class="jxr_linenumber" name="798" href="#798">798</a>             .isInstanceOf(SuperCsvInvalidAnnotationException.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="799" href="#799">799</a>             .hasMessage(<span class="jxr_string">"アノテーション @ComposeOverrideAttrNotFound1 において、アノテーション @CsvOverridesAnnotation で上書きするアノテーション @CsvNumberRange の属性(java.lang.String test) が見つかりません。"</span>);
-<a class="jxr_linenumber" name="800" href="#800">800</a>         
-<a class="jxr_linenumber" name="801" href="#801">801</a>     }
-<a class="jxr_linenumber" name="802" href="#802">802</a>     
-<a class="jxr_linenumber" name="803" href="#803">803</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="804" href="#804">804</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 上書き対象の属性が見つからない場合</em>
-<a class="jxr_linenumber" name="805" href="#805">805</a> <em class="jxr_javadoccomment">     * - インデックス指定</em>
-<a class="jxr_linenumber" name="806" href="#806">806</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="807" href="#807">807</a>     @Test
-<a class="jxr_linenumber" name="808" href="#808">808</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideNotFoundAttr2() {
-<a class="jxr_linenumber" name="809" href="#809">809</a>         
-<a class="jxr_linenumber" name="810" href="#810">810</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideAttrNotFound2"</span>);
-<a class="jxr_linenumber" name="811" href="#811">811</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideAttrNotFound2.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="812" href="#812">812</a>         
-<a class="jxr_linenumber" name="813" href="#813">813</a>         <em class="jxr_comment">//TODO: 現状は正常終了してしまう。</em>
-<a class="jxr_linenumber" name="814" href="#814">814</a>         
-<a class="jxr_linenumber" name="815" href="#815">815</a> <em class="jxr_comment">//        assertThatThrownBy(() -&gt; expander.expand(targetAnno))</em>
-<a class="jxr_linenumber" name="816" href="#816">816</a> <em class="jxr_comment">//            .isInstanceOf(SuperCsvInvalidAnnotationException.class)</em>
-<a class="jxr_linenumber" name="817" href="#817">817</a> <em class="jxr_comment">//            .hasMessage("アノテーション @ComposeOverrideAttrNotFound2 において、アノテーション @CsvOverridesAnnotation で上書きするアノテーション 1番目の @CsvNumberRange の属性(java.lang.String test) が見つかりません。");</em>
-<a class="jxr_linenumber" name="818" href="#818">818</a> <em class="jxr_comment">//        </em>
-<a class="jxr_linenumber" name="819" href="#819">819</a>     }
-<a class="jxr_linenumber" name="820" href="#820">820</a>     
-<a class="jxr_linenumber" name="821" href="#821">821</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="822" href="#822">822</a> <em class="jxr_javadoccomment">     * テスト用のクラスのフィールドを取得する</em>
-<a class="jxr_linenumber" name="823" href="#823">823</a> <em class="jxr_javadoccomment">     * @param fieldName 取得し対象のフィールドの名称</em>
-<a class="jxr_linenumber" name="824" href="#824">824</a> <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="825" href="#825">825</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="826" href="#826">826</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Field getSampleField(<strong class="jxr_keyword">final</strong> String fieldName) {
-<a class="jxr_linenumber" name="827" href="#827">827</a>         
-<a class="jxr_linenumber" name="828" href="#828">828</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="829" href="#829">829</a>             <strong class="jxr_keyword">final</strong> Field field = SampleCsv.<strong class="jxr_keyword">class</strong>.getDeclaredField(fieldName);
-<a class="jxr_linenumber" name="830" href="#830">830</a>             field.setAccessible(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="831" href="#831">831</a>             
-<a class="jxr_linenumber" name="832" href="#832">832</a>             <strong class="jxr_keyword">return</strong> field;
-<a class="jxr_linenumber" name="833" href="#833">833</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
-<a class="jxr_linenumber" name="834" href="#834">834</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(String.format(<span class="jxr_string">"fail get field : '%s'."</span>, fieldName), e);
-<a class="jxr_linenumber" name="835" href="#835">835</a>         }
-<a class="jxr_linenumber" name="836" href="#836">836</a>         
-<a class="jxr_linenumber" name="837" href="#837">837</a>     }
-<a class="jxr_linenumber" name="838" href="#838">838</a>     
-<a class="jxr_linenumber" name="839" href="#839">839</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">SampleCsv</a> {
-<a class="jxr_linenumber" name="840" href="#840">840</a>         
-<a class="jxr_linenumber" name="841" href="#841">841</a>         @CsvColumn(number=1, label=<span class="jxr_string">"test"</span>)
-<a class="jxr_linenumber" name="842" href="#842">842</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> normal;
-<a class="jxr_linenumber" name="843" href="#843">843</a>         
-<a class="jxr_linenumber" name="844" href="#844">844</a>         @CsvDateTimeFormat(pattern=<span class="jxr_string">"yyyy/MM/dd"</span>)
-<a class="jxr_linenumber" name="845" href="#845">845</a>         @CsvColumn(number=2, label=<span class="jxr_string">"test"</span>)
-<a class="jxr_linenumber" name="846" href="#846">846</a>         @CsvDateTimeMax(value=<span class="jxr_string">"2050/10/21"</span>, order=5)
-<a class="jxr_linenumber" name="847" href="#847">847</a>         @CsvUnique(order=3)
-<a class="jxr_linenumber" name="848" href="#848">848</a>         @CsvLower(order=1)
-<a class="jxr_linenumber" name="849" href="#849">849</a>         @CsvTrim(order=10)
-<a class="jxr_linenumber" name="850" href="#850">850</a>         <strong class="jxr_keyword">private</strong> Date multi;
+<a class="jxr_linenumber" name="797" href="#797">797</a>     }
+<a class="jxr_linenumber" name="798" href="#798">798</a>     
+<a class="jxr_linenumber" name="799" href="#799">799</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="800" href="#800">800</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 上書き対象の属性が見つからない場合</em>
+<a class="jxr_linenumber" name="801" href="#801">801</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="802" href="#802">802</a>     @Test
+<a class="jxr_linenumber" name="803" href="#803">803</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideNotFoundAttr1() {
+<a class="jxr_linenumber" name="804" href="#804">804</a>         
+<a class="jxr_linenumber" name="805" href="#805">805</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideAttrNotFound1"</span>);
+<a class="jxr_linenumber" name="806" href="#806">806</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideAttrNotFound1.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="807" href="#807">807</a>         
+<a class="jxr_linenumber" name="808" href="#808">808</a>         assertThatThrownBy(() -&gt; expander.expand(targetAnno))
+<a class="jxr_linenumber" name="809" href="#809">809</a>             .isInstanceOf(SuperCsvInvalidAnnotationException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="810" href="#810">810</a>             .hasMessage(<span class="jxr_string">"アノテーション @ComposeOverrideAttrNotFound1 において、アノテーション @CsvOverridesAnnotation で上書きするアノテーション @CsvNumberRange の属性(java.lang.String test) が見つかりません。"</span>);
+<a class="jxr_linenumber" name="811" href="#811">811</a>         
+<a class="jxr_linenumber" name="812" href="#812">812</a>     }
+<a class="jxr_linenumber" name="813" href="#813">813</a>     
+<a class="jxr_linenumber" name="814" href="#814">814</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="815" href="#815">815</a> <em class="jxr_javadoccomment">     * 合成のアノテーション - 上書き対象の属性が見つからない場合</em>
+<a class="jxr_linenumber" name="816" href="#816">816</a> <em class="jxr_javadoccomment">     * - インデックス指定</em>
+<a class="jxr_linenumber" name="817" href="#817">817</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="818" href="#818">818</a>     @Test
+<a class="jxr_linenumber" name="819" href="#819">819</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testExpand_composeOverrideNotFoundAttr2() {
+<a class="jxr_linenumber" name="820" href="#820">820</a>         
+<a class="jxr_linenumber" name="821" href="#821">821</a>         Field field = getSampleField(<span class="jxr_string">"composeOverrideAttrNotFound2"</span>);
+<a class="jxr_linenumber" name="822" href="#822">822</a>         Annotation targetAnno = field.getAnnotation(ComposeOverrideAttrNotFound2.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="823" href="#823">823</a>         
+<a class="jxr_linenumber" name="824" href="#824">824</a>         <em class="jxr_comment">//TODO: 現状は正常終了してしまう。</em>
+<a class="jxr_linenumber" name="825" href="#825">825</a>         
+<a class="jxr_linenumber" name="826" href="#826">826</a> <em class="jxr_comment">//        assertThatThrownBy(() -&gt; expander.expand(targetAnno))</em>
+<a class="jxr_linenumber" name="827" href="#827">827</a> <em class="jxr_comment">//            .isInstanceOf(SuperCsvInvalidAnnotationException.class)</em>
+<a class="jxr_linenumber" name="828" href="#828">828</a> <em class="jxr_comment">//            .hasMessage("アノテーション @ComposeOverrideAttrNotFound2 において、アノテーション @CsvOverridesAnnotation で上書きするアノテーション 1番目の @CsvNumberRange の属性(java.lang.String test) が見つかりません。");</em>
+<a class="jxr_linenumber" name="829" href="#829">829</a> <em class="jxr_comment">//        </em>
+<a class="jxr_linenumber" name="830" href="#830">830</a>     }
+<a class="jxr_linenumber" name="831" href="#831">831</a>     
+<a class="jxr_linenumber" name="832" href="#832">832</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="833" href="#833">833</a> <em class="jxr_javadoccomment">     * テスト用のクラスのフィールドを取得する</em>
+<a class="jxr_linenumber" name="834" href="#834">834</a> <em class="jxr_javadoccomment">     * @param fieldName 取得し対象のフィールドの名称</em>
+<a class="jxr_linenumber" name="835" href="#835">835</a> <em class="jxr_javadoccomment">     * @return</em>
+<a class="jxr_linenumber" name="836" href="#836">836</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="837" href="#837">837</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Field getSampleField(<strong class="jxr_keyword">final</strong> String fieldName) {
+<a class="jxr_linenumber" name="838" href="#838">838</a>         
+<a class="jxr_linenumber" name="839" href="#839">839</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="840" href="#840">840</a>             <strong class="jxr_keyword">final</strong> Field field = SampleCsv.<strong class="jxr_keyword">class</strong>.getDeclaredField(fieldName);
+<a class="jxr_linenumber" name="841" href="#841">841</a>             field.setAccessible(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="842" href="#842">842</a>             
+<a class="jxr_linenumber" name="843" href="#843">843</a>             <strong class="jxr_keyword">return</strong> field;
+<a class="jxr_linenumber" name="844" href="#844">844</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
+<a class="jxr_linenumber" name="845" href="#845">845</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(String.format(<span class="jxr_string">"fail get field : '%s'."</span>, fieldName), e);
+<a class="jxr_linenumber" name="846" href="#846">846</a>         }
+<a class="jxr_linenumber" name="847" href="#847">847</a>         
+<a class="jxr_linenumber" name="848" href="#848">848</a>     }
+<a class="jxr_linenumber" name="849" href="#849">849</a>     
+<a class="jxr_linenumber" name="850" href="#850">850</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">SampleCsv</a> {
 <a class="jxr_linenumber" name="851" href="#851">851</a>         
-<a class="jxr_linenumber" name="852" href="#852">852</a>         @CsvLengthMax(value=10)
-<a class="jxr_linenumber" name="853" href="#853">853</a>         <strong class="jxr_keyword">private</strong> String repeatSingle;
+<a class="jxr_linenumber" name="852" href="#852">852</a>         @CsvColumn(number=1, label=<span class="jxr_string">"test"</span>)
+<a class="jxr_linenumber" name="853" href="#853">853</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> normal;
 <a class="jxr_linenumber" name="854" href="#854">854</a>         
-<a class="jxr_linenumber" name="855" href="#855">855</a>         @CsvLengthMax(value=10)
-<a class="jxr_linenumber" name="856" href="#856">856</a>         @CsvLengthMax(value=20)
-<a class="jxr_linenumber" name="857" href="#857">857</a>         @CsvLengthMax(value=30)
-<a class="jxr_linenumber" name="858" href="#858">858</a>         <strong class="jxr_keyword">private</strong> String repeatMulti;
-<a class="jxr_linenumber" name="859" href="#859">859</a>         
-<a class="jxr_linenumber" name="860" href="#860">860</a>         @ComposeSimple(value=<span class="jxr_string">"simple"</span>)
-<a class="jxr_linenumber" name="861" href="#861">861</a>         <strong class="jxr_keyword">private</strong> Integer composeSimple;
+<a class="jxr_linenumber" name="855" href="#855">855</a>         @CsvDateTimeFormat(pattern=<span class="jxr_string">"yyyy/MM/dd"</span>)
+<a class="jxr_linenumber" name="856" href="#856">856</a>         @CsvColumn(number=2, label=<span class="jxr_string">"test"</span>)
+<a class="jxr_linenumber" name="857" href="#857">857</a>         @CsvDateTimeMax(value=<span class="jxr_string">"2050/10/21"</span>, order=5)
+<a class="jxr_linenumber" name="858" href="#858">858</a>         @CsvUnique(order=3)
+<a class="jxr_linenumber" name="859" href="#859">859</a>         @CsvLower(order=1)
+<a class="jxr_linenumber" name="860" href="#860">860</a>         @CsvTrim(order=10)
+<a class="jxr_linenumber" name="861" href="#861">861</a>         <strong class="jxr_keyword">private</strong> Date multi;
 <a class="jxr_linenumber" name="862" href="#862">862</a>         
-<a class="jxr_linenumber" name="863" href="#863">863</a>         @ComposeSimple(value=<span class="jxr_string">"repeat-1"</span>)
-<a class="jxr_linenumber" name="864" href="#864">864</a>         @ComposeSimple(value=<span class="jxr_string">"repeat-2"</span>)
-<a class="jxr_linenumber" name="865" href="#865">865</a>         <strong class="jxr_keyword">private</strong> Integer composeSimpleRepeat;
-<a class="jxr_linenumber" name="866" href="#866">866</a>         
-<a class="jxr_linenumber" name="867" href="#867">867</a>         @ComposeOverrideCustom(value=<span class="jxr_string">"override-custom"</span>, max1=<span class="jxr_string">"5"</span>)
-<a class="jxr_linenumber" name="868" href="#868">868</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideCustom;
-<a class="jxr_linenumber" name="869" href="#869">869</a>         
-<a class="jxr_linenumber" name="870" href="#870">870</a>         @ComposeOverrideDefault1(value=<span class="jxr_string">"override-default-1"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="871" href="#871">871</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault1;
-<a class="jxr_linenumber" name="872" href="#872">872</a>         
-<a class="jxr_linenumber" name="873" href="#873">873</a>         @ComposeOverrideDefault2(value=<span class="jxr_string">"override-default-2"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>},
-<a class="jxr_linenumber" name="874" href="#874">874</a>                 rangeMessage=<span class="jxr_string">"範囲内に設定してください"</span>, rangeGroups={Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="875" href="#875">875</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault2;
-<a class="jxr_linenumber" name="876" href="#876">876</a>         
-<a class="jxr_linenumber" name="877" href="#877">877</a>         @ComposeOverrideDefault3(value=<span class="jxr_string">"override-default-3"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="878" href="#878">878</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault3;
-<a class="jxr_linenumber" name="879" href="#879">879</a>         
-<a class="jxr_linenumber" name="880" href="#880">880</a>         @ComposeOverrideDefault4(value=<span class="jxr_string">"override-default-4"</span>, max=<span class="jxr_string">"5"</span>)
-<a class="jxr_linenumber" name="881" href="#881">881</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault4;
-<a class="jxr_linenumber" name="882" href="#882">882</a>         
-<a class="jxr_linenumber" name="883" href="#883">883</a>         <em class="jxr_comment">// エラー確認用</em>
-<a class="jxr_linenumber" name="884" href="#884">884</a>         @ComposeOverrideAttrNotFound1(value=<span class="jxr_string">"v"</span>, test=<span class="jxr_string">"t"</span>)
-<a class="jxr_linenumber" name="885" href="#885">885</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideAttrNotFound1;
-<a class="jxr_linenumber" name="886" href="#886">886</a>         
-<a class="jxr_linenumber" name="887" href="#887">887</a>         @ComposeOverrideAttrNotFound2(value=<span class="jxr_string">"v"</span>, test=<span class="jxr_string">"t"</span>)
-<a class="jxr_linenumber" name="888" href="#888">888</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideAttrNotFound2;
-<a class="jxr_linenumber" name="889" href="#889">889</a>         
-<a class="jxr_linenumber" name="890" href="#890">890</a>     }
-<a class="jxr_linenumber" name="891" href="#891">891</a>     
-<a class="jxr_linenumber" name="892" href="#892">892</a>     <em class="jxr_comment">// テスト用のグループ1</em>
-<a class="jxr_linenumber" name="893" href="#893">893</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/FieldAccessorTest.html">Group1</a> { }
-<a class="jxr_linenumber" name="894" href="#894">894</a>     
-<a class="jxr_linenumber" name="895" href="#895">895</a>     <em class="jxr_comment">// テスト用のグループ2</em>
-<a class="jxr_linenumber" name="896" href="#896">896</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/FieldAccessorTest.html">Group2</a> { }
-<a class="jxr_linenumber" name="897" href="#897">897</a>     
-<a class="jxr_linenumber" name="898" href="#898">898</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="899" href="#899">899</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="900" href="#900">900</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きはなし&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="901" href="#901">901</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="902" href="#902">902</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="903" href="#903">903</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="904" href="#904">904</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="905" href="#905">905</a>     @Documented
-<a class="jxr_linenumber" name="906" href="#906">906</a>     @Repeatable(ComposeSimple.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="907" href="#907">907</a>     @CsvComposition
-<a class="jxr_linenumber" name="908" href="#908">908</a>     @CsvRequire
-<a class="jxr_linenumber" name="909" href="#909">909</a>     @CsvNumberMax(value=<span class="jxr_string">"20"</span>, order=2)
-<a class="jxr_linenumber" name="910" href="#910">910</a>     @CsvNumberMax(value=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="911" href="#911">911</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeSimple</a> {
-<a class="jxr_linenumber" name="912" href="#912">912</a>         
-<a class="jxr_linenumber" name="913" href="#913">913</a>         String value();
-<a class="jxr_linenumber" name="914" href="#914">914</a>         
-<a class="jxr_linenumber" name="915" href="#915">915</a>         <em class="jxr_comment">// 繰り返しのアノテーションの格納用アノテーションの定義</em>
-<a class="jxr_linenumber" name="916" href="#916">916</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="917" href="#917">917</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="918" href="#918">918</a>         @Documented
-<a class="jxr_linenumber" name="919" href="#919">919</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="920" href="#920">920</a>             
-<a class="jxr_linenumber" name="921" href="#921">921</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeSimple</a>[] value();
-<a class="jxr_linenumber" name="922" href="#922">922</a>         }
-<a class="jxr_linenumber" name="923" href="#923">923</a>     }
-<a class="jxr_linenumber" name="924" href="#924">924</a>     
-<a class="jxr_linenumber" name="925" href="#925">925</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="926" href="#926">926</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="927" href="#927">927</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="928" href="#928">928</a> <em class="jxr_javadoccomment">     * &lt;p&gt;固有の属性をオーバーライドする&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="929" href="#929">929</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="930" href="#930">930</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="931" href="#931">931</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="932" href="#932">932</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="933" href="#933">933</a>     @Documented
-<a class="jxr_linenumber" name="934" href="#934">934</a>     @Repeatable(ComposeOverrideCustom.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="935" href="#935">935</a>     @CsvComposition
-<a class="jxr_linenumber" name="936" href="#936">936</a>     @CsvRequire(considerBlank=false, considerEmpty=false, message=<span class="jxr_string">"必須です"</span>)
-<a class="jxr_linenumber" name="937" href="#937">937</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2)
-<a class="jxr_linenumber" name="938" href="#938">938</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="939" href="#939">939</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideCustom</a> {
-<a class="jxr_linenumber" name="940" href="#940">940</a>         
-<a class="jxr_linenumber" name="941" href="#941">941</a>         String value();
-<a class="jxr_linenumber" name="942" href="#942">942</a>         
-<a class="jxr_linenumber" name="943" href="#943">943</a>         @CsvOverridesAttribute(annotation=CsvRequire.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"considerBlank"</span>)
-<a class="jxr_linenumber" name="944" href="#944">944</a>         @CsvOverridesAttribute(annotation=CsvRequire.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"considerEmpty"</span>)
-<a class="jxr_linenumber" name="945" href="#945">945</a>         <strong class="jxr_keyword">boolean</strong> considerSpace() <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="946" href="#946">946</a>         
-<a class="jxr_linenumber" name="947" href="#947">947</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"max"</span>, index=0)
-<a class="jxr_linenumber" name="948" href="#948">948</a>         String max1();
-<a class="jxr_linenumber" name="949" href="#949">949</a>         
-<a class="jxr_linenumber" name="950" href="#950">950</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"max"</span>, index=1)
-<a class="jxr_linenumber" name="951" href="#951">951</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"min"</span>, index=1)
-<a class="jxr_linenumber" name="952" href="#952">952</a>         String max2() <strong class="jxr_keyword">default</strong> <span class="jxr_string">"2"</span>;
+<a class="jxr_linenumber" name="863" href="#863">863</a>         @CsvLengthMax(value=10)
+<a class="jxr_linenumber" name="864" href="#864">864</a>         <strong class="jxr_keyword">private</strong> String repeatSingle;
+<a class="jxr_linenumber" name="865" href="#865">865</a>         
+<a class="jxr_linenumber" name="866" href="#866">866</a>         @CsvLengthMax(value=10)
+<a class="jxr_linenumber" name="867" href="#867">867</a>         @CsvLengthMax(value=20)
+<a class="jxr_linenumber" name="868" href="#868">868</a>         @CsvLengthMax(value=30)
+<a class="jxr_linenumber" name="869" href="#869">869</a>         <strong class="jxr_keyword">private</strong> String repeatMulti;
+<a class="jxr_linenumber" name="870" href="#870">870</a>         
+<a class="jxr_linenumber" name="871" href="#871">871</a>         @ComposeSimple(value=<span class="jxr_string">"simple"</span>)
+<a class="jxr_linenumber" name="872" href="#872">872</a>         <strong class="jxr_keyword">private</strong> Integer composeSimple;
+<a class="jxr_linenumber" name="873" href="#873">873</a>         
+<a class="jxr_linenumber" name="874" href="#874">874</a>         @ComposeSimple(value=<span class="jxr_string">"repeat-1"</span>)
+<a class="jxr_linenumber" name="875" href="#875">875</a>         @ComposeSimple(value=<span class="jxr_string">"repeat-2"</span>)
+<a class="jxr_linenumber" name="876" href="#876">876</a>         <strong class="jxr_keyword">private</strong> Integer composeSimpleRepeat;
+<a class="jxr_linenumber" name="877" href="#877">877</a>         
+<a class="jxr_linenumber" name="878" href="#878">878</a>         @ComposeOverrideCustom(value=<span class="jxr_string">"override-custom"</span>, max1=<span class="jxr_string">"5"</span>)
+<a class="jxr_linenumber" name="879" href="#879">879</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideCustom;
+<a class="jxr_linenumber" name="880" href="#880">880</a>         
+<a class="jxr_linenumber" name="881" href="#881">881</a>         @ComposeOverrideDefault1(value=<span class="jxr_string">"override-default-1"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>}, cases={BuildCase.Read, BuildCase.Write})
+<a class="jxr_linenumber" name="882" href="#882">882</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault1;
+<a class="jxr_linenumber" name="883" href="#883">883</a>         
+<a class="jxr_linenumber" name="884" href="#884">884</a>         @ComposeOverrideDefault2(value=<span class="jxr_string">"override-default-2"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>},
+<a class="jxr_linenumber" name="885" href="#885">885</a>                 rangeMessage=<span class="jxr_string">"範囲内に設定してください"</span>, rangeGroups={Group2.<strong class="jxr_keyword">class</strong>}, rangeCases={BuildCase.Read, BuildCase.Write})
+<a class="jxr_linenumber" name="886" href="#886">886</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault2;
+<a class="jxr_linenumber" name="887" href="#887">887</a>         
+<a class="jxr_linenumber" name="888" href="#888">888</a>         @ComposeOverrideDefault3(value=<span class="jxr_string">"override-default-3"</span>, message=<span class="jxr_string">"値は不正です"</span>, groups={DefaultGroup.<strong class="jxr_keyword">class</strong>, Group2.<strong class="jxr_keyword">class</strong>}, cases={BuildCase.Read, BuildCase.Write})
+<a class="jxr_linenumber" name="889" href="#889">889</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault3;
+<a class="jxr_linenumber" name="890" href="#890">890</a>         
+<a class="jxr_linenumber" name="891" href="#891">891</a>         @ComposeOverrideDefault4(value=<span class="jxr_string">"override-default-4"</span>, max=<span class="jxr_string">"5"</span>)
+<a class="jxr_linenumber" name="892" href="#892">892</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideDefault4;
+<a class="jxr_linenumber" name="893" href="#893">893</a>         
+<a class="jxr_linenumber" name="894" href="#894">894</a>         <em class="jxr_comment">// エラー確認用</em>
+<a class="jxr_linenumber" name="895" href="#895">895</a>         @ComposeOverrideAttrNotFound1(value=<span class="jxr_string">"v"</span>, test=<span class="jxr_string">"t"</span>)
+<a class="jxr_linenumber" name="896" href="#896">896</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideAttrNotFound1;
+<a class="jxr_linenumber" name="897" href="#897">897</a>         
+<a class="jxr_linenumber" name="898" href="#898">898</a>         @ComposeOverrideAttrNotFound2(value=<span class="jxr_string">"v"</span>, test=<span class="jxr_string">"t"</span>)
+<a class="jxr_linenumber" name="899" href="#899">899</a>         <strong class="jxr_keyword">private</strong> Integer composeOverrideAttrNotFound2;
+<a class="jxr_linenumber" name="900" href="#900">900</a>         
+<a class="jxr_linenumber" name="901" href="#901">901</a>     }
+<a class="jxr_linenumber" name="902" href="#902">902</a>     
+<a class="jxr_linenumber" name="903" href="#903">903</a>     <em class="jxr_comment">// テスト用のグループ1</em>
+<a class="jxr_linenumber" name="904" href="#904">904</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/FieldAccessorTest.html">Group1</a> { }
+<a class="jxr_linenumber" name="905" href="#905">905</a>     
+<a class="jxr_linenumber" name="906" href="#906">906</a>     <em class="jxr_comment">// テスト用のグループ2</em>
+<a class="jxr_linenumber" name="907" href="#907">907</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/FieldAccessorTest.html">Group2</a> { }
+<a class="jxr_linenumber" name="908" href="#908">908</a>     
+<a class="jxr_linenumber" name="909" href="#909">909</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="910" href="#910">910</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="911" href="#911">911</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きはなし&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="912" href="#912">912</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="913" href="#913">913</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="914" href="#914">914</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="915" href="#915">915</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="916" href="#916">916</a>     @Documented
+<a class="jxr_linenumber" name="917" href="#917">917</a>     @Repeatable(ComposeSimple.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="918" href="#918">918</a>     @CsvComposition
+<a class="jxr_linenumber" name="919" href="#919">919</a>     @CsvRequire
+<a class="jxr_linenumber" name="920" href="#920">920</a>     @CsvNumberMax(value=<span class="jxr_string">"20"</span>, order=2)
+<a class="jxr_linenumber" name="921" href="#921">921</a>     @CsvNumberMax(value=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="922" href="#922">922</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeSimple</a> {
+<a class="jxr_linenumber" name="923" href="#923">923</a>         
+<a class="jxr_linenumber" name="924" href="#924">924</a>         String value();
+<a class="jxr_linenumber" name="925" href="#925">925</a>         
+<a class="jxr_linenumber" name="926" href="#926">926</a>         <em class="jxr_comment">// 繰り返しのアノテーションの格納用アノテーションの定義</em>
+<a class="jxr_linenumber" name="927" href="#927">927</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="928" href="#928">928</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="929" href="#929">929</a>         @Documented
+<a class="jxr_linenumber" name="930" href="#930">930</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="931" href="#931">931</a>             
+<a class="jxr_linenumber" name="932" href="#932">932</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeSimple</a>[] value();
+<a class="jxr_linenumber" name="933" href="#933">933</a>         }
+<a class="jxr_linenumber" name="934" href="#934">934</a>     }
+<a class="jxr_linenumber" name="935" href="#935">935</a>     
+<a class="jxr_linenumber" name="936" href="#936">936</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="937" href="#937">937</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="938" href="#938">938</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="939" href="#939">939</a> <em class="jxr_javadoccomment">     * &lt;p&gt;固有の属性をオーバーライドする&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="940" href="#940">940</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="941" href="#941">941</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="942" href="#942">942</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="943" href="#943">943</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="944" href="#944">944</a>     @Documented
+<a class="jxr_linenumber" name="945" href="#945">945</a>     @Repeatable(ComposeOverrideCustom.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="946" href="#946">946</a>     @CsvComposition
+<a class="jxr_linenumber" name="947" href="#947">947</a>     @CsvRequire(considerBlank=false, considerEmpty=false, message=<span class="jxr_string">"必須です"</span>)
+<a class="jxr_linenumber" name="948" href="#948">948</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2)
+<a class="jxr_linenumber" name="949" href="#949">949</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="950" href="#950">950</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideCustom</a> {
+<a class="jxr_linenumber" name="951" href="#951">951</a>         
+<a class="jxr_linenumber" name="952" href="#952">952</a>         String value();
 <a class="jxr_linenumber" name="953" href="#953">953</a>         
-<a class="jxr_linenumber" name="954" href="#954">954</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="955" href="#955">955</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="956" href="#956">956</a>         @Documented
-<a class="jxr_linenumber" name="957" href="#957">957</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="958" href="#958">958</a>             
-<a class="jxr_linenumber" name="959" href="#959">959</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideCustom</a>[] value();
-<a class="jxr_linenumber" name="960" href="#960">960</a>         }
-<a class="jxr_linenumber" name="961" href="#961">961</a>     }
-<a class="jxr_linenumber" name="962" href="#962">962</a>     
-<a class="jxr_linenumber" name="963" href="#963">963</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="964" href="#964">964</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="965" href="#965">965</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="966" href="#966">966</a> <em class="jxr_javadoccomment">     * &lt;p&gt;messageやgroupsの共通の属性をオーバーライドする&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="967" href="#967">967</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="968" href="#968">968</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="969" href="#969">969</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="970" href="#970">970</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="971" href="#971">971</a>     @Documented
-<a class="jxr_linenumber" name="972" href="#972">972</a>     @Repeatable(ComposeOverrideDefault1.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="973" href="#973">973</a>     @CsvComposition
-<a class="jxr_linenumber" name="974" href="#974">974</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="975" href="#975">975</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="976" href="#976">976</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="977" href="#977">977</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault1</a> {
-<a class="jxr_linenumber" name="978" href="#978">978</a>         
-<a class="jxr_linenumber" name="979" href="#979">979</a>         String value();
-<a class="jxr_linenumber" name="980" href="#980">980</a>         
-<a class="jxr_linenumber" name="981" href="#981">981</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="982" href="#982">982</a>         
-<a class="jxr_linenumber" name="983" href="#983">983</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
-<a class="jxr_linenumber" name="984" href="#984">984</a>         
-<a class="jxr_linenumber" name="985" href="#985">985</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="986" href="#986">986</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="987" href="#987">987</a>         @Documented
-<a class="jxr_linenumber" name="988" href="#988">988</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="989" href="#989">989</a>             
-<a class="jxr_linenumber" name="990" href="#990">990</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault1</a>[] value();
-<a class="jxr_linenumber" name="991" href="#991">991</a>         }
-<a class="jxr_linenumber" name="992" href="#992">992</a>         
-<a class="jxr_linenumber" name="993" href="#993">993</a>     }
-<a class="jxr_linenumber" name="994" href="#994">994</a>     
-<a class="jxr_linenumber" name="995" href="#995">995</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="996" href="#996">996</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="997" href="#997">997</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="998" href="#998">998</a> <em class="jxr_javadoccomment">     * &lt;p&gt;messageやgroupsの共通の属性をオーバーライドする&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="999" href="#999">999</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部のみを書き換える。&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1000" href="#1000">1000</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1001" href="#1001">1001</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1002" href="#1002">1002</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1003" href="#1003">1003</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1004" href="#1004">1004</a>     @Documented
-<a class="jxr_linenumber" name="1005" href="#1005">1005</a>     @Repeatable(ComposeOverrideDefault2.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="1006" href="#1006">1006</a>     @CsvComposition
-<a class="jxr_linenumber" name="1007" href="#1007">1007</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="1008" href="#1008">1008</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="1009" href="#1009">1009</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="1010" href="#1010">1010</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault2</a> {
-<a class="jxr_linenumber" name="1011" href="#1011">1011</a>         
-<a class="jxr_linenumber" name="1012" href="#1012">1012</a>         String value();
-<a class="jxr_linenumber" name="1013" href="#1013">1013</a>         
-<a class="jxr_linenumber" name="1014" href="#1014">1014</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="1015" href="#1015">1015</a>         
-<a class="jxr_linenumber" name="1016" href="#1016">1016</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"message"</span>, index=0)
-<a class="jxr_linenumber" name="1017" href="#1017">1017</a>         String rangeMessage() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="1018" href="#1018">1018</a>         
-<a class="jxr_linenumber" name="1019" href="#1019">1019</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
-<a class="jxr_linenumber" name="1020" href="#1020">1020</a>         
-<a class="jxr_linenumber" name="1021" href="#1021">1021</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"groups"</span>, index=0)
-<a class="jxr_linenumber" name="1022" href="#1022">1022</a>         Class&lt;?&gt;[] rangeGroups() <strong class="jxr_keyword">default</strong> {};
-<a class="jxr_linenumber" name="1023" href="#1023">1023</a>         
-<a class="jxr_linenumber" name="1024" href="#1024">1024</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1025" href="#1025">1025</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1026" href="#1026">1026</a>         @Documented
-<a class="jxr_linenumber" name="1027" href="#1027">1027</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="1028" href="#1028">1028</a>             
-<a class="jxr_linenumber" name="1029" href="#1029">1029</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault2</a>[] value();
-<a class="jxr_linenumber" name="1030" href="#1030">1030</a>         }
+<a class="jxr_linenumber" name="954" href="#954">954</a>         @CsvOverridesAttribute(annotation=CsvRequire.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"considerBlank"</span>)
+<a class="jxr_linenumber" name="955" href="#955">955</a>         @CsvOverridesAttribute(annotation=CsvRequire.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"considerEmpty"</span>)
+<a class="jxr_linenumber" name="956" href="#956">956</a>         <strong class="jxr_keyword">boolean</strong> considerSpace() <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="957" href="#957">957</a>         
+<a class="jxr_linenumber" name="958" href="#958">958</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"max"</span>, index=0)
+<a class="jxr_linenumber" name="959" href="#959">959</a>         String max1();
+<a class="jxr_linenumber" name="960" href="#960">960</a>         
+<a class="jxr_linenumber" name="961" href="#961">961</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"max"</span>, index=1)
+<a class="jxr_linenumber" name="962" href="#962">962</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"min"</span>, index=1)
+<a class="jxr_linenumber" name="963" href="#963">963</a>         String max2() <strong class="jxr_keyword">default</strong> <span class="jxr_string">"2"</span>;
+<a class="jxr_linenumber" name="964" href="#964">964</a>         
+<a class="jxr_linenumber" name="965" href="#965">965</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="966" href="#966">966</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="967" href="#967">967</a>         @Documented
+<a class="jxr_linenumber" name="968" href="#968">968</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="969" href="#969">969</a>             
+<a class="jxr_linenumber" name="970" href="#970">970</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideCustom</a>[] value();
+<a class="jxr_linenumber" name="971" href="#971">971</a>         }
+<a class="jxr_linenumber" name="972" href="#972">972</a>     }
+<a class="jxr_linenumber" name="973" href="#973">973</a>     
+<a class="jxr_linenumber" name="974" href="#974">974</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="975" href="#975">975</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="976" href="#976">976</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="977" href="#977">977</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性 message groups casesのをオーバーライドする&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="978" href="#978">978</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="979" href="#979">979</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="980" href="#980">980</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="981" href="#981">981</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="982" href="#982">982</a>     @Documented
+<a class="jxr_linenumber" name="983" href="#983">983</a>     @Repeatable(ComposeOverrideDefault1.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="984" href="#984">984</a>     @CsvComposition
+<a class="jxr_linenumber" name="985" href="#985">985</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>})
+<a class="jxr_linenumber" name="986" href="#986">986</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>}, cases=BuildCase.Read)
+<a class="jxr_linenumber" name="987" href="#987">987</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1, cases=BuildCase.Write)
+<a class="jxr_linenumber" name="988" href="#988">988</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault1</a> {
+<a class="jxr_linenumber" name="989" href="#989">989</a>         
+<a class="jxr_linenumber" name="990" href="#990">990</a>         String value();
+<a class="jxr_linenumber" name="991" href="#991">991</a>         
+<a class="jxr_linenumber" name="992" href="#992">992</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="993" href="#993">993</a>         
+<a class="jxr_linenumber" name="994" href="#994">994</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="995" href="#995">995</a>         
+<a class="jxr_linenumber" name="996" href="#996">996</a>         BuildCase[] cases() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="997" href="#997">997</a>         
+<a class="jxr_linenumber" name="998" href="#998">998</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="999" href="#999">999</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1000" href="#1000">1000</a>         @Documented
+<a class="jxr_linenumber" name="1001" href="#1001">1001</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1002" href="#1002">1002</a>             
+<a class="jxr_linenumber" name="1003" href="#1003">1003</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault1</a>[] value();
+<a class="jxr_linenumber" name="1004" href="#1004">1004</a>         }
+<a class="jxr_linenumber" name="1005" href="#1005">1005</a>         
+<a class="jxr_linenumber" name="1006" href="#1006">1006</a>     }
+<a class="jxr_linenumber" name="1007" href="#1007">1007</a>     
+<a class="jxr_linenumber" name="1008" href="#1008">1008</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1009" href="#1009">1009</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="1010" href="#1010">1010</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1011" href="#1011">1011</a> <em class="jxr_javadoccomment">     * &lt;p&gt;共通の属性のmessage, groups, casesをオーバーライドする&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1012" href="#1012">1012</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部のみを書き換える。&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1013" href="#1013">1013</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1014" href="#1014">1014</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1015" href="#1015">1015</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1016" href="#1016">1016</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1017" href="#1017">1017</a>     @Documented
+<a class="jxr_linenumber" name="1018" href="#1018">1018</a>     @Repeatable(ComposeOverrideDefault2.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="1019" href="#1019">1019</a>     @CsvComposition
+<a class="jxr_linenumber" name="1020" href="#1020">1020</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>})
+<a class="jxr_linenumber" name="1021" href="#1021">1021</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>}, cases=BuildCase.Write)
+<a class="jxr_linenumber" name="1022" href="#1022">1022</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1, cases=BuildCase.Read)
+<a class="jxr_linenumber" name="1023" href="#1023">1023</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault2</a> {
+<a class="jxr_linenumber" name="1024" href="#1024">1024</a>         
+<a class="jxr_linenumber" name="1025" href="#1025">1025</a>         String value();
+<a class="jxr_linenumber" name="1026" href="#1026">1026</a>         
+<a class="jxr_linenumber" name="1027" href="#1027">1027</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="1028" href="#1028">1028</a>         
+<a class="jxr_linenumber" name="1029" href="#1029">1029</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"message"</span>, index=0)
+<a class="jxr_linenumber" name="1030" href="#1030">1030</a>         String rangeMessage() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
 <a class="jxr_linenumber" name="1031" href="#1031">1031</a>         
-<a class="jxr_linenumber" name="1032" href="#1032">1032</a>     }
-<a class="jxr_linenumber" name="1033" href="#1033">1033</a>     
-<a class="jxr_linenumber" name="1034" href="#1034">1034</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="1035" href="#1035">1035</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="1036" href="#1036">1036</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1037" href="#1037">1037</a> <em class="jxr_javadoccomment">     * &lt;p&gt;messageやgroupsの共通の属性をオーバーライドする&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1038" href="#1038">1038</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部のみを書き換える。&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1039" href="#1039">1039</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1040" href="#1040">1040</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1041" href="#1041">1041</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1042" href="#1042">1042</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1043" href="#1043">1043</a>     @Documented
-<a class="jxr_linenumber" name="1044" href="#1044">1044</a>     @Repeatable(ComposeOverrideDefault3.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="1045" href="#1045">1045</a>     @CsvComposition
-<a class="jxr_linenumber" name="1046" href="#1046">1046</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="1047" href="#1047">1047</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="1048" href="#1048">1048</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="1049" href="#1049">1049</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault3</a> {
-<a class="jxr_linenumber" name="1050" href="#1050">1050</a>         
-<a class="jxr_linenumber" name="1051" href="#1051">1051</a>         String value();
-<a class="jxr_linenumber" name="1052" href="#1052">1052</a>         
-<a class="jxr_linenumber" name="1053" href="#1053">1053</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"message"</span>, index=0)
-<a class="jxr_linenumber" name="1054" href="#1054">1054</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="1055" href="#1055">1055</a>         
-<a class="jxr_linenumber" name="1056" href="#1056">1056</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"groups"</span>, index=0)
-<a class="jxr_linenumber" name="1057" href="#1057">1057</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
-<a class="jxr_linenumber" name="1058" href="#1058">1058</a>         
-<a class="jxr_linenumber" name="1059" href="#1059">1059</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1060" href="#1060">1060</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1061" href="#1061">1061</a>         @Documented
-<a class="jxr_linenumber" name="1062" href="#1062">1062</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="1063" href="#1063">1063</a>             
-<a class="jxr_linenumber" name="1064" href="#1064">1064</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault3</a>[] value();
-<a class="jxr_linenumber" name="1065" href="#1065">1065</a>         }
+<a class="jxr_linenumber" name="1032" href="#1032">1032</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="1033" href="#1033">1033</a>         
+<a class="jxr_linenumber" name="1034" href="#1034">1034</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"groups"</span>, index=0)
+<a class="jxr_linenumber" name="1035" href="#1035">1035</a>         Class&lt;?&gt;[] rangeGroups() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="1036" href="#1036">1036</a>         
+<a class="jxr_linenumber" name="1037" href="#1037">1037</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"cases"</span>, index=1)
+<a class="jxr_linenumber" name="1038" href="#1038">1038</a>         BuildCase[] rangeCases() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="1039" href="#1039">1039</a>         
+<a class="jxr_linenumber" name="1040" href="#1040">1040</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1041" href="#1041">1041</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1042" href="#1042">1042</a>         @Documented
+<a class="jxr_linenumber" name="1043" href="#1043">1043</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1044" href="#1044">1044</a>             
+<a class="jxr_linenumber" name="1045" href="#1045">1045</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault2</a>[] value();
+<a class="jxr_linenumber" name="1046" href="#1046">1046</a>         }
+<a class="jxr_linenumber" name="1047" href="#1047">1047</a>         
+<a class="jxr_linenumber" name="1048" href="#1048">1048</a>     }
+<a class="jxr_linenumber" name="1049" href="#1049">1049</a>     
+<a class="jxr_linenumber" name="1050" href="#1050">1050</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1051" href="#1051">1051</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="1052" href="#1052">1052</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1053" href="#1053">1053</a> <em class="jxr_javadoccomment">     * &lt;p&gt;cases、messageやgroupsの共通の属性をオーバーライドする&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1054" href="#1054">1054</a> <em class="jxr_javadoccomment">     * &lt;p&gt;1部のみを書き換える。&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1055" href="#1055">1055</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1056" href="#1056">1056</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1057" href="#1057">1057</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1058" href="#1058">1058</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1059" href="#1059">1059</a>     @Documented
+<a class="jxr_linenumber" name="1060" href="#1060">1060</a>     @Repeatable(ComposeOverrideDefault3.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="1061" href="#1061">1061</a>     @CsvComposition
+<a class="jxr_linenumber" name="1062" href="#1062">1062</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>, groups={Group2.<strong class="jxr_keyword">class</strong>}, cases={BuildCase.Write})
+<a class="jxr_linenumber" name="1063" href="#1063">1063</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>}, cases={BuildCase.Read})
+<a class="jxr_linenumber" name="1064" href="#1064">1064</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="1065" href="#1065">1065</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault3</a> {
 <a class="jxr_linenumber" name="1066" href="#1066">1066</a>         
-<a class="jxr_linenumber" name="1067" href="#1067">1067</a>     }
-<a class="jxr_linenumber" name="1068" href="#1068">1068</a>     
-<a class="jxr_linenumber" name="1069" href="#1069">1069</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="1070" href="#1070">1070</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="1071" href="#1071">1071</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1072" href="#1072">1072</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性名の省略&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1073" href="#1073">1073</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1074" href="#1074">1074</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1075" href="#1075">1075</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1076" href="#1076">1076</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1077" href="#1077">1077</a>     @Documented
-<a class="jxr_linenumber" name="1078" href="#1078">1078</a>     @CsvComposition
-<a class="jxr_linenumber" name="1079" href="#1079">1079</a>     @Repeatable(ComposeOverrideDefault4.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="1080" href="#1080">1080</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>})
-<a class="jxr_linenumber" name="1081" href="#1081">1081</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="1082" href="#1082">1082</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault4</a> {
-<a class="jxr_linenumber" name="1083" href="#1083">1083</a>         
-<a class="jxr_linenumber" name="1084" href="#1084">1084</a>         String value();
+<a class="jxr_linenumber" name="1067" href="#1067">1067</a>         String value();
+<a class="jxr_linenumber" name="1068" href="#1068">1068</a>         
+<a class="jxr_linenumber" name="1069" href="#1069">1069</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"message"</span>, index=0)
+<a class="jxr_linenumber" name="1070" href="#1070">1070</a>         String message() <strong class="jxr_keyword">default</strong> <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="1071" href="#1071">1071</a>         
+<a class="jxr_linenumber" name="1072" href="#1072">1072</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"cases"</span>, index=0)
+<a class="jxr_linenumber" name="1073" href="#1073">1073</a>         BuildCase[] cases() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="1074" href="#1074">1074</a>         
+<a class="jxr_linenumber" name="1075" href="#1075">1075</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"groups"</span>, index=0)
+<a class="jxr_linenumber" name="1076" href="#1076">1076</a>         Class&lt;?&gt;[] groups() <strong class="jxr_keyword">default</strong> {};
+<a class="jxr_linenumber" name="1077" href="#1077">1077</a>         
+<a class="jxr_linenumber" name="1078" href="#1078">1078</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1079" href="#1079">1079</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1080" href="#1080">1080</a>         @Documented
+<a class="jxr_linenumber" name="1081" href="#1081">1081</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1082" href="#1082">1082</a>             
+<a class="jxr_linenumber" name="1083" href="#1083">1083</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault3</a>[] value();
+<a class="jxr_linenumber" name="1084" href="#1084">1084</a>         }
 <a class="jxr_linenumber" name="1085" href="#1085">1085</a>         
-<a class="jxr_linenumber" name="1086" href="#1086">1086</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, index=0)
-<a class="jxr_linenumber" name="1087" href="#1087">1087</a>         String max();
-<a class="jxr_linenumber" name="1088" href="#1088">1088</a>         
-<a class="jxr_linenumber" name="1089" href="#1089">1089</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1090" href="#1090">1090</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1091" href="#1091">1091</a>         @Documented
-<a class="jxr_linenumber" name="1092" href="#1092">1092</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="1093" href="#1093">1093</a>             
-<a class="jxr_linenumber" name="1094" href="#1094">1094</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault4</a>[] value();
-<a class="jxr_linenumber" name="1095" href="#1095">1095</a>         }
-<a class="jxr_linenumber" name="1096" href="#1096">1096</a>         
-<a class="jxr_linenumber" name="1097" href="#1097">1097</a>     }
-<a class="jxr_linenumber" name="1098" href="#1098">1098</a>     
-<a class="jxr_linenumber" name="1099" href="#1099">1099</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="1100" href="#1100">1100</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="1101" href="#1101">1101</a> <em class="jxr_javadoccomment">     * 一致する上書き対象の属性が見つからない場合</em>
-<a class="jxr_linenumber" name="1102" href="#1102">1102</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1103" href="#1103">1103</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1104" href="#1104">1104</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1105" href="#1105">1105</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1106" href="#1106">1106</a>     @Documented
-<a class="jxr_linenumber" name="1107" href="#1107">1107</a>     @Repeatable(ComposeOverrideAttrNotFound1.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="1108" href="#1108">1108</a>     @CsvComposition
-<a class="jxr_linenumber" name="1109" href="#1109">1109</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>)
-<a class="jxr_linenumber" name="1110" href="#1110">1110</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="1111" href="#1111">1111</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound1</a> {
-<a class="jxr_linenumber" name="1112" href="#1112">1112</a>         
-<a class="jxr_linenumber" name="1113" href="#1113">1113</a>         String value();
-<a class="jxr_linenumber" name="1114" href="#1114">1114</a>         
-<a class="jxr_linenumber" name="1115" href="#1115">1115</a>         <em class="jxr_comment">// 存在しない属性</em>
-<a class="jxr_linenumber" name="1116" href="#1116">1116</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"test"</span>)
-<a class="jxr_linenumber" name="1117" href="#1117">1117</a>         String test();
-<a class="jxr_linenumber" name="1118" href="#1118">1118</a>         
-<a class="jxr_linenumber" name="1119" href="#1119">1119</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1120" href="#1120">1120</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1121" href="#1121">1121</a>         @Documented
-<a class="jxr_linenumber" name="1122" href="#1122">1122</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="1123" href="#1123">1123</a>             
-<a class="jxr_linenumber" name="1124" href="#1124">1124</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound1</a>[] value();
-<a class="jxr_linenumber" name="1125" href="#1125">1125</a>         }
-<a class="jxr_linenumber" name="1126" href="#1126">1126</a>         
-<a class="jxr_linenumber" name="1127" href="#1127">1127</a>     }
-<a class="jxr_linenumber" name="1128" href="#1128">1128</a>     
-<a class="jxr_linenumber" name="1129" href="#1129">1129</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="1130" href="#1130">1130</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
-<a class="jxr_linenumber" name="1131" href="#1131">1131</a> <em class="jxr_javadoccomment">     * 一致する上書き対象の属性が見つからない場合</em>
-<a class="jxr_linenumber" name="1132" href="#1132">1132</a> <em class="jxr_javadoccomment">     * - インデックスが一致しない</em>
-<a class="jxr_linenumber" name="1133" href="#1133">1133</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1134" href="#1134">1134</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1135" href="#1135">1135</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1136" href="#1136">1136</a>     @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1137" href="#1137">1137</a>     @Documented
-<a class="jxr_linenumber" name="1138" href="#1138">1138</a>     @Repeatable(ComposeOverrideAttrNotFound2.List.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="1139" href="#1139">1139</a>     @CsvComposition
-<a class="jxr_linenumber" name="1140" href="#1140">1140</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>)
-<a class="jxr_linenumber" name="1141" href="#1141">1141</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
-<a class="jxr_linenumber" name="1142" href="#1142">1142</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound2</a> {
-<a class="jxr_linenumber" name="1143" href="#1143">1143</a>         
-<a class="jxr_linenumber" name="1144" href="#1144">1144</a>         String value();
+<a class="jxr_linenumber" name="1086" href="#1086">1086</a>     }
+<a class="jxr_linenumber" name="1087" href="#1087">1087</a>     
+<a class="jxr_linenumber" name="1088" href="#1088">1088</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1089" href="#1089">1089</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="1090" href="#1090">1090</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性の上書きあり&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1091" href="#1091">1091</a> <em class="jxr_javadoccomment">     * &lt;p&gt;属性名の省略&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1092" href="#1092">1092</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1093" href="#1093">1093</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1094" href="#1094">1094</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1095" href="#1095">1095</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1096" href="#1096">1096</a>     @Documented
+<a class="jxr_linenumber" name="1097" href="#1097">1097</a>     @CsvComposition
+<a class="jxr_linenumber" name="1098" href="#1098">1098</a>     @Repeatable(ComposeOverrideDefault4.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="1099" href="#1099">1099</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"20"</span>, order=2, groups={Group1.<strong class="jxr_keyword">class</strong>})
+<a class="jxr_linenumber" name="1100" href="#1100">1100</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="1101" href="#1101">1101</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault4</a> {
+<a class="jxr_linenumber" name="1102" href="#1102">1102</a>         
+<a class="jxr_linenumber" name="1103" href="#1103">1103</a>         String value();
+<a class="jxr_linenumber" name="1104" href="#1104">1104</a>         
+<a class="jxr_linenumber" name="1105" href="#1105">1105</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, index=0)
+<a class="jxr_linenumber" name="1106" href="#1106">1106</a>         String max();
+<a class="jxr_linenumber" name="1107" href="#1107">1107</a>         
+<a class="jxr_linenumber" name="1108" href="#1108">1108</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1109" href="#1109">1109</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1110" href="#1110">1110</a>         @Documented
+<a class="jxr_linenumber" name="1111" href="#1111">1111</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1112" href="#1112">1112</a>             
+<a class="jxr_linenumber" name="1113" href="#1113">1113</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideDefault4</a>[] value();
+<a class="jxr_linenumber" name="1114" href="#1114">1114</a>         }
+<a class="jxr_linenumber" name="1115" href="#1115">1115</a>         
+<a class="jxr_linenumber" name="1116" href="#1116">1116</a>     }
+<a class="jxr_linenumber" name="1117" href="#1117">1117</a>     
+<a class="jxr_linenumber" name="1118" href="#1118">1118</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1119" href="#1119">1119</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="1120" href="#1120">1120</a> <em class="jxr_javadoccomment">     * 一致する上書き対象の属性が見つからない場合</em>
+<a class="jxr_linenumber" name="1121" href="#1121">1121</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1122" href="#1122">1122</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1123" href="#1123">1123</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1124" href="#1124">1124</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1125" href="#1125">1125</a>     @Documented
+<a class="jxr_linenumber" name="1126" href="#1126">1126</a>     @Repeatable(ComposeOverrideAttrNotFound1.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="1127" href="#1127">1127</a>     @CsvComposition
+<a class="jxr_linenumber" name="1128" href="#1128">1128</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>)
+<a class="jxr_linenumber" name="1129" href="#1129">1129</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="1130" href="#1130">1130</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound1</a> {
+<a class="jxr_linenumber" name="1131" href="#1131">1131</a>         
+<a class="jxr_linenumber" name="1132" href="#1132">1132</a>         String value();
+<a class="jxr_linenumber" name="1133" href="#1133">1133</a>         
+<a class="jxr_linenumber" name="1134" href="#1134">1134</a>         <em class="jxr_comment">// 存在しない属性</em>
+<a class="jxr_linenumber" name="1135" href="#1135">1135</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"test"</span>)
+<a class="jxr_linenumber" name="1136" href="#1136">1136</a>         String test();
+<a class="jxr_linenumber" name="1137" href="#1137">1137</a>         
+<a class="jxr_linenumber" name="1138" href="#1138">1138</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1139" href="#1139">1139</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1140" href="#1140">1140</a>         @Documented
+<a class="jxr_linenumber" name="1141" href="#1141">1141</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1142" href="#1142">1142</a>             
+<a class="jxr_linenumber" name="1143" href="#1143">1143</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound1</a>[] value();
+<a class="jxr_linenumber" name="1144" href="#1144">1144</a>         }
 <a class="jxr_linenumber" name="1145" href="#1145">1145</a>         
-<a class="jxr_linenumber" name="1146" href="#1146">1146</a>         <em class="jxr_comment">// 存在しない属性 - インデックスが不正</em>
-<a class="jxr_linenumber" name="1147" href="#1147">1147</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"test"</span>, index=1)
-<a class="jxr_linenumber" name="1148" href="#1148">1148</a>         String test();
-<a class="jxr_linenumber" name="1149" href="#1149">1149</a>         
-<a class="jxr_linenumber" name="1150" href="#1150">1150</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-<a class="jxr_linenumber" name="1151" href="#1151">1151</a>         @Retention(RetentionPolicy.RUNTIME)
-<a class="jxr_linenumber" name="1152" href="#1152">1152</a>         @Documented
-<a class="jxr_linenumber" name="1153" href="#1153">1153</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
-<a class="jxr_linenumber" name="1154" href="#1154">1154</a>             
-<a class="jxr_linenumber" name="1155" href="#1155">1155</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound2</a>[] value();
-<a class="jxr_linenumber" name="1156" href="#1156">1156</a>         }
-<a class="jxr_linenumber" name="1157" href="#1157">1157</a>         
-<a class="jxr_linenumber" name="1158" href="#1158">1158</a>     }
-<a class="jxr_linenumber" name="1159" href="#1159">1159</a> }
+<a class="jxr_linenumber" name="1146" href="#1146">1146</a>     }
+<a class="jxr_linenumber" name="1147" href="#1147">1147</a>     
+<a class="jxr_linenumber" name="1148" href="#1148">1148</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1149" href="#1149">1149</a> <em class="jxr_javadoccomment">     * 合成のアノテーション</em>
+<a class="jxr_linenumber" name="1150" href="#1150">1150</a> <em class="jxr_javadoccomment">     * 一致する上書き対象の属性が見つからない場合</em>
+<a class="jxr_linenumber" name="1151" href="#1151">1151</a> <em class="jxr_javadoccomment">     * - インデックスが一致しない</em>
+<a class="jxr_linenumber" name="1152" href="#1152">1152</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1153" href="#1153">1153</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1154" href="#1154">1154</a>     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1155" href="#1155">1155</a>     @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1156" href="#1156">1156</a>     @Documented
+<a class="jxr_linenumber" name="1157" href="#1157">1157</a>     @Repeatable(ComposeOverrideAttrNotFound2.List.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="1158" href="#1158">1158</a>     @CsvComposition
+<a class="jxr_linenumber" name="1159" href="#1159">1159</a>     @CsvRequire(message=<span class="jxr_string">"必須です"</span>)
+<a class="jxr_linenumber" name="1160" href="#1160">1160</a>     @CsvNumberRange(min=<span class="jxr_string">"0"</span>, max=<span class="jxr_string">"30"</span>, order=1)
+<a class="jxr_linenumber" name="1161" href="#1161">1161</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound2</a> {
+<a class="jxr_linenumber" name="1162" href="#1162">1162</a>         
+<a class="jxr_linenumber" name="1163" href="#1163">1163</a>         String value();
+<a class="jxr_linenumber" name="1164" href="#1164">1164</a>         
+<a class="jxr_linenumber" name="1165" href="#1165">1165</a>         <em class="jxr_comment">// 存在しない属性 - インデックスが不正</em>
+<a class="jxr_linenumber" name="1166" href="#1166">1166</a>         @CsvOverridesAttribute(annotation=CsvNumberRange.<strong class="jxr_keyword">class</strong>, name=<span class="jxr_string">"test"</span>, index=1)
+<a class="jxr_linenumber" name="1167" href="#1167">1167</a>         String test();
+<a class="jxr_linenumber" name="1168" href="#1168">1168</a>         
+<a class="jxr_linenumber" name="1169" href="#1169">1169</a>         @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="1170" href="#1170">1170</a>         @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="1171" href="#1171">1171</a>         @Documented
+<a class="jxr_linenumber" name="1172" href="#1172">1172</a>         @<strong class="jxr_keyword">interface</strong> <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">List</a> {
+<a class="jxr_linenumber" name="1173" href="#1173">1173</a>             
+<a class="jxr_linenumber" name="1174" href="#1174">1174</a>             <a href="../../../../../com/github/mygreen/supercsv/builder/AnnotationExpanderTest.html">ComposeOverrideAttrNotFound2</a>[] value();
+<a class="jxr_linenumber" name="1175" href="#1175">1175</a>         }
+<a class="jxr_linenumber" name="1176" href="#1176">1176</a>         
+<a class="jxr_linenumber" name="1177" href="#1177">1177</a>     }
+<a class="jxr_linenumber" name="1178" href="#1178">1178</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -48,24 +48,24 @@ import com.github.mygreen.supercsv.util.Utils;
     @Override
     protected TextFormatter&lt;Calendar&gt; getDefaultFormatter(final FieldAccessor field, final Configuration config) {
         
-<span class="nc" id="L51">        final TextFormatter&lt;Date&gt; dateFormatter = getDateFormatter(field, config);</span>
+<span class="fc" id="L51">        final TextFormatter&lt;Date&gt; dateFormatter = getDateFormatter(field, config);</span>
         
-<span class="nc" id="L53">        return new AbstractTextFormatter&lt;Calendar&gt;() {</span>
+<span class="fc" id="L53">        return new AbstractTextFormatter&lt;Calendar&gt;() {</span>
             
             @Override
             public String print(final Calendar object) {
                 
-<span class="nc" id="L58">                return dateFormatter.print(object.getTime());</span>
+<span class="fc" id="L58">                return dateFormatter.print(object.getTime());</span>
             }
             
             @Override
             public Calendar parse(final String text) {
                 
-<span class="nc" id="L64">                final Date date = dateFormatter.parse(text);</span>
-<span class="nc" id="L65">                final Calendar cal = createDefaultCalendar(field);</span>
-<span class="nc" id="L66">                cal.setTime(date);</span>
+<span class="fc" id="L64">                final Date date = dateFormatter.parse(text);</span>
+<span class="fc" id="L65">                final Calendar cal = createDefaultCalendar(field);</span>
+<span class="fc" id="L66">                cal.setTime(date);</span>
                 
-<span class="nc" id="L68">                return cal;</span>
+<span class="fc" id="L68">                return cal;</span>
             }
             
             @Override
@@ -80,12 +80,12 @@ import com.github.mygreen.supercsv.util.Utils;
             
             @Override
             public Map&lt;String, Object&gt; getMessageVariables() {
-<span class="nc" id="L83">                return dateFormatter.getMessageVariables();</span>
+<span class="fc" id="L83">                return dateFormatter.getMessageVariables();</span>
             }
             
             @Override
             public Optional&lt;String&gt; getValidationMessage() {
-<span class="nc" id="L88">                return dateFormatter.getValidationMessage();</span>
+<span class="fc" id="L88">                return dateFormatter.getValidationMessage();</span>
             }
         };
         
@@ -93,49 +93,49 @@ import com.github.mygreen.supercsv.util.Utils;
     
     private DateFormatWrapper&lt;Date&gt; getDateFormatter(final FieldAccessor field, final Configuration config) {
         
-<span class="nc" id="L96">        final String defaultPattern = &quot;yyyy-MM-dd HH:mm:ss&quot;;</span>
+<span class="fc" id="L96">        final String defaultPattern = &quot;yyyy-MM-dd HH:mm:ss&quot;;</span>
         
-<span class="nc" id="L98">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(!formatAnno.isPresent()) {</span>
-<span class="nc" id="L100">            return new DateFormatWrapper&lt;&gt;(new SimpleDateFormat(defaultPattern), Date.class);</span>
+<span class="fc" id="L98">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if(!formatAnno.isPresent()) {</span>
+<span class="fc" id="L100">            return new DateFormatWrapper&lt;&gt;(new SimpleDateFormat(defaultPattern), Date.class);</span>
         }
         
-<span class="nc" id="L103">        String pattern = formatAnno.get().pattern();</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        if(pattern.isEmpty()) {</span>
-<span class="nc" id="L105">            pattern = defaultPattern;</span>
+<span class="fc" id="L103">        String pattern = formatAnno.get().pattern();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(pattern.isEmpty()) {</span>
+<span class="fc" id="L105">            pattern = defaultPattern;</span>
         }
         
-<span class="nc" id="L108">        final boolean lenient = formatAnno.get().lenient();</span>
-<span class="nc" id="L109">        final Locale locale = Utils.getLocale(formatAnno.get().locale());</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        final TimeZone timeZone = formatAnno.get().timezone().isEmpty() ? TimeZone.getDefault()</span>
-<span class="nc" id="L111">                : TimeZone.getTimeZone(formatAnno.get().timezone());</span>
+<span class="fc" id="L108">        final boolean lenient = formatAnno.get().lenient();</span>
+<span class="fc" id="L109">        final Locale locale = Utils.getLocale(formatAnno.get().locale());</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        final TimeZone timeZone = formatAnno.get().timezone().isEmpty() ? TimeZone.getDefault()</span>
+<span class="fc" id="L111">                : TimeZone.getTimeZone(formatAnno.get().timezone());</span>
         
-<span class="nc" id="L113">        final DateFormat formatter = SimpleDateFormatBuilder.create(pattern)</span>
-<span class="nc" id="L114">                .lenient(lenient)</span>
-<span class="nc" id="L115">                .locale(locale)</span>
-<span class="nc" id="L116">                .timeZone(timeZone)</span>
-<span class="nc" id="L117">                .build();</span>
+<span class="fc" id="L113">        final DateFormat formatter = SimpleDateFormatBuilder.create(pattern)</span>
+<span class="fc" id="L114">                .lenient(lenient)</span>
+<span class="fc" id="L115">                .locale(locale)</span>
+<span class="fc" id="L116">                .timeZone(timeZone)</span>
+<span class="fc" id="L117">                .build();</span>
         
-<span class="nc" id="L119">        final DateFormatWrapper&lt;Date&gt; wrapper = new DateFormatWrapper&lt;&gt;(formatter, Date.class); </span>
-<span class="nc" id="L120">        wrapper.setValidationMessage(formatAnno.get().message());</span>
+<span class="fc" id="L119">        final DateFormatWrapper&lt;Date&gt; wrapper = new DateFormatWrapper&lt;&gt;(formatter, Date.class); </span>
+<span class="fc" id="L120">        wrapper.setValidationMessage(formatAnno.get().message());</span>
         
-<span class="nc" id="L122">        return wrapper;</span>
+<span class="fc" id="L122">        return wrapper;</span>
         
     }
     
     private Calendar createDefaultCalendar(final FieldAccessor field) {
         
-<span class="nc" id="L128">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        if(!formatAnno.isPresent()) {</span>
-<span class="nc" id="L130">            return Calendar.getInstance();</span>
+<span class="fc" id="L128">        final Optional&lt;CsvDateTimeFormat&gt; formatAnno = field.getAnnotation(CsvDateTimeFormat.class);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if(!formatAnno.isPresent()) {</span>
+<span class="fc" id="L130">            return Calendar.getInstance();</span>
         }
         
-<span class="nc" id="L133">        final Locale locale = Utils.getLocale(formatAnno.get().locale());</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        final TimeZone timeZone = formatAnno.get().timezone().isEmpty() ? TimeZone.getDefault()</span>
-<span class="nc" id="L135">                : TimeZone.getTimeZone(formatAnno.get().timezone());</span>
+<span class="fc" id="L133">        final Locale locale = Utils.getLocale(formatAnno.get().locale());</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        final TimeZone timeZone = formatAnno.get().timezone().isEmpty() ? TimeZone.getDefault()</span>
+<span class="fc" id="L135">                : TimeZone.getTimeZone(formatAnno.get().timezone());</span>
         
-<span class="nc" id="L137">        return Calendar.getInstance(timeZone, locale);</span>
+<span class="fc" id="L137">        return Calendar.getInstance(timeZone, locale);</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

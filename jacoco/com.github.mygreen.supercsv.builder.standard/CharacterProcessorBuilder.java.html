@@ -19,32 +19,32 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextParseException;
     @Override
     protected TextFormatter&lt;Character&gt; getDefaultFormatter(final FieldAccessor field, final Configuration config) {
         
-<span class="nc" id="L22">        return new TextFormatter&lt;Character&gt;() {</span>
+<span class="fc" id="L22">        return new TextFormatter&lt;Character&gt;() {</span>
             
             @Override
             public Character parse(final String text) {
                 
-<span class="nc bnc" id="L27" title="All 2 branches missed.">                if(text.length() &gt;= 1) {</span>
-<span class="nc" id="L28">                    return text.charAt(0);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">                if(text.length() &gt;= 1) {</span>
+<span class="fc" id="L28">                    return text.charAt(0);</span>
                 } else {
-<span class="nc" id="L30">                    throw new TextParseException(text, field.getDeclaredClass(),</span>
+<span class="fc" id="L30">                    throw new TextParseException(text, field.getDeclaredClass(),</span>
                             &quot;Cannot be parsed as a char as it is a String longer than 1 character&quot;);
                 }
             }
             
             @Override
             public String print(final Character object) {
-<span class="nc" id="L37">                return object.toString();</span>
+<span class="fc" id="L37">                return object.toString();</span>
             }
             
             @Override
             public void setValidationMessage(String validationMessage) {
                 // not support
                 
-<span class="nc" id="L44">            }</span>
+<span class="fc" id="L44">            }</span>
             
         };
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -46,25 +46,25 @@ public class Equals&lt;T&gt; extends ValidationCellProcessor {
 <span class="fc" id="L46">    }</span>
     
     private static &lt;T&gt; void checkPreconditions(final Class&lt;T&gt; type, final Collection&lt;T&gt; equaledValues, final TextPrinter&lt;T&gt; printer) {
-<span class="pc bpc" id="L49" title="3 of 6 branches missed.">        if(type == null || equaledValues == null || printer == null) {</span>
-<span class="nc" id="L50">            throw new NullPointerException(&quot;type or equaledValues or printer, field should not be null.&quot;);</span>
+<span class="fc bfc" id="L49" title="All 6 branches covered.">        if(type == null || equaledValues == null || printer == null) {</span>
+<span class="fc" id="L50">            throw new NullPointerException(&quot;type or equaledValues or printer, field should not be null.&quot;);</span>
         }
 <span class="fc" id="L52">    }</span>
     
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public Object execute(final Object value, final CsvContext context) {
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if(value == null) {</span>
-<span class="nc" id="L58">            return next.execute(value, context);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L58">            return next.execute(value, context);</span>
         }
         
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(!type.isAssignableFrom(value.getClass())) {</span>
-<span class="nc" id="L62">            throw new SuperCsvCellProcessorException(type, value, context, this);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if(!type.isAssignableFrom(value.getClass())) {</span>
+<span class="fc" id="L62">            throw new SuperCsvCellProcessorException(type, value, context, this);</span>
         }
         
 <span class="fc" id="L65">        final T result = (T) value;</span>
         
-<span class="pc bpc" id="L67" title="1 of 4 branches missed.">        if(!equaledValues.isEmpty() &amp;&amp; !equaledValues.contains(value)) {</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">        if(!equaledValues.isEmpty() &amp;&amp; !equaledValues.contains(value)) {</span>
 <span class="fc" id="L68">            final String formattedValue = printer.print(result);</span>
 <span class="fc" id="L69">            final String joinedFormattedValues = equaledValues.stream()</span>
 <span class="fc" id="L70">                    .map(v -&gt; printer.print(v))</span>
@@ -98,4 +98,4 @@ public class Equals&lt;T&gt; extends ValidationCellProcessor {
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

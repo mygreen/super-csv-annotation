@@ -57,8 +57,8 @@ public class JodaFormatWrapper&lt;T&gt; extends AbstractTextFormatter&lt;T&gt; {
     public T parse(final String text) {
         
         try {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if(LocalDateTime.class.isAssignableFrom(type)) {</span>
-<span class="nc" id="L61">                return (T) LocalDateTime.parse(text, formatter);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if(LocalDateTime.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L61">                return (T) LocalDateTime.parse(text, formatter);</span>
                 
 <span class="fc bfc" id="L63" title="All 2 branches covered.">            } else if(LocalDate.class.isAssignableFrom(type)) {</span>
 <span class="fc" id="L64">                return (T) LocalDate.parse(text, formatter);</span>
@@ -113,4 +113,4 @@ public class JodaFormatWrapper&lt;T&gt; extends AbstractTextFormatter&lt;T&gt; {
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

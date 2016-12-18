@@ -35,7 +35,7 @@ XMLによる設定方法を説明します。
         <context:component-scan base-package="sample.spring" />
         
         <!-- Springのコンテナを経由するCSV用のBeanFactoryの定義 -->
-        <bean id="springBeanFacatory" class="com.github.mygreen.supercsv.builder.SpringBeanFactory" />
+        <bean id="springBeanFactory" class="com.github.mygreen.supercsv.builder.SpringBeanFactory" />
         
     </beans>
 

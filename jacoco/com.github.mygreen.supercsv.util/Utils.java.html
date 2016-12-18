@@ -87,11 +87,11 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return nullまたは、配列のサイズが0のときにtrueを返す。
      */
     public static boolean isEmpty(final Object[] arrays) {
-<span class="nc bnc" id="L90" title="All 4 branches missed.">        if(arrays == null || arrays.length == 0) {</span>
+<span class="pc bpc" id="L90" title="2 of 4 branches missed.">        if(arrays == null || arrays.length == 0) {</span>
 <span class="nc" id="L91">            return true;</span>
         }
         
-<span class="nc" id="L94">        return false;</span>
+<span class="fc" id="L94">        return false;</span>
     }
     
     /**
@@ -100,7 +100,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return
      */
     public static boolean isNotEmpty(final Object[] arrays) {
-<span class="nc bnc" id="L103" title="All 2 branches missed.">        return !isEmpty(arrays);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        return !isEmpty(arrays);</span>
     }
     
     /**
@@ -224,14 +224,14 @@ import com.github.mygreen.supercsv.builder.BuildCase;
         
 <span class="fc" id="L225">        Objects.requireNonNull(type, &quot;type should not be null.&quot;);</span>
         
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">        if(!type.isPrimitive()) {</span>
-<span class="nc" id="L228">            return null;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if(!type.isPrimitive()) {</span>
+<span class="fc" id="L228">            return null;</span>
             
 <span class="fc bfc" id="L230" title="All 2 branches covered.">        } else if(boolean.class.isAssignableFrom(type)) {</span>
 <span class="fc" id="L231">            return false;</span>
             
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        } else if(char.class.isAssignableFrom(type)) {</span>
-<span class="nc" id="L234">            return '\u0000';</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        } else if(char.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L234">            return '\u0000';</span>
             
 <span class="fc bfc" id="L236" title="All 2 branches covered.">        } else if(byte.class.isAssignableFrom(type)) {</span>
 <span class="fc" id="L237">            return (byte)0;</span>
@@ -242,8 +242,8 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 <span class="fc bfc" id="L242" title="All 2 branches covered.">        } else if(int.class.isAssignableFrom(type)) {</span>
 <span class="fc" id="L243">            return 0;</span>
             
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">        } else if(long.class.isAssignableFrom(type)) {</span>
-<span class="nc" id="L246">            return 0l;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        } else if(long.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L246">            return 0l;</span>
             
 <span class="fc bfc" id="L248" title="All 2 branches covered.">        } else if(float.class.isAssignableFrom(type)) {</span>
 <span class="fc" id="L249">            return 0.0f;</span>
@@ -328,4 +328,4 @@ import com.github.mygreen.supercsv.builder.BuildCase;
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

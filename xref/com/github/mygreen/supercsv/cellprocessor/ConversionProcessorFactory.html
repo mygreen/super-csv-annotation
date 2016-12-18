@@ -20,7 +20,7 @@
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 <a class="jxr_linenumber" name="11" href="#11">11</a>  
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * 値の変換用のアノテーションを元に、値を変換する{@link CellProcessor}を作成するインタフェース。</em>
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * 変換のアノテーションを元に値の変換を行う{@link CellProcessor}を作成するためのインタフェース。</em>
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * @param &lt;A&gt; 対応する変換のアノテーション。</em>
 <a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> * @since 2.0</em>
@@ -34,12 +34,12 @@
 <a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment">     * 値を変換する{@link CellProcessor}を作成します。</em>
 <a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment">     * @param anno ハンドリング対象のアノテーションです。</em>
-<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment">     * @param next Chainで次に実行する{@link CellProcessor}。値が空の場合があります。</em>
+<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment">     * @param next chainで次に実行する{@link CellProcessor}。値がない場合があります。</em>
 <a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment">     * @param field 処理対象のフィールド情報。</em>
 <a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment">     * @param formatter フィールドの書式に沿ったフォーマッタ。</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment">     * @param config システム情報設定。</em>
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_javadoccomment">     * @return {@link CellProcessor}の実装クラスのインスタンス。</em>
-<a class="jxr_linenumber" name="32" href="#32">32</a>  <em class="jxr_javadoccomment">     *         引数nextをそのまま返すため、値がない場合がある。</em>
+<a class="jxr_linenumber" name="32" href="#32">32</a>  <em class="jxr_javadoccomment">     *         引数nextをそのまま返す場合、値がない場合がある。</em>
 <a class="jxr_linenumber" name="33" href="#33">33</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="34" href="#34">34</a>      Optional&lt;CellProcessor&gt; create(A anno, Optional&lt;CellProcessor&gt; next, <a href="../../../../../com/github/mygreen/supercsv/builder/FieldAccessor.html">FieldAccessor</a> field,
 <a class="jxr_linenumber" name="35" href="#35">35</a>              TextFormatter&lt;?&gt; formatter, <a href="../../../../../com/github/mygreen/supercsv/builder/Configuration.html">Configuration</a> config);

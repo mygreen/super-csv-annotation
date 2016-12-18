@@ -25,74 +25,74 @@ public class DateTimeMin&lt;T extends Comparable&lt;T&gt;&gt; extends Validation
     private final TextPrinter&lt;T&gt; printer;
     
     public DateTimeMin(final T min, final boolean inclusive, final TextPrinter&lt;T&gt; printer) {
-<span class="nc" id="L28">        super();</span>
-<span class="nc" id="L29">        checkPreconditions(min, printer);</span>
-<span class="nc" id="L30">        this.min = min;</span>
-<span class="nc" id="L31">        this.inclusive = inclusive;</span>
-<span class="nc" id="L32">        this.printer = printer;</span>
-<span class="nc" id="L33">    }</span>
+<span class="fc" id="L28">        super();</span>
+<span class="fc" id="L29">        checkPreconditions(min, printer);</span>
+<span class="fc" id="L30">        this.min = min;</span>
+<span class="fc" id="L31">        this.inclusive = inclusive;</span>
+<span class="fc" id="L32">        this.printer = printer;</span>
+<span class="fc" id="L33">    }</span>
     
     public DateTimeMin(final T min, final boolean inclusive, final TextPrinter&lt;T&gt; printer, final CellProcessor next) {
-<span class="nc" id="L36">        super(next);</span>
-<span class="nc" id="L37">        checkPreconditions(min, printer);</span>
-<span class="nc" id="L38">        this.min = min;</span>
-<span class="nc" id="L39">        this.inclusive = inclusive;</span>
-<span class="nc" id="L40">        this.printer = printer;</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L36">        super(next);</span>
+<span class="fc" id="L37">        checkPreconditions(min, printer);</span>
+<span class="fc" id="L38">        this.min = min;</span>
+<span class="fc" id="L39">        this.inclusive = inclusive;</span>
+<span class="fc" id="L40">        this.printer = printer;</span>
+<span class="fc" id="L41">    }</span>
     
     private static &lt;T extends Comparable&lt;T&gt;&gt; void checkPreconditions(final T min, 
             final TextPrinter&lt;T&gt; printer) {
-<span class="nc bnc" id="L45" title="All 4 branches missed.">        if(min == null || printer == null) {</span>
-<span class="nc" id="L46">            throw new NullPointerException(&quot;min or past or printer should not be null&quot;);</span>
+<span class="fc bfc" id="L45" title="All 4 branches covered.">        if(min == null || printer == null) {</span>
+<span class="fc" id="L46">            throw new NullPointerException(&quot;min or past or printer should not be null&quot;);</span>
         }
         
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L49">    }</span>
     
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if(value == null) {</span>
-<span class="nc" id="L56">            return next.execute(value, context);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L56">            return next.execute(value, context);</span>
         }
         
-<span class="nc" id="L59">        final Class&lt;?&gt; exepectedClass = getMin().getClass();</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if(!exepectedClass.isAssignableFrom(value.getClass())) {</span>
-<span class="nc" id="L61">            throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);</span>
+<span class="fc" id="L59">        final Class&lt;?&gt; exepectedClass = getMin().getClass();</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if(!exepectedClass.isAssignableFrom(value.getClass())) {</span>
+<span class="fc" id="L61">            throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);</span>
         }
         
-<span class="nc" id="L64">        final T result = (T) value;</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if(!validate(result)) {</span>
-<span class="nc" id="L66">            throw createValidationException(context)</span>
-<span class="nc" id="L67">                .messageFormat(&quot;%s does not lie the min (%s) value.&quot;, </span>
-<span class="nc" id="L68">                        printValue(result), printValue(min))</span>
-<span class="nc" id="L69">                .rejectedValue(value)</span>
-<span class="nc" id="L70">                .messageVariables(&quot;min&quot;, getMin())</span>
-<span class="nc" id="L71">                .messageVariables(&quot;inclusive&quot;, isInclusive())</span>
-<span class="nc" id="L72">                .messageVariables(&quot;printer&quot;, getPrinter())</span>
-<span class="nc" id="L73">                .build();</span>
+<span class="fc" id="L64">        final T result = (T) value;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if(!validate(result)) {</span>
+<span class="fc" id="L66">            throw createValidationException(context)</span>
+<span class="fc" id="L67">                .messageFormat(&quot;%s does not lie the min (%s) value.&quot;, </span>
+<span class="fc" id="L68">                        printValue(result), printValue(min))</span>
+<span class="fc" id="L69">                .rejectedValue(value)</span>
+<span class="fc" id="L70">                .messageVariables(&quot;min&quot;, getMin())</span>
+<span class="fc" id="L71">                .messageVariables(&quot;inclusive&quot;, isInclusive())</span>
+<span class="fc" id="L72">                .messageVariables(&quot;printer&quot;, getPrinter())</span>
+<span class="fc" id="L73">                .build();</span>
                 
         }   
         
-<span class="nc" id="L77">        return next.execute(result, context);</span>
+<span class="fc" id="L77">        return next.execute(result, context);</span>
     }
     
     private boolean validate(final T value) {
-<span class="nc" id="L81">        final int compared = value.compareTo(min);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if(compared &gt; 0) {</span>
-<span class="nc" id="L83">            return true;</span>
+<span class="fc" id="L81">        final int compared = value.compareTo(min);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if(compared &gt; 0) {</span>
+<span class="fc" id="L83">            return true;</span>
         }
         
-<span class="nc bnc" id="L86" title="All 4 branches missed.">        if(inclusive &amp;&amp; compared == 0) {</span>
-<span class="nc" id="L87">            return true;</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">        if(inclusive &amp;&amp; compared == 0) {</span>
+<span class="fc" id="L87">            return true;</span>
         }
         
-<span class="nc" id="L90">        return false;</span>
+<span class="fc" id="L90">        return false;</span>
         
     }
     
     private String printValue(final T value) {
-<span class="nc" id="L95">        return getPrinter().print(value);</span>
+<span class="fc" id="L95">        return getPrinter().print(value);</span>
     }
     
     /**
@@ -100,7 +100,7 @@ public class DateTimeMin&lt;T extends Comparable&lt;T&gt;&gt; extends Validation
      * @return 設定された未来日（最小値）を取得する。
      */
     public T getMin() {
-<span class="nc" id="L103">        return min;</span>
+<span class="fc" id="L103">        return min;</span>
     }
     
     /**
@@ -108,7 +108,7 @@ public class DateTimeMin&lt;T extends Comparable&lt;T&gt;&gt; extends Validation
      * @return
      */
     public boolean isInclusive() {
-<span class="nc" id="L111">        return inclusive;</span>
+<span class="fc" id="L111">        return inclusive;</span>
     }
     
     /**
@@ -116,8 +116,8 @@ public class DateTimeMin&lt;T extends Comparable&lt;T&gt;&gt; extends Validation
      * @return フォーマッタを取得する
      */
     public TextPrinter&lt;T&gt; getPrinter() {
-<span class="nc" id="L119">        return printer;</span>
+<span class="fc" id="L119">        return printer;</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

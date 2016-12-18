@@ -212,8 +212,8 @@ public class AnnotationExpander {
         
         // 上書きするアノテーションの属性の組み立て
 <span class="fc" id="L214">        final Map&lt;String, Object&gt; overrideAttrs = buildOverrideAttribute(compositionAnno, nestedAnno);</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">        if(overrideAttrs.isEmpty()) {</span>
-<span class="nc" id="L216">            return nestedAnno;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        if(overrideAttrs.isEmpty()) {</span>
+<span class="fc" id="L216">            return nestedAnno;</span>
         }
         
         // 既存のアノテーションの属性の作成
@@ -325,8 +325,8 @@ public class AnnotationExpander {
             
             // 繰り返しのアノテーションの場合
 <span class="fc" id="L327">            final CsvOverridesAttribute.List overrideAttrAnnoList = compositionMethod.getAnnotation(CsvOverridesAttribute.List.class);</span>
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">            if(overrideAttrAnnoList != null) {</span>
-<span class="nc" id="L329">                annoList.addAll(Arrays.asList(overrideAttrAnnoList.value()));</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            if(overrideAttrAnnoList != null) {</span>
+<span class="fc" id="L329">                annoList.addAll(Arrays.asList(overrideAttrAnnoList.value()));</span>
             }
             
 <span class="fc bfc" id="L332" title="All 2 branches covered.">            if(annoList.isEmpty()) {</span>
@@ -343,20 +343,20 @@ public class AnnotationExpander {
                 }
                 
                 // インデックスの判定
-<span class="pc bpc" id="L346" title="1 of 4 branches missed.">                if(anno.index() &gt;= 0 &amp;&amp; anno.index() != targetAnno.getIndex()) {</span>
+<span class="fc bfc" id="L346" title="All 4 branches covered.">                if(anno.index() &gt;= 0 &amp;&amp; anno.index() != targetAnno.getIndex()) {</span>
 <span class="fc" id="L347">                    continue;</span>
                 }
                 
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">                final String attrName = anno.name().isEmpty() ? compositionMethod.getName() : anno.name();</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">                final String attrName = anno.name().isEmpty() ? compositionMethod.getName() : anno.name();</span>
                 
-<span class="pc bpc" id="L352" title="1 of 2 branches missed.">                if(!Utils.hasAnnotationAttribute(originalAnno, attrName, compositionMethod.getReturnType())) {</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">                if(!Utils.hasAnnotationAttribute(originalAnno, attrName, compositionMethod.getReturnType())) {</span>
                     // 上書き対象の属性が見つからない場合
-<span class="nc" id="L354">                    throw new SuperCsvInvalidAnnotationException(originalAnno, MessageBuilder.create(&quot;anno.CsvOverridesAnnotation.notFoundAttr&quot;)</span>
-<span class="nc" id="L355">                            .varWithAnno(&quot;compositionAnno&quot;, compositionAnno.annotationType())</span>
-<span class="nc" id="L356">                            .varWithAnno(&quot;overrideAnno&quot;, originalAnno.annotationType())</span>
-<span class="nc" id="L357">                            .varWithClass(&quot;attrType&quot;, compositionMethod.getReturnType())</span>
-<span class="nc" id="L358">                            .var(&quot;attrName&quot;, attrName)</span>
-<span class="nc" id="L359">                            .format());</span>
+<span class="fc" id="L354">                    throw new SuperCsvInvalidAnnotationException(originalAnno, MessageBuilder.create(&quot;anno.CsvOverridesAnnotation.notFoundAttr&quot;)</span>
+<span class="fc" id="L355">                            .varWithAnno(&quot;compositionAnno&quot;, compositionAnno.annotationType())</span>
+<span class="fc" id="L356">                            .varWithAnno(&quot;overrideAnno&quot;, originalAnno.annotationType())</span>
+<span class="fc" id="L357">                            .varWithClass(&quot;attrType&quot;, compositionMethod.getReturnType())</span>
+<span class="fc" id="L358">                            .var(&quot;attrName&quot;, attrName)</span>
+<span class="fc" id="L359">                            .format());</span>
                     
                 }
                 
@@ -379,28 +379,39 @@ public class AnnotationExpander {
         
         // message 属性の取得。
         // 既に取得していたり、@CsvOverridesAttributeが付与されている場合はスキップする。
-<span class="pc bpc" id="L382" title="2 of 4 branches missed.">        if(!overrideAttrs.containsKey(&quot;message&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;message&quot;)</span>
+<span class="fc bfc" id="L382" title="All 4 branches covered.">        if(!overrideAttrs.containsKey(&quot;message&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;message&quot;)</span>
 <span class="pc bpc" id="L383" title="1 of 2 branches missed.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;message&quot;, String.class)) {</span>
             
 <span class="fc" id="L385">            final Optional&lt;String&gt; messageAttr = Utils.getAnnotationAttribute(compositionAnno, &quot;message&quot;, String.class);</span>
-<span class="pc bpc" id="L386" title="2 of 4 branches missed.">            if(messageAttr.isPresent() &amp;&amp; Utils.isNotEmpty(messageAttr.get())) {</span>
+<span class="pc bpc" id="L386" title="1 of 4 branches missed.">            if(messageAttr.isPresent() &amp;&amp; Utils.isNotEmpty(messageAttr.get())) {</span>
 <span class="fc" id="L387">                overrideAttrs.put(&quot;message&quot;, messageAttr.get());</span>
             }
         }
         
         // groups 属性の取得。
         // 既に取得していたり、@CsvOverridesAttributeが付与されている場合はスキップする。
-<span class="pc bpc" id="L393" title="2 of 4 branches missed.">        if(!overrideAttrs.containsKey(&quot;groups&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;groups&quot;)</span>
+<span class="fc bfc" id="L393" title="All 4 branches covered.">        if(!overrideAttrs.containsKey(&quot;groups&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;groups&quot;)</span>
 <span class="pc bpc" id="L394" title="1 of 2 branches missed.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;groups&quot;, Class[].class)) {</span>
             
 <span class="fc" id="L396">            final Optional&lt;Class[]&gt; groupsAttr = Utils.getAnnotationAttribute(compositionAnno, &quot;groups&quot;, Class[].class);</span>
-<span class="pc bpc" id="L397" title="3 of 4 branches missed.">            if(groupsAttr.isPresent() &amp;&amp; Utils.isNotEmpty(groupsAttr.get())) {</span>
-<span class="nc" id="L398">                overrideAttrs.put(&quot;groups&quot;, groupsAttr.get());</span>
+<span class="pc bpc" id="L397" title="1 of 4 branches missed.">            if(groupsAttr.isPresent() &amp;&amp; Utils.isNotEmpty(groupsAttr.get())) {</span>
+<span class="fc" id="L398">                overrideAttrs.put(&quot;groups&quot;, groupsAttr.get());</span>
             }
         }
         
-<span class="fc" id="L402">        return overrideAttrs;</span>
+        // cases 属性の取得。
+        // 既に取得していたり、@CsvOverridesAttributeが付与されている場合はスキップする。
+<span class="fc bfc" id="L404" title="All 4 branches covered.">        if(!overrideAttrs.containsKey(&quot;cases&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;cases&quot;)</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;cases&quot;, BuildCase[].class)) {</span>
+            
+<span class="fc" id="L407">            final Optional&lt;BuildCase[]&gt; casesAttr = Utils.getAnnotationAttribute(compositionAnno, &quot;cases&quot;, BuildCase[].class);</span>
+<span class="pc bpc" id="L408" title="1 of 4 branches missed.">            if(casesAttr.isPresent() &amp;&amp; Utils.isNotEmpty(casesAttr.get())) {</span>
+<span class="fc" id="L409">                overrideAttrs.put(&quot;cases&quot;, casesAttr.get());</span>
+            }
+        }
+        
+<span class="fc" id="L413">        return overrideAttrs;</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

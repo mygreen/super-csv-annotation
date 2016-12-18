@@ -41,8 +41,8 @@ public class LengthMax extends ValidationCellProcessor implements StringCellProc
      *             {@literal if min is &lt; 0}
      */
     private static void checkPreconditions(final int max) {
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if( max &lt;= 0 ) {</span>
-<span class="nc" id="L45">            throw new IllegalArgumentException(String.format(&quot;max length (%d) should not be &lt;= 0&quot;, max));</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if( max &lt;= 0 ) {</span>
+<span class="fc" id="L45">            throw new IllegalArgumentException(String.format(&quot;max length (%d) should not be &lt;= 0&quot;, max));</span>
         }
 <span class="fc" id="L47">    }</span>
     
@@ -86,4 +86,4 @@ public class LengthMax extends ValidationCellProcessor implements StringCellProc
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

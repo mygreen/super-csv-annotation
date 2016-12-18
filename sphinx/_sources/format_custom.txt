@@ -4,8 +4,8 @@
 
 独自の変換処理を実装するには、2つのステップを踏む必要があります。
 
-1. ``TextFormatter`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/TextFormatter.html>`_ ] の実装クラスの作成
-2. アノテーション ``@CsvFormat`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html>`_ ] で作成したTextFormatterの指定
+1. ``TextFormatter`` の実装クラスの作成
+2. アノテーション ``@CsvFormat`` で作成したTextFormatterの指定
 
 
 以下、それぞれに対して解説していきます。
@@ -16,7 +16,7 @@ TextFormatterの実装クラスの作成
 
 サンプルとして、 ``java.net.URL`` にマッピングするTextFromatterを作成します。
 
-* 抽象クラス ``AbstractTextFormatter`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html>`_ ] を継承します。
+* 抽象クラス ``AbstractTextFormatter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html>`_ ] を継承します。
 * メソッド ``parse(...)`` で、読み込み時の文字列からオブジェクト型に変換するメソッドの実装を行います。
   
   * 変換に失敗した場合、例外 ``TextParseException`` をスローします。
@@ -83,7 +83,7 @@ TextFormatterの実装クラスの作成
 作成したTextFormatterの指定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-作成したTextFormatterを指定するには、アノテーション ``@CsvFormat`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html>`_ ]を使用します。
+作成したTextFormatterを指定するには、アノテーション ``@CsvFormat`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html>`_ ]を使用します。
 
 * 属性 ``formatter`` で、TextFormatterの実装クラスを指定します。
 * 属性 ``message`` で、読み込み時のエラーメッセージを指定することができます。

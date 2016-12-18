@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>@CsvBooleanFormat &mdash; Super CSV Annotation 2.0 ドキュメント</title>
+  <title>@CsvBooleanFormat &mdash; Super CSV Annotation 2.0.1 ドキュメント</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.0 ドキュメント" href="index.html"/>
+    <link rel="top" title="Super CSV Annotation 2.0.1 ドキュメント" href="index.html"/>
  
 <!-- my theme custom extrahead beacon -->
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.0
+                2.0.1
               </div>
             
           
@@ -87,7 +87,8 @@
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
-	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/super-csv-annotation">GitHub</a></li>
 	<li class="toctree-l1"><a class="reference internal" href="http://super-csv.github.io/super-csv/index.html">Super CSV</a></li>
 </ul>
 
@@ -102,6 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id4">1.3. 読み込み方法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id6">1.4. 書き込み方法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id8">1.5. 値の加工方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#csv">1.6. タブ区切りCSVファイルへの対応</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">2. 機能概要</a><ul>
@@ -113,34 +115,34 @@
 <li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format.html#id2">3.1. 書式指定用の既存のアノテーション</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvbooleanformat">3.1.1. &#64;CsvBooleanFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id6">3.1.1.1. 読み込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.1.2. 書き込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.1.1. 読み込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.1.2. 書き込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id10">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvnumberformat">3.1.2. &#64;CsvNumberFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id11">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id12">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id15">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id16">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvdatetimeformat">3.1.3. &#64;CsvDateTimeFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id17">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id18">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id19">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id19">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id20">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id21">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvenumformat">3.1.4. &#64;CsvEnumFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id22">3.1.4.1. 基本的な使い方</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id23">3.1.4.2. 別名でマッピングする場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id24">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id24">3.1.4.1. 基本的な使い方</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id25">3.1.4.2. 別名でマッピングする場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id26">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="format.html#id27">3.2. 独自のクラスタイプへの対応</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format.html#id29">3.2. 独自のクラスタイプへの対応</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="format.html#textformatter">3.2.1. TextFormatterの実装クラスの作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#id31">3.2.2. 作成したTextFormatterの指定</a></li>
 </ul>
@@ -172,31 +174,31 @@
 <li class="toctree-l2"><a class="reference internal" href="validation.html#id23">5.2. 独自の検証処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#cellprocessor">5.2.1. CellProcessorの実装クラスの作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#id27">5.2.2. 値の検証用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id29">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id30">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="validation.html#bean">5.3. Bean単位での値の検証方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#csvvalidator">5.3.1. CsvValidatorの実装</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id31">5.3.2. エラーメッセージの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id32">5.3.3. エラーのハンドリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id32">5.3.2. エラーメッセージの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id33">5.3.3. エラーのハンドリング</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id33">5.4. エラー処理の方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id34">5.4.1. 例外の種類とハンドリング</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id35">5.4.2. 書き込み時の値の検証のスキップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id34">5.4. エラー処理の方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id35">5.4.1. 例外の種類とハンドリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id36">5.4.2. 書き込み時の値の検証のスキップ</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id36">5.5. 値の検証時のエラーメッセージ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id37">5.5. 値の検証時のエラーメッセージ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="validation.html#bean-validation">5.6. Bean Validationとの連携</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id37">5.6.1. ライブラリの追加</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id40">5.6.2. Bean Validationの利用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id41">5.6.3. Bean Validationのカスタマイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id38">5.6.1. ライブラリの追加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id41">5.6.2. Bean Validationの利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id42">5.6.3. Bean Validationのカスタマイズ</a></li>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#beanvalidationspring-framework">5.6.4. BeanValidationとSpring Frameworkとの連携</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#xml">5.6.4.1. XMLによるコンテナの設定</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#javaconfig">5.6.4.2. JavaConfigによるコンテナの設定</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#constraintvalidator">5.6.4.3. 独自のConstraintValidatorの作成</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#csvbean">5.6.4.4. CsvBeanの定義</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#id43">5.6.4.5. 値の検証方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#id44">5.6.4.5. 値の検証方法</a></li>
 </ul>
 </li>
 </ul>
@@ -255,9 +257,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.1. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.2. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.3. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">12.1. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.2. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.3. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.4. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -309,9 +312,14 @@
 <h1>&#64;CsvBooleanFormat<a class="headerlink" href="#csvbooleanformat" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>クラスタイプが「boolean/Boolean」のマッピング規則を定義する際に使用します。</p>
 <p>通常の「true、false」以外に、「○、×」などでのマッピングが可能となります。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、 <code class="docutils literal"><span class="pre">false</span></code> が設定されます。
+初期値を変更したい場合は、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvDefaultValue</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a>]を使用してください。</p>
+</div>
 <div class="section" id="id1">
 <h2>読み込み時の値の指定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>属性 <code class="docutils literal"><span class="pre">readForTrue</span></code> 、 <code class="docutils literal"><span class="pre">readForFalse</span></code> で読み込み時のtrueまたはfalseと判断するの候補の値を指定します。</p>
+<p>属性 <code class="docutils literal"><span class="pre">readForTrue</span></code> 、 <code class="docutils literal"><span class="pre">readForFalse</span></code> で、読み込み時のtrueまたはfalseと判定する候補の値を指定します。</p>
 <ul class="simple">
 <li>属性readForTrueとreadForFalseの値に重複がある場合、readForTrueの定義が優先されまます。</li>
 <li>属性readForTrueを指定しない場合、デフォルトで「&#8221;true&#8221;, &#8220;1&#8221;, &#8220;yes&#8221;, &#8220;on&#8221;, &#8220;y&#8221;, &#8220;t&#8221;」が設定されます。</li>
@@ -370,7 +378,7 @@
 </div>
 <div class="section" id="id2">
 <h2>書き込み時の値の指定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>属性 <code class="docutils literal"><span class="pre">writeAsTrue</span></code> と <code class="docutils literal"><span class="pre">writeAsFalse</span></code> で書き込み時のtrueまたはfalse値に該当する文字を指定します。</p>
+<p>属性 <code class="docutils literal"><span class="pre">writeAsTrue</span></code> と <code class="docutils literal"><span class="pre">writeAsFalse</span></code> で、書き込み時のtrueまたはfalse値に該当する文字を指定します。</p>
 <ul class="simple">
 <li>属性writeAsTrueを指定しない場合は、デフォルトで&#8221;true&#8221;が設定され、セルのタイプもブール型になります。</li>
 <li>属性writeAsFalseを指定しない場合は、デフォルトで&#8221;false&#8221;が設定され、セルのタイプもブール型になります。</li>
@@ -407,7 +415,7 @@
             <span class="n">readForTrue</span><span class="o">={</span><span class="s">&quot;○&quot;</span><span class="o">,</span> <span class="s">&quot;有効&quot;</span><span class="o">,</span> <span class="s">&quot;レ&quot;</span><span class="o">},</span> <span class="c1">// 読み書きの両方を行う場合、書き込む値を含める必要がある。</span>
             <span class="n">readForFalse</span><span class="o">={</span><span class="s">&quot;×&quot;</span><span class="o">,</span> <span class="s">&quot;無効&quot;</span><span class="o">,</span> <span class="s">&quot;-&quot;</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">},</span>
             <span class="n">writeAsTrue</span><span class="o">=</span><span class="s">&quot;○&quot;</span><span class="o">,</span>
-            <span class="n">writeAsFalse</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="o">)</span>
+            <span class="n">writeAsFalse</span><span class="o">=</span><span class="s">&quot;×&quot;</span><span class="o">)</span>
     <span class="o">)</span>
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">availaled</span><span class="o">;</span>
 
@@ -464,7 +472,7 @@
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
-<p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html">Javadoc</a> を参照してください。</p>
+<p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html">JavaDoc</a> を参照してください。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -508,7 +516,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, T.TSUCHIE.
-      最終更新: 2016-12-14 02:48:01
+      最終更新: 2016-12-18 14:37:25
 
     </p>
   </div>
@@ -530,7 +538,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0',
+            VERSION:'2.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -49,12 +49,12 @@ public class NumberRange&lt;T extends Number &amp; Comparable&lt;T&gt;&gt; exten
     
     private static &lt;T extends Number &amp; Comparable&lt;T&gt;&gt; void checkPreconditions(final T min, final T max, 
             final TextPrinter&lt;T&gt; printer) {
-<span class="pc bpc" id="L52" title="3 of 6 branches missed.">        if(min == null || max == null || printer == null) {</span>
-<span class="nc" id="L53">            throw new NullPointerException(&quot;min ,max and printer should not be null&quot;);</span>
+<span class="fc bfc" id="L52" title="All 6 branches covered.">        if(min == null || max == null || printer == null) {</span>
+<span class="fc" id="L53">            throw new NullPointerException(&quot;min ,max and printer should not be null&quot;);</span>
         }
         
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(min.compareTo(max) &gt; 0) {</span>
-<span class="nc" id="L57">            throw new IllegalArgumentException(String.format(&quot;max (%s) should not be &lt; min (%s)&quot;, max, min));</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(min.compareTo(max) &gt; 0) {</span>
+<span class="fc" id="L57">            throw new IllegalArgumentException(String.format(&quot;max (%s) should not be &lt; min (%s)&quot;, max, min));</span>
         }
 <span class="fc" id="L59">    }</span>
 
@@ -62,13 +62,13 @@ public class NumberRange&lt;T extends Number &amp; Comparable&lt;T&gt;&gt; exten
     @Override
     public Object execute(final Object value, final CsvContext context) {
         
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if(value == null) {</span>
-<span class="nc" id="L66">            return next.execute(value, context);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L66">            return next.execute(value, context);</span>
         }
         
 <span class="fc" id="L69">        final Class&lt;?&gt; exepectedClass = getMin().getClass();</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if(!exepectedClass.isAssignableFrom(value.getClass())) {</span>
-<span class="nc" id="L71">            throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(!exepectedClass.isAssignableFrom(value.getClass())) {</span>
+<span class="fc" id="L71">            throw new SuperCsvCellProcessorException(exepectedClass, value, context, this);</span>
         }
         
 <span class="fc" id="L74">        final T result = ((T) value);</span>
@@ -140,4 +140,4 @@ public class NumberRange&lt;T extends Number &amp; Comparable&lt;T&gt;&gt; exten
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

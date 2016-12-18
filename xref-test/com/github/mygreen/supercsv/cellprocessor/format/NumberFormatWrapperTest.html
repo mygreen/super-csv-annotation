@@ -11,7 +11,7 @@
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.supercsv.cellprocessor.format;
 <a class="jxr_linenumber" name="2" href="#2">2</a>   
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
-<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.hamcrest.Matchers.*;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.*;
 <a class="jxr_linenumber" name="5" href="#5">5</a>   
 <a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> java.math.BigDecimal;
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> java.math.BigInteger;
@@ -68,19 +68,19 @@
 <a class="jxr_linenumber" name="58" href="#58">58</a>      
 <a class="jxr_linenumber" name="59" href="#59">59</a>      @Test
 <a class="jxr_linenumber" name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGetPattern() {
-<a class="jxr_linenumber" name="61" href="#61">61</a>          assertThat(formatter.getPattern().get(), is(<span class="jxr_string">"#,##0.0##"</span>));
-<a class="jxr_linenumber" name="62" href="#62">62</a>          assertThat(lenientFormatter.getPattern().get(), is(<span class="jxr_string">"#,##0.0##"</span>));
+<a class="jxr_linenumber" name="61" href="#61">61</a>          assertThat(formatter.getPattern().get()).isEqualTo(<span class="jxr_string">"#,##0.0##"</span>);
+<a class="jxr_linenumber" name="62" href="#62">62</a>          assertThat(lenientFormatter.getPattern().get()).isEqualTo(<span class="jxr_string">"#,##0.0##"</span>);
 <a class="jxr_linenumber" name="63" href="#63">63</a>          
 <a class="jxr_linenumber" name="64" href="#64">64</a>      }
 <a class="jxr_linenumber" name="65" href="#65">65</a>      
 <a class="jxr_linenumber" name="66" href="#66">66</a>      @Test
 <a class="jxr_linenumber" name="67" href="#67">67</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testPrintWithValid() {
 <a class="jxr_linenumber" name="68" href="#68">68</a>          
-<a class="jxr_linenumber" name="69" href="#69">69</a>          assertThat(formatter.print(123456), is(<span class="jxr_string">"123,456.0"</span>));
-<a class="jxr_linenumber" name="70" href="#70">70</a>          assertThat(formatter.print(-2.4567), is(<span class="jxr_string">"-2.457"</span>));
+<a class="jxr_linenumber" name="69" href="#69">69</a>          assertThat(formatter.print(123456)).isEqualTo(<span class="jxr_string">"123,456.0"</span>);
+<a class="jxr_linenumber" name="70" href="#70">70</a>          assertThat(formatter.print(-2.4567)).isEqualTo(<span class="jxr_string">"-2.457"</span>);
 <a class="jxr_linenumber" name="71" href="#71">71</a>          
-<a class="jxr_linenumber" name="72" href="#72">72</a>          assertThat(lenientFormatter.print(123456), is(<span class="jxr_string">"123,456.0"</span>));
-<a class="jxr_linenumber" name="73" href="#73">73</a>          assertThat(lenientFormatter.print(-2.4567), is(<span class="jxr_string">"-2.457"</span>));
+<a class="jxr_linenumber" name="72" href="#72">72</a>          assertThat(lenientFormatter.print(123456)).isEqualTo(<span class="jxr_string">"123,456.0"</span>);
+<a class="jxr_linenumber" name="73" href="#73">73</a>          assertThat(lenientFormatter.print(-2.4567)).isEqualTo(<span class="jxr_string">"-2.457"</span>);
 <a class="jxr_linenumber" name="74" href="#74">74</a>      }
 <a class="jxr_linenumber" name="75" href="#75">75</a>      
 <a class="jxr_linenumber" name="76" href="#76">76</a>      @Test(expected=IllegalArgumentException.<strong class="jxr_keyword">class</strong>)
@@ -92,14 +92,14 @@
 <a class="jxr_linenumber" name="82" href="#82">82</a>      @Test
 <a class="jxr_linenumber" name="83" href="#83">83</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseWithValid() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="84" href="#84">84</a>          
-<a class="jxr_linenumber" name="85" href="#85">85</a>          assertThat(formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0"</span>), is(123456));
-<a class="jxr_linenumber" name="86" href="#86">86</a>          assertThat(formatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456"</span>), is(-2.456));
+<a class="jxr_linenumber" name="85" href="#85">85</a>          assertThat(formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0"</span>)).isEqualTo(123456);
+<a class="jxr_linenumber" name="86" href="#86">86</a>          assertThat(formatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456"</span>)).isEqualTo(-2.456);
 <a class="jxr_linenumber" name="87" href="#87">87</a>          
-<a class="jxr_linenumber" name="88" href="#88">88</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0"</span>), is(123456));
-<a class="jxr_linenumber" name="89" href="#89">89</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456"</span>), is(-2.456));
+<a class="jxr_linenumber" name="88" href="#88">88</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0"</span>)).isEqualTo(123456);
+<a class="jxr_linenumber" name="89" href="#89">89</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456"</span>)).isEqualTo(-2.456);
 <a class="jxr_linenumber" name="90" href="#90">90</a>          
-<a class="jxr_linenumber" name="91" href="#91">91</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0abc"</span>), is(123456));
-<a class="jxr_linenumber" name="92" href="#92">92</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456abc"</span>), is(-2.456));
+<a class="jxr_linenumber" name="91" href="#91">91</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0abc"</span>)).isEqualTo(123456);
+<a class="jxr_linenumber" name="92" href="#92">92</a>          assertThat(lenientFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"-2.456abc"</span>)).isEqualTo(-2.456);
 <a class="jxr_linenumber" name="93" href="#93">93</a>          
 <a class="jxr_linenumber" name="94" href="#94">94</a>      }
 <a class="jxr_linenumber" name="95" href="#95">95</a>      
@@ -111,7 +111,7 @@
 <a class="jxr_linenumber" name="101" href="#101">101</a>     
 <a class="jxr_linenumber" name="102" href="#102">102</a>     @Test(expected=TextParseException.<strong class="jxr_keyword">class</strong>)
 <a class="jxr_linenumber" name="103" href="#103">103</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseWithInvalidAtWrong() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="104" href="#104">104</a>         assertThat(formatter.isLenient(), is(false));
+<a class="jxr_linenumber" name="104" href="#104">104</a>         assertThat(formatter.isLenient()).isEqualTo(false);
 <a class="jxr_linenumber" name="105" href="#105">105</a>         
 <a class="jxr_linenumber" name="106" href="#106">106</a>         formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123,456.0abc"</span>);
 <a class="jxr_linenumber" name="107" href="#107">107</a>         fail();
@@ -126,52 +126,52 @@
 <a class="jxr_linenumber" name="116" href="#116">116</a>     @Test
 <a class="jxr_linenumber" name="117" href="#117">117</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseWithValidAtType() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="118" href="#118">118</a>         
-<a class="jxr_linenumber" name="119" href="#119">119</a>         assertThat(formatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Byte((byte)123)));
-<a class="jxr_linenumber" name="120" href="#120">120</a>         assertThat(formatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is((byte)123));
+<a class="jxr_linenumber" name="119" href="#119">119</a>         assertThat(formatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Byte((byte)123));
+<a class="jxr_linenumber" name="120" href="#120">120</a>         assertThat(formatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo((byte)123);
 <a class="jxr_linenumber" name="121" href="#121">121</a>         
-<a class="jxr_linenumber" name="122" href="#122">122</a>         assertThat(formatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123)));
-<a class="jxr_linenumber" name="123" href="#123">123</a>         assertThat(formatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="122" href="#122">122</a>         assertThat(formatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="123" href="#123">123</a>         assertThat(formatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo((<strong class="jxr_keyword">short</strong>)123);
 <a class="jxr_linenumber" name="124" href="#124">124</a>         
-<a class="jxr_linenumber" name="125" href="#125">125</a>         assertThat(formatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Integer(123)));
-<a class="jxr_linenumber" name="126" href="#126">126</a>         assertThat(formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123));
+<a class="jxr_linenumber" name="125" href="#125">125</a>         assertThat(formatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Integer(123));
+<a class="jxr_linenumber" name="126" href="#126">126</a>         assertThat(formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123);
 <a class="jxr_linenumber" name="127" href="#127">127</a>         
-<a class="jxr_linenumber" name="128" href="#128">128</a>         assertThat(formatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Long(123L)));
-<a class="jxr_linenumber" name="129" href="#129">129</a>         assertThat(formatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123L));
+<a class="jxr_linenumber" name="128" href="#128">128</a>         assertThat(formatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Long(123L));
+<a class="jxr_linenumber" name="129" href="#129">129</a>         assertThat(formatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123L);
 <a class="jxr_linenumber" name="130" href="#130">130</a>         
-<a class="jxr_linenumber" name="131" href="#131">131</a>         assertThat(formatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Float(123.456f)));
-<a class="jxr_linenumber" name="132" href="#132">132</a>         assertThat(formatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456f));
+<a class="jxr_linenumber" name="131" href="#131">131</a>         assertThat(formatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Float(123.456f));
+<a class="jxr_linenumber" name="132" href="#132">132</a>         assertThat(formatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456f);
 <a class="jxr_linenumber" name="133" href="#133">133</a>         
-<a class="jxr_linenumber" name="134" href="#134">134</a>         assertThat(formatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Double(123.456)));
-<a class="jxr_linenumber" name="135" href="#135">135</a>         assertThat(formatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456));
+<a class="jxr_linenumber" name="134" href="#134">134</a>         assertThat(formatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Double(123.456));
+<a class="jxr_linenumber" name="135" href="#135">135</a>         assertThat(formatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456);
 <a class="jxr_linenumber" name="136" href="#136">136</a>         
-<a class="jxr_linenumber" name="137" href="#137">137</a>         assertThat(formatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>)));
-<a class="jxr_linenumber" name="138" href="#138">138</a>         assertThat(formatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>)));
+<a class="jxr_linenumber" name="137" href="#137">137</a>         assertThat(formatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>));
+<a class="jxr_linenumber" name="138" href="#138">138</a>         assertThat(formatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>));
 <a class="jxr_linenumber" name="139" href="#139">139</a>         
 <a class="jxr_linenumber" name="140" href="#140">140</a>     }
 <a class="jxr_linenumber" name="141" href="#141">141</a>     
 <a class="jxr_linenumber" name="142" href="#142">142</a>     @Test
 <a class="jxr_linenumber" name="143" href="#143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseWithValidAtTypeBigDecimal() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="144" href="#144">144</a>         
-<a class="jxr_linenumber" name="145" href="#145">145</a>         assertThat(parseBigDecimalFormatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> Byte((byte)123)));
-<a class="jxr_linenumber" name="146" href="#146">146</a>         assertThat(parseBigDecimalFormatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is((byte)123));
+<a class="jxr_linenumber" name="145" href="#145">145</a>         assertThat(parseBigDecimalFormatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Byte((byte)123));
+<a class="jxr_linenumber" name="146" href="#146">146</a>         assertThat(parseBigDecimalFormatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo((byte)123);
 <a class="jxr_linenumber" name="147" href="#147">147</a>         
-<a class="jxr_linenumber" name="148" href="#148">148</a>         assertThat(parseBigDecimalFormatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123)));
-<a class="jxr_linenumber" name="149" href="#149">149</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="148" href="#148">148</a>         assertThat(parseBigDecimalFormatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="149" href="#149">149</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo((<strong class="jxr_keyword">short</strong>)123);
 <a class="jxr_linenumber" name="150" href="#150">150</a>         
-<a class="jxr_linenumber" name="151" href="#151">151</a>         assertThat(parseBigDecimalFormatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> Integer(123)));
-<a class="jxr_linenumber" name="152" href="#152">152</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(123));
+<a class="jxr_linenumber" name="151" href="#151">151</a>         assertThat(parseBigDecimalFormatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Integer(123));
+<a class="jxr_linenumber" name="152" href="#152">152</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(123);
 <a class="jxr_linenumber" name="153" href="#153">153</a>         
-<a class="jxr_linenumber" name="154" href="#154">154</a>         assertThat(parseBigDecimalFormatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> Long(123L)));
-<a class="jxr_linenumber" name="155" href="#155">155</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(123L));
+<a class="jxr_linenumber" name="154" href="#154">154</a>         assertThat(parseBigDecimalFormatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Long(123L));
+<a class="jxr_linenumber" name="155" href="#155">155</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(123L);
 <a class="jxr_linenumber" name="156" href="#156">156</a>         
-<a class="jxr_linenumber" name="157" href="#157">157</a>         assertThat(parseBigDecimalFormatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Float(123.456f)));
-<a class="jxr_linenumber" name="158" href="#158">158</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456f));
+<a class="jxr_linenumber" name="157" href="#157">157</a>         assertThat(parseBigDecimalFormatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Float(123.456f));
+<a class="jxr_linenumber" name="158" href="#158">158</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456f);
 <a class="jxr_linenumber" name="159" href="#159">159</a>         
-<a class="jxr_linenumber" name="160" href="#160">160</a>         assertThat(parseBigDecimalFormatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Double(123.456)));
-<a class="jxr_linenumber" name="161" href="#161">161</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456));
+<a class="jxr_linenumber" name="160" href="#160">160</a>         assertThat(parseBigDecimalFormatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Double(123.456));
+<a class="jxr_linenumber" name="161" href="#161">161</a>         assertThat(parseBigDecimalFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456);
 <a class="jxr_linenumber" name="162" href="#162">162</a>         
-<a class="jxr_linenumber" name="163" href="#163">163</a>         assertThat(parseBigDecimalFormatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>)));
-<a class="jxr_linenumber" name="164" href="#164">164</a>         assertThat(parseBigDecimalFormatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>)));
+<a class="jxr_linenumber" name="163" href="#163">163</a>         assertThat(parseBigDecimalFormatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>));
+<a class="jxr_linenumber" name="164" href="#164">164</a>         assertThat(parseBigDecimalFormatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>));
 <a class="jxr_linenumber" name="165" href="#165">165</a>         
 <a class="jxr_linenumber" name="166" href="#166">166</a>     }
 <a class="jxr_linenumber" name="167" href="#167">167</a>     
@@ -190,28 +190,28 @@
 <a class="jxr_linenumber" name="180" href="#180">180</a>     @Test
 <a class="jxr_linenumber" name="181" href="#181">181</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseWithValidAtTypeLenientBigDecimal() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="182" href="#182">182</a>         
-<a class="jxr_linenumber" name="183" href="#183">183</a>         assertThat(lenientParseBigDecimalFormatter.isLenient(), is(<strong class="jxr_keyword">true</strong>));
+<a class="jxr_linenumber" name="183" href="#183">183</a>         assertThat(lenientParseBigDecimalFormatter.isLenient()).isEqualTo(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="184" href="#184">184</a>         
-<a class="jxr_linenumber" name="185" href="#185">185</a>         assertThat(lenientParseBigDecimalFormatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Byte((byte)123)));
-<a class="jxr_linenumber" name="186" href="#186">186</a>         assertThat(lenientParseBigDecimalFormatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is((byte)123));
+<a class="jxr_linenumber" name="185" href="#185">185</a>         assertThat(lenientParseBigDecimalFormatter.parse(Byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Byte((byte)123));
+<a class="jxr_linenumber" name="186" href="#186">186</a>         assertThat(lenientParseBigDecimalFormatter.parse(byte.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo((byte)123);
 <a class="jxr_linenumber" name="187" href="#187">187</a>         
-<a class="jxr_linenumber" name="188" href="#188">188</a>         assertThat(lenientParseBigDecimalFormatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123)));
-<a class="jxr_linenumber" name="189" href="#189">189</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="188" href="#188">188</a>         assertThat(lenientParseBigDecimalFormatter.parse(Short.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Short((<strong class="jxr_keyword">short</strong>)123));
+<a class="jxr_linenumber" name="189" href="#189">189</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">short</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo((<strong class="jxr_keyword">short</strong>)123);
 <a class="jxr_linenumber" name="190" href="#190">190</a>         
-<a class="jxr_linenumber" name="191" href="#191">191</a>         assertThat(lenientParseBigDecimalFormatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Integer(123)));
-<a class="jxr_linenumber" name="192" href="#192">192</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123));
+<a class="jxr_linenumber" name="191" href="#191">191</a>         assertThat(lenientParseBigDecimalFormatter.parse(Integer.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Integer(123));
+<a class="jxr_linenumber" name="192" href="#192">192</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123);
 <a class="jxr_linenumber" name="193" href="#193">193</a>         
-<a class="jxr_linenumber" name="194" href="#194">194</a>         assertThat(lenientParseBigDecimalFormatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Long(123L)));
-<a class="jxr_linenumber" name="195" href="#195">195</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123L));
+<a class="jxr_linenumber" name="194" href="#194">194</a>         assertThat(lenientParseBigDecimalFormatter.parse(Long.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Long(123L));
+<a class="jxr_linenumber" name="195" href="#195">195</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">long</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123L);
 <a class="jxr_linenumber" name="196" href="#196">196</a>         
-<a class="jxr_linenumber" name="197" href="#197">197</a>         assertThat(lenientParseBigDecimalFormatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Float(123.456f)));
-<a class="jxr_linenumber" name="198" href="#198">198</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456f));
+<a class="jxr_linenumber" name="197" href="#197">197</a>         assertThat(lenientParseBigDecimalFormatter.parse(Float.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Float(123.456f));
+<a class="jxr_linenumber" name="198" href="#198">198</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">float</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456f);
 <a class="jxr_linenumber" name="199" href="#199">199</a>         
-<a class="jxr_linenumber" name="200" href="#200">200</a>         assertThat(lenientParseBigDecimalFormatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> Double(123.456)));
-<a class="jxr_linenumber" name="201" href="#201">201</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(123.456));
+<a class="jxr_linenumber" name="200" href="#200">200</a>         assertThat(lenientParseBigDecimalFormatter.parse(Double.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> Double(123.456));
+<a class="jxr_linenumber" name="201" href="#201">201</a>         assertThat(lenientParseBigDecimalFormatter.parse(<strong class="jxr_keyword">double</strong>.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(123.456);
 <a class="jxr_linenumber" name="202" href="#202">202</a>         
-<a class="jxr_linenumber" name="203" href="#203">203</a>         assertThat(lenientParseBigDecimalFormatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>), is(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>)));
-<a class="jxr_linenumber" name="204" href="#204">204</a>         assertThat(lenientParseBigDecimalFormatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>), is(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>)));
+<a class="jxr_linenumber" name="203" href="#203">203</a>         assertThat(lenientParseBigDecimalFormatter.parse(BigInteger.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"123"</span>));
+<a class="jxr_linenumber" name="204" href="#204">204</a>         assertThat(lenientParseBigDecimalFormatter.parse(BigDecimal.<strong class="jxr_keyword">class</strong>, <span class="jxr_string">"123.456"</span>)).isEqualTo(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"123.456"</span>));
 <a class="jxr_linenumber" name="205" href="#205">205</a>         
 <a class="jxr_linenumber" name="206" href="#206">206</a>     }
 <a class="jxr_linenumber" name="207" href="#207">207</a>     
@@ -229,7 +229,7 @@
 <a class="jxr_linenumber" name="219" href="#219">219</a>                 
 <a class="jxr_linenumber" name="220" href="#220">220</a>                 String str = formatter.print(i);
 <a class="jxr_linenumber" name="221" href="#221">221</a>                 <strong class="jxr_keyword">int</strong> num = formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, str);
-<a class="jxr_linenumber" name="222" href="#222">222</a>                 assertThat(num, is(i));
+<a class="jxr_linenumber" name="222" href="#222">222</a>                 assertThat(num).isEqualTo(i);
 <a class="jxr_linenumber" name="223" href="#223">223</a>                 
 <a class="jxr_linenumber" name="224" href="#224">224</a>             } <strong class="jxr_keyword">catch</strong> (Exception e) {
 <a class="jxr_linenumber" name="225" href="#225">225</a>                 e.printStackTrace();
@@ -247,7 +247,7 @@
 <a class="jxr_linenumber" name="237" href="#237">237</a>                     <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="238" href="#238">238</a>                         String str = formatter.print(i);
 <a class="jxr_linenumber" name="239" href="#239">239</a>                         <strong class="jxr_keyword">int</strong> num = formatter.parse(<strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>, str);
-<a class="jxr_linenumber" name="240" href="#240">240</a>                         assertThat(num, is(i));
+<a class="jxr_linenumber" name="240" href="#240">240</a>                         assertThat(num).isEqualTo(i);
 <a class="jxr_linenumber" name="241" href="#241">241</a>                         
 <a class="jxr_linenumber" name="242" href="#242">242</a>                     } <strong class="jxr_keyword">catch</strong> (Exception e) {
 <a class="jxr_linenumber" name="243" href="#243">243</a>                         fail();

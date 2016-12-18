@@ -34,16 +34,16 @@ public class LeftPad extends CellProcessorAdaptor implements StringCellProcessor
 <span class="fc" id="L34">    }</span>
     
     private static void checkPreconditions(final int padSize) {
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if(padSize &lt;= 0) {</span>
-<span class="nc" id="L38">            throw new IllegalArgumentException(String.format(&quot;padSize should be &gt; 0 but was %d&quot;, padSize));</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(padSize &lt;= 0) {</span>
+<span class="fc" id="L38">            throw new IllegalArgumentException(String.format(&quot;padSize should be &gt; 0 but was %d&quot;, padSize));</span>
         }
 <span class="fc" id="L40">    }</span>
     
     @Override
     public &lt;T&gt; T execute(final Object value, final CsvContext context) {
         
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if(value == null) {</span>
-<span class="nc" id="L46">            return next.execute(value, context);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L46">            return next.execute(value, context);</span>
         }
         
 <span class="fc" id="L49">        final String result = padding((String)value);</span>
@@ -54,8 +54,8 @@ public class LeftPad extends CellProcessorAdaptor implements StringCellProcessor
     private String padding(final String str) {
         
 <span class="fc" id="L56">        final int pads = padSize - str.length();</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if(pads &lt;= 0) {</span>
-<span class="nc" id="L58">            return str;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if(pads &lt;= 0) {</span>
+<span class="fc" id="L58">            return str;</span>
         }
         
 <span class="fc" id="L61">        final StringBuilder sb = new StringBuilder(str.length() + pads);</span>
@@ -86,4 +86,4 @@ public class LeftPad extends CellProcessorAdaptor implements StringCellProcessor
 <span class="fc" id="L86">        return padChar;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

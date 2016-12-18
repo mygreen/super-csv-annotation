@@ -32,19 +32,19 @@ public class FullChar extends CellProcessorAdaptor implements StringCellProcesso
 <span class="fc" id="L32">    }</span>
     
     private static void checkPreconditions(final CharCategory[] categories) {
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if(categories == null) {</span>
-<span class="nc" id="L36">            throw new NullPointerException(&quot;categories should not be null.&quot;);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(categories == null) {</span>
+<span class="fc" id="L36">            throw new NullPointerException(&quot;categories should not be null.&quot;);</span>
             
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        } else if(categories.length == 0) {</span>
-<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;categories should not be empty.&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        } else if(categories.length == 0) {</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;categories should not be empty.&quot;);</span>
         }
 <span class="fc" id="L41">    }</span>
     
     @Override
     public &lt;T&gt; T execute(final Object value, final CsvContext context) {
         
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if(value == null) {</span>
-<span class="nc" id="L47">            return next.execute(value, context);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L47">            return next.execute(value, context);</span>
         }
         
 <span class="fc" id="L50">        final String result = replacer.replaceToFullChar(value.toString());</span>
@@ -60,4 +60,4 @@ public class FullChar extends CellProcessorAdaptor implements StringCellProcesso
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

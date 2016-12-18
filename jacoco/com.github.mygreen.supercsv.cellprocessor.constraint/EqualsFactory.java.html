@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EqualsFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.constraint</a> &gt; <span class="el_source">EqualsFactory.java</span></div><h1>EqualsFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.constraint;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,58 +24,58 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
  * @author T.TSUCHIE
  *
  */
-<span class="fc" id="L26">public class EqualsFactory&lt;T&gt; implements ConstraintProcessorFactory&lt;CsvEquals&gt; {</span>
+<span class="fc" id="L27">public class EqualsFactory&lt;T&gt; implements ConstraintProcessorFactory&lt;CsvEquals&gt; {</span>
     
-    @SuppressWarnings(&quot;unchecked&quot;)
+    @SuppressWarnings({&quot;unchecked&quot;, &quot;rawtypes&quot;})
     @Override
     public Optional&lt;CellProcessor&gt; create(final CsvEquals anno, final Optional&lt;CellProcessor&gt; next,
             final FieldAccessor field, final TextFormatter&lt;?&gt; formatter, final Configuration config) {
         
-<span class="fc" id="L33">        final TextFormatter&lt;T&gt; typeFormatter = (TextFormatter&lt;T&gt;)formatter;</span>
+<span class="fc" id="L34">        final TextFormatter&lt;T&gt; typeFormatter = (TextFormatter&lt;T&gt;)formatter;</span>
         
-<span class="fc" id="L35">        final List&lt;T&gt; equaledValues = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">        final List&lt;T&gt; equaledValues = new ArrayList&lt;&gt;();</span>
         
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(anno.value().length &gt; 0) {</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">            for(String str : anno.value()) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(anno.value().length &gt; 0) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for(String str : anno.value()) {</span>
                 try {
-<span class="fc" id="L40">                    equaledValues.add(typeFormatter.parse(str));</span>
+<span class="fc" id="L41">                    equaledValues.add(typeFormatter.parse(str));</span>
                 
-<span class="fc" id="L42">                } catch(TextParseException e) {</span>
-<span class="fc" id="L43">                    throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
-<span class="fc" id="L44">                            .var(&quot;property&quot;, field.getNameWithClass())</span>
-<span class="fc" id="L45">                            .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
-<span class="fc" id="L46">                            .var(&quot;attrName&quot;, &quot;value&quot;)</span>
-<span class="fc" id="L47">                            .var(&quot;attrValue&quot;, str)</span>
-<span class="fc" id="L48">                            .varWithClass(&quot;type&quot;, field.getType())</span>
-<span class="fc" id="L49">                            .var(&quot;pattern&quot;, typeFormatter.getPattern().orElseGet(null))</span>
-<span class="fc" id="L50">                            .format(), e);</span>
-<span class="fc" id="L51">                }</span>
+<span class="fc" id="L43">                } catch(TextParseException e) {</span>
+<span class="fc" id="L44">                    throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
+<span class="fc" id="L45">                            .var(&quot;property&quot;, field.getNameWithClass())</span>
+<span class="fc" id="L46">                            .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
+<span class="fc" id="L47">                            .var(&quot;attrName&quot;, &quot;value&quot;)</span>
+<span class="fc" id="L48">                            .var(&quot;attrValue&quot;, str)</span>
+<span class="fc" id="L49">                            .varWithClass(&quot;type&quot;, field.getType())</span>
+<span class="fc" id="L50">                            .var(&quot;pattern&quot;, typeFormatter.getPattern().orElseGet(null))</span>
+<span class="fc" id="L51">                            .format(), e);</span>
+<span class="fc" id="L52">                }</span>
             }
             
         }
         
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        if(anno.provider().length &gt; 0) {</span>
-<span class="fc" id="L57">            final EqualedValueProvider&lt;T&gt; provider = (EqualedValueProvider&lt;T&gt;) config.getBeanFactory().create(anno.provider()[0]);</span>
-<span class="fc" id="L58">            equaledValues.addAll(provider.getEqualedValues(field));</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if(anno.provider().length &gt; 0) {</span>
+<span class="fc" id="L58">            final EqualedValueProvider provider = (EqualedValueProvider) config.getBeanFactory().create(anno.provider()[0]);</span>
+<span class="fc" id="L59">            equaledValues.addAll((Collection&lt;T&gt;)provider.getEqualedValues(field));</span>
             
         }
         
-<span class="fc bfc" id="L62" title="All 4 branches covered.">        if(anno.value().length == 0 &amp;&amp; anno.provider().length == 0) {</span>
-<span class="fc" id="L63">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.required&quot;)</span>
-<span class="fc" id="L64">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
-<span class="fc" id="L65">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
-<span class="fc" id="L66">                    .var(&quot;attrName&quot;, &quot;value or provider&quot;)</span>
-<span class="fc" id="L67">                    .format());</span>
+<span class="fc bfc" id="L63" title="All 4 branches covered.">        if(anno.value().length == 0 &amp;&amp; anno.provider().length == 0) {</span>
+<span class="fc" id="L64">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.required&quot;)</span>
+<span class="fc" id="L65">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
+<span class="fc" id="L66">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
+<span class="fc" id="L67">                    .var(&quot;attrName&quot;, &quot;value or provider&quot;)</span>
+<span class="fc" id="L68">                    .format());</span>
         }
         
-<span class="fc" id="L70">        final Class&lt;T&gt; fieldType = (Class&lt;T&gt;)field.getType();</span>
-<span class="fc" id="L71">        final Equals&lt;T&gt; processor = next.map(n -&gt; new Equals&lt;&gt;(fieldType, equaledValues, typeFormatter, n))</span>
-<span class="fc" id="L72">                .orElseGet(() -&gt; new Equals&lt;&gt;(fieldType, equaledValues, typeFormatter));</span>
+<span class="fc" id="L71">        final Class&lt;T&gt; fieldType = (Class&lt;T&gt;)field.getType();</span>
+<span class="fc" id="L72">        final Equals&lt;T&gt; processor = next.map(n -&gt; new Equals&lt;&gt;(fieldType, equaledValues, typeFormatter, n))</span>
+<span class="fc" id="L73">                .orElseGet(() -&gt; new Equals&lt;&gt;(fieldType, equaledValues, typeFormatter));</span>
         
-<span class="fc" id="L74">        processor.setValidationMessage(anno.message());</span>
+<span class="fc" id="L75">        processor.setValidationMessage(anno.message());</span>
         
-<span class="fc" id="L76">        return Optional.of(processor);</span>
+<span class="fc" id="L77">        return Optional.of(processor);</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
