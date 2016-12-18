@@ -25,9 +25,9 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  *         
  *         final String path;
  *         if(field.getDeclaredClass().equals(AdminCsv.class)) {
- *             path = "forbbidden_word_admin.txt";
+ *             path = "equaled_value_admin.txt";
  *         } else {
- *             path = "forbbidden_word.txt";
+ *             path = "equaled_value.txt";
  *         }
  *         
  *         String lines;
@@ -83,7 +83,7 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
  *     // リポジトリから取得した内容をキャッシュする。
  *     // 引数 role をキーにして、区別する。
  *     {@literal @Transactional(readOnly = true)}
- *     {@literal @Cacheable(cacheNames="forbbidenWords", key="#role")}
+ *     {@literal @Cacheable(cacheNames="equaledValues", key="#role")}
  *     public {@literal List<EqualedDto>} loadWords(Role role) {
  *          
  *          if(role.euals(Role.admin)) {

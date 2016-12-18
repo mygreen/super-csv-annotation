@@ -151,7 +151,7 @@ public class EqualsFactoryTest {
             final List<String> lines;
             try {
                 lines = Files.readAllLines(
-                        new File("src/test/data/data_eaualed_value.txt").toPath(), Charset.forName("UTF-8"));
+                        new File("src/test/data/data_equaled_value.txt").toPath(), Charset.forName("UTF-8"));
                 
             } catch (IOException e) {
                 throw new RuntimeException("fail reading the equaled value file.", e);

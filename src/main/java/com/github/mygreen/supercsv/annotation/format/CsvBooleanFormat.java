@@ -12,7 +12,35 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 
 /**
  * boolean/Boolean型の書式を定義するためのアノテーションです。
- *
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #readForTrue()}、{@link #readForFalse()}で、読み込み時のtrueまたはfalseと判定する候補の値を指定します。</li>
+ *   <li>属性{@link #writeAsTrue()}、{@link #writeAsFalse()}で、書き込み時のtrueまたはfalse値に該当する文字を指定します。</li>
+ *   <li>属性{@link #ignoreCase()}で、読み込み時に大文字・小文字の区別なく候補の値と比較するか指定します。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     // boolean型の読み込み時のtrueとfalseの値の変換規則を指定します。
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvBooleanFormat(}
+ *           readForTrue={"○", "有効", "レ"}, readForFalse={"×", "無効", "-", ""},
+ *           writeAsTrue="○", writeAsFalse="×")
+ *     private boolean availaled;
+ *     
+ *     // 読み込み時の大文字・小文字の区別を行わない
+ *     {@literal @CsvColumn(number=2, label="チェック")}
+ *     {@literal @CsvBooleanFormat(readForTrue={"OK"}, readForFalse={"NO"}, ignoreCase=true)}
+ *     private Boolean checked;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @version 2.0
  * @author T.TSUCHIE
  *
@@ -68,7 +96,7 @@ public @interface CsvBooleanFormat {
     String writeAsFalse() default "false";
     
     /**
-     * 読み込み時に、大文字・小文字を区別なく候補の値と比較して処理するか指定します。
+     * 読み込み時に、大文字・小文字を区別なく候補の値と比較して判定するか指定します。
      * @return trueの場合、大文字・小文字の区別は行いません。
      */
     boolean ignoreCase() default false;

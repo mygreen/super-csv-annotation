@@ -15,7 +15,7 @@
 	<context:component-scan base-package="com.github.mygreen.supercsv.builder.spring" />
 	
 	<!-- Springのコンテナを経由するCSV用のBeanFactoryの定義 -->
-	<bean id="springBeanFacatory" class="com.github.mygreen.supercsv.builder.SpringBeanFactory" />
+	<bean id="springBeanFactory" class="com.github.mygreen.supercsv.builder.SpringBeanFactory" />
 	
 	<!-- Spring標準のメッセージソースの定義 -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

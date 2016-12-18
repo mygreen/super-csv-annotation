@@ -3,7 +3,7 @@ package com.github.mygreen.supercsv.cellprocessor.format;
 import com.github.mygreen.supercsv.annotation.format.CsvFormat;
 
 /**
- * 文字列とオブジェクトの相互変換を行うインタフェース。
+ * 文字列とオブジェクトの相互変換を行うインタフェースです。
  * 
  * @param <T> オブジェクトのタイプ
  * @since 2.0
