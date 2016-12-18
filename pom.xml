@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.0</version>
+	<version>2.0.1</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
-	<description>[<![CDATA[
+	<description><![CDATA[
 CSVのJavaライブラリであるSuperCSVに、アノテーション機能を追加したライブラリです。
-]]>]</description>
+]]></description>
 	
 	<issueManagement>
 		<system>github</system>
@@ -110,12 +110,14 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		</pluginManagement>
 		<plugins>
 			<plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
+					<!-- 
 					<failOnError>false</failOnError>
+					 -->
 					<!-- 
 					<compilerArgs>
 						<arg>-Xlint:unchecked</arg>
@@ -163,13 +165,6 @@ $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
-});
-</script>
-
-<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
 });
 </script>
 ]]>
@@ -231,7 +226,7 @@ $(document).ready(function() {
 			<plugin>
 		        <groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.7.201606060606</version>
+				<version>0.7.8</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -355,30 +350,12 @@ $(document).ready(function() {
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hamcrest</groupId>
-					<artifactId>hamcrest-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.3</version>
-			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>3.6.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-joda-time</artifactId>
-			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -437,13 +414,6 @@ $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
-});
-</script>
-
-<script type="text/javascript" src="resources/jquery.externallink.js" charset="UTF-8"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('body').externalLink({cssClass : 'externalink', iconUrl:''});
 });
 </script>
 ]]>

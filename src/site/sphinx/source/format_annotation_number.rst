@@ -9,6 +9,14 @@
 * ``byte/short/int/long/float/double`` のプリミティブ型とそのラッパークラス。
 * ``java.math.BigDecimal`` / ``java.math.BigInteger`` の数値クラス。
 
+.. note::
+   
+   プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、それぞれのプリミティブ型の初期値が設定されます。
+   
+   整数型の場合は ``0`` が、小数型の場合は ``0.0`` が設定されます。
+   初期値を変更したい場合は、アノテーション ``@CsvDefaultValue`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`_]を使用してください。
+
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 読み込み/書き込み時の書式を指定したい場合
@@ -23,11 +31,11 @@
   * 言語コードのみを指定する場合、'ja'の2桁で指定します。
   * 言語コードと国コードを指定する場合、'ja _JP'のようにアンダーバーで区切り指定します。
     
-* 属性 ``currency`` で通貨コード（ISO-4217コード）を指定します。
+* 属性 ``currency`` で通貨コード（ `ISO-4217コード <https://ja.wikipedia.org/wiki/ISO_4217>`_ ）を指定します。
     
   * Javaのクラス ``java.util.Currency`` で解釈可能なコードを指定します。
 
-* 書式に合わない値をパースした場合、例外 ``SupreCsvValidationException`` が発生します。
+* 書式に合わない値をパースした場合、例外 ``SuperCsvValidationException`` が発生します。
 
 .. sourcecode:: java
     :linenos:
@@ -40,7 +48,7 @@
     public class SampleCsv {
         
         @CsvColumn(number=1)
-        @XlsNumberFormat(pattern="#,##0")
+        @CsvNumberFormat(pattern="#,##0")
         private int number;
         
         @CsvColumn(number=2, label="給与")
@@ -57,11 +65,14 @@
 
 曖昧なケースでも読み込めるようにしたいときは、属性 ``lenient`` の値をtrueにします。
 
+例えば、 *12.51* と小数を整数型にマッピングする場合、*13* と丸めの補正が行われます。
+また、 *123,456.0ab* のように、途中から数値以外の文字が出現した場合、それまでの文字 *123,456.0* を抽出して処理が行われます。
+
+
 .. note::
     
-    数値型へのパースは、ライブラリの内部では ``java.text.DecimalFormat`` を利用し、
-    結果を一旦 ``java.math.BigDecimal`` で読み込み、
-    そこからさらに、各クラスタイプに変換しています。
+    数値型へのパースは、本ライブラリでは ``java.text.DecimalFormat`` を利用し、
+    結果を一旦 ``java.math.BigDecimal`` で読み込み、そこからさらに、各クラスタイプに変換しています。
     
     *DecimalFormat#parse(...)* は、``123,456.0abc`` のように、途中から数値以外の文字が出現した場合、それまでの文字を読み込み、正常処理することができます。
     
@@ -81,7 +92,7 @@
     public class SampleCsv {
         
         @CsvColumn(number=1)
-        @XlsNumberFormat(pattern="#,##0", lenient=true)
+        @CsvNumberFormat(pattern="#,##0", lenient=true)
         private int number;
         
         @CsvColumn(number=2, label="給与")
@@ -107,7 +118,7 @@
   
   * 値は、列挙型 ``java.math.RoundingMode`` を設定します。
   * デフォルトでは、``RoundingMode.HALF_EVEN`` です。
-    詳細は、 `RoundingModeのJavadoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`_ を参照してください。
+    詳細は、 `RoundingModeのJavaDoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`_ を参照してください。
   * 属性patternを指定した場合は、書式自身が精度を表現しており、属性roundingで丸めの方法を指定することができます。
 
 
@@ -147,7 +158,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_ を参照してください。
 
 
 .. sourcecode:: java

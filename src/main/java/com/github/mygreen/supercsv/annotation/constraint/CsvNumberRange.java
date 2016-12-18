@@ -14,8 +14,44 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 
 /**
- * カラムの値が指定した期間内かどうかチェックします。
- * <p>数値に指定可能です。</p>
+ * 値が指定した範囲内かどうか検証するためのアノテーションです。
+ * <p>数値型に指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #min()}で、下限値を指定します。
+ *     <br>値は、クラスタイプや指定した書式に沿った形式で指定する必要があります。
+ *   </li>
+ *   <li>属性{@link #max()}で、上限値を指定します。
+ *     <br>値は、クラスタイプや指定した書式に沿った形式で指定する必要があります。
+ *   </li>
+ *   <li>属性{@link #inclusive()}で、値の検証時に属性{@link #min()}と{@link #min()}の値を含むかどうか指定します。
+ *     <br>初期値はtrueで、指定した値を含みます。</li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvNumberRange(min="0", max="1000")}
+ *     private long id;
+ *     
+ *     // 値は書式に沿った形式で入力します。
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvNumberFormat(pattern="#,##0")}
+ *     {@literal @CsvNumberRange(min="1,000", max="1,000,000,000")}
+ *     private Integer salary;
+ *     
+ *     // 比較する際には指定した値の範囲内（境界値を含まない）どうかで判定します。
+ *     {@literal @CsvColumn(number=3)}
+ *     {@literal @CsvNumberRange(min="0.0", max="100.0", inclusive=false)}
+ *     private Double rate;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -29,13 +65,13 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
 public @interface CsvNumberRange {
     
     /**
-     * 最小値を指定します。
+     * 下限値を指定します。
      * @return 値は、クラスタイプやアノテーションで指定した書式に沿った値を指定する必要があります。
      */
     String min();
     
     /**
-     * 最大値を指定します。
+     * 上限値を指定します。
      * @return 値は、クラスタイプやアノテーションで指定した書式に沿った値を指定する必要があります。
      */
     String max();

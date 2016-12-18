@@ -14,19 +14,19 @@
      
    * - ``@CsvRequire``
      - 必須チェックを行います。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvRequire.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvRequire.html>`_
 
    * - ``@CsvEquals``
-     - 指定した値と等しいかチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvEquals.html>`_
+     - 指定した値と等しいか検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvEquals.html>`_
 
    * - ``@CsvUnique``
-     - 他のレコードの値と異なるかチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUnique.html>`_
+     - 他のレコードの値と異なるか検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUnique.html>`_
 
    * - ``@CsvUniqueHashCode``
-     - 他のレコードの値と異なるかハッシュコードによりチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUniqueHashCode.html>`_
+     - 他のレコードの値と異なるかハッシュコードにより検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUniqueHashCode.html>`_
 
 
 .. list-table:: 値の検証方法を指定する既存のアノテーション（String型）
@@ -38,36 +38,36 @@
      - 参照
      
    * - ``@CsvPattern``
-     - 正規表現と一致するかチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvPattern.html>`_
+     - 正規表現と一致するか検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvPattern.html>`_
 
    * - ``@CsvLengthMin``
-     - 指定した文字長以上かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMin.html>`_
+     - 指定した文字長以上か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMin.html>`_
 
    * - ``@CsvLengthMax``
-     - 指定した文字長以内かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMax.html>`_
+     - 指定した文字長以内か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMax.html>`_
 
    * - ``@CsvLengthBetween``
-     - 指定した文字長の範囲内かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthBetween.html>`_
+     - 指定した文字長の範囲内か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthBetween.html>`_
 
    * - ``@CsvLengthExact``
-     - 指定した文字長かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html>`_
+     - 指定した文字長か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html>`_
 
    * - ``@CsvLengthExact``
-     - 指定した文字長かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html>`_
+     - 指定した文字長か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html>`_
 
    * - ``@CsvWordForbid``
-     - 指定した語彙を含んでいないかチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordForbid.html>`_
+     - 指定した語彙を含んでいないか検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordForbid.html>`_
 
    * - ``@CsvWordRequire``
-     - 指定した語彙を含んでいるかチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordRequire.html>`_
+     - 指定した語彙を含んでいるか検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordRequire.html>`_
 
 
 .. list-table:: 値の検証方法を指定する既存のアノテーション（数値型）
@@ -79,16 +79,16 @@
      - 参照
      
    * - ``@CsvNumberMin``
-     - 指定した値以上かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMin.html>`_
+     - 指定した下限値以上か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMin.html>`_
 
    * - ``@CsvNumberMax``
-     - 指定した値以内かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMax.html>`_
+     - 指定した上限値以下か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMax.html>`_
 
    * - ``@CsvNumberRange``
-     - 指定した値の範囲内かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberRange.html>`_
+     - 指定した値の範囲内か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberRange.html>`_
 
 .. list-table:: 値の検証方法を指定する既存のアノテーション（日時型）
    :widths: 30 55 15
@@ -99,16 +99,16 @@
      - 参照
      
    * - ``@CsvDateTimeMin``
-     - 指定した値以降かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMin.html>`_
+     - 指定した値以降（下限値以上）か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMin.html>`_
 
    * - ``@CsvDateTimeMax``
-     - 指定した値以前かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMax.html>`_
+     - 指定した値以前（上限値以下）か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMax.html>`_
 
    * - ``@CsvDateTimeRange``
-     - 指定した値の期間内かチェックします。
-     - `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeRange.html>`_
+     - 指定した値の期間内か検証します。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeRange.html>`_
 
 
 
@@ -125,6 +125,7 @@
   * ただし、必須チェック用の ``@CsvRequire`` は、初めに実行されるよう、属性orderのデフォルト値にはIntegerの最小値（-2147483648）が設定されています。
 
 * 読み込み時、書き込み時とも同じ処理順序になります。
+* 属性 ``order`` が付与されていないアノテーションは順番が付与されているものよりも後になります。
 
 
 .. sourcecode:: java
@@ -190,13 +191,13 @@
 
 属性 ``groups`` で、グループ用クラスを指定することで、属性 *cases* より柔軟に適用するケースをを限定することができます。
 
-* BeanValidation* のgroupと同じような考え方ですが、適用される順序は関係ありません。
+* Bean Validation のgroupと同じような考え方ですが、適用される順序は関係ありません。
 
   * 本ライブラリでは、順序を指定したいときは、属性 *order* を指定します。
   
 * 属性を指定しない（空の）場合は、デフォルトのグループ ``com.github.mygreen.supercsv.annotation.DefaultGroup`` が適用されたと同じ意味になります。
   
-  * BeanValidationのデフォルトグループ ``javax.validation.groups.Default`` とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。
+  * Bean Validationのデフォルトグループ ``javax.validation.groups.Default`` とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。
   
 * グループ用クラスは、実装が必要ないため、通常はインタフェースで作成します。
 

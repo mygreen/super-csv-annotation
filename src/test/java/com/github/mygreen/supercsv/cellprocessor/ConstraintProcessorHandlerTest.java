@@ -1,6 +1,5 @@
 package com.github.mygreen.supercsv.cellprocessor;
 
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;

@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.io;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 
 import java.io.File;
@@ -66,7 +66,7 @@ public class CsvAnnotationBeanReaderTest {
         
         // read header
         final String[] csvHeaders = csvReader.getHeader(true);
-        assertThat(csvHeaders, is(not(nullValue())));
+        assertThat(csvHeaders).isNotNull();
         
         SampleNormalBean bean;
         while((bean = csvReader.read()) != null) {
@@ -75,7 +75,7 @@ public class CsvAnnotationBeanReaderTest {
             assertBean(bean);
         }
         
-        assertThat(csvReader.getErrorMessages(), hasSize(0));
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
         
         csvReader.close();
         
@@ -109,11 +109,11 @@ public class CsvAnnotationBeanReaderTest {
             };
         
         final String[] definitionHeaders = csvReader.getDefinedHeader();
-        assertThat(definitionHeaders, arrayContaining(expectedHeaders));
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
         
         // read header
         final String[] csvHeaders = csvReader.getHeader(true);
-        assertThat(csvHeaders, arrayContaining(expectedHeaders));
+        assertThat(csvHeaders).containsExactly(expectedHeaders);
         
         SampleNormalBean bean;
         while((bean = csvReader.read()) != null) {
@@ -122,7 +122,7 @@ public class CsvAnnotationBeanReaderTest {
             assertBean(bean);
         }
         
-        assertThat(csvReader.getErrorMessages(), hasSize(0));
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
         
         csvReader.close();
         
@@ -150,14 +150,15 @@ public class CsvAnnotationBeanReaderTest {
             fail();
             
         } catch(SuperCsvException e) {
-            assertThat(e, instanceOf(SuperCsvNoMatchColumnSizeException.class));
+            assertThat(e).isInstanceOf(SuperCsvNoMatchColumnSizeException.class);
             
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         
         // convert error messages.
         List<String> messages = csvReader.getErrorMessages();
-        assertThat(messages, hasSize(1));
+        assertThat(messages).hasSize(1)
+            .contains("[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。");
         messages.forEach(System.out::println);
         
         csvReader.close();
@@ -212,15 +213,14 @@ public class CsvAnnotationBeanReaderTest {
             fail();
             
         } catch(SuperCsvException e) {
-            assertThat(e, instanceOf(SuperCsvNoMatchHeaderException.class));
-            
-            e.printStackTrace();
+            assertThat(e).isInstanceOf(SuperCsvNoMatchHeaderException.class);
             
         }
         
         // convert error messages.
         List<String> messages = csvReader.getErrorMessages();
-        assertThat(messages, hasSize(1));
+        assertThat(messages).hasSize(1)
+            .contains("[1行]  : ヘッダーの値「id, 間違い, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」は、「id, 数字1, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」と一致しません。");
         messages.forEach(System.out::println);
         
         csvReader.close();
@@ -258,15 +258,16 @@ public class CsvAnnotationBeanReaderTest {
             
         } catch(SuperCsvException e) {
             
-            assertThat(e, instanceOf(SuperCsvNoMatchColumnSizeException.class));
+            assertThat(e).isInstanceOf(SuperCsvNoMatchColumnSizeException.class);
             
-            e.printStackTrace();
+//            e.printStackTrace();
             
         }
         
         // convert error messages.
         List<String> messages = csvReader.getErrorMessages();
-        assertThat(messages, hasSize(1));
+        assertThat(messages).hasSize(1)
+            .contains("[3行] : 列数が不正です。 11列で設定すべきですが、実際には13列になっています。");
         messages.forEach(System.out::println);
         
         csvReader.close();
@@ -304,15 +305,17 @@ public class CsvAnnotationBeanReaderTest {
             fail();
             
         } catch(SuperCsvException e) {
-            e.printStackTrace();
+            assertThat(e).isInstanceOf(SuperCsvBindingException.class);
             
-            assertThat(e, instanceOf(SuperCsvBindingException.class));
+//            e.printStackTrace();
+            
             
         }
         
         // convert error messages.
         List<String> messages = csvReader.getErrorMessages();
-        assertThat(messages, hasSize(1));
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。");
         messages.forEach(System.out::println);
         
         csvReader.close();
@@ -335,13 +338,13 @@ public class CsvAnnotationBeanReaderTest {
         csvReader.setExceptionConverter(exceptionConverter);
         
         List<SampleNormalBean> list = csvReader.readAll(false);
-        assertThat(list, hasSize(2));
+        assertThat(list).hasSize(2);
         
         for(SampleNormalBean bean : list) {
             assertBean(bean);
         }
         
-        assertThat(csvReader.getErrorMessages(), hasSize(0));
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
         
         csvReader.close();
         
@@ -374,11 +377,11 @@ public class CsvAnnotationBeanReaderTest {
             };
         
         final String[] definitionHeaders = csvReader.getDefinedHeader();
-        assertThat(definitionHeaders, arrayContaining(expectedHeaders));
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
         
         // read header
         final String[] csvHeaders = csvReader.getHeader(true);
-        assertThat(csvHeaders, arrayContaining(expectedHeaders));
+        assertThat(csvHeaders).containsExactly(expectedHeaders);
         
         SamplePartialBean bean;
         while((bean = csvReader.read()) != null) {
@@ -387,7 +390,7 @@ public class CsvAnnotationBeanReaderTest {
             assertBean(bean);
         }
         
-        assertThat(csvReader.getErrorMessages(), hasSize(0));
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
         
         csvReader.close();
         
@@ -396,37 +399,37 @@ public class CsvAnnotationBeanReaderTest {
     private void assertBean(final SampleNormalBean bean) {
         
         if(bean.getId() == 1) {
-            assertThat(bean.getNumber1(), is(999110));
-            assertThat(bean.getNumber2(), is(10.2d));
+            assertThat(bean.getNumber1()).isEqualTo(999110);
+            assertThat(bean.getNumber2()).isEqualTo(10.2d);
             
-            assertThat(bean.getString1(), is("abcd"));
-            assertThat(bean.getString2(), is("12345"));
+            assertThat(bean.getString1()).isEqualTo("abcd");
+            assertThat(bean.getString2()).isEqualTo("12345");
             
-            assertThat(bean.getDate1(), is(toDate(2000, 1, 1, 0, 1, 2)));
-            assertThat(bean.getDate2(), is(toTimestamp(toDate(2000, 2, 3))));
+            assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
+            assertThat(bean.getDate2()).isEqualTo(toTimestamp(toDate(2000, 2, 3)));
             
-            assertThat(bean.getEnum1(), is(SampleEnum.RED));
-            assertThat(bean.getEnum2(), is(SampleEnum.RED));
+            assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
+            assertThat(bean.getEnum2()).isEqualTo(SampleEnum.RED);
             
-            assertThat(bean.isBoolean1(), is(true));
-            assertThat(bean.getBoolean2(), is(Boolean.TRUE));
+            assertThat(bean.isBoolean1()).isEqualTo(true);
+            assertThat(bean.getBoolean2()).isEqualTo(Boolean.TRUE);
             
         } else if(bean.getId() == 2) {
             
-            assertThat(bean.getNumber1(), is(-12));
-            assertThat(bean.getNumber2(), is(nullValue()));
+            assertThat(bean.getNumber1()).isEqualTo(-12);
+            assertThat(bean.getNumber2()).isNull();
             
-            assertThat(bean.getString1(), is("あいうえお"));
-            assertThat(bean.getString2(), is(""));
+            assertThat(bean.getString1()).isEqualTo("あいうえお");
+            assertThat(bean.getString2()).isEqualTo("");
             
-            assertThat(bean.getDate1(), is(toDate(2000, 2, 1, 3, 4, 5)));
-            assertThat(bean.getDate2(), is(nullValue()));
+            assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
+            assertThat(bean.getDate2()).isNull();;
             
-            assertThat(bean.getEnum1(), is(SampleEnum.BLUE));
-            assertThat(bean.getEnum2(), is(SampleEnum.BLUE));
+            assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
+            assertThat(bean.getEnum2()).isEqualTo(SampleEnum.BLUE);
             
-            assertThat(bean.isBoolean1(), is(false));
-            assertThat(bean.getBoolean2(), is(Boolean.FALSE));
+            assertThat(bean.isBoolean1()).isEqualTo(false);
+            assertThat(bean.getBoolean2()).isEqualTo(Boolean.FALSE);
             
         }
         
@@ -435,27 +438,27 @@ public class CsvAnnotationBeanReaderTest {
     private void assertBean(final SamplePartialBean bean) {
         
         if(bean.getId() == 1) {
-            assertThat(bean.getNumber1(), is(999110));
+            assertThat(bean.getNumber1()).isEqualTo(999110);
             
-            assertThat(bean.getString1(), is("abcd"));
+            assertThat(bean.getString1()).isEqualTo("abcd");
             
-            assertThat(bean.getDate1(), is(toDate(2000, 1, 1, 0, 1, 2)));
+            assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
             
-            assertThat(bean.getEnum1(), is(SampleEnum.RED));
+            assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
             
-            assertThat(bean.isBoolean1(), is(true));
+            assertThat(bean.isBoolean1()).isEqualTo(true);
             
         } else if(bean.getId() == 2) {
             
-            assertThat(bean.getNumber1(), is(-12));
+            assertThat(bean.getNumber1()).isEqualTo(-12);
             
-            assertThat(bean.getString1(), is("あいうえお"));
+            assertThat(bean.getString1()).isEqualTo("あいうえお");
             
-            assertThat(bean.getDate1(), is(toDate(2000, 2, 1, 3, 4, 5)));
+            assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
             
-            assertThat(bean.getEnum1(), is(SampleEnum.BLUE));
+            assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
             
-            assertThat(bean.isBoolean1(), is(false));
+            assertThat(bean.isBoolean1()).isEqualTo(false);
             
         }
         

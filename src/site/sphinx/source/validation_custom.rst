@@ -17,29 +17,30 @@ CellProcessorの実装クラスの作成
 
 サンプルとして、最後が任意の文字で終わるか検証するCellProcessorを作成します。
 
-* 抽象クラス ``ValidationCellProcessor`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ValidationCellProcessor.html>`_ ] を継承して作成します。
+* 抽象クラス ``ValidationCellProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ValidationCellProcessor.html>`_ ] を継承して作成します。
 
   * *ValidationCellProcessor* は、値の検証に特化したCellProcessorの実装です。
   * CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。
 
-* 今回は、文字列型の値を検証するため、インタフェースとして ``StringCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
+* 今回は、文字列型の値を検証するため、インタフェースとして ``StringCellProcessor`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
 
   * この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
-  * 扱う値が数値型のときは ``LongCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html>`_ ]などと、扱う値によって変更してください。
+    CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。
+  * 扱う値が数値型のときは ``LongCellProcessor`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html>`_ ]などと、扱う値によって変更してください。
 
-* コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
+* コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
 
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
   * nullの場合、次の処理に委譲するようにします。
-    SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+    Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
     本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。
   
   * 検証対象のクラスタイプが不正な場合は、例外 ``SuperCsvCellProcessorException`` をスローします。
     アノテーションを間違った型に付与した場合に発生する場合がありますが、ファクトリクラスの段階で弾いてもかまいません。
   
   * 正常な値であれば、次の処理に渡します。
-  * 問題がある場合、例外 ``SupreCsvValidationException`` をスローします。
+  * 問題がある場合、例外 ``SuperCsvValidationException`` をスローします。
     その際に、メソッド *createValidationException(...)* を呼び出して、ビルダクラスを利用して例外クラスを組み立てます。
 
 
@@ -124,11 +125,17 @@ CellProcessorの実装クラスの作成
 
 * ``@Repeatable`` として、複数のアノテーションを設定できるようにします。
 
-  * 内部クラスのアノテーションとして、 *List* を定義します。
+  * 内部アノテーションとして、 *List* を定義します。
 
-* 値の検証用のアノテーションと示すためのメタアノテーション ``@CsvConstraint`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvConstraint.html>`_ ]を指定します。
+* 値の検証用のアノテーションであることを示すためのメタアノテーション ``@CsvConstraint`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvConstraint.html>`_ ]を指定します。
+  
+  * 属性 ``value`` に、``ConstraintProcessorFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html>`_ ]を実装したCellProcessorのファクトリクラスの実装を指定します。
+  
 * 共通の属性として、 ``cases`` と ``groups`` 、 ``order`` を定義します。
-* 固有の属性 として、``text`` を定義します。これはCellProcessorに渡す値となります。
+  
+  * 省略した場合は、それぞれのデフォルト値が適用されます。
+  
+* 必要であれば、固有の属性を定義します。今回は、``text`` を定義します。これはCellProcessorに渡す値となります。
 
 .. sourcecode:: java
     :linenos:
@@ -150,9 +157,9 @@ CellProcessorの実装クラスの作成
     @Documented
     @Repeatable(CsvCustomConstraint.List.class)
     @CsvConstraint(CustomConstratinFactory.class)  // ファクトリクラスを指定
-    public static @interface CsvCustomConstraint {
+    public @interface CsvCustomConstraint {
         
-        // 固有の属性 - 追加する値を指定します。
+        // 固有の属性 - チェックすることとなる最後の文字を指定します。
         String text();
         
         // 共通の属性 - ケース
@@ -181,7 +188,7 @@ CellProcessorの実装クラスの作成
 
 アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。
 
-* インタフェース ``ConstraintProcessorFactory`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html>`_ ]を実装します。
+* インタフェース ``ConstraintProcessorFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html>`_ ]を実装します。
 * アノテーションが検証対象のクラスタイプ以外に付与される場合があるため、その際は無視するようにします。
 * 独自のCellProcessorのCustomConstraintのインスタンスを作成します。
 * Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。

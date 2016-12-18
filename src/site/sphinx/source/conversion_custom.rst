@@ -17,21 +17,22 @@ CellProcessorの実装クラスの作成
 
 サンプルとして、任意の文字列を追加するCellProcessorを作成します。
 
-*  抽象クラス ``CellProcessorAdaptor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html>`_ ] を継承します。
+*  抽象クラス ``CellProcessorAdaptor`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html>`_ ] を継承します。
 
   * CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。
 
-* インタフェースとして ``StringCellProcessor`` [ `Javadoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
+* インタフェースとして ``StringCellProcessor`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html>`_ ] を実装します。
 
   * この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
+    CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。
   * 変換処理は、必ず文字列に対して行うため実装しておきます。
 
-* コンストラクタとして、Chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
+* コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。
 
 * メソッド ``execute(...)`` 内で処理の実装を行います。
   
   * nullの場合、次の処理に委譲するようにします。
-    SupreCSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+    Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
     本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。
   
   * 変換した値を次の処理に渡します。
@@ -99,7 +100,7 @@ CellProcessorの実装クラスの作成
 
   * 内部クラスのアノテーションとして、 *List* を定義します。
 
-* 変換用のアノテーションと示すためのメタアノテーション ``@CsvConversion`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html>`_ ]を指定します。
+* 変換用のアノテーションと示すためのメタアノテーション ``@CsvConversion`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html>`_ ]を指定します。
 * 共通の属性として、 ``cases`` と ``groups`` 、 ``order`` を定義します。
 * 固有の属性 として、``text`` を定義します。これはCellProcessorに渡す値となります。
 
@@ -124,7 +125,7 @@ CellProcessorの実装クラスの作成
     @Documented
     @Repeatable(CsvCustomConversion.List.class)
     @CsvConversion(CustomConversionFactory.class)  // ファクトリクラスを指定
-    public static @interface CsvCustomConversion {
+    public @interface CsvCustomConversion {
         
         // 固有の属性 - 追加する値を指定します。
         String text();
@@ -155,7 +156,7 @@ CellProcessorの実装クラスの作成
 
 アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。
 
-* インタフェース ``ConversionProcessorFactory`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html>`_ ] を実装します。
+* インタフェース ``ConversionProcessorFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html>`_ ] を実装します。
 * 独自のCellProcessorのCustomConversionのインスタンスを作成します。
 * Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。
 

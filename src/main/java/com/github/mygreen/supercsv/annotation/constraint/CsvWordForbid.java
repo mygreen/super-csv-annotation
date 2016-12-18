@@ -15,8 +15,58 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.cellprocessor.constraint.ForbiddenWordProvider;
 
 /**
- * 禁止語彙を含まないかどうかチェックします。
+ * 禁止語彙を含まないかどうか検証するためのアノテーションです。
  * <p>文字列型に指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * <p>属性{@link #value()}で語彙を指定します。</p>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvWordForbid({"馬鹿", "あほ"})}
+ *     private String comment;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
+ * <h3 class="description">DBやファイルなどのリソースから取得する場合</h3>
+ * <p>語彙をDBやファイルなどの別リソースから取得する場合は、属性{@link #provider()}にて、
+ *    プロバイダ{@link ForbiddenWordProvider}の実装クラスを指定します。
+ * </p>
+ * <p>Spring Frameworkと連携している場合は、プロバイダクラスをSpringBeanとして登録しておくことでインジェクションできます。</p>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvWordForbid(provider=FileForbiddenWordProvider.class)}
+ *     private String comment;
+ *     
+ *     // setter/getterは省略
+ * }
+ * 
+ * // プロバイダクラスの実装（ファイルから語彙を取得する）
+ * public class FileForbiddenWordProvider implements ForbiddenWordProvider {
+ *     
+ *     {@literal @Override}
+ *     public {@literal Collection<String>} getForbiddenWords(final FieldAccessor field) {
+ *         
+ *         try {
+ *              return Files.readAllLines(
+ *                      new File("forbidden_word.txt").toPath(), Charset.forName("UTF-8"));
+ *              
+ *         } catch (IOException e) {
+ *             throw new RuntimeException("fail reading the forbidden words file.", e);
+ *         }
+ *         
+ *     }
+ * }
+ * </code></pre>
  * 
  * @since 2.0
  * @author T.TSUCHIE

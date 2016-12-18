@@ -1,7 +1,6 @@
 package com.github.mygreen.supercsv.cellprocessor.constraint;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 
@@ -58,8 +57,8 @@ public class PatternTest {
         
         String input = "A-$123.45";
         
-        assertThat(processor.execute(input, ANONYMOUS_CSVCONTEXT), is(input));
-        assertThat(processorChain.execute(input, ANONYMOUS_CSVCONTEXT), is(input));
+        assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(input);
+        assertThat((Object)processorChain.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(input);
         
         
     }
@@ -73,7 +72,7 @@ public class PatternTest {
         String input = "123.45";
         
         try {
-            assertThat(processor.execute(input, ANONYMOUS_CSVCONTEXT), is(input));
+            processor.execute(input, ANONYMOUS_CSVCONTEXT);
             fail();
             
         } catch(Exception e) {

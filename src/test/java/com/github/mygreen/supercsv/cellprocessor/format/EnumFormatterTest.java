@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.format;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,34 +62,34 @@ public class EnumFormatterTest {
     @Test
     public void testGetType() {
         
-        assertThat(formatter.getType(), equalTo(TestEnum.class));
+        assertThat(formatter.getType()).isEqualTo(TestEnum.class);
         
     }
     
     @Test
     public void testIsIgnoreCase() {
         
-        assertThat(formatter.isIgnoreCase(), is(false));
-        assertThat(selectorFormatter.isIgnoreCase(), is(false));
-        assertThat(ignoreCaseFormatter.isIgnoreCase(), is(true));
-        assertThat(ignoreCaseSelectorFormatter.isIgnoreCase(), is(true));
+        assertThat(formatter.isIgnoreCase()).isEqualTo(false);
+        assertThat(selectorFormatter.isIgnoreCase()).isEqualTo(false);
+        assertThat(ignoreCaseFormatter.isIgnoreCase()).isEqualTo(true);
+        assertThat(ignoreCaseSelectorFormatter.isIgnoreCase()).isEqualTo(true);
         
     }
     
     @Test
     public void testGetSelectorMethod() {
         
-        assertThat(formatter.getSelectorMethod().isPresent(), is(false));
-        assertThat(selectorFormatter.getSelectorMethod().isPresent(), is(true));
-        assertThat(ignoreCaseFormatter.getSelectorMethod().isPresent(), is(false));
-        assertThat(ignoreCaseSelectorFormatter.getSelectorMethod().isPresent(), is(true));
+        assertThat(formatter.getSelectorMethod().isPresent()).isEqualTo(false);
+        assertThat(selectorFormatter.getSelectorMethod().isPresent()).isEqualTo(true);
+        assertThat(ignoreCaseFormatter.getSelectorMethod().isPresent()).isEqualTo(false);
+        assertThat(ignoreCaseSelectorFormatter.getSelectorMethod().isPresent()).isEqualTo(true);
         
     }
     
     @Test
     public void testParse() {
         
-        assertThat(formatter.parse("Blue"), is(TestEnum.Blue));
+        assertThat(formatter.parse("Blue")).isEqualTo(TestEnum.Blue);
         
     }
     
@@ -103,7 +103,7 @@ public class EnumFormatterTest {
     @Test
     public void testParseWithSelector() {
         
-        assertThat(selectorFormatter.parse("青(BLUE)"), is(TestEnum.Blue));
+        assertThat(selectorFormatter.parse("青(BLUE)")).isEqualTo(TestEnum.Blue);
         
     }
     
@@ -117,40 +117,40 @@ public class EnumFormatterTest {
     @Test
     public void testParseWithIgnoreCase() {
         
-        assertThat(ignoreCaseFormatter.parse("bLuE"), is(TestEnum.Blue));
+        assertThat(ignoreCaseFormatter.parse("bLuE")).isEqualTo(TestEnum.Blue);
         
     }
     
     @Test
     public void testParseWithIgnoreCaseSelector() {
         
-        assertThat(ignoreCaseSelectorFormatter.parse("青(bLuE)"), is(TestEnum.Blue));
+        assertThat(ignoreCaseSelectorFormatter.parse("青(bLuE)")).isEqualTo(TestEnum.Blue);
         
     }
     
     @Test
     public void testPrint() {
         
-        assertThat(formatter.print(TestEnum.Blue), is("Blue"));
+        assertThat(formatter.print(TestEnum.Blue)).isEqualTo("Blue");
     }
     
     @Test
     public void testPrintWithSelector() {
         
-        assertThat(selectorFormatter.print(TestEnum.Blue), is("青(BLUE)"));
+        assertThat(selectorFormatter.print(TestEnum.Blue)).isEqualTo("青(BLUE)");
     }
     
     @Test
     public void testPrintWithIgnoreCase() {
         
-        assertThat(ignoreCaseFormatter.print(TestEnum.Blue), is("Blue"));
+        assertThat(ignoreCaseFormatter.print(TestEnum.Blue)).isEqualTo("Blue");
         
     }
     
     @Test
     public void testPrintWithIgnoreCaseSelector() {
         
-        assertThat(ignoreCaseSelectorFormatter.print(TestEnum.Blue), is("青(BLUE)"));
+        assertThat(ignoreCaseSelectorFormatter.print(TestEnum.Blue)).isEqualTo("青(BLUE)");
         
     }
 }

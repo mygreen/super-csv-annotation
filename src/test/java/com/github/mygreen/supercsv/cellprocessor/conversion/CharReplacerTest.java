@@ -24,12 +24,6 @@ public class CharReplacerTest {
     }
     
     @Test(expected=NullPointerException.class)
-    public void testRegister_wordNull() {
-        replacer.register(null);
-        fail();
-    }
-    
-    @Test(expected=NullPointerException.class)
     public void testRegister_srcNull() {
         
         replacer.register(null, "a");
@@ -157,10 +151,10 @@ public class CharReplacerTest {
     @Test
     public void testRegisterAndReplace_duplicateWord() {
         
-        replacer.register(new ReplacedWord("a", "b"));
+        replacer.register("a", "b");
         replacer.register("a", "c");
         
-        replacer.register(new ReplacedWord("xyz", "hello"));
+        replacer.register("xyz", "hello");
         replacer.register("xyz", "world");
         
         replacer.ready();

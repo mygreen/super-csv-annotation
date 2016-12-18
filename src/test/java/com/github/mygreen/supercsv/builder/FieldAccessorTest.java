@@ -1,7 +1,6 @@
 package com.github.mygreen.supercsv.builder;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.lang.annotation.Annotation;
@@ -392,7 +391,7 @@ public class FieldAccessorTest {
             assertThat(annos).hasSize(1);
             
             {
-                assertThat(annos.get(0), instanceOf(CsvNumberRange.class));
+                assertThat(annos.get(0)).isInstanceOf(CsvNumberRange.class);
                 
                 CsvNumberRange anno = (CsvNumberRange) annos.get(0);
                 assertThat(anno.min()).isEqualTo("1");
@@ -407,7 +406,7 @@ public class FieldAccessorTest {
             assertThat(annos).hasSize(2);
             
             {
-                assertThat(annos.get(0), instanceOf(CsvNumberRange.class));
+                assertThat(annos.get(0)).isInstanceOf(CsvNumberRange.class);
                 
                 CsvNumberRange anno = (CsvNumberRange) annos.get(0);
                 assertThat(anno.min()).isEqualTo("1");
@@ -415,7 +414,7 @@ public class FieldAccessorTest {
             }
             
             {
-                assertThat(annos.get(1), instanceOf(CsvNumberRange.class));
+                assertThat(annos.get(1)).isInstanceOf(CsvNumberRange.class);
                 
                 CsvNumberRange anno = (CsvNumberRange) annos.get(1);
                 assertThat(anno.min()).isEqualTo("50");
@@ -441,7 +440,7 @@ public class FieldAccessorTest {
             assertThat(annos).hasSize(2);
             
             {
-                assertThat(annos.get(0), instanceOf(CsvRequire.class));
+                assertThat(annos.get(0)).isInstanceOf(CsvRequire.class);
                 
                 CsvRequire anno = (CsvRequire) annos.get(0);
                 assertThat(anno.message()).isEqualTo("ユーザ名は不正です。");
@@ -449,7 +448,7 @@ public class FieldAccessorTest {
             }
             
             {
-                assertThat(annos.get(1), instanceOf(CsvLengthMax.class));
+                assertThat(annos.get(1)).isInstanceOf(CsvLengthMax.class);
                 
                 CsvLengthMax anno = (CsvLengthMax) annos.get(1);
                 assertThat(anno.message()).isEqualTo("ユーザ名は不正です。");
@@ -468,7 +467,7 @@ public class FieldAccessorTest {
             assertThat(annos).hasSize(3);
             
             {
-                assertThat(annos.get(0), instanceOf(CsvRequire.class));
+                assertThat(annos.get(0)).isInstanceOf(CsvRequire.class);
                 
                 CsvRequire anno = (CsvRequire) annos.get(0);
                 assertThat(anno.message()).isEqualTo("ユーザ名は不正です。");
@@ -476,7 +475,7 @@ public class FieldAccessorTest {
             }
             
             {
-                assertThat(annos.get(1), instanceOf(CsvLengthMax.class));
+                assertThat(annos.get(1)).isInstanceOf(CsvLengthMax.class);
                 
                 CsvLengthMax anno = (CsvLengthMax) annos.get(1);
                 assertThat(anno.message()).isEqualTo("ユーザ名は不正です。");
@@ -487,7 +486,7 @@ public class FieldAccessorTest {
             }
             
             {
-                assertThat(annos.get(2), instanceOf(CsvLengthMax.class));
+                assertThat(annos.get(2)).isInstanceOf(CsvLengthMax.class);
                 
                 CsvLengthMax anno = (CsvLengthMax) annos.get(2);
                 assertThat(anno.message()).isEqualTo("ユーザ名は不正です。");

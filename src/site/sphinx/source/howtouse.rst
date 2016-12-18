@@ -14,8 +14,8 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     
     <dependency>
         <groupId>com.github.mygreen</groupId>
-        <artifactId>supre-csv-annotation</artifactId>
-        <version>2.0</version>
+        <artifactId>super-csv-annotation</artifactId>
+        <version>2.0.1</version>
     </dependency>
 
 
@@ -30,11 +30,11 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
   * 引数なしの ``public`` なコンストラクタが必要です。
   * コンストラクタを定義しない場合は、デフォルトコンストラクタでもかまいません。
   
-* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html>`_ ] をクラスに付与します。
+* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html>`_ ] をクラスに付与します。
 
   * 属性 ``header`` をtrueとすると、 *CsvAnnotationBeanReader#readAll(...)* と *CsvAnnotationBeanWriter#writeAll(...)* メソッドの呼び出し時に、ヘッダー行がある前提として処理します。
 
-* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html>`_ ]をフィールドに付与します。
+* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html>`_ ]をフィールドに付与します。
 
   * 属性 ``number`` で、マッピングするカラムの番号を指定します。カラムの番号は1から始まります。
   * 属性 ``label`` で、ヘッダー行のラベル名を指定することができます。省略した場合はフィールド名が適用されます。
@@ -92,7 +92,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 読み込み方法
 --------------------------------------
 
-* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
+* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
 * 一度に全レコードを読み込む場合は、メソッド ``readAll(...)`` を使用します。
 * 1件ずつ読み込む場合は、メソッド ``read(...)`` を使用します。
 
@@ -154,7 +154,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 書き込み方法
 --------------------------------------
 
-* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanWriter`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html>`_ ]を使用します。
+* CSVファイルを書き込む場合は、クラス ``CsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html>`_ ]を使用します。
 * 一度に全レコードを書き込む場合は、メソッド ``writeAll(...)`` を使用します。
 * 1件ずつ書き込む場合は、メソッド ``write(...)`` を使用します。
 
@@ -200,7 +200,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             csvWriter.close();
         }
         
-        // レコードを1件ずつ読み込む場合
+        // レコードを1件ずつ書き込む場合
         public void sampleWrite() {
            
             CsvAnnotationBeanWriter<UserCsv> csvWriter = new CsvAnnotationBeanWriter<>(
@@ -262,8 +262,8 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
         
         @CsvColumn(number=1, label="ID")
         @CsvRequire                        // 必須チェックを行う
-        @CsvUnique(order=1)                // 全レコード内で値がユニークかチェックする(順番指定)
-        @CsvNumberMin(value="0", order=2)  // 最小値かどかチェックする(順番指定)
+        @CsvUnique(order=1)                // 全レコード内で値がユニークか検証する(順番指定)
+        @CsvNumberMin(value="0", order=2)  // 下限値以上か検証する(順番指定)
         private Integer id;
         
         @CsvColumn(number=2, label="名前")
@@ -274,7 +274,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
         private LocalDate birthday;
         
         @CsvColumn(number=4, label="給料")
-        @CsvNumberFormat(pattern="#,###0")                    // 数値の書式を指定する
+        @CsvNumberFormat(pattern="#,##0")                    // 数値の書式を指定する
         @CsvDefaultValue(value="N/A", cases=BuildCase.Write)  // 書き込み時に値がnull(空)の場合、「N/A」として出力します。
         @CsvNullConvert(value="N/A", cases=BuildCase.Read)    // 読み込み時に値が「N/A」のとき、nullとして読み込みます。
         private Integer salary;
@@ -284,6 +284,50 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
     }
     
     
+
+--------------------------------------
+タブ区切りCSVファイルへの対応
+--------------------------------------
+
+本ライブラリは、CSVの処理はSuper CSVの機能をそのまま使用しているため、
+*CsvAnnotationBeanReader/CsvAnnotationBeanWriter* に渡す `CsvPreference <http://super-csv.github.io/super-csv/preferences.html>`_ をカスタマイズすることで、タブ区切りなどに対応できます。
+
+.. sourcecode:: java
+    :linenos:
+    :caption: CSVの書式を変更するサンプル
+    
+    import com.github.mygreen.supercsv.io.CsvAnnotationBeanReader;
+    
+    import java.nio.charset.Charset;
+    import java.nio.file.Files;
+    import java.io.File;
+    import java.util.ArrayList;
+    import java.util.List;
+    
+    import org.supercsv.prefs.CsvPreference;
+    import org.supercsv.quote.AlwaysQuoteMode;
+    
+    public class Sample {
+    
+        // 書き込む場合
+        public void sampleWrite() {
+            
+            // CsvPreferencesのカスタマイズ
+            // タブ区切り、改行コード「LF」、必ずダブルクウォートで囲む設定
+            final CsvPreference preference = new CsvPreference.Builder('\"', '\t', "\n")
+                .useQuoteMode(new AlwaysQuoteMode())
+                .build();
+            
+            CsvAnnotationBeanWriter<UserCsv> csvReader = new CsvAnnotationBeanWriter<>(
+                    UserCsv.class,
+                    Files.newBufferedReader(new File("sample.csv").toPath(), Charset.forName("Windows-31j")),
+                    preference);
+            
+            // 省略
+        }
+        
+        
+    }
 
 
 

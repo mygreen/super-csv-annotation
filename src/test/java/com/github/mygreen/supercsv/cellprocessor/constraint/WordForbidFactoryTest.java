@@ -5,8 +5,11 @@ import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +27,6 @@ import com.github.mygreen.supercsv.annotation.constraint.CsvWordForbid;
 import com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
-import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.Configuration;
 import com.github.mygreen.supercsv.builder.FieldAccessor;
@@ -83,7 +85,7 @@ public class WordForbidFactoryTest {
         private String col_default;
         
         @CsvColumn(number=2)
-        @CsvWordForbid(provider=MyForbidWordProvider.class)
+        @CsvWordForbid(provider=FileForbidWordProvider.class)
         private String col_provider;
         
         @CsvColumn(number=10)
@@ -114,13 +116,21 @@ public class WordForbidFactoryTest {
         
     }
     
-    private static class MyForbidWordProvider implements ForbiddenWordProvider {
+    // ファイルから読み込む場合
+    private static class FileForbidWordProvider implements ForbiddenWordProvider {
         
         @Override
         public Collection<String> getForbiddenWords(final FieldAccessor field) {
-            return Arrays.asList("馬鹿", "阿呆");
+            
+            try {
+                return Files.readAllLines(
+                        new File("src/test/data/data_forbidden_word.txt").toPath(), Charset.forName("UTF-8"));
+                
+            } catch (IOException e) {
+                throw new RuntimeException("fail reading the forbbden file.", e);
+            }
+            
         }
-        
     }
     
     @Test

@@ -1,10 +1,8 @@
 package com.github.mygreen.supercsv.cellprocessor;
 
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
-import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.assertThat;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
@@ -27,10 +25,6 @@ import org.supercsv.util.CsvContext;
 
 import com.github.mygreen.supercsv.annotation.CsvBean;
 import com.github.mygreen.supercsv.annotation.CsvColumn;
-import com.github.mygreen.supercsv.annotation.constraint.CsvLengthBetween;
-import com.github.mygreen.supercsv.annotation.constraint.CsvLengthExact;
-import com.github.mygreen.supercsv.annotation.constraint.CsvLengthMax;
-import com.github.mygreen.supercsv.annotation.constraint.CsvLengthMin;
 import com.github.mygreen.supercsv.annotation.conversion.CsvConversion;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLeftPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLower;
@@ -42,14 +36,6 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.builder.Configuration;
 import com.github.mygreen.supercsv.builder.FieldAccessor;
 import com.github.mygreen.supercsv.builder.standard.StringProcessorBuilder;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthBetween;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthBetweenFactory;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthExact;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthExactFactory;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthMax;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthMaxFactory;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthMin;
-import com.github.mygreen.supercsv.cellprocessor.constraint.LengthMinFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LeftPad;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LeftPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.Lower;
@@ -216,7 +202,7 @@ public class ConversionProcessorHandlerTest {
         
         Optional<CellProcessor> processor = handlerFactory.create(Optional.empty(), field, formatter, config, BuildCase.Read, groupEmpty);
         
-        assertThat(processor).isEmpty();
+        assertThat(processor.isPresent()).isEqualTo(false);
         
     }
     

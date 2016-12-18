@@ -6,9 +6,9 @@
 システム設定の変更方法
 --------------------------------------------------------
 
-CellProcessorを組み立てる際の動作を ``Configuration`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]クラスでカスタマイズすることができます。
+CellProcessorを組み立てる際の動作を ``Configuration`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]クラスでカスタマイズすることができます。
 
-* Configuration は、``BeanMappingFactory`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`_ ]から設定／取得できます。
+* Configuration は、``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`_ ]から設定／取得できます。
 
  * :doc:`Spring Frameworkとの連携 <spring_beanfactory>` を行う場合は、BeanMappingFactoryの変更を行います。
  
@@ -61,7 +61,7 @@ CellProcessorを組み立てる際の動作を ``Configuration`` [ `Javadoc <../
 システム設定の項目一覧
 --------------------------------------------------------
 
-``Configuration`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]で設定可能な項目一覧を下記に示します。
+``Configuration`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]で設定可能な項目一覧を下記に示します。
 
 
 .. list-table:: システム設定の項目一覧
@@ -78,10 +78,10 @@ CellProcessorを組み立てる際の動作を ``Configuration`` [ `Javadoc <../
        
    * - *annoationComparator*
      - | アノテーションを取得する際に、順番を一定に保つために並び変えるためのクラスです。
-       | 標準のクラス ``AnnotationComparator`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/AnnotationComparator.html>`_ ]は、アノテーションの属性「order」を元に並び変えます。
+       | 標準のクラス ``AnnotationComparator`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/AnnotationComparator.html>`_ ]は、アノテーションの属性「order」を元に並び変えます。
    
    * - *builderResolver*
-     - | 各タイプの ``ProcessorBuilder`` [ `Javadoc <../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html>`_ ]のインスタンスを管理するためのクラスです。
+     - | 各タイプの ``ProcessorBuilder`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html>`_ ]のインスタンスを管理するためのクラスです。
        | 基本的に、各種アノテーションで独自のクラスタイプに対応・カスタマイズすることができますが、
        | 既存の実装を切り替えることもできます。
      

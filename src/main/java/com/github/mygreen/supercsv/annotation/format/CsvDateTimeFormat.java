@@ -13,9 +13,12 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 /**
  * 日時型の書式を定義するためのアノテーションです。
  * 
- * <p>対応しているクラスタイプと標準の書式は以下の通りです。</p>
+ * <p>アノテーションを付与しないときや属性{@link #pattern()}を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
+ *  <br>対応しているクラスタイプと標準の書式は以下の通りです。
+ * </p>
+ * 
  * <table class="description">
- *  <caption>対応している日時のクラスタイプ</caption>
+ *  <caption>対応する日時のクラスタイプと標準の書式</caption>
  *  <thead>
  *  <tr>
  *   <th>クラスタイプ</th>
@@ -79,6 +82,38 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
  *  </tbody>
  * </table>
  * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性{@link #pattern()}で、書式を指定します。
+ *     <br>省略した場合は、標準の書式が適用されます。
+ *   </li>
+ *   <li>属性{@link #locale()}でロケールを指定します。
+ *     <ul>
+ *       <li>言語コードのみを指定する場合、{@literal ja} の2桁で指定します。</li>
+ *       <li>言語コードと国コードを指定する場合、{@literal ja_JP} のようにアンダーバーで区切り指定します。</li>
+ *       <li>和暦を扱う時など、バリアントを指定する場合も同様に、{@literal ja_JP_JP} のようにさらにアンダーバーで区切り指定します。</li>
+ *     </ul>
+ *    </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     // 和暦を扱う場合
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvDateTimeFormat(pattern="GGGGyy年MM月dd日", locale="ja_JP_JP")}
+ *     private Date japaneseDate;
+ *     
+ *     {@literal @CsvColumn(number=2, label="更新日時")}
+ *     {@literal @CsvDateTimeFormat(pattern="uuuu/MM/dd HH:mm:ss")}
+ *     private LocalDateTime updateTime;
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
+ * 
  * @version 2.0
  * @author T.TSUCHIE
  *
@@ -93,14 +128,15 @@ public @interface CsvDateTimeFormat {
      * <p>クラスタイプごとに、指定可能な書式は異なります。</p>
      * <p>{@literal java.util.Date/java.util.Calendar/java.sql.Date/java.sql.Time/java.sql.Timestamp}の場合、{@link java.text.SimpleDateFormat}で解釈可能な書式を指定します。</p>
      * <p>{@literal java.time.LocalDateTime/java.time.LocalDate/java.time.LocalTime/java.time.ZonedDateTime}の場合、{@link java.time.format.DateTimeFormatter}で解釈可能な書式を指定します。</p>
-     * <p>{@literal org.joda.time.LocalDateTime/org.joda.time.LocalDate/org.joda.time.LocalTime/}の場合、{@link org.joda.time.format.DateTimeFormat}で解釈可能な書式を指定します。</p>
-     * @return 指定しない場合は、クラスタイプにより自動的に決まります。
+     * <p>{@literal org.joda.time.LocalDateTime/org.joda.time.LocalDate/org.joda.time.LocalTime}の場合、{@link org.joda.time.format.DateTimeFormat}で解釈可能な書式を指定します。</p>
+     * @return 指定しない場合は、クラスタイプごとの標準の書式が適用されます。
      */
     String pattern() default "";
     
     /**
-     * 読み込み時に日時の解析を厳密に行うか判定します。
-     * @return trueの場合、非厳密(曖昧)に判定を行います。
+     * 読み込み時に日時の解析を曖昧に行うか指定します。
+     * <p>曖昧に解析する場合、例えば、{@literal 2016-02-31} と存在しない日を解析すると、{@literal 2016-03-02} と自動的に補正が行われます。</p>
+     * @return trueの場合、曖昧に解析を行います。
      */
     boolean lenient() default false;
     
@@ -115,7 +151,7 @@ public @interface CsvDateTimeFormat {
     
     /**
      * ロケールを指定します。
-     * <p>{@literal <言語コード>}、{@literal <言語コード>_<国コード>}、{@literal <言語コード>_<国コード>_<バリアント>}の3つの書式で指定します。</p>
+     * <p>{@literal <言語コード>}、{@literal <言語コード>_<国コード>}、{@literal <言語コード>_<国コード>_<バリアント>}の3つの何れかで書式を指定します。</p>
      * <p>例 'ja'、'ja_JP'、'ja_JP_JP'</p>
      * @return 省略した場合、システム標準の値を使用します。
      */

@@ -2,7 +2,6 @@ package com.github.mygreen.supercsv.builder.joda;
 
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.jodatime.api.Assertions.assertThat;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
 
@@ -105,21 +104,21 @@ public class LocalDateTimeProcessorBuilderTest {
             // null input
             String input = null;
             LocalDateTime expected = null;
-            assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            assertThat((LocalDateTime)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
         }
         
         {
             // empty input
             String input = "";
             LocalDateTime expected = null;
-            assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            assertThat((LocalDateTime)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
         }
         
         {
             // valid input
             String input = TEST_VALUE_1_STR_NORMAL;
             LocalDateTime expected = TEST_VALUE_1_OBJ;
-            assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            assertThat((LocalDateTime)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
         }
         
         {

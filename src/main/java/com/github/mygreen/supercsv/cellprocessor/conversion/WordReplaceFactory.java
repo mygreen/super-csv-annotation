@@ -14,7 +14,8 @@ import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
- * アノテーション{@link CsvWordReplace}をハンドリングして、CellProcessorの{@link WordReplace}を作成する。
+ * アノテーション{@link CsvWordReplace}をハンドリングして、CellProcessorの{@link WordReplace}を作成します。
+ * 
  * 
  * @since 2.0
  * @author T.TSUCHIE
@@ -49,7 +50,7 @@ public class WordReplaceFactory implements ConversionProcessorFactory<CsvWordRep
             final ReplacedWordProvider provider = (ReplacedWordProvider) config.getBeanFactory().create(anno.provider()[0]);
             provider.getReplacedWords(field)
                 .stream()
-                .forEach(word -> replacer.register(word));
+                .forEach(word -> replacer.register(word.getWord(), word.getReplacement()));
         }
         
         if(words.length == 0 && anno.provider().length == 0) {

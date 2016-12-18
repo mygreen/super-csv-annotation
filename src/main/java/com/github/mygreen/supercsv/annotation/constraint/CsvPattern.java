@@ -15,8 +15,37 @@ import com.github.mygreen.supercsv.annotation.PatternFlag;
 import com.github.mygreen.supercsv.builder.BuildCase;
 
 /**
- * カラムの値が指定した正規表現に一致するかどうかチェックします。
+ * 値が指定した正規表現に一致するかどうか検証するためのアノテーションです。
  * <p>文字列型に指定可能です。</p>
+ * 
+ * <h3 class="description">基本的な使い方</h3>
+ * 
+ * <ul>
+ *   <li>属性 {@link #regex()}で、正規表現を指定します。
+ *     <br>{@link Pattern}で解釈可能な値を指定する必要があります。。
+ *   </li>
+ *   <li>属性{@link #flags()}で、正規表現をコンパイルする際のフラグを列挙型{@link PatternFlag}で指定します。
+ *     <br>複数指定すると、ビットOR演算した結果と同じ意味になります。
+ *   </li>
+ * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * {@literal @CsvBean}
+ * public class SampleCsv {
+ *     
+ *     {@literal @CsvColumn(number=1)}
+ *     {@literal @CsvPattern(regex="([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})")}
+ *     private LocalDate date;
+ *     
+ *     // コンパイル用のフラグを指定する場合
+ *     {@literal @CsvColumn(number=2)}
+ *     {@literal @CsvPattern(regex="^comment(.+)", flags={PatternFlag.CASE_INSENSITIVE})}
+ *     private String comment;
+ *     
+ *     
+ *     // getter/setterは省略
+ * }
+ * </code></pre>
  *
  * @since 2.0
  * @author T.TSUCHIE

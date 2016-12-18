@@ -1,7 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.format;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -58,19 +58,19 @@ public class NumberFormatWrapperTest {
     
     @Test
     public void testGetPattern() {
-        assertThat(formatter.getPattern().get(), is("#,##0.0##"));
-        assertThat(lenientFormatter.getPattern().get(), is("#,##0.0##"));
+        assertThat(formatter.getPattern().get()).isEqualTo("#,##0.0##");
+        assertThat(lenientFormatter.getPattern().get()).isEqualTo("#,##0.0##");
         
     }
     
     @Test
     public void testPrintWithValid() {
         
-        assertThat(formatter.print(123456), is("123,456.0"));
-        assertThat(formatter.print(-2.4567), is("-2.457"));
+        assertThat(formatter.print(123456)).isEqualTo("123,456.0");
+        assertThat(formatter.print(-2.4567)).isEqualTo("-2.457");
         
-        assertThat(lenientFormatter.print(123456), is("123,456.0"));
-        assertThat(lenientFormatter.print(-2.4567), is("-2.457"));
+        assertThat(lenientFormatter.print(123456)).isEqualTo("123,456.0");
+        assertThat(lenientFormatter.print(-2.4567)).isEqualTo("-2.457");
     }
     
     @Test(expected=IllegalArgumentException.class)
@@ -82,14 +82,14 @@ public class NumberFormatWrapperTest {
     @Test
     public void testParseWithValid() throws Exception {
         
-        assertThat(formatter.parse(int.class, "123,456.0"), is(123456));
-        assertThat(formatter.parse(double.class, "-2.456"), is(-2.456));
+        assertThat(formatter.parse(int.class, "123,456.0")).isEqualTo(123456);
+        assertThat(formatter.parse(double.class, "-2.456")).isEqualTo(-2.456);
         
-        assertThat(lenientFormatter.parse(int.class, "123,456.0"), is(123456));
-        assertThat(lenientFormatter.parse(double.class, "-2.456"), is(-2.456));
+        assertThat(lenientFormatter.parse(int.class, "123,456.0")).isEqualTo(123456);
+        assertThat(lenientFormatter.parse(double.class, "-2.456")).isEqualTo(-2.456);
         
-        assertThat(lenientFormatter.parse(int.class, "123,456.0abc"), is(123456));
-        assertThat(lenientFormatter.parse(double.class, "-2.456abc"), is(-2.456));
+        assertThat(lenientFormatter.parse(int.class, "123,456.0abc")).isEqualTo(123456);
+        assertThat(lenientFormatter.parse(double.class, "-2.456abc")).isEqualTo(-2.456);
         
     }
     
@@ -101,7 +101,7 @@ public class NumberFormatWrapperTest {
     
     @Test(expected=TextParseException.class)
     public void testParseWithInvalidAtWrong() throws Exception {
-        assertThat(formatter.isLenient(), is(false));
+        assertThat(formatter.isLenient()).isEqualTo(false);
         
         formatter.parse(int.class, "123,456.0abc");
         fail();
@@ -116,52 +116,52 @@ public class NumberFormatWrapperTest {
     @Test
     public void testParseWithValidAtType() throws Exception {
         
-        assertThat(formatter.parse(Byte.class, "123.456"), is(new Byte((byte)123)));
-        assertThat(formatter.parse(byte.class, "123.456"), is((byte)123));
+        assertThat(formatter.parse(Byte.class, "123.456")).isEqualTo(new Byte((byte)123));
+        assertThat(formatter.parse(byte.class, "123.456")).isEqualTo((byte)123);
         
-        assertThat(formatter.parse(Short.class, "123.456"), is(new Short((short)123)));
-        assertThat(formatter.parse(short.class, "123.456"), is((short)123));
+        assertThat(formatter.parse(Short.class, "123.456")).isEqualTo(new Short((short)123));
+        assertThat(formatter.parse(short.class, "123.456")).isEqualTo((short)123);
         
-        assertThat(formatter.parse(Integer.class, "123.456"), is(new Integer(123)));
-        assertThat(formatter.parse(int.class, "123.456"), is(123));
+        assertThat(formatter.parse(Integer.class, "123.456")).isEqualTo(new Integer(123));
+        assertThat(formatter.parse(int.class, "123.456")).isEqualTo(123);
         
-        assertThat(formatter.parse(Long.class, "123.456"), is(new Long(123L)));
-        assertThat(formatter.parse(long.class, "123.456"), is(123L));
+        assertThat(formatter.parse(Long.class, "123.456")).isEqualTo(new Long(123L));
+        assertThat(formatter.parse(long.class, "123.456")).isEqualTo(123L);
         
-        assertThat(formatter.parse(Float.class, "123.456"), is(new Float(123.456f)));
-        assertThat(formatter.parse(float.class, "123.456"), is(123.456f));
+        assertThat(formatter.parse(Float.class, "123.456")).isEqualTo(new Float(123.456f));
+        assertThat(formatter.parse(float.class, "123.456")).isEqualTo(123.456f);
         
-        assertThat(formatter.parse(Double.class, "123.456"), is(new Double(123.456)));
-        assertThat(formatter.parse(double.class, "123.456"), is(123.456));
+        assertThat(formatter.parse(Double.class, "123.456")).isEqualTo(new Double(123.456));
+        assertThat(formatter.parse(double.class, "123.456")).isEqualTo(123.456);
         
-        assertThat(formatter.parse(BigInteger.class, "123"), is(new BigInteger("123")));
-        assertThat(formatter.parse(BigDecimal.class, "123.456"), is(new BigDecimal("123.456")));
+        assertThat(formatter.parse(BigInteger.class, "123")).isEqualTo(new BigInteger("123"));
+        assertThat(formatter.parse(BigDecimal.class, "123.456")).isEqualTo(new BigDecimal("123.456"));
         
     }
     
     @Test
     public void testParseWithValidAtTypeBigDecimal() throws Exception {
         
-        assertThat(parseBigDecimalFormatter.parse(Byte.class, "123"), is(new Byte((byte)123)));
-        assertThat(parseBigDecimalFormatter.parse(byte.class, "123"), is((byte)123));
+        assertThat(parseBigDecimalFormatter.parse(Byte.class, "123")).isEqualTo(new Byte((byte)123));
+        assertThat(parseBigDecimalFormatter.parse(byte.class, "123")).isEqualTo((byte)123);
         
-        assertThat(parseBigDecimalFormatter.parse(Short.class, "123"), is(new Short((short)123)));
-        assertThat(parseBigDecimalFormatter.parse(short.class, "123"), is((short)123));
+        assertThat(parseBigDecimalFormatter.parse(Short.class, "123")).isEqualTo(new Short((short)123));
+        assertThat(parseBigDecimalFormatter.parse(short.class, "123")).isEqualTo((short)123);
         
-        assertThat(parseBigDecimalFormatter.parse(Integer.class, "123"), is(new Integer(123)));
-        assertThat(parseBigDecimalFormatter.parse(int.class, "123"), is(123));
+        assertThat(parseBigDecimalFormatter.parse(Integer.class, "123")).isEqualTo(new Integer(123));
+        assertThat(parseBigDecimalFormatter.parse(int.class, "123")).isEqualTo(123);
         
-        assertThat(parseBigDecimalFormatter.parse(Long.class, "123"), is(new Long(123L)));
-        assertThat(parseBigDecimalFormatter.parse(long.class, "123"), is(123L));
+        assertThat(parseBigDecimalFormatter.parse(Long.class, "123")).isEqualTo(new Long(123L));
+        assertThat(parseBigDecimalFormatter.parse(long.class, "123")).isEqualTo(123L);
         
-        assertThat(parseBigDecimalFormatter.parse(Float.class, "123.456"), is(new Float(123.456f)));
-        assertThat(parseBigDecimalFormatter.parse(float.class, "123.456"), is(123.456f));
+        assertThat(parseBigDecimalFormatter.parse(Float.class, "123.456")).isEqualTo(new Float(123.456f));
+        assertThat(parseBigDecimalFormatter.parse(float.class, "123.456")).isEqualTo(123.456f);
         
-        assertThat(parseBigDecimalFormatter.parse(Double.class, "123.456"), is(new Double(123.456)));
-        assertThat(parseBigDecimalFormatter.parse(double.class, "123.456"), is(123.456));
+        assertThat(parseBigDecimalFormatter.parse(Double.class, "123.456")).isEqualTo(new Double(123.456));
+        assertThat(parseBigDecimalFormatter.parse(double.class, "123.456")).isEqualTo(123.456);
         
-        assertThat(parseBigDecimalFormatter.parse(BigInteger.class, "123"), is(new BigInteger("123")));
-        assertThat(parseBigDecimalFormatter.parse(BigDecimal.class, "123.456"), is(new BigDecimal("123.456")));
+        assertThat(parseBigDecimalFormatter.parse(BigInteger.class, "123")).isEqualTo(new BigInteger("123"));
+        assertThat(parseBigDecimalFormatter.parse(BigDecimal.class, "123.456")).isEqualTo(new BigDecimal("123.456"));
         
     }
     
@@ -180,28 +180,28 @@ public class NumberFormatWrapperTest {
     @Test
     public void testParseWithValidAtTypeLenientBigDecimal() throws Exception {
         
-        assertThat(lenientParseBigDecimalFormatter.isLenient(), is(true));
+        assertThat(lenientParseBigDecimalFormatter.isLenient()).isEqualTo(true);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Byte.class, "123.456"), is(new Byte((byte)123)));
-        assertThat(lenientParseBigDecimalFormatter.parse(byte.class, "123.456"), is((byte)123));
+        assertThat(lenientParseBigDecimalFormatter.parse(Byte.class, "123.456")).isEqualTo(new Byte((byte)123));
+        assertThat(lenientParseBigDecimalFormatter.parse(byte.class, "123.456")).isEqualTo((byte)123);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Short.class, "123.456"), is(new Short((short)123)));
-        assertThat(lenientParseBigDecimalFormatter.parse(short.class, "123.456"), is((short)123));
+        assertThat(lenientParseBigDecimalFormatter.parse(Short.class, "123.456")).isEqualTo(new Short((short)123));
+        assertThat(lenientParseBigDecimalFormatter.parse(short.class, "123.456")).isEqualTo((short)123);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Integer.class, "123.456"), is(new Integer(123)));
-        assertThat(lenientParseBigDecimalFormatter.parse(int.class, "123.456"), is(123));
+        assertThat(lenientParseBigDecimalFormatter.parse(Integer.class, "123.456")).isEqualTo(new Integer(123));
+        assertThat(lenientParseBigDecimalFormatter.parse(int.class, "123.456")).isEqualTo(123);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Long.class, "123.456"), is(new Long(123L)));
-        assertThat(lenientParseBigDecimalFormatter.parse(long.class, "123.456"), is(123L));
+        assertThat(lenientParseBigDecimalFormatter.parse(Long.class, "123.456")).isEqualTo(new Long(123L));
+        assertThat(lenientParseBigDecimalFormatter.parse(long.class, "123.456")).isEqualTo(123L);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Float.class, "123.456"), is(new Float(123.456f)));
-        assertThat(lenientParseBigDecimalFormatter.parse(float.class, "123.456"), is(123.456f));
+        assertThat(lenientParseBigDecimalFormatter.parse(Float.class, "123.456")).isEqualTo(new Float(123.456f));
+        assertThat(lenientParseBigDecimalFormatter.parse(float.class, "123.456")).isEqualTo(123.456f);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(Double.class, "123.456"), is(new Double(123.456)));
-        assertThat(lenientParseBigDecimalFormatter.parse(double.class, "123.456"), is(123.456));
+        assertThat(lenientParseBigDecimalFormatter.parse(Double.class, "123.456")).isEqualTo(new Double(123.456));
+        assertThat(lenientParseBigDecimalFormatter.parse(double.class, "123.456")).isEqualTo(123.456);
         
-        assertThat(lenientParseBigDecimalFormatter.parse(BigInteger.class, "123"), is(new BigInteger("123")));
-        assertThat(lenientParseBigDecimalFormatter.parse(BigDecimal.class, "123.456"), is(new BigDecimal("123.456")));
+        assertThat(lenientParseBigDecimalFormatter.parse(BigInteger.class, "123")).isEqualTo(new BigInteger("123"));
+        assertThat(lenientParseBigDecimalFormatter.parse(BigDecimal.class, "123.456")).isEqualTo(new BigDecimal("123.456"));
         
     }
     
@@ -219,7 +219,7 @@ public class NumberFormatWrapperTest {
                 
                 String str = formatter.print(i);
                 int num = formatter.parse(int.class, str);
-                assertThat(num, is(i));
+                assertThat(num).isEqualTo(i);
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -237,7 +237,7 @@ public class NumberFormatWrapperTest {
                     try {
                         String str = formatter.print(i);
                         int num = formatter.parse(int.class, str);
-                        assertThat(num, is(i));
+                        assertThat(num).isEqualTo(i);
                         
                     } catch (Exception e) {
                         fail();

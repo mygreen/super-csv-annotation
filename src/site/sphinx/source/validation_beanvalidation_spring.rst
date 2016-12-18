@@ -57,7 +57,7 @@ XMLによる設定方法を説明します。
             </property>
         </bean>
         
-        <!-- Supre CSV Annotation 用のMessgeResolverの定義 -->
+        <!-- Super CSV Annotation 用のMessgeResolverの定義 -->
         <bean id="springMessageResolver" class="com.github.mygreen.supercsv.localization.SpringMessageResolver">
             <property name="messageSource" ref="messageSource" />
         </bean>
@@ -163,15 +163,17 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
 独自のConstraintValidatorの作成
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-BeanValidatorの独自のアノテーションを作成する際には、通常の方法と同じです。
+Bean Validationの独自のアノテーションを作成する際には、通常の方法と同じです。
 
 * メタアノテーション ``@Constraint`` を付与します。
   
   * 属性 ``validatedBy`` に、 ``ConsraintValidator`` の実装クラスを指定します。
 
-* Java8から追加された、``@Repetable`` は対応していませんが、複数指定可能できるように、内部クラス ``List`` を定義しておきます。
+* 複数指定可能できるように、内部クラス ``List`` を定義しておきます。
   
-  * ただし、今後リリース予定のBeanValidator2.0から ``@Repetable`` 対応するため、定義しておいても問題はありません。
+  * Bean Validation 1.1の段階では、Java8から追加された ``@Repeatable`` は対応していませんが、
+    従来の定義方法と揃えておくことで、*@Repeatable* を使ってJava8のスタイルで使用することができます。
+  * ただし、今後リリース予定のBeanValidator2.0から *@Repeatable* 対応するため、定義しておいても問題はありません。
 
 .. sourcecode:: java
     :linenos:

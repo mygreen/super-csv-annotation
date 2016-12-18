@@ -1,6 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.constraint;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
  */
 public class EqualsFactory<T> implements ConstraintProcessorFactory<CsvEquals> {
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public Optional<CellProcessor> create(final CsvEquals anno, final Optional<CellProcessor> next,
             final FieldAccessor field, final TextFormatter<?> formatter, final Configuration config) {
@@ -54,8 +55,8 @@ public class EqualsFactory<T> implements ConstraintProcessorFactory<CsvEquals> {
         }
         
         if(anno.provider().length > 0) {
-            final EqualedValueProvider<T> provider = (EqualedValueProvider<T>) config.getBeanFactory().create(anno.provider()[0]);
-            equaledValues.addAll(provider.getEqualedValues(field));
+            final EqualedValueProvider provider = (EqualedValueProvider) config.getBeanFactory().create(anno.provider()[0]);
+            equaledValues.addAll((Collection<T>)provider.getEqualedValues(field));
             
         }
         

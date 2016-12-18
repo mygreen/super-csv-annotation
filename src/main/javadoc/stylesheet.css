@@ -595,6 +595,10 @@ h3.description {
 	
 }
 
+pre.highlight code {
+	margin-top: 0px;
+}
+
 /**
  * 画像音基本枠
  */
