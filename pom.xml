@@ -110,12 +110,14 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		</pluginManagement>
 		<plugins>
 			<plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
+					<!-- 
 					<failOnError>false</failOnError>
+					 -->
 					<!-- 
 					<compilerArgs>
 						<arg>-Xlint:unchecked</arg>
@@ -354,12 +356,6 @@ $(document).ready(function() {
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>3.6.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-joda-time</artifactId>
-			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		
