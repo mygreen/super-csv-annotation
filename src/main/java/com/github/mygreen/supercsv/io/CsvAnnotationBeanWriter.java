@@ -132,7 +132,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
      * 
      */
     public void writeAll(final Collection<T> sources) throws IOException {
-        writeAll(sources);
+        writeAll(sources, true);
     }
     
     /**
