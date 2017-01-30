@@ -243,7 +243,13 @@ public class ZonedDateTimeProcessorBuilderTest {
             // valid input
             ZonedDateTime input = TEST_VALUE_1_OBJ;
             String expected = TEST_VALUE_1_STR_FORMATTED;
-            assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            
+            String actual = (String)processor.execute(input, ANONYMOUS_CSVCONTEXT);
+            if(isLinuxPlatform()) {
+                assertThat(actual.replace("[Japan]", "[Asia/Tokyo]")).isEqualTo(expected);
+            } else {
+                assertThat(actual).isEqualTo(expected);
+            }
         }
         
     }
@@ -328,7 +334,6 @@ public class ZonedDateTimeProcessorBuilderTest {
             
             String actual = (String)processor.execute(input, ANONYMOUS_CSVCONTEXT);
             
-            System.out.printf("os.name=%s\n", System.getProperty("os.name"));
             if(isLinuxPlatform()) {
                 assertThat(actual.replace("[Japan]", "[Asia/Tokyo]")).isEqualTo(expected);
             } else {
