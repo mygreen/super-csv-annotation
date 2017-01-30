@@ -466,7 +466,7 @@ public class TestUtils {
      * @return trueの場合、windows。
      */
     public static boolean isWindowsPlatform() {
-        return System.getProperty("os.name").startsWith("windows");
+        return System.getProperty("os.name").toLowerCase().startsWith("windows");
     }
     
     /**
@@ -474,6 +474,6 @@ public class TestUtils {
      * @return trueの場合、Linux。
      */
     public static boolean isLinuxPlatform() {
-        return System.getProperty("os.name").startsWith("linux");
+        return System.getProperty("os.name").toLowerCase().startsWith("linux");
     }
 }
