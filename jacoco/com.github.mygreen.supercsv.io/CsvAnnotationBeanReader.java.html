@@ -214,7 +214,7 @@ public class CsvAnnotationBeanReader&lt;T&gt; extends AbstractCsvReader {
      * @throws SuperCsvException 設定など、その他に問題がある場合
      */
     public List&lt;T&gt; readAll() throws IOException {
-<span class="nc" id="L217">        return readAll(false);</span>
+<span class="fc" id="L217">        return readAll(false);</span>
     }
     
     /**
@@ -237,9 +237,9 @@ public class CsvAnnotationBeanReader&lt;T&gt; extends AbstractCsvReader {
 <span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if(beanMapping.getOriginal().isHeader()) {</span>
             try {
 <span class="fc" id="L239">                getHeader(true);</span>
-<span class="nc" id="L240">            } catch(SuperCsvNoMatchColumnSizeException | SuperCsvNoMatchHeaderException e) {</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">                if(!continueOnError) {</span>
-<span class="nc" id="L242">                    throw e;</span>
+<span class="fc" id="L240">            } catch(SuperCsvNoMatchColumnSizeException | SuperCsvNoMatchHeaderException e) {</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">                if(!continueOnError) {</span>
+<span class="fc" id="L242">                    throw e;</span>
                 }
 <span class="fc" id="L244">            }</span>
         }
@@ -255,8 +255,8 @@ public class CsvAnnotationBeanReader&lt;T&gt; extends AbstractCsvReader {
 <span class="fc" id="L255">                list.add(record);</span>
                 
 <span class="fc" id="L257">            } catch(SuperCsvNoMatchColumnSizeException | SuperCsvBindingException e) {</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">                if(!continueOnError) {</span>
-<span class="nc" id="L259">                    throw e;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">                if(!continueOnError) {</span>
+<span class="fc" id="L259">                    throw e;</span>
                 }
 <span class="fc" id="L261">            }</span>
         }

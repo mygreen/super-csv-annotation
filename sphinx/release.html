@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>12. リリースノート &mdash; Super CSV Annotation 2.0.1 ドキュメント</title>
+  <title>12. リリースノート &mdash; Super CSV Annotation 2.0.2 ドキュメント</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.0.1 ドキュメント" href="index.html"/>
+    <link rel="top" title="Super CSV Annotation 2.0.2 ドキュメント" href="index.html"/>
         <link rel="prev" title="11. システム設定" href="configuration.html"/>
  
 <!-- my theme custom extrahead beacon -->
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0.1
+                2.0.2
               </div>
             
           
@@ -258,10 +258,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">12. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-1-2016-12-18">12.1. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2016-12-11">12.2. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-1-2-2016-09-03">12.3. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-1-1-2014-11-30">12.4. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2-2017-01-30">12.1. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-1-2016-12-18">12.2. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2016-12-11">12.3. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-1-2-2016-09-03">12.4. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-1-1-2014-11-30">12.5. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -311,19 +312,31 @@
             
   <div class="section" id="id1">
 <h1>12. リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="ver-2-0-2-2017-01-30">
+<h2>12.1. ver.2.0.2 - 2017-01-30<a class="headerlink" href="#ver-2-0-2-2017-01-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>修正内容。<ul>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/22">#22</a> - メソッド <code class="docutils literal"><span class="pre">CsvAnnotationWriter#writeAll(...)</span></code> を呼ぶと、StackOverflowError が発生する事象を修正。</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="ver-2-0-1-2016-12-18">
-<h2>12.1. ver.2.0.1 - 2016-12-18<a class="headerlink" href="#ver-2-0-1-2016-12-18" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.2. ver.2.0.1 - 2016-12-18<a class="headerlink" href="#ver-2-0-1-2016-12-18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>修正内容。<ul>
 <li>ドキュメントの誤字の見直し。</li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/20">#20</a> - 合成したアノテーションのとき、共通の属性casesが上書きされない事象を修正。</li>
+</ul>
+</li>
+<li>変更内容<ul>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/21">#21</a> - 置換語彙を取得するプロバイダのメソッド <code class="docutils literal"><span class="pre">RepalcedWordProvider#getReplacedWords(...)</span></code> の戻り値を変更。語彙を格納するクラスを内部クラスに変更。</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="ver-2-0-2016-12-11">
-<h2>12.2. ver.2.0 - 2016-12-11<a class="headerlink" href="#ver-2-0-2016-12-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.3. ver.2.0 - 2016-12-11<a class="headerlink" href="#ver-2-0-2016-12-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>根本から作り直し、大幅に変更。<ul>
 <li>ver.1.x系とは互換性はありません。</li>
@@ -333,7 +346,7 @@
 </ul>
 </div>
 <div class="section" id="ver-1-2-2016-09-03">
-<h2>12.3. ver.1.2 - 2016-09-03<a class="headerlink" href="#ver-1-2-2016-09-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.4. ver.1.2 - 2016-09-03<a class="headerlink" href="#ver-1-2-2016-09-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p class="first">機能追加.</p>
 <ul class="simple">
@@ -367,7 +380,7 @@
 </ul>
 </div>
 <div class="section" id="ver-1-1-2014-11-30">
-<h2>12.4. ver.1.1 - 2014-11-30<a class="headerlink" href="#ver-1-1-2014-11-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.5. ver.1.1 - 2014-11-30<a class="headerlink" href="#ver-1-1-2014-11-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>機能追加.<ul>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/9">#9</a>- CellProcessorBuilderのインスタンス生成をカスタマイズ可能にする。</li>
@@ -403,8 +416,8 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, T.TSUCHIE.
-      最終更新: 2016-12-18 14:37:25
+        &copy; Copyright 2016-2017, T.TSUCHIE.
+      最終更新: 2017-01-30 12:51:27
 
     </p>
   </div>
@@ -426,7 +439,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.1',
+            VERSION:'2.0.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
