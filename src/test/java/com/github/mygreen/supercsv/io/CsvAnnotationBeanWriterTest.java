@@ -209,7 +209,7 @@ public class CsvAnnotationBeanWriterTest {
     }
     
     /**
-     * 全件書き込みのテスト - デフォルト設定 - エラーがある場合
+     * 全件書き込みのテスト - エラーがある場合も処理を続ける
      * @since 2.0.2
      */
     @Test
