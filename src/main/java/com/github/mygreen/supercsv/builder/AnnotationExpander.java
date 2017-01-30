@@ -272,7 +272,7 @@ public class AnnotationExpander {
      * <p>ただし、実際には合成のアノテーションに属性がなければ上書きはされないので、あくまで上書き可能かの判定しか行わない。</p>
      * <p>条件は以下の通り。</p>
      * <ul>
-     *  <li>メタアノテーション{@link CsvConstraint}、{@link CsvConversion}が付与されているアノテーションである。</li>>
+     *  <li>メタアノテーション{@link CsvConstraint}、{@link CsvConversion}が付与されているアノテーションである。</li>
      *  <li>アノテーション{@link CsvRequire}である。</li>
      *  <li>フォーマット用のアノテーションである。パッケージ名から判定する。</li>
      * </ul>
