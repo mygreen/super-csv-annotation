@@ -460,4 +460,20 @@ public class TestUtils {
         return context;
         
     }
+    
+    /**
+     * 実行している環境がWindowsかどうか
+     * @return trueの場合、windows。
+     */
+    public static boolean isWindowsPlatform() {
+        return System.getProperty("os.name").toLowerCase().startsWith("windows");
+    }
+    
+    /**
+     * 実行している環境がLinuxかどうか
+     * @return trueの場合、Linux。
+     */
+    public static boolean isLinuxPlatform() {
+        return System.getProperty("os.name").toLowerCase().startsWith("linux");
+    }
 }

@@ -29,7 +29,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link CsvAnnotationBeanReader}のテスタ。
  *
- * @version 2.0
+ * @version 2.0.2
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -337,7 +337,7 @@ public class CsvAnnotationBeanReaderTest {
                 DefaultGroup.class, SampleNormalBean.ReadGroup.class);
         csvReader.setExceptionConverter(exceptionConverter);
         
-        List<SampleNormalBean> list = csvReader.readAll(false);
+        List<SampleNormalBean> list = csvReader.readAll();
         assertThat(list).hasSize(2);
         
         for(SampleNormalBean bean : list) {
@@ -345,6 +345,134 @@ public class CsvAnnotationBeanReaderTest {
         }
         
         assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * 全件読み込み - カラムにエラーがある
+     */
+    @Test
+    public void testReadAll_error_column() throws IOException {
+        
+        File file = new File("src/test/data/test_read_error_wrong_pattern.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        try {
+            List<SampleNormalBean> list = csvReader.readAll();
+        
+        } catch(Exception e) {
+            assertThat(e).isInstanceOf(SuperCsvBindingException.class);
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。");
+        messages.forEach(System.out::println);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * 全件読み込み - カラムにエラーがある場合も処理を続ける
+     */
+    @Test
+    public void testReadAll_error_continueOnError() throws IOException {
+        
+        File file = new File("src/test/data/test_read_error_wrong_pattern.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleNormalBean> list = csvReader.readAll(true);
+        assertThat(list).hasSize(1);
+        
+        for(SampleNormalBean bean : list) {
+            assertBean(bean);
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。");
+        messages.forEach(System.out::println);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * 全件読み込み - ヘッダーにエラーがある場合
+     */
+    @Test
+    public void testReadAll_error_header_size() throws IOException {
+        
+        File file = new File("src/test/data/test_read_error_header_size.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        try {
+            List<SampleNormalBean> list = csvReader.readAll();
+        
+        } catch(Exception e) {
+            assertThat(e).isInstanceOf(SuperCsvNoMatchColumnSizeException.class);
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        assertThat(messages).hasSize(1)
+            .contains("[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。");
+        messages.forEach(System.out::println);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * 全件読み込み - ヘッダーにエラーがある場合 - エラーがあっても処理を続ける
+     */
+    @Test
+    public void testReadAll_error_header_size_continueOnError() throws IOException {
+        
+        File file = new File("src/test/data/test_read_error_header_size.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleNormalBean> list = csvReader.readAll(true);
+        assertThat(list).hasSize(2);
+        
+        for(SampleNormalBean bean : list) {
+            assertBean(bean);
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        assertThat(messages).hasSize(1)
+            .contains("[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。");
+        messages.forEach(System.out::println);
         
         csvReader.close();
         
