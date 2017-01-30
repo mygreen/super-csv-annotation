@@ -36,7 +36,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
  * アノテーションを元にCSVファイルを出力するためのクラス。
  *
  * @param <T> マッピング対象のBeanのクラスタイプ
- * @version 2.0
+ * @version 2.0.2
  * @author T.TSUCHIE
  *
  */
@@ -123,6 +123,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
     /**
      * レコードのデータを全て書き込みます。
      * <p>ヘッダー行も自動的に処理されます。2回目以降に呼び出した場合、ヘッダー情報は書き込まれません。</p>
+     * <p>レコード処理中に例外が発生した場合、その時点で処理を終了します。</p>
      * 
      * @param sources 書き込むレコードのデータ。
      * @throws NullPointerException sources is null.
@@ -132,7 +133,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
      * 
      */
     public void writeAll(final Collection<T> sources) throws IOException {
-        writeAll(sources);
+        writeAll(sources, false);
     }
     
     /**
