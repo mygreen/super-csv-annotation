@@ -15,6 +15,8 @@ import com.github.mygreen.supercsv.annotation.constraint.CsvRequire;
 import com.github.mygreen.supercsv.annotation.constraint.CsvUnique;
 import com.github.mygreen.supercsv.annotation.constraint.CsvUniqueHashCode;
 import com.github.mygreen.supercsv.annotation.conversion.CsvDefaultValue;
+import com.github.mygreen.supercsv.annotation.conversion.CsvFullChar;
+import com.github.mygreen.supercsv.annotation.conversion.CsvHalfChar;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLeftPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLower;
 import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
@@ -34,6 +36,8 @@ import com.github.mygreen.supercsv.cellprocessor.constraint.RequireFactory;
 import com.github.mygreen.supercsv.cellprocessor.constraint.UniqueFactory;
 import com.github.mygreen.supercsv.cellprocessor.constraint.UniqueHashCodeFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.DefaultValueFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.FullCharFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.HalfCharFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LeftPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LowerFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.NullConvertFactory;
@@ -109,6 +113,8 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
         registerForConversion(CsvLower.class, new LowerFactory());
         registerForConversion(CsvRegexReplace.class, new RegexReplaceFactory());
         registerForConversion(CsvWordReplace.class, new WordReplaceFactory());
+        registerForConversion(CsvFullChar.class, new FullCharFactory());
+        registerForConversion(CsvHalfChar.class, new HalfCharFactory());
         registerForConversion(CsvLeftPad.class, new LeftPadFactory());
         registerForConversion(CsvRightPad.class, new RightPadFactory());
         
