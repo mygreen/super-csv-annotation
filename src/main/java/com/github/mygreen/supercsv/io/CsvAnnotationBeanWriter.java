@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -186,11 +187,8 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
         // update the current row/line numbers
         super.incrementRowAndLineNo();
         
-        // extract the bean values
-        extractBeanValues(source, beanMapping.getNameMapping());
-        
         final CsvContext context = new CsvContext(getLineNumber(), getRowNumber(), 1);
-        context.setRowSource(new ArrayList<Object>(beanValues));
+        context.setRowSource(Collections.emptyList());  // 空の値を入れる
         
         final CsvBindingErrors bindingErrors = new CsvBindingErrors(beanMapping.getOriginal().getType());
         
@@ -198,6 +196,10 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvWriter {
         for(CallbackMethod callback : beanMapping.getOriginal().getPreWriteMethods()) {
             callback.invoke(source, context, bindingErrors, beanMapping.getOriginal());
         }
+        
+        // extract the bean values
+        extractBeanValues(source, beanMapping.getNameMapping());
+        context.setRowSource(new ArrayList<Object>(beanValues));
         
         Optional<SuperCsvRowException> rowException = Optional.empty();
         try {
