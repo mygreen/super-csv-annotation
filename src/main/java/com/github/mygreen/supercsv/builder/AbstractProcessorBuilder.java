@@ -19,7 +19,9 @@ import com.github.mygreen.supercsv.annotation.conversion.CsvFullChar;
 import com.github.mygreen.supercsv.annotation.conversion.CsvHalfChar;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLeftPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLower;
+import com.github.mygreen.supercsv.annotation.conversion.CsvMultiPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
+import com.github.mygreen.supercsv.annotation.conversion.CsvOneSideTrim;
 import com.github.mygreen.supercsv.annotation.conversion.CsvRegexReplace;
 import com.github.mygreen.supercsv.annotation.conversion.CsvRightPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvTrim;
@@ -40,7 +42,9 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.FullCharFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.HalfCharFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LeftPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LowerFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.MultiPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.NullConvertFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.OneSideTrimFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.RegexReplaceFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.RightPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.TrimFactory;
@@ -60,27 +64,27 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
  *
  */
 public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T> {
-    
+
     /**
      * 読み込み時の変換用のCellProcessorを作成する。
      */
     protected List<ProcessorFactory> readingFactory = new ArrayList<>();
-    
+
     /**
      * 書き込み時の変換用のCellProcessorを作成する。
      */
     protected List<ProcessorFactory> writingFactory = new ArrayList<>();
-    
+
     /**
      * 変換のCellProcessorを作成する
      */
     protected ConversionProcessorHandler conversionHandler = new ConversionProcessorHandler();
-    
+
     /**
      * 制約のCellProcessorを作成する
      */
     protected ConstraintProcessorHandler constraintHandler = new ConstraintProcessorHandler();
-    
+
     /**
      * デフォルトコンストラクタ。
      * <p>{@link #init()}メソッドが呼ばれる。
@@ -88,23 +92,23 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public AbstractProcessorBuilder() {
         init();
     }
-    
+
     /**
      * デフォルトの{@link ProcessorFactory}などの登録を行い、初期化を行う。
-     * 
+     *
      */
     protected void init() {
-        
+
         // 読み込み用の登録
         registerForReading(conversionHandler);
         registerForReading(new ParseProcessorFactory<>());
         registerForReading(constraintHandler);
-        
+
         // 書き込み用の登録
         registerForWriting(constraintHandler);
         registerForWriting(new PrintProcessorFactory<>());
         registerForWriting(conversionHandler);
-        
+
         // 変換用の登録
         registerForConversion(CsvNullConvert.class, new NullConvertFactory());
         registerForConversion(CsvDefaultValue.class, new DefaultValueFactory());
@@ -117,60 +121,61 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
         registerForConversion(CsvHalfChar.class, new HalfCharFactory());
         registerForConversion(CsvLeftPad.class, new LeftPadFactory());
         registerForConversion(CsvRightPad.class, new RightPadFactory());
-        
-        
+        registerForConversion(CsvMultiPad.class, new MultiPadFactory());
+        registerForConversion(CsvOneSideTrim.class, new OneSideTrimFactory());
+
         // 制約用の登録
         registerForConstraint(CsvRequire.class, new RequireFactory());
         registerForConstraint(CsvUnique.class, new UniqueFactory<>());
         registerForConstraint(CsvUniqueHashCode.class, new UniqueHashCodeFactory<>());
         registerForConstraint(CsvEquals.class, new EqualsFactory<>());
-        
+
     }
-    
+
     @Override
-    public Optional<CellProcessor> buildForReading(final Class<T> type, final FieldAccessor field, 
+    public Optional<CellProcessor> buildForReading(final Class<T> type, final FieldAccessor field,
             final Configuration config, final Class<?>[] groups) {
-        
+
         // 登録時とは逆順に処理する
         final List<ProcessorFactory> factories = new ArrayList<>(readingFactory);
         Collections.reverse(factories);
-        
+
         final TextFormatter<T> formatter = getFormatter(field, config);
-        
+
         Optional<CellProcessor> processor = Optional.empty();
         for(ProcessorFactory factory : factories) {
             processor = factory.create(processor, field, formatter, config, BuildCase.Read, groups);
         }
-        
+
         return processor;
-        
+
     }
-    
+
     @Override
     public Optional<CellProcessor> buildForWriting(final Class<T> type, final FieldAccessor field,
             final Configuration config, final Class<?>[] groups) {
-        
+
         // 登録時とは逆順に処理する
         final List<ProcessorFactory> factories = new ArrayList<>(writingFactory);
         Collections.reverse(factories);
-        
+
         final TextFormatter<T> formatter = getFormatter(field, config);
-        
+
         Optional<CellProcessor> processor = Optional.empty();
         for(ProcessorFactory factory : factories) {
-            
+
             //制約のProcessorの実行有無の判定
             if(config.isSkipValidationOnWrite()
                     && factory instanceof ConstraintProcessorHandler) {
                 continue;
             }
-            
+
             processor = factory.create(processor, field, formatter, config, BuildCase.Write, groups);
         }
-        
+
         return processor;
     }
-    
+
     /**
      * 読み込み用のCellProcessorを作成するクラスを登録する。
      * <p>実行時は、登録された順に処理される。
@@ -179,7 +184,7 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public void registerForReading(final ProcessorFactory factory) {
         this.readingFactory.add(factory);
     }
-    
+
     /**
      * 書き込み用のCellProcessorを作成するクラスを登録する。
      * <p>実行時は、登録された順に処理される。
@@ -188,10 +193,10 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public void registerForWriting(final ProcessorFactory factory) {
         this.writingFactory.add(factory);
     }
-    
+
     /**
      * 変換のCellProcessorを作成するクラスを登録する。読み込み時と書き込み時は共通です。
-     * 
+     *
      * @param <A> アノテーションのクラス
      * @param anno 関連づけるアノテーション
      * @param factory アノテーションを処理する{@link ConversionProcessorFactory}の実装。
@@ -199,10 +204,10 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public <A extends Annotation> void registerForConversion(final Class<A> anno, final ConversionProcessorFactory<A> factory) {
         this.conversionHandler.register(anno, factory);
     }
-    
+
     /**
      * 制約のCellProcessorを作成するクラスを登録する。読み込み時と書き込み時は共通です。
-     * 
+     *
      * @param <A> アノテーションのクラス
      * @param anno 関連づけるアノテーション
      * @param factory アノテーションを処理する{@link ConstraintProcessorFactory}の実装。
@@ -210,7 +215,7 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public <A extends Annotation> void registerForConstraint(final Class<A> anno, final ConstraintProcessorFactory<A> factory) {
         this.constraintHandler.register(anno, factory);
     }
-    
+
     /**
      * 文字列とオブジェクトを相互変換するフォーマッタを取得します。
      * <p>アノテーション{@link CsvFormat}が指定されている場合は、そちらを優先します。</p>
@@ -220,22 +225,22 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
      */
     @SuppressWarnings("unchecked")
     public TextFormatter<T> getFormatter(final FieldAccessor field, final Configuration config) {
-        
+
         if(field.hasAnnotation(CsvFormat.class)) {
             CsvFormat formatAnno = field.getAnnotation(CsvFormat.class).get();
-            
+
             final TextFormatter<T> formatter = (TextFormatter<T>) config.getBeanFactory().create(formatAnno.formatter());
             if(!formatAnno.message().isEmpty()) {
                 formatter.setValidationMessage(formatAnno.message());
             }
             return formatter;
-            
+
         } else {
             return getDefaultFormatter(field, config);
-            
+
         }
     }
-    
+
     /**
      * 文字列とオブジェクトを相互変換する標準のフォーマッタを取得します。
      * <p>書式が設定されている場合は、書式に沿って処理を行います。</p>
@@ -244,7 +249,7 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
      * @return 標準のフォーマッタを取得します。
      */
     protected abstract TextFormatter<T> getDefaultFormatter(FieldAccessor field, Configuration config);
-    
+
     /**
      * 登録している変換用のアノテーションとそのファクトリクラスの情報を取得します。
      * @return アノテーションと対応する{@link ConversionProcessorFactory}のマップ。
@@ -252,7 +257,7 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public Set<Map.Entry<Class<? extends Annotation>, ConversionProcessorFactory<?>>>  getEntrySetForConversion() {
         return conversionHandler.getEntrySet();
     }
-    
+
     /**
      * 登録している検証用のアノテーションとそのファクトリクラスの情報を取得します。
      * @return アノテーションと対応する{@link ConstraintProcessorFactory}のマップ。
@@ -260,5 +265,5 @@ public abstract class AbstractProcessorBuilder<T> implements ProcessorBuilder<T>
     public Set<Map.Entry<Class<? extends Annotation>, ConstraintProcessorFactory<?>>>  getEntrySetForConsraint() {
         return constraintHandler.getEntrySet();
     }
-    
+
 }
