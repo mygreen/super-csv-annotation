@@ -71,10 +71,10 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
         
         // デフォルトのメッセージ
         final String defaultCode = String.format("%s.message", descriptor.getAnnotation().annotationType().getCanonicalName());
-        final Optional<String> defautlMessage = messageResolver.getMessage(defaultCode);
+        final Optional<String> defaultMessage = messageResolver.getMessage(defaultCode);
         
         vars.put(defaultCode, 
-                defautlMessage.orElseThrow(() -> new RuntimeException(String.format("not found message code '%s'", defaultCode))));
+                defaultMessage.orElseThrow(() -> new RuntimeException(String.format("not found message code '%s'", defaultCode))));
         
         
         return vars;
