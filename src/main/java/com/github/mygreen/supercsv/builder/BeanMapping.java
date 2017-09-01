@@ -12,7 +12,7 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
  * 解析したBeanのマッピング情報です。
  *
  * @param <T> Beanのクラスタイプ
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  * 
  */
@@ -41,6 +41,10 @@ public class BeanMapping<T> {
     private boolean skipValidationOnWrite;
     
     private Class<?>[] groups;
+    
+    private HeaderMapper headerMapper;
+    
+    private Configuration configuration;
     
     public BeanMapping(final Class<T> type) {
         this.type = type;
@@ -75,7 +79,7 @@ public class BeanMapping<T> {
     public String[] getHeader() {
         
         return columns.stream()
-            .map(c -> c.getLabel())
+            .map(c -> headerMapper.toMap(c, configuration, groups))
             .toArray(n -> new String[n]);
         
     }
@@ -209,6 +213,39 @@ public class BeanMapping<T> {
     public void setGroups(Class<?>[] groups) {
         this.groups = groups;
     }
-
+    
+    /**
+     * カラムに対するヘッダー情報を取得するためのマッパーを取得する。
+     * @since 2.1
+     * @return {@link HeaderMapper}の実装クラス。
+     */
+    public HeaderMapper getHeaderMapper() {
+        return headerMapper;
+    }
+    
+    /**
+     * カラムに対するヘッダー情報を取得するためのマッパーを設定します。
+     * @since 2.1
+     * @param headerMapper {@link HeaderMapper}の実装クラス。
+     */
+    public void setHeaderMapper(HeaderMapper headerMapper) {
+        this.headerMapper = headerMapper;
+    }
+    
+    /**
+     * システム情報を取得します。
+     * @return 既存のシステム情報を変更する際に取得します。
+     */
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+    
+    /**
+     * システム情報を取得します。
+     * @param configuraton 新しくシステム情報を変更する際に設定します。
+     */
+    public void setConfiguration(Configuration configuraton) {
+        this.configuration = configuraton;
+    }
 
 }

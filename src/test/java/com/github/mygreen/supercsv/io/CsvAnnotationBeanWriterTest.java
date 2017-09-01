@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link CsvAnnotationBeanReader}のテスタ
  *
+ * @version 2.1
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -436,6 +438,51 @@ public class CsvAnnotationBeanWriterTest {
     }
     
     /**
+     * 書き込みのテスト - 固定長のテスト
+     */
+    @Test
+    public void testWrite_fixedLength() throws Exception {
+        
+        // テストデータを作成する
+        final List<SampleFixedColumnBean> list = createFixedColumnData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        CsvAnnotationBeanWriter<SampleFixedColumnBean> csvWriter = new CsvAnnotationBeanWriter<>(
+                SampleFixedColumnBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        final String[] expectedHeaders = new String[]{
+                "   no",
+                "ユーザ名　　　　　　",
+                "誕生日____",
+                "コメント            "
+            };
+        
+        final String[] definitionHeaders = csvWriter.getDefinedHeader();
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
+        
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleFixedColumnBean item : list) {
+            csvWriter.write(item);
+            csvWriter.flush();
+        }
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_fixedColumn.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+    }
+    
+    /**
      * 書き込み用のデータを作成する
      * @return
      */
@@ -527,6 +574,51 @@ public class CsvAnnotationBeanWriterTest {
         bean2.setBoolean1(false);
         
         return list;
+    }
+    
+    /**
+     * 固定長のカラムの書き込み用のデータを作成する。
+     * @return
+     */
+    private List<SampleFixedColumnBean> createFixedColumnData() {
+        
+        final List<SampleFixedColumnBean> list = new ArrayList<>();
+        
+        {
+            final SampleFixedColumnBean bean = new SampleFixedColumnBean();
+            
+            bean.setNo(1);
+            bean.setUserName("山田　太郎");
+            bean.setBirthDay(LocalDate.of(1980, 1, 28));
+            bean.setComment("全ての項目に値が設定");
+            
+            list.add(bean);
+        }
+        
+        {
+            final SampleFixedColumnBean bean = new SampleFixedColumnBean();
+            
+            bean.setNo(2);
+            bean.setUserName("田中　次郎");
+            bean.setBirthDay(null);
+            bean.setComment("誕生日の項目が空。");
+            
+            list.add(bean);
+        }
+        
+        {
+            final SampleFixedColumnBean bean = new SampleFixedColumnBean();
+            
+            bean.setNo(3);
+            bean.setUserName("鈴木　三郎");
+            bean.setBirthDay(LocalDate.of(2000, 3, 25));
+            bean.setComment("コメントを切落とす。あいう。");
+            
+            list.add(bean);
+        }
+        
+        return list;
+        
     }
     
     /**

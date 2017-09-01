@@ -29,7 +29,7 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
 /**
  * BeanからCSVのマッピング情報を作成するクラス。
  * 
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  *
  */
@@ -62,6 +62,7 @@ public class BeanMappingFactory {
         Objects.requireNonNull(beanType);
         
         final BeanMapping<T> beanMapping = new BeanMapping<>(beanType);
+        beanMapping.setConfiguration(configuration);
         
         // アノテーション @CsvBeanの取得
         final CsvBean beanAnno = beanType.getAnnotation(CsvBean.class);
@@ -142,6 +143,10 @@ public class BeanMappingFactory {
                 }
             }
         }
+        
+        // ヘッダーのマッピングクラスの取得
+        final HeaderMapper headerMapper = (HeaderMapper) configuration.getBeanFactory().create(beanAnno.headerMapper());
+        beanMapping.setHeaderMapper(headerMapper);
         
         beanMapping.getPreReadMethods().sort(null);
         beanMapping.getPostReadMethods().sort(null);

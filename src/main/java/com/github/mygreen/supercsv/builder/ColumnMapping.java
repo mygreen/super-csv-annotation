@@ -56,7 +56,7 @@ public class ColumnMapping implements Comparable<ColumnMapping> {
     }
     
     /**
-     * 
+     * フィールド情報を取得します。
      * @return 部分的なカラムの場合はnullを返します。
      */
     public FieldAccessor getField() {
@@ -67,18 +67,34 @@ public class ColumnMapping implements Comparable<ColumnMapping> {
         this.field = field;
     }
     
+    /**
+     * ラベル情報を取得します。
+     * @return ラベル情報。
+     */
     public String getLabel() {
         return label;
     }
     
+    /**
+     * ラベル情報を設定します。
+     * @param label ラベル情報。
+     */
     public void setLabel(String label) {
         this.label = label;
     }
     
+    /**
+     * カラムの番号を取得します。
+     * @return 1から始まります。
+     */
     public int getNumber() {
         return number;
     }
     
+    /**
+     * カラムの番号を設定します。
+     * @param number 1から始まります。
+     */
     public void setNumber(int number) {
         this.number = number;
     }

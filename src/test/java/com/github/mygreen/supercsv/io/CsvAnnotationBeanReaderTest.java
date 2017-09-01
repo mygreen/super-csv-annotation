@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link CsvAnnotationBeanReader}のテスタ。
  *
- * @version 2.0.2
+ * @version 2.1
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -524,6 +525,49 @@ public class CsvAnnotationBeanReaderTest {
         
     }
     
+    /**
+     * 固定長のカラムを読み込む
+     */
+    @Test
+    public void testRead_fixedColumn() throws IOException {
+        
+        File file = new File("src/test/data/test_read_fixedColumn.csv");
+        
+        CsvAnnotationBeanReader<SampleFixedColumnBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleFixedColumnBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleFixedColumnBean> list = new ArrayList<>();
+        
+        final String[] expectedHeaders = new String[]{
+                "   no",
+                "ユーザ名　　　　　　",
+                "誕生日____",
+                "コメント            "
+            };
+        
+        final String[] definitionHeaders = csvReader.getDefinedHeader();
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
+        
+        // read header
+        final String[] csvHeaders = csvReader.getHeader(true);
+        assertThat(csvHeaders).containsExactly(expectedHeaders);
+        
+        SampleFixedColumnBean bean;
+        while((bean = csvReader.read()) != null) {
+            list.add(bean);
+            
+            assertBean(bean);
+        }
+        
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
     private void assertBean(final SampleNormalBean bean) {
         
         if(bean.getId() == 1) {
@@ -587,6 +631,35 @@ public class CsvAnnotationBeanReaderTest {
             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
             
             assertThat(bean.isBoolean1()).isEqualTo(false);
+            
+        }
+        
+    }
+    
+    private void assertBean(final SampleFixedColumnBean bean) {
+        
+        if(bean.getNo() == 1) {
+            assertThat(bean.getUserName()).isEqualTo("山田　太郎");
+            
+            assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(1980, 1, 28));
+            
+            assertThat(bean.getComment()).isEqualTo("全ての項目に値が設定");
+            
+        } else if(bean.getNo() == 2) {
+            
+            assertThat(bean.getUserName()).isEqualTo("田中　次郎");
+            
+            assertThat(bean.getBirthDay()).isNull();
+            
+            assertThat(bean.getComment()).isEqualTo("誕生日の項目が空。");
+            
+        } else if(bean.getNo() == 3) {
+            
+            assertThat(bean.getUserName()).isEqualTo("鈴木　三郎");
+            
+            assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(2000, 3, 25));
+            
+            assertThat(bean.getComment()).isEqualTo("コメントを切落とす。あいう。");
             
         }
         

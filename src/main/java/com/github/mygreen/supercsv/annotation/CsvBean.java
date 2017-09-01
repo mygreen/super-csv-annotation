@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.github.mygreen.supercsv.builder.DefaultHeaderMapper;
+import com.github.mygreen.supercsv.builder.HeaderMapper;
 import com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException;
 import com.github.mygreen.supercsv.io.CsvAnnotationBeanReader;
 import com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter;
@@ -33,7 +35,7 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
  * }
  * </code></pre>
  * 
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  *
  */
@@ -58,6 +60,14 @@ public @interface CsvBean {
      *         ヘッダーの値が不正な場合、例外{@link SuperCsvNoMatchHeaderException}がスローされます。
      */
     boolean validateHeader() default false;
+    
+    /**
+     * カラムに対するヘッダーラベルを取得方法を指定します。
+     * 
+     * @since 2.1
+     * @return {@link HeaderMapper}の実装クラスを指定します。
+     */
+    Class<? extends HeaderMapper> headerMapper() default DefaultHeaderMapper.class;
     
     /**
      * レコードに対する値の検証を行うクラスを指定します。
