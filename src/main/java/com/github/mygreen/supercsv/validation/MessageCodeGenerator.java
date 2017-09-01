@@ -1,5 +1,6 @@
 package com.github.mygreen.supercsv.validation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,10 @@ import com.github.mygreen.supercsv.util.Utils;
  * @author T.TSUCHIE
  *
  */
-public class MessageCodeGenerator {
+public class MessageCodeGenerator implements Serializable {
+    
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
     
     public static final String CODE_SEPARATOR = ".";
     
@@ -201,7 +205,7 @@ public class MessageCodeGenerator {
     
     private void addCode(final List<String> codeList, final String code, final String objectName, final String field) {
         final String formattedCode = formatCode(code, objectName, field);
-        if(!codeList.contains(codeList)) {
+        if(!codeList.contains(formattedCode)) {
             codeList.add(formattedCode);
         }
     }
