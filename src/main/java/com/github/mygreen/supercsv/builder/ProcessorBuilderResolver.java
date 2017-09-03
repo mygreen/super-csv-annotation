@@ -7,6 +7,11 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.MonthDay;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -32,13 +37,18 @@ import com.github.mygreen.supercsv.builder.standard.TimestampProcessorBuilder;
 import com.github.mygreen.supercsv.builder.time.LocalDateProcessorBuilder;
 import com.github.mygreen.supercsv.builder.time.LocalDateTimeProcessorBuilder;
 import com.github.mygreen.supercsv.builder.time.LocalTimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.MonthDayProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.OffsetDateTimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.OffsetTimeProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.YearMonthProcessorBuilder;
+import com.github.mygreen.supercsv.builder.time.YearProcessorBuilder;
 import com.github.mygreen.supercsv.builder.time.ZonedDateTimeProcessorBuilder;
 import com.github.mygreen.supercsv.util.Utils;
 
 /**
  * 各タイプに対して、登録された{@link ProcessorBuilder}を解決するクラス。
  * 
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  *
  */
@@ -97,6 +107,11 @@ public class ProcessorBuilderResolver {
         register(LocalDate.class, new LocalDateProcessorBuilder());
         register(LocalTime.class, new LocalTimeProcessorBuilder());
         register(ZonedDateTime.class, new ZonedDateTimeProcessorBuilder());
+        register(OffsetDateTime.class, new OffsetDateTimeProcessorBuilder());
+        register(OffsetTime.class, new OffsetTimeProcessorBuilder());
+        register(Year.class, new YearProcessorBuilder());
+        register(YearMonth.class, new YearMonthProcessorBuilder());
+        register(MonthDay.class, new MonthDayProcessorBuilder());
         
         // Joda-Time
         if(Utils.isEnabledJodaTime()) {
@@ -104,6 +119,8 @@ public class ProcessorBuilderResolver {
             register(org.joda.time.LocalDate.class, new com.github.mygreen.supercsv.builder.joda.LocalDateProcessorBuilder());
             register(org.joda.time.LocalTime.class, new com.github.mygreen.supercsv.builder.joda.LocalTimeProcessorBuilder());
             register(org.joda.time.DateTime.class, new com.github.mygreen.supercsv.builder.joda.DateTimeProcessorBuilder());
+            register(org.joda.time.YearMonth.class, new com.github.mygreen.supercsv.builder.joda.YearMonthProcessorBuilder());
+            register(org.joda.time.MonthDay.class, new com.github.mygreen.supercsv.builder.joda.MonthDayProcessorBuilder());
         }
         
     }
