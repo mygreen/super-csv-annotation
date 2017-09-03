@@ -1,9 +1,8 @@
 package com.github.mygreen.supercsv.cellprocessor.format;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,8 +16,8 @@ import com.github.mygreen.supercsv.util.Utils;
 
 /**
  * Date and Time APIの{@link DateTimeFormatter}をラップしたクラス。
- * <p>{@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}に対応している。</p>
  *
+ * @version 2.1
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -29,14 +28,16 @@ public class TemporalFormatWrapper<T extends TemporalAccessor> extends AbstractT
     
     private final Class<T> type;
     
+    private final Method parseMethod;
+    
     private String pattern;
     
     /**
      * 
      * @param formatter ラップする{@link DateTimeFormatter}を指定します。
-     * @param type {@link TemporalAccessor}の実装クラスである、
-     *        {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}の何れかを指定します。
+     * @param type {@link TemporalAccessor}の実装クラスを指定します。
      * @throws NullPointerException {@literal if formatter or type is null.}
+     * @throws IllegalArgumentException {@literal type is not support class type.}
      */
     public TemporalFormatWrapper(final DateTimeFormatter formatter, final Class<T> type) {
         Objects.requireNonNull(formatter);
@@ -44,37 +45,36 @@ public class TemporalFormatWrapper<T extends TemporalAccessor> extends AbstractT
         
         this.formatter = formatter;
         this.type = type;
+        
+        
+        try {
+            this.parseMethod = type.getMethod("parse", CharSequence.class, DateTimeFormatter.class);
+            
+        } catch (NoSuchMethodException | SecurityException e) {
+            throw new IllegalArgumentException(String.format("Cannot suuport type : %s.", type.getName()));
+        }
+        
     }
     
     /**
      * {@inheritDoc}
      * 
-     * {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}以外のクラスタイプの場合、
-     * 例外{@link TextParseException}がスローされます。
+     * サポートしていないクラスタイプの場合、例外{@link TextParseException}がスローされます。
      */
     @SuppressWarnings("unchecked")
     @Override
     public T parse(final String text) {
         
         try {
-            if(LocalDateTime.class.isAssignableFrom(type)) {
-                return (T) LocalDateTime.parse(text, formatter);
-                
-            } else if(LocalDate.class.isAssignableFrom(type)) {
-                return (T) LocalDate.parse(text, formatter);
-                
-            } else if(LocalTime.class.isAssignableFrom(type)) {
-                return (T) LocalTime.parse(text, formatter);
-                
-            } else if(ZonedDateTime.class.isAssignableFrom(type)) {
-                return (T) ZonedDateTime.parse(text, formatter);
-                
-            }
+            return (T) parseMethod.invoke(type, text, formatter);
+            
+        } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new TextParseException(text, type, "Cannot suuport type.");
+            
         } catch(DateTimeParseException e) {
             throw new TextParseException(text, type, e);
         }
         
-        throw new TextParseException(text, type, "Cannot suuport type.");
     }
     
     @Override

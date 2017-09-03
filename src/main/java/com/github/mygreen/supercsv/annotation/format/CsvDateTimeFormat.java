@@ -63,6 +63,26 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
  *   <td>{@literal uuuu-MM-dd HH:mm:ssxxx'['VV']'}</td>
  *  </tr>
  *  <tr>
+ *   <td>java.time.OffsetDateTime</td>
+ *   <td>{@literal uuuu-MM-dd HH:mm:ssxxx}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>java.time.OffsetTime</td>
+ *   <td>{@literal HH:mm:ssxxx}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>java.time.Year</td>
+ *   <td>{@literal uuuu}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>java.time.YearMonth</td>
+ *   <td>{@literal uuuu-MM}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>java.time.MonthDay</td>
+ *   <td>{@literal MM-dd}</td>
+ *  </tr>
+ *  <tr>
  *   <td>org.joda.time.LocalDateTime</td>
  *   <td>{@literal yyyy-MM-dd HH:mm:ss}</td>
  *  </tr>
@@ -77,6 +97,14 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
  *  <tr>
  *   <td>org.joda.time.DateTime</td>
  *   <td>{@literal yyyy-MM-dd HH:mm:ssZZ}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>>org.joda.time.YearMonth</td>
+ *   <td>{@literal yyyy-MM}</td>
+ *  </tr>
+ *  <tr>
+ *   <td>>org.joda.time.MonthDay</td>
+ *   <td>{@literal MM-dd}</td>
  *  </tr>
  *  
  *  </tbody>
@@ -126,9 +154,15 @@ public @interface CsvDateTimeFormat {
     /**
      * 日時の書式を指定します。
      * <p>クラスタイプごとに、指定可能な書式は異なります。</p>
-     * <p>{@literal java.util.Date/java.util.Calendar/java.sql.Date/java.sql.Time/java.sql.Timestamp}の場合、{@link java.text.SimpleDateFormat}で解釈可能な書式を指定します。</p>
-     * <p>{@literal java.time.LocalDateTime/java.time.LocalDate/java.time.LocalTime/java.time.ZonedDateTime}の場合、{@link java.time.format.DateTimeFormatter}で解釈可能な書式を指定します。</p>
-     * <p>{@literal org.joda.time.LocalDateTime/org.joda.time.LocalDate/org.joda.time.LocalTime}の場合、{@link org.joda.time.format.DateTimeFormat}で解釈可能な書式を指定します。</p>
+     * <p>{@literal java.util.Date/java.util.Calendar/java.sql.Date/java.sql.Time/java.sql.Timestamp}の場合、
+     *   {@link java.text.SimpleDateFormat}で解釈可能な書式を指定します。
+     * </p>
+     * <p>{@literal java.time.LocalDateTime/java.time.LocalDate/java.time.LocalTime/java.time.ZonedDateTime/java.time.OffsetDateTime/java.time.OffsetTime/java.time.Year/java.time,YearMonth/java.time/MonthDay}の場合、
+     *   {@link java.time.format.DateTimeFormatter}で解釈可能な書式を指定します。
+     * </p>
+     * <p>{@literal org.joda.time.LocalDateTime/org.joda.time.LocalDate/org.joda.time.LocalTime/org.joda.time.YearMonth/org.joda.time.MonthDay}の場合、
+     *   {@link org.joda.time.format.DateTimeFormat}で解釈可能な書式を指定します。
+     * </p>
      * @return 指定しない場合は、クラスタイプごとの標準の書式が適用されます。
      */
     String pattern() default "";
