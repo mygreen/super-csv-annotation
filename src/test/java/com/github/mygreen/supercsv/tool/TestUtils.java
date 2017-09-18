@@ -1,10 +1,14 @@
 package com.github.mygreen.supercsv.tool;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -476,4 +480,24 @@ public class TestUtils {
     public static boolean isLinuxPlatform() {
         return System.getProperty("os.name").toLowerCase().startsWith("linux");
     }
+    
+    /**
+     * テキストファイルを読み込む。
+     * @param path ファイルパス
+     * @param charset 文字コード
+     * @return ファイルの内容。
+     * @throws IOException
+     */
+    public static String getTextFromFile(final String path, final Charset charset) {
+        
+        try {
+            byte[] data = Files.readAllBytes(Paths.get(path));
+            return new String(data, charset);
+        
+        } catch(IOException e) {
+            throw new RuntimeException(String.format("fail file '%s',", path), e);
+        }
+        
+    }
+    
 }

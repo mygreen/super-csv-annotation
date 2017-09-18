@@ -118,18 +118,26 @@ public class BeanMapping<T> {
                 .toArray(n -> new CellProcessor[n]);
     }
     
+    /**
+     * 
+     * @return Beanのクラスタイプを取得する。
+     */
     public Class<T> getType() {
         return type;
     }
     
     /**
-     *
-     * @return  ヘッダーが存在するとして処理を行う
+     * ヘッダーが存在するとして処理するかどうか。
+     * @return trueの場合、ヘッダーが存在するとして処理を行う。
      */
     public boolean isHeader() {
         return header;
     }
     
+    /**
+     * ヘッダーが存在するとして処理するかどうか設定する。
+     * @param header trueの場合、ヘッダーが存在するとして処理を行う。
+     */
     public void setHeader(boolean header) {
         this.header = header;
     }
@@ -160,6 +168,10 @@ public class BeanMapping<T> {
     
     public List<ColumnMapping> getColumns() {
         return columns;
+    }
+    
+    public void setColumns(List<ColumnMapping> columns) {
+        this.columns = columns;;
     }
     
     public void addAllColumns(List<ColumnMapping> columns) {

@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -56,7 +54,6 @@ public class BeanMappingFactory {
      * @throws NullPointerException {@literal beanType == null.}
      * @throws SuperCsvInvalidAnnotationException アノテーションの定義が不正な場合。
      */
-    @SuppressWarnings({"unchecked"})
     public <T> BeanMapping<T> create(final Class<T> beanType, final Class<?>... groups) {
         
         Objects.requireNonNull(beanType);
@@ -73,8 +70,48 @@ public class BeanMappingFactory {
                         .format());
         }
         
+        // ヘッダーの設定情報の組み立て
+        buildHeaderMapper(beanMapping, beanAnno);
+        
+        // 入力値検証の設定を組み立てます。
+        buildValidators(beanMapping, beanAnno, groups);
+        
+        // アノテーション @CsvColumn を元にしたカラム情報の組み立て
+        buildColumnMappingList(beanMapping, beanType, groups);
+        
+        // コールバックメソッドの設定
+        buildCallbackMethods(beanMapping, beanType, beanAnno);
+        
+        return beanMapping;
+    }
+    
+    /**
+     * ヘッダーのマッピングの処理や設定を組み立てます。
+     * 
+     * @param <T> Beanのタイプ
+     * @param beanMapping Beanのマッピング情報
+     * @param beanAnno アノテーション{@literal @CsvBean}のインタンス
+     */
+    protected <T> void buildHeaderMapper(final BeanMapping<T> beanMapping, final CsvBean beanAnno) {
+        
+        final HeaderMapper headerMapper = (HeaderMapper) configuration.getBeanFactory().create(beanAnno.headerMapper());
+        beanMapping.setHeaderMapper(headerMapper);
+        
         beanMapping.setHeader(beanAnno.header());
         beanMapping.setValidateHeader(beanAnno.validateHeader());
+        
+    }
+    
+    /**
+     * 入力値検証の設定を組み立てます。
+     * 
+     * @param <T> Beanのタイプ
+     * @param beanMapping Beanのマッピング情報
+     * @param beanAnno アノテーション{@literal @CsvBean}のインタンス
+     * @param groups グループ情報
+     */
+    @SuppressWarnings({"unchecked"})
+    protected <T> void buildValidators(final BeanMapping<T> beanMapping, final CsvBean beanAnno, final Class<?>[] groups) {
         
         // CsvValidatorの取得
         final List<CsvValidator<T>> validators = Arrays.stream(beanAnno.validators())
@@ -82,21 +119,157 @@ public class BeanMappingFactory {
                 .collect(Collectors.toList());
         beanMapping.addAllValidators(validators);
         
-        // アノテーション @CsvColumn の取得
+        beanMapping.setSkipValidationOnWrite(configuration.isSkipValidationOnWrite());
+        beanMapping.setGroups(groups);
+        
+    }
+    
+    /**
+     * アノテーション{@link CsvColumn}を元に、カラムのマッピング情報を組み立てる。
+     * 
+     * @param <T> Beanのタイプ
+     * @param beanMapping Beanのマッピング情報
+     * @param beanType  Beanのクラスタイプ
+     * @param groups グループ情報
+     */
+    protected <T> void buildColumnMappingList(final BeanMapping<T> beanMapping, final Class<T> beanType, final Class<?>[] groups) {
+        
         final List<ColumnMapping> columnMappingList = new ArrayList<>();
         for(Field field : beanType.getDeclaredFields()) {
             
             final CsvColumn columnAnno = field.getAnnotation(CsvColumn.class);
             if(columnAnno != null) {
-                columnMappingList.add(createColumnMapping(field, columnAnno, configuration, groups));
+                columnMappingList.add(createColumnMapping(field, columnAnno, groups));
             }
             
         }
         
         // カラムの位置順の並び変えと、位置のチェック
         columnMappingList.sort(null);
-        validateColumnAndSupplyPartialColumn(beanType, columnMappingList, Optional.ofNullable(beanType.getAnnotation(CsvPartial.class)));
+        validateColumnAndSupplyPartialColumn(beanType, columnMappingList);
         beanMapping.addAllColumns(columnMappingList);
+        
+    }
+    
+    /**
+     * カラム情報を組み立てる
+     * 
+     * @param field フィールド情報
+     * @param columnAnno 設定されているカラムのアノテーション
+     * @param groups グループ情報
+     * @return 組み立てたカラム
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected ColumnMapping createColumnMapping(final Field field, final CsvColumn columnAnno, final Class<?>[] groups) {
+        
+        final FieldAccessor fieldAccessor = new FieldAccessor(field, configuration.getAnnoationComparator());
+        
+        final ColumnMapping columnMapping = new ColumnMapping();
+        columnMapping.setField(fieldAccessor);
+        columnMapping.setNumber(columnAnno.number());
+        
+        if(columnAnno.label().isEmpty()) {
+            columnMapping.setLabel(field.getName());
+        } else {
+            columnMapping.setLabel(columnAnno.label());
+        }
+        
+        // ProcessorBuilderの取得
+        ProcessorBuilder builder;
+        if(columnAnno.builder().length == 0) {
+            
+            builder = configuration.getBuilderResolver().resolve(fieldAccessor.getType());
+            if(builder == null) {
+                // 不明なタイプの場合
+                builder = new GeneralProcessorBuilder();
+            }
+            
+        } else {
+            // 直接Builderクラスが指定されている場合
+            try {
+                builder = (ProcessorBuilder) configuration.getBeanFactory().create(columnAnno.builder()[0]);
+                
+            } catch(Throwable e) {
+                throw new SuperCsvReflectionException(
+                        String.format("Fail create instance of %s with attribute 'builderClass' of @CsvColumn",
+                                columnAnno.builder()[0].getCanonicalName()), e);
+            }
+        }
+        
+        // CellProcessorの作成
+        columnMapping.setCellProcessorForReading(
+                (CellProcessor)builder.buildForReading(field.getType(), fieldAccessor, configuration, groups).orElse(null));
+        
+        columnMapping.setCellProcessorForWriting(
+                (CellProcessor)builder.buildForWriting(field.getType(), fieldAccessor, configuration,  groups).orElse(null));
+        
+        if(builder instanceof AbstractProcessorBuilder) {
+            columnMapping.setFormatter(((AbstractProcessorBuilder)builder).getFormatter(fieldAccessor, configuration));
+        }
+        
+        return columnMapping;
+        
+    }
+    
+    /**
+     * カラム情報の検証と、部分的に読み込む場合のカラム情報を補足する。
+     * @param beanType Beanのクラスタイプ
+     * @param list カラム番号の昇順に並び変えられたカラム情報。
+     */
+    protected void validateColumnAndSupplyPartialColumn(final Class<?> beanType, final List<ColumnMapping> list) {
+        
+        final Optional<CsvPartial> partialAnno = Optional.ofNullable(beanType.getAnnotation(CsvPartial.class));
+        
+        if(list.isEmpty()) {
+            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create("anno.notFound")
+                    .varWithClass("property", beanType)
+                    .varWithAnno("anno", CsvColumn.class)
+                    .format());
+        }
+        
+        // 番号の重複などのチェック
+        BeanMappingFactoryHelper.validateDuplicatedColumnNumber(beanType, list);
+        
+        // 不足している番号のカラムを補完する。
+        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanType, list, partialAnno, new String[0]);
+        
+    }
+    
+    /**
+     * 部分的なカラムの場合の作成
+     * @param columnNumber 列番号
+     * @param partialAnno アノテーション {@literal @CsvPartial}のインスタンス
+     * @return
+     */
+    protected ColumnMapping createPartialColumnMapping(int columnNumber, final Optional<CsvPartial> partialAnno) {
+        
+        final ColumnMapping columnMapping = new ColumnMapping();
+        columnMapping.setNumber(columnNumber);
+        columnMapping.setPartialized(true);
+        
+        String label = String.format("column%d", columnNumber);
+        if(partialAnno.isPresent()) {
+            for(CsvPartial.Header header : partialAnno.get().headers()) {
+                if(header.number() == columnNumber) {
+                    label = header.label();
+                }
+            }
+        }
+        columnMapping.setLabel(label);
+        
+        return columnMapping;
+        
+    }
+    
+    /**
+     * コールバック用メソッドの設定を組み立てます。
+     * 
+     * @param <T> Beanのタイプ
+     * @param beanMapping Beanのマッピング情報
+     * @param beanType Beanのクラスタイプ
+     * @param beanAnno {@literal CsvBean}のアノテーションのインスタンス
+     */
+    protected <T> void buildCallbackMethods(final BeanMapping<T> beanMapping, final Class<T> beanType, final CsvBean beanAnno) {
         
         // コールバック用のメソッドの取得
         for(Method method : beanType.getDeclaredMethods()) {
@@ -144,192 +317,10 @@ public class BeanMappingFactory {
             }
         }
         
-        // ヘッダーのマッピングクラスの取得
-        final HeaderMapper headerMapper = (HeaderMapper) configuration.getBeanFactory().create(beanAnno.headerMapper());
-        beanMapping.setHeaderMapper(headerMapper);
-        
         beanMapping.getPreReadMethods().sort(null);
         beanMapping.getPostReadMethods().sort(null);
         beanMapping.getPreWriteMethods().sort(null);
         beanMapping.getPostWriteMethods().sort(null);
-        
-        beanMapping.setSkipValidationOnWrite(configuration.isSkipValidationOnWrite());
-        beanMapping.setGroups(groups);
-        
-        return beanMapping;
-    }
-    
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    private ColumnMapping createColumnMapping(final Field field, final CsvColumn columnAnno,
-            final Configuration config, final Class<?>[] groups) {
-        
-        final FieldAccessor fieldAccessor = new FieldAccessor(field, config.getAnnoationComparator());
-        
-        final ColumnMapping columnMapping = new ColumnMapping();
-        columnMapping.setField(fieldAccessor);
-        columnMapping.setNumber(columnAnno.number());
-        
-        if(columnAnno.label().isEmpty()) {
-            columnMapping.setLabel(field.getName());
-        } else {
-            columnMapping.setLabel(columnAnno.label());
-        }
-        
-        // ProcessorBuilderの取得
-        ProcessorBuilder builder;
-        if(columnAnno.builder().length == 0) {
-            
-            builder = config.getBuilderResolver().resolve(fieldAccessor.getType());
-            if(builder == null) {
-                // 不明なタイプの場合
-                builder = new GeneralProcessorBuilder();
-            }
-            
-        } else {
-            // 直接Builderクラスが指定されている場合
-            try {
-                builder = (ProcessorBuilder) config.getBeanFactory().create(columnAnno.builder()[0]);
-                
-            } catch(Throwable e) {
-                throw new SuperCsvReflectionException(
-                        String.format("Fail create instance of %s with attribute 'builderClass' of @CsvColumn",
-                                columnAnno.builder()[0].getCanonicalName()), e);
-            }
-        }
-        
-        // CellProcessorの作成
-        columnMapping.setCellProcessorForReading(
-                (CellProcessor)builder.buildForReading(field.getType(), fieldAccessor, config, groups).orElse(null));
-        
-        columnMapping.setCellProcessorForWriting(
-                (CellProcessor)builder.buildForWriting(field.getType(), fieldAccessor, config,  groups).orElse(null));
-        
-        if(builder instanceof AbstractProcessorBuilder) {
-            columnMapping.setFormatter(((AbstractProcessorBuilder)builder).getFormatter(fieldAccessor, config));
-        }
-        
-        return columnMapping;
-        
-    }
-    
-    /**
-     * カラム情報の検証と、部分的に読み込む場合のカラム情報を補足する。
-     * @param beanType Beanのクラスタイプ
-     * @param list カラム番号の昇順に並び変えられたカラム情報。
-     * @param partialAnno アノテーション{@link CsvPartial}の情報
-     */
-    private void validateColumnAndSupplyPartialColumn(final Class<?> beanType, final List<ColumnMapping> list, 
-            final Optional<CsvPartial> partialAnno) {
-        
-        if(list.isEmpty()) {
-            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create("anno.notFound")
-                    .varWithClass("property", beanType)
-                    .varWithAnno("anno", CsvColumn.class)
-                    .format());
-        }
-        
-        // check duplicated column number value 
-        final Set<Integer> checkedNumber = new TreeSet<>();
-        final Set<Integer> duplicateNumbers = new TreeSet<>();
-        for(ColumnMapping columnMapping : list) {
-            
-            if(checkedNumber.contains(columnMapping.getNumber())) {
-                duplicateNumbers.add(columnMapping.getNumber());
-            }
-            checkedNumber.add(columnMapping.getNumber());
-            
-        }
-        
-        if(!duplicateNumbers.isEmpty()) {
-            // 重複している 属性 numberが存在する場合
-            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create("anno.attr.duplicated")
-                    .var("property", beanType.getName())
-                    .varWithAnno("anno", CsvColumn.class)
-                    .var("attrName", "number")
-                    .var("attrValues", duplicateNumbers)
-                    .format());
-        }
-        
-        // カラム番号が1以上かのチェック
-        final int minColumnNumber = list.get(0).getNumber();
-        if(minColumnNumber <= 0) {
-            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create("anno.attr.min")
-                    .var("property", beanType.getName())
-                    .varWithAnno("anno", CsvColumn.class)
-                    .var("attrName", "number")
-                    .var("attrValue", minColumnNumber)
-                    .var("min", 1)
-                    .format());
-            
-        }
-        
-        // 定義されている列番号の最大値
-        final int maxColumnNumber = list.get(list.size()-1).getNumber();
-        
-        // Beanに定義されていない欠けているカラム番号の取得
-        final Set<Integer> lackNumbers = new TreeSet<Integer>();
-        for(int i=1; i <= maxColumnNumber; i++) {
-            if(!checkedNumber.contains(i)) {
-                lackNumbers.add(i);
-            }
-        }
-        
-        // 定義されているカラム番号より、大きなカラム番号を持つカラム情報の補足
-        if(partialAnno.isPresent()) {
-            
-            final int partialColumnSize = partialAnno.get().columnSize();
-            if(maxColumnNumber > partialColumnSize) {
-                throw new SuperCsvInvalidAnnotationException(partialAnno.get(), MessageBuilder.create("anno.CsvPartial.columSizeMin")
-                        .var("property", beanType.getName())
-                        .var("columnSize", partialColumnSize)
-                        .var("maxColumnNumber", maxColumnNumber)
-                        .format());
-                
-            }
-            
-            if(maxColumnNumber < partialColumnSize) {
-                for(int i= maxColumnNumber+1; i <= partialColumnSize; i++) {
-                    lackNumbers.add(i);
-                }
-            }
-            
-        }
-        
-        // 不足分のカラムがある場合は、部分的な読み書き用カラムとして追加する
-        if(lackNumbers.size() > 0) {
-            
-            for(int number : lackNumbers) {
-                list.add(createPartialColumnMapping(number, partialAnno));
-            }
-            
-            list.sort(null);
-        }
-        
-    }
-    
-    /**
-     * 部分的なカラムの場合の作成
-     * @param columnNumber 列番号
-     * @param partialAnno
-     * @return
-     */
-    private ColumnMapping createPartialColumnMapping(int columnNumber, final Optional<CsvPartial> partialAnno) {
-        
-        final ColumnMapping columnMapping = new ColumnMapping();
-        columnMapping.setNumber(columnNumber);
-        columnMapping.setPartialized(true);
-        
-        String label = String.format("column%d", columnNumber);
-        if(partialAnno.isPresent()) {
-            for(CsvPartial.Header header : partialAnno.get().headers()) {
-                if(header.number() == columnNumber) {
-                    label = header.label();
-                }
-            }
-        }
-        columnMapping.setLabel(label);
-        
-        return columnMapping;
         
     }
     

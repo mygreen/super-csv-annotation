@@ -39,7 +39,7 @@ import com.github.mygreen.supercsv.builder.ProcessorBuilder;
  * }
  * </code></pre>
  * 
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  *
  */
@@ -53,7 +53,7 @@ public @interface CsvColumn {
      * <p>他のカラムの値との重複は許可しません。</p>
      * @return 番号は1から始まります。
      */
-    int number();
+    int number() default 0;
     
     /**
      * 見出しとなるラベルを指定します。
