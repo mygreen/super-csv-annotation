@@ -7,8 +7,6 @@ import static com.github.mygreen.supercsv.tool.TestUtils.*;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -618,20 +616,6 @@ public class CsvAnnotationBeanWriterTest {
         }
         
         return list;
-        
-    }
-    
-    /**
-     * テキストファイルを読み込む。
-     * @param path
-     * @param charset
-     * @return
-     * @throws IOException
-     */
-    private String getTextFromFile(final String path, final Charset charset) throws IOException {
-        
-        byte[] data = Files.readAllBytes(Paths.get(path));
-        return new String(data, charset);
         
     }
     

@@ -7,7 +7,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 /**
  * 解析したカラムのマッピング情報です。
  *
- * @version 2.0
+ * @version 2.1
  * @author T.TSUCHIE
  *
  */
@@ -44,6 +44,15 @@ public class ColumnMapping implements Comparable<ColumnMapping> {
             return Integer.compare(number, o.number);
         }
         
+    }
+    
+    /**
+     * 番号が決まっている（1以上）かどうか。
+     * @since 2.1
+     * @return trueの場合、番号は1以上であり決まっています。
+     */
+    public boolean isDeterminedNumber() {
+        return number >= 1;
     }
     
     /**
