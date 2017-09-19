@@ -99,11 +99,11 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
  *   <td>{@literal yyyy-MM-dd HH:mm:ssZZ}</td>
  *  </tr>
  *  <tr>
- *   <td>>org.joda.time.YearMonth</td>
+ *   <td>org.joda.time.YearMonth</td>
  *   <td>{@literal yyyy-MM}</td>
  *  </tr>
  *  <tr>
- *   <td>>org.joda.time.MonthDay</td>
+ *   <td>org.joda.time.MonthDay</td>
  *   <td>{@literal MM-dd}</td>
  *  </tr>
  *  
