@@ -14,6 +14,7 @@ import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.exception.SuperCsvReflectionException;
 import org.supercsv.io.AbstractCsvReader;
+import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ITokenizer;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.BeanInterfaceProxy;
@@ -37,6 +38,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
  * 
  * @param <T> マッピング対象のBeanのクラスタイプ
  *
+ * @see CsvBeanReader
  * @since 2.1
  * @author T.TSUCHIE
  *

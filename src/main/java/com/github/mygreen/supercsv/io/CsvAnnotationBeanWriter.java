@@ -48,6 +48,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWriter<
     /**
      * Beanのマッピング情報を指定して、{@link CsvAnnotationBeanWriter}を作成するコンストラクタ。
      * <p>{@link BufferedWriter}にラップして実行されるため、ラップする必要はありません。</p>
+     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link BeanMappingFactory}から作成する場合に利用します。</p>
      * 
      * @param beanMapping Beanのマッピング情報。
      * @param writer the writer

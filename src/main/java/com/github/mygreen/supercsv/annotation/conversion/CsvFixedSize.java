@@ -42,25 +42,25 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcess
  *     
  *     // 右詰めする
  *     {@literal @CsvColumn(number=1)}
- *     {@literal @CsvFixedSize(length=10, rightAlign=true)}
+ *     {@literal @CsvFixedSize(size=10, rightAlign=true)}
  *     private Integer value;
  *     
  *     // 全角空白で埋める。
  *     // ただし、文字の幅（半角のサイズ=1、全角のサイズ=2）として処理する。
  *     {@literal @CsvColumn(number=2)}
  *     {@literal @CsvFullChar}
- *     {@literal @CsvFixedSize(length=20, padChar='　', paddingProcessor=CharWidthPaddingProcessor.class)}
+ *     {@literal @CsvFixedSize(size=20, padChar='　', paddingProcessor=CharWidthPaddingProcessor.class)}
  *     private String userName;
  *     
  *     // 他のオブジェクト型への変換を行う
  *     {@literal @CsvColumn(number=3)}
- *     {@literal @CsvFixedSize(length=10, padChar='_')}
+ *     {@literal @CsvFixedSize(size=10, padChar='_')}
  *     {@literal @CsvDateTimeFormat(pattern="uuuu-MM-dd")}
- *     private LocalDate birthDay;
+ *     private LocalDate birthday;
  *     
  *     // 指定した文字長を超えた場合、切り落とす。
  *     {@literal @CsvColumn(number=4, label="コメント")}
- *     {@literal @CsvFixedSize(length=20, chopped=true)}
+ *     {@literal @CsvFixedSize(size=20, chopped=true)}
  *     private String comment;
  *     
  *     // getter/setterは省略
@@ -103,7 +103,7 @@ public @interface CsvFixedSize {
     char padChar() default ' ';
     
     /**
-     * 指定したカラムの長さを超えた場合、切り出すかどうか指定します。
+     * パディング時に指定したカラムの長さを超えた場合、切り出すかどうか指定します。
      * @return trueの場合、指定したカラムの長さを超えた場合切り出します。
      *
      */

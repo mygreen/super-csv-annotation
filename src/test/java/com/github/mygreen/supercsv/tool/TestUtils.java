@@ -486,7 +486,6 @@ public class TestUtils {
      * @param path ファイルパス
      * @param charset 文字コード
      * @return ファイルの内容。
-     * @throws IOException
      */
     public static String getTextFromFile(final String path, final Charset charset) {
         

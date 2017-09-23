@@ -16,7 +16,6 @@ import org.supercsv.prefs.CsvPreference;
 
 import com.github.mygreen.supercsv.annotation.CsvPartial;
 import com.github.mygreen.supercsv.builder.BeanMapping;
-import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.BeanMappingFactoryHelper;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.LazyBeanMappingFactory;
@@ -27,9 +26,12 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
  * カラムの定義が曖昧なアノテーションを元にCSVファイルを読み込むためのクラス。
+ * <p>カラム番号が指定されていないBean定義を元にマッピングします。
+ *   <br>カラム番号の決定は、ヘッダー行を取得して、その情報を元に読み込み時に決定します。
+ * </p>
  * 
  * @param <T> マッピング対象のBeanのクラスタイプ
- * @see CsvBeanReader
+ * 
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -48,7 +50,7 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
     private boolean initialized = false;
     
     /**
-     * Beanのクラスタイプを指定して、{@link CsvAnnotationBeanReader}を作成するコンストラクタ。
+     * Beanのクラスタイプを指定して、{@link LazyCsvAnnotationBeanReader}を作成するコンストラクタ。
      * <p>{@link BufferedReader}にラップして実行されるため、ラップする必要はありません。</p>
      * 
      * @param beanType Beanのクラスタイプ。
@@ -70,9 +72,9 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
     }
     
     /**
-     * Beanのマッピング情報を指定して、{@link CsvAnnotationBeanReader}を作成するコンストラクタ。
+     * Beanのマッピング情報を指定して、{@link LazyCsvAnnotationBeanReader}を作成するコンストラクタ。
      * <p>{@link BufferedReader}にラップして実行されるため、ラップする必要はありません。</p>
-     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link BeanMappingFactory}から作成する場合に利用します。</p>
+     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link LazyBeanMappingFactory}から作成する場合に利用します。</p>
      * 
      * @param beanMapping Beanのマッピング情報。
      * @param reader the Reader。
@@ -91,7 +93,7 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
     }
     
     /**
-     * Beanのクラスタイプを指定して、{@link CsvAnnotationBeanReader}を作成するコンストラクタ。
+     * Beanのクラスタイプを指定して、{@link LazyCsvAnnotationBeanReader}を作成するコンストラクタ。
      * <p>{@link BufferedReader}にラップして実行されるため、ラップする必要はありません。</p>
      * 
      * @param beanType Beanのクラスタイプ。
@@ -113,9 +115,9 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
     }
     
     /**
-     * Beanのマッピング情報を指定して、{@link CsvAnnotationBeanReader}を作成するコンストラクタ。
+     * Beanのマッピング情報を指定して、{@link LazyCsvAnnotationBeanReader}を作成するコンストラクタ。
      * <p>{@link BufferedReader}にラップして実行されるため、ラップする必要はありません。</p>
-     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link BeanMappingFactory}から作成する場合に利用します。</p>
+     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link LazyBeanMappingFactory}から作成する場合に利用します。</p>
      * 
      * @param beanMapping Beanのマッピング情報。
      * @param tokenizer the tokenizer.

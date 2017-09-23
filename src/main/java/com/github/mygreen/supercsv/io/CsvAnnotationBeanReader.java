@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.supercsv.exception.SuperCsvException;
-import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ITokenizer;
 import org.supercsv.prefs.CsvPreference;
 
@@ -22,7 +21,6 @@ import com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException;
  * アノテーションを元にCSVファイルを読み込むためのクラス。
  * 
  * @param <T> マッピング対象のBeanのクラスタイプ
- * @see CsvBeanReader
  * @version 2.１
  * @author T.TSUCHIE
  *

@@ -1,5 +1,6 @@
 package com.github.mygreen.supercsv.io;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
@@ -23,7 +24,8 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
  * カラムの定義が曖昧なアノテーションを元にCSVファイルを書き出すためのクラス。
- *
+ * <p>カラム番号が指定されていないBean定義を元にマッピングします。</p>
+ * 
  * @param <T> マッピング対象のBeanのクラスタイプ
  * 
  * @since 2.1
@@ -43,6 +45,16 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
      */
     private boolean initialized = false;
     
+    /**
+     * Beanのクラスタイプを指定して、{@link LazyCsvAnnotationBeanWriter}を作成するコンストラクタ。
+     * <p>{@link BufferedWriter}にラップして実行されるため、ラップする必要はありません。</p>
+     * 
+     * @param beanType Beanのクラスタイプ。
+     * @param writer the writer
+     * @param preference CSV preferences.
+     * @param groups グループ情報。適用するアノテーションを切り替える際に指定します。
+     * @throws NullPointerException {@literal if beanType or writer or preferences are null.}
+     */
     public LazyCsvAnnotationBeanWriter(final Class<T> beanType, final Writer writer, final CsvPreference preference,
             final Class<?>... groups) {
         super(writer, preference);
@@ -55,6 +67,16 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
         
     }
     
+    /**
+     * Beanのマッピング情報を指定して、{@link LazyCsvAnnotationBeanWriter}を作成するコンストラクタ。
+     * <p>{@link BufferedWriter}にラップして実行されるため、ラップする必要はありません。</p>
+     * <p>Beanのマッピング情報を独自にカスタマイズして、{@link LazyBeanMappingFactory}から作成する場合に利用します。</p>
+     * 
+     * @param beanMapping Beanのマッピング情報。
+     * @param writer the writer
+     * @param preference the CSV preferences.
+     * @throws NullPointerException {@literal if beanMapping or writer or preferences are null.}
+     */
     public LazyCsvAnnotationBeanWriter(final BeanMapping<T> beanMapping, final Writer writer, final CsvPreference preference,
             final Class<?>... groups) {
         super(writer, preference);

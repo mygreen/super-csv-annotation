@@ -12,7 +12,7 @@ import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
- * インデックス番号の指定なしでマッピングできる
+ * カラム番号の設定、チェックを行わないで、BeanからCSVのマッピング情報を作成するクラス。
  *
  * @since 2.1
  * @author T.TSUCHIE
@@ -20,6 +20,9 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
  */
 public class LazyBeanMappingFactory extends BeanMappingFactory {
     
+    /**
+     * デフォルトコンストラクタ
+     */
     public LazyBeanMappingFactory() {
         
     }
