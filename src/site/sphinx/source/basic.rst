@@ -43,8 +43,8 @@ Super CSVの拡張ライブラリ
 
    * - | Bean Validation  (option)
        | ( `Hibernate Validator <http://hibernate.org/validator/>`_ )
-     - | ver.1.0/1.1
-       | (Hibernate Validator 4.x/5.x)
+     - | ver.1.0/1.1/2.0
+       | (Hibernate Validator 4.x/5.x/6.x)
 
 
 
@@ -100,9 +100,23 @@ Super CSVの拡張ライブラリ
      -
      
    * - 列挙型
-     - 
+     - java.time.OffsetDateTime
      -
      
+   * - 
+     - java.time.OffsetTime
+     -
+   
+   * - 
+     - java.time.Year
+     -
+   
+   * - 
+     - java.time.YearMonth
+     -
+   * - 
+     - java.time.MonthDay
+     -
 
 .. list-table:: 対応しているクラスタイプ(サードパーティ)
    :widths: 33 33 33
@@ -126,6 +140,12 @@ Super CSVの拡張ライブラリ
      -
      
    * - org.joda.time.DateTime
+     - 
+     -
+   * - org.joda.time.YearMonth
+     - 
+     -
+   * - org.joda.time.MonthDay
      - 
      -
      

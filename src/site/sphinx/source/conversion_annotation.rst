@@ -16,6 +16,10 @@
      - 前後の空白をトリミングします。
      - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTrim.html>`_
 
+   * - ``@CsvOneSideTrim`` *[v2.1+]*
+     - 前後どちらか一方をトリミングします。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`_
+
    * - ``@CsvDefaultValue``
      - 値がnullのときに他の値に変換します。
      - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`_
@@ -59,6 +63,15 @@
    * - ``@CsvRightPad``
      - 右側にパディングを行います。
      - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRightPad.html>`_
+
+   * - ``@CsvMultiPad`` *[v2.1+]*
+     - 柔軟な設定でパディングを行います。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`_
+
+   * - ``@CsvFixedSize`` *[v2.1+]*
+     - | 固定長のサイズに変換します。
+       | 詳細は、「 :doc:`fixedsizecolumn` 」を参照してください。
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html>`_
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

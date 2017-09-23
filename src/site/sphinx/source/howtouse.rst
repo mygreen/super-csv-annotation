@@ -15,7 +15,25 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
-        <version>2.0.3</version>
+        <version>2.1</version>
+    </dependency>
+
+
+本ライブラリは、ロギングライブラリ `SLF4j <https://www.slf4j.org/>`_ を使用しているため、好きな実装を追加してください。
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: ロギングライブラリの実装の追加（Log4jの場合）
+    
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.1</version>
+    </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
     </dependency>
 
 
@@ -146,9 +164,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             csvReader.close();
         }
     }
-
-
-
+    
 
 --------------------------------------
 書き込み方法
@@ -227,8 +243,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             
         }
     }
-
-
+    
 
 --------------------------------------
 値の加工方法
@@ -283,7 +298,6 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
         
     }
     
-    
 
 --------------------------------------
 タブ区切りCSVファイルへの対応
@@ -326,8 +340,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             // 省略
         }
         
-        
     }
-
+    
 
 

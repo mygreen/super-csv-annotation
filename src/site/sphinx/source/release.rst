@@ -3,6 +3,33 @@
 ======================================
 
 --------------------------------------------------------
+ver.2.1 - 2017-09-23
+--------------------------------------------------------
+
+* 修正内容
+  
+  * `#27 <https://github.com/mygreen/super-csv-annotation/pull/27>`_ - ``MessageInterpolatorAdapter.java`` 内の変数 ``defautlMessage`` のタイプミスとして、 ``defaultMessage`` に修正。
+  * `#28 <https://github.com/mygreen/super-csv-annotation/pull/28>`_ - メッセージコードを生成するメソッド ``MessageCodeGenerator#addCode(...)`` の不良の修正。
+
+* 変更内容。
+  
+  * `#26 <https://github.com/mygreen/super-csv-annotation/pull/26>`_ - 固定長のサイズのカラムに対応し、アノテーション ``@CsvFixedSize`` を追加しました。
+  
+    * 詳細は、「 :doc:`fixedsizecolumn` 」を参照してください。
+
+  * `#29 <https://github.com/mygreen/super-csv-annotation/issues/29>`_ / `#31 <https://github.com/mygreen/super-csv-annotation/pull/31>`_ - BeanValdiation2.0に対応しました。さらに、以下の日時型に対応しました。
+  
+    * JSR-310(Date and Time)のクラスタイプとして、``OffsetDateTime/OffsetTime/Year/YearMonth/MonthDay`` に対応しました。
+    * Joda-Timeのクラスタイプとして、``YearMonth/MonthDay`` に対応しました。
+  
+  * `#32 <https://github.com/mygreen/super-csv-annotation/pull/32>`_ - カラム番号を指定しないで、ラベルによるマッピングする機能を追加しました。
+  
+    * 詳細は、「 :doc:`labelledcolumn` 」 を参照してください。
+  
+  * メソッド ``CsvAnnotationBeanWriter#writeAll()``  呼び出しの最後に、 ``flush()`` メソッドを呼ぶよう修正。
+
+
+--------------------------------------------------------
 ver.2.0.3 - 2017-02-20
 --------------------------------------------------------
 

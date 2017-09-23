@@ -20,6 +20,8 @@ JavaのCSVファイルのライブラリ「 `Super CSV <http://super-csv.github.
    validation
    composition
    partialization
+   fixedsizecolumn
+   labelledcolumn
    processorbuilder
    lifecycle
    spring

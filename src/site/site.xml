@@ -26,6 +26,8 @@
 			<item name="値の検証方法" href="sphinx/validation.html" />
 			<item name="アノテーションの合成" href="sphinx/composition.html" />
 			<item name="部分的なカラムの読み書き" href="sphinx/partialization.html" />
+			<item name="固定長のカラムの読み書き " href="sphinx/fixedsizecolumn.html" />
+			<item name="ラベルによるカラムのマッピング" href="sphinx/labelledcolumn.html" />
 			<item name="独自のProcessorBuilderの作成" href="sphinx/processorbuilder.html" />
 			<item name="ライフサイクルイベントの管理" href="sphinx/lifecycle.html" />
 			<item name="Spring Frameworkとの連携" href="sphinx/spring.html" />
