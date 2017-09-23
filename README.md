@@ -13,20 +13,34 @@ This library 'Super CSV' extension library with annotation function.
 
 # Setup
 
-```xml
-  <dependency>
-    <groupId>com.github.mygreen</groupId>
-    <artifactId>super-csv-annotation</artifactId>
-    <version>2.1</version>
-  </dependency>
-```
+1. Add dependency for Super Csv Annotation
+    ```xml
+    <dependency>
+        <groupId>com.github.mygreen</groupId>
+        <artifactId>super-csv-annotation</artifactId>
+        <version>2.1</version>
+    </dependency>
+    ```
+2. Add dependency for Logging library. Example Log4j.
+    ```xml
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.1</version>
+    </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
+    </dependency>
+    ```
 
 # Build
 
 1. Setup Java SE 8 (1.8.0_121+)
 2. Setup Maven
 3. Setup Sphinx (building for manual)
-    a. install Python (recomend Python 2.7)
+    a. install Python
     b. install sphinx and theme for read the docs, janome
     ```console
     # pip install sphinx
