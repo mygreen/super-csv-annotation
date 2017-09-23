@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. 値の変換方法 &mdash; Super CSV Annotation 2.0.3 ドキュメント</title>
+  <title>4. 値の変換方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
   
 
+  
+  
   
   
 
@@ -35,7 +37,7 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.0.3 ドキュメント" href="index.html"/>
+    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
         <link rel="next" title="5. 値の検証方法" href="validation.html"/>
         <link rel="prev" title="3. 書式の指定方法" href="format.html"/>
  
@@ -48,6 +50,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -67,7 +70,7 @@
             
             
               <div class="version">
-                2.0.3
+                2.1
               </div>
             
           
@@ -97,7 +100,10 @@
 
             
             
-                <p class="caption"><span class="caption-text">目次</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">目次</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -153,15 +159,15 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. 値の変換方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id14">4.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">4.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id16">4.1.3. グループの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">4.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">4.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">4.1.3. グループの指定</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id17">4.2. 独自の変換処理の作成方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id20">4.2. 独自の変換処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id20">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id22">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 </ul>
@@ -218,53 +224,66 @@
 <li class="toctree-l2"><a class="reference internal" href="partialization.html#id3">7.2. 部分的なカラムの書き込み</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">8. 独自のProcessorBuilderの作成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">8.1. CellProcessorを直接組み立てる場合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">8.2. エラー処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixedsizecolumn.html">8. 固定長のカラムの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id4">8.1. 基本的な設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id5">8.2. ヘッダー行の固定長の指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id7">8.3. パディング処理方式の切り替え</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">9. ライフサイクルイベントの管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">9.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">9.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#bean">9.1. Beanの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id2">9.2. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id3">9.3. 書き出し方法</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="spring.html">10. Spring Frameworkとの連携</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">10.1. ライブラリの追加</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">10.2. SpringBeanFactoryの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">10.2.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">10.2.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">10.2.3. SpringBeanとしての定義</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">10.2.3.1. 独自の書式の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">10.2.3.2. 独自の変換/検証の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">10.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">10.2.3.4. CsvValidator の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">10.2.3.5. リスナクラスの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">10. 独自のProcessorBuilderの作成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">10.1. CellProcessorを直接組み立てる場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">10.2. エラー処理</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">10.2.4. CsvBeanの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">10.2.5. SpringBeanFactoryの使用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">11.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">10.3. エラーメッセージの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">10.3.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">10.3.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">10.3.3. SpringMessageResolverの使用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spring.html">12. Spring Frameworkとの連携</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">12.1. ライブラリの追加</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">12.2. SpringBeanFactoryの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">12.2.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">12.2.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">12.2.3. SpringBeanとしての定義</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">12.2.3.1. 独自の書式の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">12.2.3.2. 独自の変換/検証の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">12.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">12.2.3.4. CsvValidator の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">12.2.3.5. リスナクラスの作成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">12.2.4. CsvBeanの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">12.2.5. SpringBeanFactoryの使用方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">12.3. エラーメッセージの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">12.3.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">12.3.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">12.3.3. SpringMessageResolverの使用方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">11. システム設定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">11.1. システム設定の変更方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">11.2. システム設定の項目一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">13.1. システム設定の変更方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">12.1. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">12.2. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">12.3. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.4. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.5. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.6. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -280,8 +299,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Super CSV Annotation</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Super CSV Annotation</a>
+        
       </nav>
 
 
@@ -290,23 +311,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>4. 値の変換方法</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>4. 値の変換方法</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/conversion.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/conversion.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -320,8 +358,8 @@
 <div class="section" id="id2">
 <h2>4.1. 変換処理用の既存のアノテーション<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>既存のアノテーションとして、以下のものが用意されています。</p>
-<table border="1" class="docutils" id="id24">
-<caption><span class="caption-number">表 - 4.1.1 </span><span class="caption-text">変換規則を指定する既存のアノテーション</span><a class="headerlink" href="#id24" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id27">
+<caption><span class="caption-number">表 - 4.1.1 </span><span class="caption-text">変換規則を指定する既存のアノテーション</span><a class="headerlink" href="#id27" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="55%" />
@@ -338,54 +376,70 @@
 <td>前後の空白をトリミングします。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTrim.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvDefaultValue</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvOneSideTrim</span></code> <em>[v2.1+]</em></td>
+<td>前後どちらか一方をトリミングします。</td>
+<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html">JavaDoc</a></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvDefaultValue</span></code></td>
 <td>値がnullのときに他の値に変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvNullConvert</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvNullConvert</span></code></td>
 <td>指定した値と一致するときにnullに変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvNullConvert.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLower</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLower</span></code></td>
 <td>英字のアルファベットの大文字から小文字に変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLower.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvUpper</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvUpper</span></code></td>
 <td>英字のアルファベットの小文字を大文字に変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvUpper.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvRegexReplace</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvRegexReplace</span></code></td>
 <td>正規表現による置換を行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRegexReplace.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvWordReplace</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvWordReplace</span></code></td>
 <td>語彙による置換を行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvWordReplace.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvFullChar</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvFullChar</span></code></td>
 <td>半角文字を日本語の全角文字に変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFullChar.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvHalfChar</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvHalfChar</span></code></td>
 <td>日本語の全角文字を半角文字に変換します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvHalfChar.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvTruncate</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvTruncate</span></code></td>
 <td>一定の文字長を超える場合に切り出しを行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTruncate.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLeftPad</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLeftPad</span></code></td>
 <td>左側にパディングを行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLeftPad.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvRightPad</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvRightPad</span></code></td>
 <td>右側にパディングを行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRightPad.html">JavaDoc</a></td>
 </tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvMultiPad</span></code> <em>[v2.1+]</em></td>
+<td>柔軟な設定でパディングを行います。</td>
+<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html">JavaDoc</a></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvFixedSize</span></code> <em>[v2.1+]</em></td>
+<td><div class="first last line-block">
+<div class="line">固定長のサイズに変換します。</div>
+<div class="line">詳細は、「 <a class="reference internal" href="fixedsizecolumn.html"><span class="doc">固定長のカラムの読み書き</span></a> 」を参照してください。</div>
+</div>
+</td>
+<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html">JavaDoc</a></td>
+</tr>
 </tbody>
 </table>
-<div class="section" id="id14">
-<h3>4.1.1. 処理順序の指定<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id17">
+<h3>4.1.1. 処理順序の指定<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>属性 <code class="docutils literal"><span class="pre">order</span></code> で処理順序を指定することができます。</p>
 <ul class="simple">
 <li>値が大きいほど後から実行されます。</li>
@@ -430,8 +484,8 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="id15">
-<h3>4.1.2. 処理ケースの指定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id18">
+<h3>4.1.2. 処理ケースの指定<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>属性 <code class="docutils literal"><span class="pre">cases</span></code> で、アノテーションを適用するケースとして「読み込み時」「書き込み時」を限定することができます。</p>
 <ul class="simple">
 <li>列挙型 <code class="docutils literal"><span class="pre">BuildCase</span></code> で指定します。<ul>
@@ -477,8 +531,8 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="id16">
-<h3>4.1.3. グループの指定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id19">
+<h3>4.1.3. グループの指定<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>属性 <code class="docutils literal"><span class="pre">groups</span></code> で、グループ用クラスを指定することで、属性 <em>cases</em> より柔軟に適用するケースをを限定することができます。</p>
 <ul class="simple">
 <li>Bean Validation のgroupと同じような考え方ですが、適用される順序は関係ありません。<ul>
@@ -656,8 +710,8 @@
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id17">
-<h2>4.2. 独自の変換処理の作成方法<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id20">
+<h2>4.2. 独自の変換処理の作成方法<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>独自の変換処理を実装するには、3つのステップを踏む必要があります。</p>
 <ol class="arabic simple">
 <li>CellProcessorの実装クラスの作成</li>
@@ -686,7 +740,7 @@ CellProcessorを直接組み立てる時に、これらのインタフェース�
 <li>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
 <li>メソッド <code class="docutils literal"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
 <li>nullの場合、次の処理に委譲するようにします。
-Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
+Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を呼びnullチェックを行いますが、
 本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</li>
 <li>変換した値を次の処理に渡します。</li>
 </ul>
@@ -782,8 +836,8 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="id20">
-<h3>4.2.2. 変換処理用のアノテーションクラスの作成<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id23">
+<h3>4.2.2. 変換処理用のアノテーションクラスの作成<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
 <li>通常はFieldのみで問題ないですが、 <a class="reference internal" href="composition.html"><span class="doc">アノテーションを合成</span></a> するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</li>
@@ -879,8 +933,8 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="id22">
-<h3>4.2.3. 変換処理用のファクトリクラスの作成<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id25">
+<h3>4.2.3. 変換処理用のファクトリクラスの作成<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。</p>
 <ul class="simple">
 <li>インタフェース <code class="docutils literal"><span class="pre">ConversionProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html">JavaDoc</a> ] を実装します。</li>
@@ -936,15 +990,18 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="validation.html" class="btn btn-neutral float-right" title="5. 値の検証方法" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="validation.html" class="btn btn-neutral float-right" title="5. 値の検証方法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="format.html" class="btn btn-neutral" title="3. 書式の指定方法" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="format.html" class="btn btn-neutral" title="3. 書式の指定方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -954,7 +1011,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-02-20 22:29:48
+      最終更新: 2017-09-23 19:13:00
 
     </p>
   </div>
@@ -976,10 +1033,12 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.3',
+            VERSION:'2.1',
+            LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

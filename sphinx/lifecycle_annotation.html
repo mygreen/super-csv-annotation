@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ライフサイクル・コールバック用のアノテーション &mdash; Super CSV Annotation 2.0.3 ドキュメント</title>
+  <title>ライフサイクル・コールバック用のアノテーション &mdash; Super CSV Annotation 2.1 ドキュメント</title>
   
 
+  
+  
   
   
 
@@ -35,7 +37,7 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.0.3 ドキュメント" href="index.html"/>
+    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,6 +48,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -65,7 +68,7 @@
             
             
               <div class="version">
-                2.0.3
+                2.1
               </div>
             
           
@@ -95,7 +98,10 @@
 
             
             
-                <p class="caption"><span class="caption-text">目次</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">目次</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -151,15 +157,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">4. 値の変換方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conversion.html#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id14">4.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id15">4.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id16">4.1.3. グループの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id17">4.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id18">4.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id19">4.1.3. グループの指定</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="conversion.html#id17">4.2. 独自の変換処理の作成方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conversion.html#id20">4.2. 独自の変換処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="conversion.html#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id20">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id22">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id23">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id25">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 </ul>
@@ -216,53 +222,66 @@
 <li class="toctree-l2"><a class="reference internal" href="partialization.html#id3">7.2. 部分的なカラムの書き込み</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">8. 独自のProcessorBuilderの作成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">8.1. CellProcessorを直接組み立てる場合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">8.2. エラー処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixedsizecolumn.html">8. 固定長のカラムの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id4">8.1. 基本的な設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id5">8.2. ヘッダー行の固定長の指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id7">8.3. パディング処理方式の切り替え</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">9. ライフサイクルイベントの管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">9.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">9.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#bean">9.1. Beanの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id2">9.2. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id3">9.3. 書き出し方法</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="spring.html">10. Spring Frameworkとの連携</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">10.1. ライブラリの追加</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">10.2. SpringBeanFactoryの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">10.2.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">10.2.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">10.2.3. SpringBeanとしての定義</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">10.2.3.1. 独自の書式の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">10.2.3.2. 独自の変換/検証の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">10.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">10.2.3.4. CsvValidator の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">10.2.3.5. リスナクラスの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">10. 独自のProcessorBuilderの作成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">10.1. CellProcessorを直接組み立てる場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">10.2. エラー処理</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">10.2.4. CsvBeanの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">10.2.5. SpringBeanFactoryの使用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">11.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">10.3. エラーメッセージの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">10.3.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">10.3.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">10.3.3. SpringMessageResolverの使用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spring.html">12. Spring Frameworkとの連携</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">12.1. ライブラリの追加</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">12.2. SpringBeanFactoryの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">12.2.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">12.2.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">12.2.3. SpringBeanとしての定義</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">12.2.3.1. 独自の書式の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">12.2.3.2. 独自の変換/検証の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">12.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">12.2.3.4. CsvValidator の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">12.2.3.5. リスナクラスの作成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">12.2.4. CsvBeanの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">12.2.5. SpringBeanFactoryの使用方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">12.3. エラーメッセージの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">12.3.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">12.3.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">12.3.3. SpringMessageResolverの使用方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">11. システム設定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">11.1. システム設定の変更方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">11.2. システム設定の項目一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">13.1. システム設定の変更方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">12.1. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">12.2. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">12.3. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.4. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.5. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.6. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -278,8 +297,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Super CSV Annotation</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Super CSV Annotation</a>
+        
       </nav>
 
 
@@ -288,23 +309,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>ライフサイクル・コールバック用のアノテーション</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>ライフサイクル・コールバック用のアノテーション</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/lifecycle_annotation.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/lifecycle_annotation.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -314,7 +352,7 @@
 <h1>ライフサイクル・コールバック用のアノテーション<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>ライフサイクルイベントに対応するアノテーションをメソッドに付与することで、
 そのメソッドをコールバック呼び出しすることができます。</p>
-<table border="1" class="docutils" id="id8">
+<table border="1" class="colwidths-given docutils" id="id8">
 <caption><span class="caption-text">ライフサイクルイベント用のアノテーション</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="30%" />
@@ -355,7 +393,7 @@
 <li>引数は、とらなくても可能です。</li>
 <li>引数の順番は任意で指定可能です。</li>
 </ul>
-<table border="1" class="docutils" id="id9">
+<table border="1" class="colwidths-given docutils" id="id9">
 <caption><span class="caption-text">コールバック用のメソッドに指定可能な引数一覧</span><a class="headerlink" href="#id9" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="50%" />
@@ -484,6 +522,9 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -493,7 +534,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-02-20 22:29:48
+      最終更新: 2017-09-23 19:13:00
 
     </p>
   </div>
@@ -515,10 +556,12 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.3',
+            VERSION:'2.1',
+            LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

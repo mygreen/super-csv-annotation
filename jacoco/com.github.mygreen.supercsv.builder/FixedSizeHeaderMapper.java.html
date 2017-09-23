@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FixedSizeHeaderMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">FixedSizeHeaderMapper.java</span></div><h1>FixedSizeHeaderMapper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.util.Optional;
+
+import com.github.mygreen.supercsv.annotation.conversion.CsvFixedSize;
+import com.github.mygreen.supercsv.cellprocessor.conversion.PaddingProcessor;
+
+/**
+ * アノテーション{@link CsvFixedSize}を元に、ヘッダーラベル情報を処理します。
+ * &lt;p&gt;パディング文字がゼロ埋めのときや、文字数を超えたとき切り出す設定の場合、
+ *    意図した結果とならない場合があるため、このクラスを参考に各自実装してください。
+ * &lt;/p&gt;
+ * 
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L18">public class FixedSizeHeaderMapper implements HeaderMapper {</span>
+    
+    @Override
+    public String toMap(final ColumnMapping column, final Configuration config, final Class&lt;?&gt;[] groups) {
+        
+        // @CsvFixedSizeアノテーションを取得する
+<span class="fc" id="L24">        final Optional&lt;CsvFixedSize&gt; fixedLengthAnno = column.getField().getAnnotationsByGroup(CsvFixedSize.class, groups)</span>
+<span class="fc" id="L25">                .stream().findFirst();</span>
+        
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if(!fixedLengthAnno.isPresent()) {</span>
+<span class="nc" id="L28">            return column.getLabel();</span>
+        }
+        
+<span class="fc" id="L31">        final PaddingProcessor paddingProcessor = (PaddingProcessor)config.getBeanFactory()</span>
+<span class="fc" id="L32">                .create(fixedLengthAnno.get().paddingProcessor());</span>
+        
+        // アノテーションが存在する場合は、その情報を使ってパディングする。
+<span class="fc" id="L35">        String label = fixedLengthAnno.map(anno -&gt; paddingProcessor.pad(column.getLabel(),</span>
+<span class="fc" id="L36">                anno.size(), anno.padChar(), anno.rightAlign(), anno.chopped()))</span>
+<span class="fc" id="L37">                .orElse(column.getLabel());</span>
+        
+<span class="fc" id="L39">        return label;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

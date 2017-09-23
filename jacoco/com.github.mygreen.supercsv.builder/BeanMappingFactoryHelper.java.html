@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanMappingFactoryHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.builder</a> &gt; <span class="el_source">BeanMappingFactoryHelper.java</span></div><h1>BeanMappingFactoryHelper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.builder;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import com.github.mygreen.supercsv.annotation.CsvColumn;
+import com.github.mygreen.supercsv.annotation.CsvPartial;
+import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
+import com.github.mygreen.supercsv.localization.MessageBuilder;
+
+/**
+ * {@link BeanMapping}を組み立てる時のヘルパクラス。
+ * 
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+<span class="nc" id="L20">public class BeanMappingFactoryHelper {</span>
+    
+    /**
+     * カラム番号が重複しているかチェックする。また、番号が1以上かもチェ句する。
+     * @param beanType Beanタイプ
+     * @param list カラム情報の一覧
+     * @return チェック済みの番号
+     */
+    public static TreeSet&lt;Integer&gt; validateDuplicatedColumnNumber(final Class&lt;?&gt; beanType, final List&lt;ColumnMapping&gt; list) {
+        
+<span class="fc" id="L30">        final TreeSet&lt;Integer&gt; checkedNumber = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L31">        final TreeSet&lt;Integer&gt; duplicatedNumbers = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for(ColumnMapping columnMapping : list) {</span>
+            
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            if(checkedNumber.contains(columnMapping.getNumber())) {</span>
+<span class="fc" id="L35">                duplicatedNumbers.add(columnMapping.getNumber());</span>
+            }
+<span class="fc" id="L37">            checkedNumber.add(columnMapping.getNumber());</span>
+            
+<span class="fc" id="L39">        }</span>
+        
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(!duplicatedNumbers.isEmpty()) {</span>
+            // 重複している 属性 numberが存在する場合
+<span class="fc" id="L43">            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create(&quot;anno.attr.duplicated&quot;)</span>
+<span class="fc" id="L44">                    .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L45">                    .varWithAnno(&quot;anno&quot;, CsvColumn.class)</span>
+<span class="fc" id="L46">                    .var(&quot;attrName&quot;, &quot;number&quot;)</span>
+<span class="fc" id="L47">                    .var(&quot;attrValues&quot;, duplicatedNumbers)</span>
+<span class="fc" id="L48">                    .format());</span>
+        }
+        
+        // カラム番号が1以上かチェックする
+<span class="fc" id="L52">        final int minColumnNumber = checkedNumber.first();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if(minColumnNumber &lt;= 0) {</span>
+<span class="fc" id="L54">            throw new SuperCsvInvalidAnnotationException(MessageBuilder.create(&quot;anno.attr.min&quot;)</span>
+<span class="fc" id="L55">                    .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L56">                    .varWithAnno(&quot;anno&quot;, CsvColumn.class)</span>
+<span class="fc" id="L57">                    .var(&quot;attrName&quot;, &quot;number&quot;)</span>
+<span class="fc" id="L58">                    .var(&quot;attrValue&quot;, minColumnNumber)</span>
+<span class="fc" id="L59">                    .var(&quot;min&quot;, 1)</span>
+<span class="fc" id="L60">                    .format());</span>
+            
+        }
+        
+<span class="fc" id="L64">        return checkedNumber;</span>
+    }
+    
+    /**
+     * 欠けているカラム番号がある場合、その番号を持つダミーのカラムを追加する。
+     * @param beanType Beanタイプ
+     * @param list カラム情報の一覧
+     * @param partialAnno Beanに設定されているアノテーション{@link CsvPartial}の情報。
+     * @param suppliedHeaders 提供されたヘッダー。提供されてない場合は、長さ0の配列。
+     * @return
+     */
+    public static TreeSet&lt;Integer&gt; supplyLackedNumberMappingColumn(final Class&lt;?&gt; beanType, final List&lt;ColumnMapping&gt; list,
+            final Optional&lt;CsvPartial&gt; partialAnno, final String[] suppliedHeaders) {
+        
+<span class="fc" id="L78">        final TreeSet&lt;Integer&gt; checkedNumber = list.stream()</span>
+<span class="fc" id="L79">                .filter(col -&gt; col.isDeterminedNumber())</span>
+<span class="fc" id="L80">                .map(col -&gt; col.getNumber())</span>
+<span class="fc" id="L81">                .collect(Collectors.toCollection(TreeSet::new));</span>
+        
+        // 定義されている列番号の最大値
+<span class="fc" id="L84">        final int maxColumnNumber = checkedNumber.last();</span>
+        
+        // Beanに定義されていない欠けているカラム番号の取得
+<span class="fc" id="L87">        final TreeSet&lt;Integer&gt; lackedNumbers = new TreeSet&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for(int i=1; i &lt;= maxColumnNumber; i++) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(!checkedNumber.contains(i)) {</span>
+<span class="fc" id="L90">                lackedNumbers.add(i);</span>
+            }
+        }
+        
+        // 定義されているカラム番号より、大きなカラム番号を持つカラム情報の補足
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if(partialAnno.isPresent()) {</span>
+            
+<span class="fc" id="L97">            final int partialColumnSize = partialAnno.get().columnSize();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if(maxColumnNumber &gt; partialColumnSize) {</span>
+<span class="fc" id="L99">                throw new SuperCsvInvalidAnnotationException(partialAnno.get(), MessageBuilder.create(&quot;anno.CsvPartial.columSizeMin&quot;)</span>
+<span class="fc" id="L100">                        .var(&quot;property&quot;, beanType.getName())</span>
+<span class="fc" id="L101">                        .var(&quot;columnSize&quot;, partialColumnSize)</span>
+<span class="fc" id="L102">                        .var(&quot;maxColumnNumber&quot;, maxColumnNumber)</span>
+<span class="fc" id="L103">                        .format());</span>
+                
+            }
+            
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if(maxColumnNumber &lt; partialColumnSize) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                for(int i= maxColumnNumber+1; i &lt;= partialColumnSize; i++) {</span>
+<span class="fc" id="L109">                    lackedNumbers.add(i);</span>
+                }
+            }
+            
+        }
+        
+        // 不足分のカラムがある場合は、部分的な読み書き用カラムとして追加する
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if(lackedNumbers.size() &gt; 0) {</span>
+            
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for(int number : lackedNumbers) {</span>
+<span class="fc" id="L119">                list.add(createPartialColumnMapping(number, partialAnno, getSuppliedHeaders(suppliedHeaders, number)));</span>
+<span class="fc" id="L120">            }</span>
+            
+<span class="fc" id="L122">            list.sort(null);</span>
+        }
+        
+<span class="fc" id="L125">        return lackedNumbers;</span>
+        
+    }
+    
+    /**
+     * 提供されたヘッダーから該当するカラム番号のヘッダーを取得する。
+     * @param suppliedHeaders 提供されたヘッダー。提供されてない場合は、長さ0の配列。
+     * @param columnNumber カラム番号。1から始まる。
+     * @return 該当するカラムのヘッダー。見つからない場合は空を返す。
+     */
+    private static Optional&lt;String&gt; getSuppliedHeaders(final String[] suppliedHeaders, final int columnNumber) {
+        
+<span class="fc" id="L137">        final int length = suppliedHeaders.length;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if(length == 0) {</span>
+<span class="fc" id="L139">            return Optional.empty();</span>
+        }
+        
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if(columnNumber &lt; length) {</span>
+<span class="fc" id="L143">            return Optional.ofNullable(suppliedHeaders[columnNumber-1]);</span>
+        }
+        
+<span class="nc" id="L146">        return Optional.empty();</span>
+        
+    }
+    
+    /**
+     * 部分的なカラムの場合の作成
+     * @param columnNumber 列番号
+     * @param partialAnno アノテーション {@literal @CsvPartial}のインスタンス
+     * @param suppliedHeader 補完対象のヘッダーの値
+     * @return 部分的なカラム情報。
+     */
+    private static ColumnMapping createPartialColumnMapping(int columnNumber, final Optional&lt;CsvPartial&gt; partialAnno,
+            final Optional&lt;String&gt; suppliedHeader) {
+        
+<span class="fc" id="L160">        final ColumnMapping columnMapping = new ColumnMapping();</span>
+<span class="fc" id="L161">        columnMapping.setNumber(columnNumber);</span>
+<span class="fc" id="L162">        columnMapping.setPartialized(true);</span>
+        
+<span class="fc" id="L164">        String label = String.format(&quot;column%d&quot;, columnNumber);</span>
+        
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if(suppliedHeader.isPresent()) {</span>
+<span class="fc" id="L167">            label = suppliedHeader.get();</span>
+        }
+        
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if(partialAnno.isPresent()) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            for(CsvPartial.Header header : partialAnno.get().headers()) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">                if(header.number() == columnNumber) {</span>
+<span class="fc" id="L173">                    label = header.label();</span>
+<span class="fc" id="L174">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L178">        columnMapping.setLabel(label);</span>
+        
+<span class="fc" id="L180">        return columnMapping;</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

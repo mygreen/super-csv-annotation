@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCsvAnnotationBeanReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.io</a> &gt; <span class="el_source">AbstractCsvAnnotationBeanReader.java</span></div><h1>AbstractCsvAnnotationBeanReader.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.io;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.exception.SuperCsvException;
+import org.supercsv.exception.SuperCsvReflectionException;
+import org.supercsv.io.AbstractCsvReader;
+import org.supercsv.io.CsvBeanReader;
+import org.supercsv.io.ITokenizer;
+import org.supercsv.prefs.CsvPreference;
+import org.supercsv.util.BeanInterfaceProxy;
+import org.supercsv.util.CsvContext;
+import org.supercsv.util.MethodCache;
+
+import com.github.mygreen.supercsv.builder.BeanMapping;
+import com.github.mygreen.supercsv.builder.CallbackMethod;
+import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
+import com.github.mygreen.supercsv.exception.SuperCsvNoMatchColumnSizeException;
+import com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException;
+import com.github.mygreen.supercsv.exception.SuperCsvRowException;
+import com.github.mygreen.supercsv.validation.CsvBindingErrors;
+import com.github.mygreen.supercsv.validation.CsvError;
+import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
+import com.github.mygreen.supercsv.validation.CsvValidator;
+import com.github.mygreen.supercsv.validation.ValidationContext;
+
+/**
+ * アノテーションを元にCSVファイルを読み込むための抽象クラス。
+ * 
+ * @param &lt;T&gt; マッピング対象のBeanのクラスタイプ
+ *
+ * @see CsvBeanReader
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+public abstract class AbstractCsvAnnotationBeanReader&lt;T&gt; extends AbstractCsvReader {
+    
+    /**
+     * Beanのマッピング情報のキャッシュ。
+     * ・組み立てたCellProcessorをキャッシュしておきます。
+     */
+    protected BeanMappingCache&lt;T&gt; beanMappingCache;
+    
+    /** temporary storage of processed columns to be mapped to the bean */
+<span class="pc" id="L55">    protected final List&lt;Object&gt; processedColumns = new ArrayList&lt;&gt;();</span>
+    
+    /** cache of methods for mapping from columns to fields */
+<span class="pc" id="L58">    protected final MethodCache cache = new MethodCache();</span>
+    
+    /** exception converter. */
+<span class="pc" id="L61">    protected CsvExceptionConverter exceptionConverter = new CsvExceptionConverter();</span>
+    
+    /** processing error messages. */
+<span class="pc" id="L64">    protected final List&lt;String&gt; errorMessages = new ArrayList&lt;&gt;();</span>
+    
+    /** validator */
+<span class="pc" id="L67">    protected final List&lt;CsvValidator&lt;T&gt;&gt; validators = new ArrayList&lt;&gt;();</span>
+    
+    public AbstractCsvAnnotationBeanReader(final Reader reader, final CsvPreference preference) {
+<span class="fc" id="L70">        super(reader, preference);</span>
+<span class="fc" id="L71">    }</span>
+    
+    public AbstractCsvAnnotationBeanReader(final ITokenizer tokenizer, final CsvPreference preference) {
+<span class="nc" id="L74">        super(tokenizer, preference);</span>
+<span class="nc" id="L75">    }</span>
+    
+    /**
+     * 1レコード分を読み込みます。
+     * 
+     * @return Beanのレコード。読み込むレコードがない場合は、nullを返します。
+     * 
+     * @throws IOException レコードの読み込みに失敗した場合。
+     * @throws SuperCsvNoMatchColumnSizeException レコードのカラムサイズに問題がある場合
+     * @throws SuperCsvBindingException セルの値に問題がある場合
+     * @throws SuperCsvException 設定など、その他に問題がある場合
+     * 
+     */
+    public T read() throws IOException {
+        
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(readRow()) {</span>
+            
+<span class="fc" id="L92">            final T bean = instantiateBean(beanMappingCache.getOriginal().getType());</span>
+<span class="fc" id="L93">            final CsvBindingErrors bindingErrors = new CsvBindingErrors(beanMappingCache.getOriginal().getType());</span>
+            
+<span class="fc" id="L95">            final CsvContext context = new CsvContext(getLineNumber(), getRowNumber(), 1);</span>
+<span class="fc" id="L96">            context.setRowSource(new ArrayList&lt;Object&gt;(processedColumns));</span>
+            
+<span class="fc" id="L98">            Optional&lt;SuperCsvRowException&gt; rowException = Optional.empty();</span>
+            try {
+<span class="fc" id="L100">                executeCellProcessor(processedColumns, getColumns(), beanMappingCache.getCellProcessorsForReading(), context);</span>
+                
+<span class="fc" id="L102">            } catch(SuperCsvRowException e) {</span>
+                /*
+                 * カラムごとのCellProcessorのエラーの場合、別なValidatorで値を検証するために、
+                 * 後から判定を行うようにする。
+                 */
+<span class="fc" id="L107">                rowException = Optional.of(e);</span>
+                
+<span class="fc" id="L109">                final List&lt;CsvError&gt; errors = exceptionConverter.convert(e, beanMappingCache.getOriginal());</span>
+<span class="fc" id="L110">                bindingErrors.addAllErrors(errors);</span>
+                
+<span class="fc" id="L112">            } catch(SuperCsvException e) {</span>
+<span class="fc" id="L113">                errorMessages.addAll(exceptionConverter.convertAndFormat(e, beanMappingCache.getOriginal()));</span>
+<span class="fc" id="L114">                throw e;</span>
+<span class="fc" id="L115">            }</span>
+            
+            // コールバックメソッドの実行（読み込み前）
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for(CallbackMethod callback : beanMappingCache.getOriginal().getPreReadMethods()) {</span>
+<span class="fc" id="L119">                callback.invoke(bean, context, bindingErrors, beanMappingCache.getOriginal());</span>
+<span class="fc" id="L120">            }</span>
+            
+            // beanへのマッピング
+<span class="fc" id="L123">            populateBean(bean, beanMappingCache.getNameMapping(), bindingErrors);</span>
+            
+            // Bean(レコード)の入力値検証
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            for(CsvValidator&lt;T&gt; recordValidator : validators) {</span>
+<span class="fc" id="L127">                recordValidator.validate(bean, bindingErrors, new ValidationContext&lt;&gt;(context, beanMappingCache.getOriginal()));</span>
+<span class="fc" id="L128">            }</span>
+            
+            // コールバックメソッドの実行（読み込み後）
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            for(CallbackMethod callback : beanMappingCache.getOriginal().getPostReadMethods()) {</span>
+<span class="fc" id="L132">                callback.invoke(bean, context, bindingErrors, beanMappingCache.getOriginal());</span>
+<span class="fc" id="L133">            }</span>
+            
+            // エラーメッセージの変換
+<span class="fc" id="L136">            processErrors(bindingErrors, context, rowException);</span>
+            
+<span class="fc" id="L138">            return bean;</span>
+            
+        }
+        
+<span class="fc" id="L142">        return null; // EOF</span>
+        
+        
+    }
+    
+    /**
+     * CSVのヘッダーの検証を行います。
+     * 
+     * @param sourceHeader オリジナルのヘッダー情報。
+     * @param definedHeader アノテーションなどの定義を元にしたヘッダー情報
+     * @throws SuperCsvNoMatchColumnSizeException ヘッダーのサイズ（カラム数）がBean定義と一致しない場合。
+     * @throws SuperCsvNoMatchHeaderException ヘッダーの値がBean定義と一致しない場合。
+     */
+    protected void validateHeader(final String[] sourceHeader, final String[] definedHeader) {
+        
+        // check column size.
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if(sourceHeader.length != definedHeader.length) {</span>
+<span class="fc" id="L159">            final CsvContext context = new CsvContext(1, 1, 1);</span>
+<span class="fc" id="L160">            throw new SuperCsvNoMatchColumnSizeException(sourceHeader.length, definedHeader.length, context);</span>
+            
+        }
+        
+        // check header value
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for(int i=0; i &lt; sourceHeader.length; i++) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            if(!sourceHeader[i].equals(definedHeader[i])) {</span>
+<span class="fc" id="L167">                final CsvContext context = new CsvContext(1, 1, i+1);</span>
+<span class="fc" id="L168">                throw new SuperCsvNoMatchHeaderException(sourceHeader, definedHeader, context);</span>
+            }
+        }
+        
+<span class="fc" id="L172">    }</span>
+    
+    /**
+     * 行の例外情報をメッセージに変換したりします。
+     * @param bindingErrors
+     * @param context
+     * @param rowException
+     */
+    protected void processErrors(final CsvBindingErrors bindingErrors, final CsvContext context,
+            final Optional&lt;SuperCsvRowException&gt; rowException) {
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if(bindingErrors.hasErrors()) {</span>
+<span class="fc" id="L183">            final List&lt;String&gt; message = bindingErrors.getAllErrors().stream()</span>
+<span class="fc" id="L184">                    .map(error -&gt; error.format(exceptionConverter.getMessageResolver(), exceptionConverter.getMessageInterpolator()))</span>
+<span class="fc" id="L185">                    .collect(Collectors.toList());</span>
+<span class="fc" id="L186">            errorMessages.addAll(message);</span>
+            
+<span class="fc" id="L188">            final SuperCsvBindingException bindingException = new SuperCsvBindingException(&quot;has binding error.&quot;, context, bindingErrors);</span>
+<span class="fc" id="L189">            rowException.ifPresent(re -&gt; bindingException.addAllProcessingErrors(re.getColumnErrors()));</span>
+            
+<span class="fc" id="L191">            throw bindingException;</span>
+        }
+<span class="fc" id="L193">    }</span>
+    
+    /**
+     * 指定したBeanのクラスのインスタンスを作成する。
+     * 
+     * @param clazz Beanのクラスタイプ。
+     * @return Beanのインスタンス。
+     * @throws SuperCsvReflectionException Beanのインスタンスの作成に失敗した場合。
+     */
+    protected T instantiateBean(final Class&lt;T&gt; clazz) {
+        
+        final T bean;
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if( clazz.isInterface() ) {</span>
+<span class="nc" id="L206">            bean = BeanInterfaceProxy.createProxy(clazz);</span>
+        } else {
+            try {
+<span class="fc" id="L209">                bean = clazz.newInstance();</span>
+<span class="nc" id="L210">            } catch(InstantiationException e) {</span>
+<span class="nc" id="L211">                throw new SuperCsvReflectionException(String.format(</span>
+<span class="nc" id="L212">                    &quot;error instantiating bean, check that %s has a default no-args constructor&quot;, clazz.getName()), e);</span>
+<span class="nc" id="L213">            } catch(IllegalAccessException e) {</span>
+<span class="nc" id="L214">                throw new SuperCsvReflectionException(&quot;error instantiating bean&quot;, e);</span>
+<span class="fc" id="L215">            }</span>
+        }
+        
+<span class="fc" id="L218">        return bean;</span>
+        
+    }
+    
+    /**
+     * 行の各カラムの値に対して、CellProcessorを適用します。
+     * @param destination
+     * @param source
+     * @param processors
+     * @param context
+     * @throws SuperCsvNoMatchColumnSizeException カラムサイズが定義と一致しない場合
+     * @throws SuperCsvRowException CellProcessor内で発生した例外
+     */
+    protected void executeCellProcessor(final List&lt;Object&gt; destination, final List&lt;String&gt; source,
+            final CellProcessor[] processors, final CsvContext context) {
+        
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        if(source.size() != processors.length) {</span>
+<span class="fc" id="L235">            throw new SuperCsvNoMatchColumnSizeException(source.size(), processors.length, context);</span>
+            
+        }
+        
+<span class="fc" id="L239">        destination.clear();</span>
+        
+<span class="fc" id="L241">        final SuperCsvRowException rowException = new SuperCsvRowException(</span>
+<span class="fc" id="L242">                String.format(&quot;row (%d) has errors column&quot;, context.getRowNumber()), context);</span>
+        
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        for( int i = 0; i &lt; source.size(); i++ ) {</span>
+            
+            try {
+<span class="fc" id="L247">                context.setColumnNumber(i + 1); // update context (columns start at 1)</span>
+                
+<span class="fc bfc" id="L249" title="All 2 branches covered.">                if( processors[i] == null ) {</span>
+<span class="fc" id="L250">                    destination.add(source.get(i)); // no processing required</span>
+                } else {
+<span class="fc" id="L252">                    destination.add(processors[i].execute(source.get(i), context)); // execute the processor chain</span>
+                }
+<span class="fc" id="L254">            } catch(SuperCsvCellProcessorException e) {</span>
+<span class="fc" id="L255">                rowException.addError(e);</span>
+                
+                // 各カラムでエラーがあっても、後の入力値検証で処理を続けるために、仮に値を設定する。
+<span class="fc" id="L258">                destination.add(source.get(i));</span>
+                
+<span class="nc" id="L260">            } catch(SuperCsvException e) {</span>
+                
+<span class="nc" id="L262">                throw e;</span>
+                
+<span class="fc" id="L264">            }</span>
+        }
+        
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if(rowException.isNotEmptyColumnErrors()) {</span>
+<span class="fc" id="L268">            throw rowException;</span>
+        }
+        
+<span class="fc" id="L271">    }</span>
+    
+    /**
+     * Beanの各フィールドに対して値を設定する。
+     * @param resultBean
+     * @param nameMapping
+     * @param bindingErrors
+     */
+    protected void populateBean(final T resultBean, final String[] nameMapping, final CsvBindingErrors bindingErrors) {
+        
+        // map each column to its associated field on the bean
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        for( int i = 0; i &lt; nameMapping.length; i++ ) {</span>
+<span class="fc" id="L283">            final String fieldName = nameMapping[i];</span>
+<span class="fc" id="L284">            final Object fieldValue = processedColumns.get(i);</span>
+            
+            // don't call a set-method in the bean if there is no name mapping for the column or no result to store
+<span class="fc bfc" id="L287" title="All 6 branches covered.">            if( fieldName == null || fieldValue == null || bindingErrors.hasFieldErrors(fieldName)) {</span>
+<span class="fc" id="L288">                continue;</span>
+            }
+            
+            // invoke the setter on the bean
+<span class="fc" id="L292">            final Method setMethod = cache.getSetMethod(resultBean, fieldName, fieldValue.getClass());</span>
+            try {
+<span class="fc" id="L294">                setMethod.invoke(resultBean, fieldValue);</span>
+                
+<span class="nc" id="L296">            } catch(final Exception e) {</span>
+<span class="nc" id="L297">                throw new SuperCsvReflectionException(String.format(&quot;error invoking method %s()&quot;, setMethod.getName()), e);</span>
+<span class="fc" id="L298">            }</span>
+            
+        }
+        
+<span class="fc" id="L302">    }</span>
+    
+    /**
+     * Beanクラスを元に作成したヘッダー情報を取得する。
+     * @return ヘッダー一覧。
+     */
+    public String[] getDefinedHeader() {
+<span class="fc" id="L309">        return beanMappingCache.getHeader();</span>
+    }
+    
+    /**
+     * Beanのマッピング情報を取得します。
+     * @return Beanのマッピング情報
+     */
+    public BeanMapping&lt;T&gt; getBeanMapping() {
+<span class="fc" id="L317">        return beanMappingCache.getOriginal();</span>
+    }
+    
+    /**
+     * エラーメッセージを取得します。
+     * @return 処理中に発生した例外をメッセージに変換した
+     */
+    public List&lt;String&gt; getErrorMessages() {
+<span class="fc" id="L325">        return errorMessages;</span>
+    }
+    
+    /**
+     * 処理中に発生した例外をメッセージに変換するクラスを取得します。
+     * @return 
+     */
+    public CsvExceptionConverter getExceptionConverter() {
+<span class="nc" id="L333">        return exceptionConverter;</span>
+    }
+    
+    /**
+     * 処理中に発生した例外をメッセージに変換するクラスを設定します。
+     * @param exceptionConverter 独自にカスタマイズした値を設定します。
+     */
+    public void setExceptionConverter(CsvExceptionConverter exceptionConverter) {
+<span class="fc" id="L341">        this.exceptionConverter = exceptionConverter;</span>
+<span class="fc" id="L342">    }</span>
+    
+    /**
+     * レコードの値を検証するValidatorを追加します。
+     * @param validators {@link CsvValidator}の実装クラスを設定します。
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public void addValidator(CsvValidator&lt;T&gt;... validators) {
+<span class="nc" id="L350">        this.validators.addAll(Arrays.asList(validators));</span>
+<span class="nc" id="L351">    }</span>
+    
+    /**
+     * レコードの値を検証するValidatorを取得します。
+     * @return {@link CsvValidator}の実装クラスを設定します。
+     */
+    public List&lt;CsvValidator&lt;T&gt;&gt; getValidators() {
+<span class="nc" id="L358">        return validators;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

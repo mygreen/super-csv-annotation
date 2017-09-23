@@ -17,26 +17,26 @@
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> java.io.IOException;
 <a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> java.io.StringWriter;
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> java.nio.charset.Charset;
-<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Files;
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Paths;
-<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="14" href="#14">14</a>  
-<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> org.junit.Before;
-<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> org.supercsv.exception.SuperCsvException;
-<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> org.supercsv.prefs.CsvPreference;
-<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> org.supercsv.quote.AlwaysQuoteMode;
-<a class="jxr_linenumber" name="20" href="#20">20</a>  
-<a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.DefaultGroup;
-<a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMapping;
-<a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMappingFactory;
-<a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.exception.SuperCsvBindingException;
-<a class="jxr_linenumber" name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.validation.CsvExceptionConverter;
-<a class="jxr_linenumber" name="26" href="#26">26</a>  
-<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment"> * {@link CsvAnnotationBeanReader}のテスタ</em>
-<a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.time.LocalDate;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="13" href="#13">13</a>  
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> org.junit.Before;
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> org.supercsv.exception.SuperCsvException;
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> org.supercsv.prefs.CsvPreference;
+<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> org.supercsv.quote.AlwaysQuoteMode;
+<a class="jxr_linenumber" name="19" href="#19">19</a>  
+<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.DefaultGroup;
+<a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMapping;
+<a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMappingFactory;
+<a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.exception.SuperCsvBindingException;
+<a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.validation.CsvExceptionConverter;
+<a class="jxr_linenumber" name="25" href="#25">25</a>  
+<a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment"> * {@link CsvAnnotationBeanReader}のテスタ</em>
+<a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment"> * @version 2.1</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment"> * @since 1.2</em>
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <em class="jxr_javadoccomment"> *</em>
@@ -446,114 +446,190 @@
 <a class="jxr_linenumber" name="436" href="#436">436</a>     }
 <a class="jxr_linenumber" name="437" href="#437">437</a>     
 <a class="jxr_linenumber" name="438" href="#438">438</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="439" href="#439">439</a> <em class="jxr_javadoccomment">     * 書き込み用のデータを作成する</em>
-<a class="jxr_linenumber" name="440" href="#440">440</a> <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="441" href="#441">441</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="442" href="#442">442</a>     <strong class="jxr_keyword">private</strong> List&lt;SampleNormalBean&gt; createNormalData() {
+<a class="jxr_linenumber" name="439" href="#439">439</a> <em class="jxr_javadoccomment">     * 書き込みのテスト - 固定長のテスト</em>
+<a class="jxr_linenumber" name="440" href="#440">440</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="441" href="#441">441</a>     @Test
+<a class="jxr_linenumber" name="442" href="#442">442</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testWrite_fixedLength() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="443" href="#443">443</a>         
-<a class="jxr_linenumber" name="444" href="#444">444</a>         <em class="jxr_comment">// テストデータの作成</em>
-<a class="jxr_linenumber" name="445" href="#445">445</a>         <strong class="jxr_keyword">final</strong> List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="444" href="#444">444</a>         <em class="jxr_comment">// テストデータを作成する</em>
+<a class="jxr_linenumber" name="445" href="#445">445</a>         <strong class="jxr_keyword">final</strong> List&lt;SampleFixedColumnBean&gt; list = createFixedColumnData();
 <a class="jxr_linenumber" name="446" href="#446">446</a>         
-<a class="jxr_linenumber" name="447" href="#447">447</a>         <em class="jxr_comment">// データ1</em>
-<a class="jxr_linenumber" name="448" href="#448">448</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a> bean1 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a>();
-<a class="jxr_linenumber" name="449" href="#449">449</a>         list.add(bean1);
-<a class="jxr_linenumber" name="450" href="#450">450</a>         bean1.setId(1);
-<a class="jxr_linenumber" name="451" href="#451">451</a>         
-<a class="jxr_linenumber" name="452" href="#452">452</a>         bean1.setNumber1(999110);
-<a class="jxr_linenumber" name="453" href="#453">453</a>         bean1.setNumber2(10.2d);
-<a class="jxr_linenumber" name="454" href="#454">454</a>         
-<a class="jxr_linenumber" name="455" href="#455">455</a>         bean1.setString1(<span class="jxr_string">"abcd"</span>);
-<a class="jxr_linenumber" name="456" href="#456">456</a>         bean1.setString2(<span class="jxr_string">"12345"</span>);
-<a class="jxr_linenumber" name="457" href="#457">457</a>         
-<a class="jxr_linenumber" name="458" href="#458">458</a>         bean1.setDate1(toDate(2000, 1, 1, 0, 1, 2));
-<a class="jxr_linenumber" name="459" href="#459">459</a>         bean1.setDate2(toTimestamp(toDate(2000, 2, 3)));
+<a class="jxr_linenumber" name="447" href="#447">447</a>         StringWriter strWriter = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="448" href="#448">448</a>         
+<a class="jxr_linenumber" name="449" href="#449">449</a>         CsvAnnotationBeanWriter&lt;SampleFixedColumnBean&gt; csvWriter = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanWriter&lt;&gt;(
+<a class="jxr_linenumber" name="450" href="#450">450</a>                 SampleFixedColumnBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="451" href="#451">451</a>                 strWriter,
+<a class="jxr_linenumber" name="452" href="#452">452</a>                 CsvPreference.STANDARD_PREFERENCE);
+<a class="jxr_linenumber" name="453" href="#453">453</a>         
+<a class="jxr_linenumber" name="454" href="#454">454</a>         <strong class="jxr_keyword">final</strong> String[] expectedHeaders = <strong class="jxr_keyword">new</strong> String[]{
+<a class="jxr_linenumber" name="455" href="#455">455</a>                 <span class="jxr_string">"   no"</span>,
+<a class="jxr_linenumber" name="456" href="#456">456</a>                 <span class="jxr_string">"ユーザ名　　　　　　"</span>,
+<a class="jxr_linenumber" name="457" href="#457">457</a>                 <span class="jxr_string">"誕生日____"</span>,
+<a class="jxr_linenumber" name="458" href="#458">458</a>                 <span class="jxr_string">"コメント            "</span>
+<a class="jxr_linenumber" name="459" href="#459">459</a>             };
 <a class="jxr_linenumber" name="460" href="#460">460</a>         
-<a class="jxr_linenumber" name="461" href="#461">461</a>         bean1.setEnum1(SampleEnum.RED);
-<a class="jxr_linenumber" name="462" href="#462">462</a>         bean1.setEnum2(SampleEnum.RED);
+<a class="jxr_linenumber" name="461" href="#461">461</a>         <strong class="jxr_keyword">final</strong> String[] definitionHeaders = csvWriter.getDefinedHeader();
+<a class="jxr_linenumber" name="462" href="#462">462</a>         assertThat(definitionHeaders).containsExactly(expectedHeaders);
 <a class="jxr_linenumber" name="463" href="#463">463</a>         
-<a class="jxr_linenumber" name="464" href="#464">464</a>         bean1.setBoolean1(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="465" href="#465">465</a>         bean1.setBoolean2(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="464" href="#464">464</a>         csvWriter.writeHeader();
+<a class="jxr_linenumber" name="465" href="#465">465</a>         csvWriter.flush();
 <a class="jxr_linenumber" name="466" href="#466">466</a>         
-<a class="jxr_linenumber" name="467" href="#467">467</a>         <em class="jxr_comment">// データ2</em>
-<a class="jxr_linenumber" name="468" href="#468">468</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a> bean2 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a>();
-<a class="jxr_linenumber" name="469" href="#469">469</a>         list.add(bean2);
-<a class="jxr_linenumber" name="470" href="#470">470</a>         bean2.setId(2);
+<a class="jxr_linenumber" name="467" href="#467">467</a>         <strong class="jxr_keyword">for</strong>(<a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a> item : list) {
+<a class="jxr_linenumber" name="468" href="#468">468</a>             csvWriter.write(item);
+<a class="jxr_linenumber" name="469" href="#469">469</a>             csvWriter.flush();
+<a class="jxr_linenumber" name="470" href="#470">470</a>         }
 <a class="jxr_linenumber" name="471" href="#471">471</a>         
-<a class="jxr_linenumber" name="472" href="#472">472</a>         bean2.setNumber1(-12);
-<a class="jxr_linenumber" name="473" href="#473">473</a>         bean2.setNumber2(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="472" href="#472">472</a>         String actual = strWriter.toString();
+<a class="jxr_linenumber" name="473" href="#473">473</a>         System.out.println(actual);
 <a class="jxr_linenumber" name="474" href="#474">474</a>         
-<a class="jxr_linenumber" name="475" href="#475">475</a>         bean2.setString1(<span class="jxr_string">"あいうえお"</span>);
-<a class="jxr_linenumber" name="476" href="#476">476</a>         bean2.setString2(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="475" href="#475">475</a>         String expected = getTextFromFile(<span class="jxr_string">"src/test/data/test_write_fixedColumn.csv"</span>, Charset.forName(<span class="jxr_string">"UTF-8"</span>));
+<a class="jxr_linenumber" name="476" href="#476">476</a>         assertThat(actual).isEqualTo(expected);
 <a class="jxr_linenumber" name="477" href="#477">477</a>         
-<a class="jxr_linenumber" name="478" href="#478">478</a>         bean2.setDate1(toDate(2000, 2, 1, 3, 4, 5));
-<a class="jxr_linenumber" name="479" href="#479">479</a>         bean2.setDate2(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="480" href="#480">480</a>         
-<a class="jxr_linenumber" name="481" href="#481">481</a>         bean2.setEnum1(SampleEnum.BLUE);
-<a class="jxr_linenumber" name="482" href="#482">482</a>         bean2.setEnum2(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="483" href="#483">483</a>         
-<a class="jxr_linenumber" name="484" href="#484">484</a>         bean2.setBoolean1(false);
-<a class="jxr_linenumber" name="485" href="#485">485</a>         bean2.setBoolean2(Boolean.FALSE);
-<a class="jxr_linenumber" name="486" href="#486">486</a>         
-<a class="jxr_linenumber" name="487" href="#487">487</a>         <strong class="jxr_keyword">return</strong> list;
-<a class="jxr_linenumber" name="488" href="#488">488</a>     }
-<a class="jxr_linenumber" name="489" href="#489">489</a>     
-<a class="jxr_linenumber" name="490" href="#490">490</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_javadoccomment">     * 部分的なカラムの書き込み用のデータを作成する</em>
-<a class="jxr_linenumber" name="492" href="#492">492</a> <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="493" href="#493">493</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="494" href="#494">494</a>     <strong class="jxr_keyword">private</strong> List&lt;SamplePartialBean&gt; createPartialData() {
-<a class="jxr_linenumber" name="495" href="#495">495</a>         
-<a class="jxr_linenumber" name="496" href="#496">496</a>         <em class="jxr_comment">// テストデータの作成</em>
-<a class="jxr_linenumber" name="497" href="#497">497</a>         <strong class="jxr_keyword">final</strong> List&lt;SamplePartialBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="498" href="#498">498</a>         
-<a class="jxr_linenumber" name="499" href="#499">499</a>         <em class="jxr_comment">// データ1</em>
-<a class="jxr_linenumber" name="500" href="#500">500</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a> bean1 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a>();
-<a class="jxr_linenumber" name="501" href="#501">501</a>         list.add(bean1);
-<a class="jxr_linenumber" name="502" href="#502">502</a>         bean1.setId(1);
-<a class="jxr_linenumber" name="503" href="#503">503</a>         
-<a class="jxr_linenumber" name="504" href="#504">504</a>         bean1.setNumber1(999110);
+<a class="jxr_linenumber" name="478" href="#478">478</a>         assertThat(csvWriter.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="479" href="#479">479</a>         
+<a class="jxr_linenumber" name="480" href="#480">480</a>         csvWriter.close();
+<a class="jxr_linenumber" name="481" href="#481">481</a>     }
+<a class="jxr_linenumber" name="482" href="#482">482</a>     
+<a class="jxr_linenumber" name="483" href="#483">483</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">     * 書き込み用のデータを作成する</em>
+<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">     * @return</em>
+<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a>     <strong class="jxr_keyword">private</strong> List&lt;SampleNormalBean&gt; createNormalData() {
+<a class="jxr_linenumber" name="488" href="#488">488</a>         
+<a class="jxr_linenumber" name="489" href="#489">489</a>         <em class="jxr_comment">// テストデータの作成</em>
+<a class="jxr_linenumber" name="490" href="#490">490</a>         <strong class="jxr_keyword">final</strong> List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="491" href="#491">491</a>         
+<a class="jxr_linenumber" name="492" href="#492">492</a>         <em class="jxr_comment">// データ1</em>
+<a class="jxr_linenumber" name="493" href="#493">493</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a> bean1 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a>();
+<a class="jxr_linenumber" name="494" href="#494">494</a>         list.add(bean1);
+<a class="jxr_linenumber" name="495" href="#495">495</a>         bean1.setId(1);
+<a class="jxr_linenumber" name="496" href="#496">496</a>         
+<a class="jxr_linenumber" name="497" href="#497">497</a>         bean1.setNumber1(999110);
+<a class="jxr_linenumber" name="498" href="#498">498</a>         bean1.setNumber2(10.2d);
+<a class="jxr_linenumber" name="499" href="#499">499</a>         
+<a class="jxr_linenumber" name="500" href="#500">500</a>         bean1.setString1(<span class="jxr_string">"abcd"</span>);
+<a class="jxr_linenumber" name="501" href="#501">501</a>         bean1.setString2(<span class="jxr_string">"12345"</span>);
+<a class="jxr_linenumber" name="502" href="#502">502</a>         
+<a class="jxr_linenumber" name="503" href="#503">503</a>         bean1.setDate1(toDate(2000, 1, 1, 0, 1, 2));
+<a class="jxr_linenumber" name="504" href="#504">504</a>         bean1.setDate2(toTimestamp(toDate(2000, 2, 3)));
 <a class="jxr_linenumber" name="505" href="#505">505</a>         
-<a class="jxr_linenumber" name="506" href="#506">506</a>         bean1.setString1(<span class="jxr_string">"abcd"</span>);
-<a class="jxr_linenumber" name="507" href="#507">507</a>         
-<a class="jxr_linenumber" name="508" href="#508">508</a>         bean1.setDate1(toDate(2000, 1, 1, 0, 1, 2));
-<a class="jxr_linenumber" name="509" href="#509">509</a>         
-<a class="jxr_linenumber" name="510" href="#510">510</a>         bean1.setEnum1(SampleEnum.RED);
+<a class="jxr_linenumber" name="506" href="#506">506</a>         bean1.setEnum1(SampleEnum.RED);
+<a class="jxr_linenumber" name="507" href="#507">507</a>         bean1.setEnum2(SampleEnum.RED);
+<a class="jxr_linenumber" name="508" href="#508">508</a>         
+<a class="jxr_linenumber" name="509" href="#509">509</a>         bean1.setBoolean1(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="510" href="#510">510</a>         bean1.setBoolean2(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="511" href="#511">511</a>         
-<a class="jxr_linenumber" name="512" href="#512">512</a>         bean1.setBoolean1(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="513" href="#513">513</a>         
-<a class="jxr_linenumber" name="514" href="#514">514</a>         <em class="jxr_comment">// データ2</em>
-<a class="jxr_linenumber" name="515" href="#515">515</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a> bean2 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a>();
-<a class="jxr_linenumber" name="516" href="#516">516</a>         list.add(bean2);
-<a class="jxr_linenumber" name="517" href="#517">517</a>         bean2.setId(2);
-<a class="jxr_linenumber" name="518" href="#518">518</a>         
-<a class="jxr_linenumber" name="519" href="#519">519</a>         bean2.setNumber1(-12);
-<a class="jxr_linenumber" name="520" href="#520">520</a>         
-<a class="jxr_linenumber" name="521" href="#521">521</a>         bean2.setString1(<span class="jxr_string">"あいうえお"</span>);
+<a class="jxr_linenumber" name="512" href="#512">512</a>         <em class="jxr_comment">// データ2</em>
+<a class="jxr_linenumber" name="513" href="#513">513</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a> bean2 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html">SampleNormalBean</a>();
+<a class="jxr_linenumber" name="514" href="#514">514</a>         list.add(bean2);
+<a class="jxr_linenumber" name="515" href="#515">515</a>         bean2.setId(2);
+<a class="jxr_linenumber" name="516" href="#516">516</a>         
+<a class="jxr_linenumber" name="517" href="#517">517</a>         bean2.setNumber1(-12);
+<a class="jxr_linenumber" name="518" href="#518">518</a>         bean2.setNumber2(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="519" href="#519">519</a>         
+<a class="jxr_linenumber" name="520" href="#520">520</a>         bean2.setString1(<span class="jxr_string">"あいうえお"</span>);
+<a class="jxr_linenumber" name="521" href="#521">521</a>         bean2.setString2(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="522" href="#522">522</a>         
 <a class="jxr_linenumber" name="523" href="#523">523</a>         bean2.setDate1(toDate(2000, 2, 1, 3, 4, 5));
-<a class="jxr_linenumber" name="524" href="#524">524</a>         
-<a class="jxr_linenumber" name="525" href="#525">525</a>         bean2.setEnum1(SampleEnum.BLUE);
-<a class="jxr_linenumber" name="526" href="#526">526</a>         
-<a class="jxr_linenumber" name="527" href="#527">527</a>         bean2.setBoolean1(false);
+<a class="jxr_linenumber" name="524" href="#524">524</a>         bean2.setDate2(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="525" href="#525">525</a>         
+<a class="jxr_linenumber" name="526" href="#526">526</a>         bean2.setEnum1(SampleEnum.BLUE);
+<a class="jxr_linenumber" name="527" href="#527">527</a>         bean2.setEnum2(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="528" href="#528">528</a>         
-<a class="jxr_linenumber" name="529" href="#529">529</a>         <strong class="jxr_keyword">return</strong> list;
-<a class="jxr_linenumber" name="530" href="#530">530</a>     }
-<a class="jxr_linenumber" name="531" href="#531">531</a>     
-<a class="jxr_linenumber" name="532" href="#532">532</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="533" href="#533">533</a> <em class="jxr_javadoccomment">     * テキストファイルを読み込む。</em>
-<a class="jxr_linenumber" name="534" href="#534">534</a> <em class="jxr_javadoccomment">     * @param path</em>
-<a class="jxr_linenumber" name="535" href="#535">535</a> <em class="jxr_javadoccomment">     * @param charset</em>
-<a class="jxr_linenumber" name="536" href="#536">536</a> <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="537" href="#537">537</a> <em class="jxr_javadoccomment">     * @throws IOException</em>
+<a class="jxr_linenumber" name="529" href="#529">529</a>         bean2.setBoolean1(false);
+<a class="jxr_linenumber" name="530" href="#530">530</a>         bean2.setBoolean2(Boolean.FALSE);
+<a class="jxr_linenumber" name="531" href="#531">531</a>         
+<a class="jxr_linenumber" name="532" href="#532">532</a>         <strong class="jxr_keyword">return</strong> list;
+<a class="jxr_linenumber" name="533" href="#533">533</a>     }
+<a class="jxr_linenumber" name="534" href="#534">534</a>     
+<a class="jxr_linenumber" name="535" href="#535">535</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="536" href="#536">536</a> <em class="jxr_javadoccomment">     * 部分的なカラムの書き込み用のデータを作成する</em>
+<a class="jxr_linenumber" name="537" href="#537">537</a> <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="538" href="#538">538</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="539" href="#539">539</a>     <strong class="jxr_keyword">private</strong> String getTextFromFile(<strong class="jxr_keyword">final</strong> String path, <strong class="jxr_keyword">final</strong> Charset charset) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="539" href="#539">539</a>     <strong class="jxr_keyword">private</strong> List&lt;SamplePartialBean&gt; createPartialData() {
 <a class="jxr_linenumber" name="540" href="#540">540</a>         
-<a class="jxr_linenumber" name="541" href="#541">541</a>         byte[] data = Files.readAllBytes(Paths.get(path));
-<a class="jxr_linenumber" name="542" href="#542">542</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> String(data, charset);
+<a class="jxr_linenumber" name="541" href="#541">541</a>         <em class="jxr_comment">// テストデータの作成</em>
+<a class="jxr_linenumber" name="542" href="#542">542</a>         <strong class="jxr_keyword">final</strong> List&lt;SamplePartialBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="543" href="#543">543</a>         
-<a class="jxr_linenumber" name="544" href="#544">544</a>     }
-<a class="jxr_linenumber" name="545" href="#545">545</a>     
-<a class="jxr_linenumber" name="546" href="#546">546</a> }
+<a class="jxr_linenumber" name="544" href="#544">544</a>         <em class="jxr_comment">// データ1</em>
+<a class="jxr_linenumber" name="545" href="#545">545</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a> bean1 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a>();
+<a class="jxr_linenumber" name="546" href="#546">546</a>         list.add(bean1);
+<a class="jxr_linenumber" name="547" href="#547">547</a>         bean1.setId(1);
+<a class="jxr_linenumber" name="548" href="#548">548</a>         
+<a class="jxr_linenumber" name="549" href="#549">549</a>         bean1.setNumber1(999110);
+<a class="jxr_linenumber" name="550" href="#550">550</a>         
+<a class="jxr_linenumber" name="551" href="#551">551</a>         bean1.setString1(<span class="jxr_string">"abcd"</span>);
+<a class="jxr_linenumber" name="552" href="#552">552</a>         
+<a class="jxr_linenumber" name="553" href="#553">553</a>         bean1.setDate1(toDate(2000, 1, 1, 0, 1, 2));
+<a class="jxr_linenumber" name="554" href="#554">554</a>         
+<a class="jxr_linenumber" name="555" href="#555">555</a>         bean1.setEnum1(SampleEnum.RED);
+<a class="jxr_linenumber" name="556" href="#556">556</a>         
+<a class="jxr_linenumber" name="557" href="#557">557</a>         bean1.setBoolean1(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="558" href="#558">558</a>         
+<a class="jxr_linenumber" name="559" href="#559">559</a>         <em class="jxr_comment">// データ2</em>
+<a class="jxr_linenumber" name="560" href="#560">560</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a> bean2 = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SamplePartialBean.html">SamplePartialBean</a>();
+<a class="jxr_linenumber" name="561" href="#561">561</a>         list.add(bean2);
+<a class="jxr_linenumber" name="562" href="#562">562</a>         bean2.setId(2);
+<a class="jxr_linenumber" name="563" href="#563">563</a>         
+<a class="jxr_linenumber" name="564" href="#564">564</a>         bean2.setNumber1(-12);
+<a class="jxr_linenumber" name="565" href="#565">565</a>         
+<a class="jxr_linenumber" name="566" href="#566">566</a>         bean2.setString1(<span class="jxr_string">"あいうえお"</span>);
+<a class="jxr_linenumber" name="567" href="#567">567</a>         
+<a class="jxr_linenumber" name="568" href="#568">568</a>         bean2.setDate1(toDate(2000, 2, 1, 3, 4, 5));
+<a class="jxr_linenumber" name="569" href="#569">569</a>         
+<a class="jxr_linenumber" name="570" href="#570">570</a>         bean2.setEnum1(SampleEnum.BLUE);
+<a class="jxr_linenumber" name="571" href="#571">571</a>         
+<a class="jxr_linenumber" name="572" href="#572">572</a>         bean2.setBoolean1(false);
+<a class="jxr_linenumber" name="573" href="#573">573</a>         
+<a class="jxr_linenumber" name="574" href="#574">574</a>         <strong class="jxr_keyword">return</strong> list;
+<a class="jxr_linenumber" name="575" href="#575">575</a>     }
+<a class="jxr_linenumber" name="576" href="#576">576</a>     
+<a class="jxr_linenumber" name="577" href="#577">577</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="578" href="#578">578</a> <em class="jxr_javadoccomment">     * 固定長のカラムの書き込み用のデータを作成する。</em>
+<a class="jxr_linenumber" name="579" href="#579">579</a> <em class="jxr_javadoccomment">     * @return</em>
+<a class="jxr_linenumber" name="580" href="#580">580</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="581" href="#581">581</a>     <strong class="jxr_keyword">private</strong> List&lt;SampleFixedColumnBean&gt; createFixedColumnData() {
+<a class="jxr_linenumber" name="582" href="#582">582</a>         
+<a class="jxr_linenumber" name="583" href="#583">583</a>         <strong class="jxr_keyword">final</strong> List&lt;SampleFixedColumnBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="584" href="#584">584</a>         
+<a class="jxr_linenumber" name="585" href="#585">585</a>         {
+<a class="jxr_linenumber" name="586" href="#586">586</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a> bean = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a>();
+<a class="jxr_linenumber" name="587" href="#587">587</a>             
+<a class="jxr_linenumber" name="588" href="#588">588</a>             bean.setNo(1);
+<a class="jxr_linenumber" name="589" href="#589">589</a>             bean.setUserName(<span class="jxr_string">"山田　太郎"</span>);
+<a class="jxr_linenumber" name="590" href="#590">590</a>             bean.setBirthDay(LocalDate.of(1980, 1, 28));
+<a class="jxr_linenumber" name="591" href="#591">591</a>             bean.setComment(<span class="jxr_string">"全ての項目に値が設定"</span>);
+<a class="jxr_linenumber" name="592" href="#592">592</a>             
+<a class="jxr_linenumber" name="593" href="#593">593</a>             list.add(bean);
+<a class="jxr_linenumber" name="594" href="#594">594</a>         }
+<a class="jxr_linenumber" name="595" href="#595">595</a>         
+<a class="jxr_linenumber" name="596" href="#596">596</a>         {
+<a class="jxr_linenumber" name="597" href="#597">597</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a> bean = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a>();
+<a class="jxr_linenumber" name="598" href="#598">598</a>             
+<a class="jxr_linenumber" name="599" href="#599">599</a>             bean.setNo(2);
+<a class="jxr_linenumber" name="600" href="#600">600</a>             bean.setUserName(<span class="jxr_string">"田中　次郎"</span>);
+<a class="jxr_linenumber" name="601" href="#601">601</a>             bean.setBirthDay(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="602" href="#602">602</a>             bean.setComment(<span class="jxr_string">"誕生日の項目が空。"</span>);
+<a class="jxr_linenumber" name="603" href="#603">603</a>             
+<a class="jxr_linenumber" name="604" href="#604">604</a>             list.add(bean);
+<a class="jxr_linenumber" name="605" href="#605">605</a>         }
+<a class="jxr_linenumber" name="606" href="#606">606</a>         
+<a class="jxr_linenumber" name="607" href="#607">607</a>         {
+<a class="jxr_linenumber" name="608" href="#608">608</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a> bean = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html">SampleFixedColumnBean</a>();
+<a class="jxr_linenumber" name="609" href="#609">609</a>             
+<a class="jxr_linenumber" name="610" href="#610">610</a>             bean.setNo(3);
+<a class="jxr_linenumber" name="611" href="#611">611</a>             bean.setUserName(<span class="jxr_string">"鈴木　三郎"</span>);
+<a class="jxr_linenumber" name="612" href="#612">612</a>             bean.setBirthDay(LocalDate.of(2000, 3, 25));
+<a class="jxr_linenumber" name="613" href="#613">613</a>             bean.setComment(<span class="jxr_string">"コメントを切落とす。あいう。"</span>);
+<a class="jxr_linenumber" name="614" href="#614">614</a>             
+<a class="jxr_linenumber" name="615" href="#615">615</a>             list.add(bean);
+<a class="jxr_linenumber" name="616" href="#616">616</a>         }
+<a class="jxr_linenumber" name="617" href="#617">617</a>         
+<a class="jxr_linenumber" name="618" href="#618">618</a>         <strong class="jxr_keyword">return</strong> list;
+<a class="jxr_linenumber" name="619" href="#619">619</a>         
+<a class="jxr_linenumber" name="620" href="#620">620</a>     }
+<a class="jxr_linenumber" name="621" href="#621">621</a>     
+<a class="jxr_linenumber" name="622" href="#622">622</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

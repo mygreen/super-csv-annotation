@@ -19,7 +19,9 @@ import com.github.mygreen.supercsv.annotation.conversion.CsvFullChar;
 import com.github.mygreen.supercsv.annotation.conversion.CsvHalfChar;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLeftPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvLower;
+import com.github.mygreen.supercsv.annotation.conversion.CsvMultiPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
+import com.github.mygreen.supercsv.annotation.conversion.CsvOneSideTrim;
 import com.github.mygreen.supercsv.annotation.conversion.CsvRegexReplace;
 import com.github.mygreen.supercsv.annotation.conversion.CsvRightPad;
 import com.github.mygreen.supercsv.annotation.conversion.CsvTrim;
@@ -40,7 +42,9 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.FullCharFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.HalfCharFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LeftPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.LowerFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.MultiPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.NullConvertFactory;
+import com.github.mygreen.supercsv.cellprocessor.conversion.OneSideTrimFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.RegexReplaceFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.RightPadFactory;
 import com.github.mygreen.supercsv.cellprocessor.conversion.TrimFactory;
@@ -60,157 +64,158 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
  *
  */
 public abstract class AbstractProcessorBuilder&lt;T&gt; implements ProcessorBuilder&lt;T&gt; {
-    
+
     /**
      * 読み込み時の変換用のCellProcessorを作成する。
      */
-<span class="fc" id="L67">    protected List&lt;ProcessorFactory&gt; readingFactory = new ArrayList&lt;&gt;();</span>
-    
+<span class="fc" id="L71">    protected List&lt;ProcessorFactory&gt; readingFactory = new ArrayList&lt;&gt;();</span>
+
     /**
      * 書き込み時の変換用のCellProcessorを作成する。
      */
-<span class="fc" id="L72">    protected List&lt;ProcessorFactory&gt; writingFactory = new ArrayList&lt;&gt;();</span>
-    
+<span class="fc" id="L76">    protected List&lt;ProcessorFactory&gt; writingFactory = new ArrayList&lt;&gt;();</span>
+
     /**
      * 変換のCellProcessorを作成する
      */
-<span class="fc" id="L77">    protected ConversionProcessorHandler conversionHandler = new ConversionProcessorHandler();</span>
-    
+<span class="fc" id="L81">    protected ConversionProcessorHandler conversionHandler = new ConversionProcessorHandler();</span>
+
     /**
      * 制約のCellProcessorを作成する
      */
-<span class="fc" id="L82">    protected ConstraintProcessorHandler constraintHandler = new ConstraintProcessorHandler();</span>
-    
+<span class="fc" id="L86">    protected ConstraintProcessorHandler constraintHandler = new ConstraintProcessorHandler();</span>
+
     /**
      * デフォルトコンストラクタ。
      * &lt;p&gt;{@link #init()}メソッドが呼ばれる。
      */
-<span class="fc" id="L88">    public AbstractProcessorBuilder() {</span>
-<span class="fc" id="L89">        init();</span>
-<span class="fc" id="L90">    }</span>
-    
+<span class="fc" id="L92">    public AbstractProcessorBuilder() {</span>
+<span class="fc" id="L93">        init();</span>
+<span class="fc" id="L94">    }</span>
+
     /**
      * デフォルトの{@link ProcessorFactory}などの登録を行い、初期化を行う。
-     * 
+     *
      */
     protected void init() {
-        
+
         // 読み込み用の登録
-<span class="fc" id="L99">        registerForReading(conversionHandler);</span>
-<span class="fc" id="L100">        registerForReading(new ParseProcessorFactory&lt;&gt;());</span>
-<span class="fc" id="L101">        registerForReading(constraintHandler);</span>
-        
+<span class="fc" id="L103">        registerForReading(conversionHandler);</span>
+<span class="fc" id="L104">        registerForReading(new ParseProcessorFactory&lt;&gt;());</span>
+<span class="fc" id="L105">        registerForReading(constraintHandler);</span>
+
         // 書き込み用の登録
-<span class="fc" id="L104">        registerForWriting(constraintHandler);</span>
-<span class="fc" id="L105">        registerForWriting(new PrintProcessorFactory&lt;&gt;());</span>
-<span class="fc" id="L106">        registerForWriting(conversionHandler);</span>
-        
+<span class="fc" id="L108">        registerForWriting(constraintHandler);</span>
+<span class="fc" id="L109">        registerForWriting(new PrintProcessorFactory&lt;&gt;());</span>
+<span class="fc" id="L110">        registerForWriting(conversionHandler);</span>
+
         // 変換用の登録
-<span class="fc" id="L109">        registerForConversion(CsvNullConvert.class, new NullConvertFactory());</span>
-<span class="fc" id="L110">        registerForConversion(CsvDefaultValue.class, new DefaultValueFactory());</span>
-<span class="fc" id="L111">        registerForConversion(CsvTrim.class, new TrimFactory());</span>
-<span class="fc" id="L112">        registerForConversion(CsvUpper.class, new UpperFactory());</span>
-<span class="fc" id="L113">        registerForConversion(CsvLower.class, new LowerFactory());</span>
-<span class="fc" id="L114">        registerForConversion(CsvRegexReplace.class, new RegexReplaceFactory());</span>
-<span class="fc" id="L115">        registerForConversion(CsvWordReplace.class, new WordReplaceFactory());</span>
-<span class="fc" id="L116">        registerForConversion(CsvFullChar.class, new FullCharFactory());</span>
-<span class="fc" id="L117">        registerForConversion(CsvHalfChar.class, new HalfCharFactory());</span>
-<span class="fc" id="L118">        registerForConversion(CsvLeftPad.class, new LeftPadFactory());</span>
-<span class="fc" id="L119">        registerForConversion(CsvRightPad.class, new RightPadFactory());</span>
-        
-        
+<span class="fc" id="L113">        registerForConversion(CsvNullConvert.class, new NullConvertFactory());</span>
+<span class="fc" id="L114">        registerForConversion(CsvDefaultValue.class, new DefaultValueFactory());</span>
+<span class="fc" id="L115">        registerForConversion(CsvTrim.class, new TrimFactory());</span>
+<span class="fc" id="L116">        registerForConversion(CsvUpper.class, new UpperFactory());</span>
+<span class="fc" id="L117">        registerForConversion(CsvLower.class, new LowerFactory());</span>
+<span class="fc" id="L118">        registerForConversion(CsvRegexReplace.class, new RegexReplaceFactory());</span>
+<span class="fc" id="L119">        registerForConversion(CsvWordReplace.class, new WordReplaceFactory());</span>
+<span class="fc" id="L120">        registerForConversion(CsvFullChar.class, new FullCharFactory());</span>
+<span class="fc" id="L121">        registerForConversion(CsvHalfChar.class, new HalfCharFactory());</span>
+<span class="fc" id="L122">        registerForConversion(CsvLeftPad.class, new LeftPadFactory());</span>
+<span class="fc" id="L123">        registerForConversion(CsvRightPad.class, new RightPadFactory());</span>
+<span class="fc" id="L124">        registerForConversion(CsvMultiPad.class, new MultiPadFactory());</span>
+<span class="fc" id="L125">        registerForConversion(CsvOneSideTrim.class, new OneSideTrimFactory());</span>
+
         // 制約用の登録
-<span class="fc" id="L123">        registerForConstraint(CsvRequire.class, new RequireFactory());</span>
-<span class="fc" id="L124">        registerForConstraint(CsvUnique.class, new UniqueFactory&lt;&gt;());</span>
-<span class="fc" id="L125">        registerForConstraint(CsvUniqueHashCode.class, new UniqueHashCodeFactory&lt;&gt;());</span>
-<span class="fc" id="L126">        registerForConstraint(CsvEquals.class, new EqualsFactory&lt;&gt;());</span>
-        
-<span class="fc" id="L128">    }</span>
-    
+<span class="fc" id="L128">        registerForConstraint(CsvRequire.class, new RequireFactory());</span>
+<span class="fc" id="L129">        registerForConstraint(CsvUnique.class, new UniqueFactory&lt;&gt;());</span>
+<span class="fc" id="L130">        registerForConstraint(CsvUniqueHashCode.class, new UniqueHashCodeFactory&lt;&gt;());</span>
+<span class="fc" id="L131">        registerForConstraint(CsvEquals.class, new EqualsFactory&lt;&gt;());</span>
+
+<span class="fc" id="L133">    }</span>
+
     @Override
-    public Optional&lt;CellProcessor&gt; buildForReading(final Class&lt;T&gt; type, final FieldAccessor field, 
+    public Optional&lt;CellProcessor&gt; buildForReading(final Class&lt;T&gt; type, final FieldAccessor field,
             final Configuration config, final Class&lt;?&gt;[] groups) {
-        
+
         // 登録時とは逆順に処理する
-<span class="fc" id="L135">        final List&lt;ProcessorFactory&gt; factories = new ArrayList&lt;&gt;(readingFactory);</span>
-<span class="fc" id="L136">        Collections.reverse(factories);</span>
-        
-<span class="fc" id="L138">        final TextFormatter&lt;T&gt; formatter = getFormatter(field, config);</span>
-        
-<span class="fc" id="L140">        Optional&lt;CellProcessor&gt; processor = Optional.empty();</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">        for(ProcessorFactory factory : factories) {</span>
-<span class="fc" id="L142">            processor = factory.create(processor, field, formatter, config, BuildCase.Read, groups);</span>
-<span class="fc" id="L143">        }</span>
-        
-<span class="fc" id="L145">        return processor;</span>
-        
+<span class="fc" id="L140">        final List&lt;ProcessorFactory&gt; factories = new ArrayList&lt;&gt;(readingFactory);</span>
+<span class="fc" id="L141">        Collections.reverse(factories);</span>
+
+<span class="fc" id="L143">        final TextFormatter&lt;T&gt; formatter = getFormatter(field, config);</span>
+
+<span class="fc" id="L145">        Optional&lt;CellProcessor&gt; processor = Optional.empty();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for(ProcessorFactory factory : factories) {</span>
+<span class="fc" id="L147">            processor = factory.create(processor, field, formatter, config, BuildCase.Read, groups);</span>
+<span class="fc" id="L148">        }</span>
+
+<span class="fc" id="L150">        return processor;</span>
+
     }
-    
+
     @Override
     public Optional&lt;CellProcessor&gt; buildForWriting(final Class&lt;T&gt; type, final FieldAccessor field,
             final Configuration config, final Class&lt;?&gt;[] groups) {
-        
+
         // 登録時とは逆順に処理する
-<span class="fc" id="L154">        final List&lt;ProcessorFactory&gt; factories = new ArrayList&lt;&gt;(writingFactory);</span>
-<span class="fc" id="L155">        Collections.reverse(factories);</span>
-        
-<span class="fc" id="L157">        final TextFormatter&lt;T&gt; formatter = getFormatter(field, config);</span>
-        
-<span class="fc" id="L159">        Optional&lt;CellProcessor&gt; processor = Optional.empty();</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        for(ProcessorFactory factory : factories) {</span>
-            
+<span class="fc" id="L159">        final List&lt;ProcessorFactory&gt; factories = new ArrayList&lt;&gt;(writingFactory);</span>
+<span class="fc" id="L160">        Collections.reverse(factories);</span>
+
+<span class="fc" id="L162">        final TextFormatter&lt;T&gt; formatter = getFormatter(field, config);</span>
+
+<span class="fc" id="L164">        Optional&lt;CellProcessor&gt; processor = Optional.empty();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for(ProcessorFactory factory : factories) {</span>
+
             //制約のProcessorの実行有無の判定
-<span class="fc bfc" id="L163" title="All 4 branches covered.">            if(config.isSkipValidationOnWrite()</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">            if(config.isSkipValidationOnWrite()</span>
                     &amp;&amp; factory instanceof ConstraintProcessorHandler) {
-<span class="fc" id="L165">                continue;</span>
+<span class="fc" id="L170">                continue;</span>
             }
-            
-<span class="fc" id="L168">            processor = factory.create(processor, field, formatter, config, BuildCase.Write, groups);</span>
-<span class="fc" id="L169">        }</span>
-        
-<span class="fc" id="L171">        return processor;</span>
+
+<span class="fc" id="L173">            processor = factory.create(processor, field, formatter, config, BuildCase.Write, groups);</span>
+<span class="fc" id="L174">        }</span>
+
+<span class="fc" id="L176">        return processor;</span>
     }
-    
+
     /**
      * 読み込み用のCellProcessorを作成するクラスを登録する。
      * &lt;p&gt;実行時は、登録された順に処理される。
      * @param factory {@link ProcessorFactory}の実装クラス。
      */
     public void registerForReading(final ProcessorFactory factory) {
-<span class="fc" id="L180">        this.readingFactory.add(factory);</span>
-<span class="fc" id="L181">    }</span>
-    
+<span class="fc" id="L185">        this.readingFactory.add(factory);</span>
+<span class="fc" id="L186">    }</span>
+
     /**
      * 書き込み用のCellProcessorを作成するクラスを登録する。
      * &lt;p&gt;実行時は、登録された順に処理される。
      * @param factory {@link ProcessorFactory}の実装クラス。
      */
     public void registerForWriting(final ProcessorFactory factory) {
-<span class="fc" id="L189">        this.writingFactory.add(factory);</span>
-<span class="fc" id="L190">    }</span>
-    
+<span class="fc" id="L194">        this.writingFactory.add(factory);</span>
+<span class="fc" id="L195">    }</span>
+
     /**
      * 変換のCellProcessorを作成するクラスを登録する。読み込み時と書き込み時は共通です。
-     * 
+     *
      * @param &lt;A&gt; アノテーションのクラス
      * @param anno 関連づけるアノテーション
      * @param factory アノテーションを処理する{@link ConversionProcessorFactory}の実装。
      */
     public &lt;A extends Annotation&gt; void registerForConversion(final Class&lt;A&gt; anno, final ConversionProcessorFactory&lt;A&gt; factory) {
-<span class="fc" id="L200">        this.conversionHandler.register(anno, factory);</span>
-<span class="fc" id="L201">    }</span>
-    
+<span class="fc" id="L205">        this.conversionHandler.register(anno, factory);</span>
+<span class="fc" id="L206">    }</span>
+
     /**
      * 制約のCellProcessorを作成するクラスを登録する。読み込み時と書き込み時は共通です。
-     * 
+     *
      * @param &lt;A&gt; アノテーションのクラス
      * @param anno 関連づけるアノテーション
      * @param factory アノテーションを処理する{@link ConstraintProcessorFactory}の実装。
      */
     public &lt;A extends Annotation&gt; void registerForConstraint(final Class&lt;A&gt; anno, final ConstraintProcessorFactory&lt;A&gt; factory) {
-<span class="fc" id="L211">        this.constraintHandler.register(anno, factory);</span>
-<span class="fc" id="L212">    }</span>
-    
+<span class="fc" id="L216">        this.constraintHandler.register(anno, factory);</span>
+<span class="fc" id="L217">    }</span>
+
     /**
      * 文字列とオブジェクトを相互変換するフォーマッタを取得します。
      * &lt;p&gt;アノテーション{@link CsvFormat}が指定されている場合は、そちらを優先します。&lt;/p&gt;
@@ -220,22 +225,22 @@ public abstract class AbstractProcessorBuilder&lt;T&gt; implements ProcessorBuil
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     public TextFormatter&lt;T&gt; getFormatter(final FieldAccessor field, final Configuration config) {
-        
-<span class="fc bfc" id="L224" title="All 2 branches covered.">        if(field.hasAnnotation(CsvFormat.class)) {</span>
-<span class="fc" id="L225">            CsvFormat formatAnno = field.getAnnotation(CsvFormat.class).get();</span>
-            
-<span class="fc" id="L227">            final TextFormatter&lt;T&gt; formatter = (TextFormatter&lt;T&gt;) config.getBeanFactory().create(formatAnno.formatter());</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">            if(!formatAnno.message().isEmpty()) {</span>
-<span class="fc" id="L229">                formatter.setValidationMessage(formatAnno.message());</span>
+
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if(field.hasAnnotation(CsvFormat.class)) {</span>
+<span class="fc" id="L230">            CsvFormat formatAnno = field.getAnnotation(CsvFormat.class).get();</span>
+
+<span class="fc" id="L232">            final TextFormatter&lt;T&gt; formatter = (TextFormatter&lt;T&gt;) config.getBeanFactory().create(formatAnno.formatter());</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            if(!formatAnno.message().isEmpty()) {</span>
+<span class="fc" id="L234">                formatter.setValidationMessage(formatAnno.message());</span>
             }
-<span class="fc" id="L231">            return formatter;</span>
-            
+<span class="fc" id="L236">            return formatter;</span>
+
         } else {
-<span class="fc" id="L234">            return getDefaultFormatter(field, config);</span>
-            
+<span class="fc" id="L239">            return getDefaultFormatter(field, config);</span>
+
         }
     }
-    
+
     /**
      * 文字列とオブジェクトを相互変換する標準のフォーマッタを取得します。
      * &lt;p&gt;書式が設定されている場合は、書式に沿って処理を行います。&lt;/p&gt;
@@ -244,22 +249,22 @@ public abstract class AbstractProcessorBuilder&lt;T&gt; implements ProcessorBuil
      * @return 標準のフォーマッタを取得します。
      */
     protected abstract TextFormatter&lt;T&gt; getDefaultFormatter(FieldAccessor field, Configuration config);
-    
+
     /**
      * 登録している変換用のアノテーションとそのファクトリクラスの情報を取得します。
      * @return アノテーションと対応する{@link ConversionProcessorFactory}のマップ。
      */
     public Set&lt;Map.Entry&lt;Class&lt;? extends Annotation&gt;, ConversionProcessorFactory&lt;?&gt;&gt;&gt;  getEntrySetForConversion() {
-<span class="nc" id="L253">        return conversionHandler.getEntrySet();</span>
+<span class="nc" id="L258">        return conversionHandler.getEntrySet();</span>
     }
-    
+
     /**
      * 登録している検証用のアノテーションとそのファクトリクラスの情報を取得します。
      * @return アノテーションと対応する{@link ConstraintProcessorFactory}のマップ。
      */
     public Set&lt;Map.Entry&lt;Class&lt;? extends Annotation&gt;, ConstraintProcessorFactory&lt;?&gt;&gt;&gt;  getEntrySetForConsraint() {
-<span class="nc" id="L261">        return constraintHandler.getEntrySet();</span>
+<span class="nc" id="L266">        return constraintHandler.getEntrySet();</span>
     }
-    
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

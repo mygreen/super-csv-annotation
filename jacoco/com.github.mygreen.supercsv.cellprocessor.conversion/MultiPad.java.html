@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MultiPad.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">MultiPad.java</span></div><h1>MultiPad.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.util.CsvContext;
+
+/**
+ * 固定長にそろえる{@link CellProcessor}。
+ *
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+public class MultiPad extends CellProcessorAdaptor implements StringCellProcessor {
+
+    /**
+     * パディングのサイズ
+     */
+    private final int size;
+
+    /**
+     * パディング文字
+     */
+    private final char padChar;
+
+    /**
+     * 右詰めかどうか。
+     */
+    private final boolean rightAlign;
+
+    /**
+     * 固定長を超える場合に切り出しをするかどうか。
+     */
+    private final boolean chopped;
+
+    /**
+     * パディング処理の実装
+     */
+    private final PaddingProcessor paddingProcessor;
+
+    /**
+     * コンストラクタ
+     *
+     * @param size パディングのサイズ
+     * @param padChar パディングする文字。
+     * @param rightAlign 右詰めするかどうか。
+     * @param chopped 処理対象の文字が固定長を超えている場合に、切り出すかどうか。
+     * @param paddingProcessor パディング処理の実装
+     * @throws IllegalArgumentException {@literal length &lt;= 0.}
+     */
+    public MultiPad(final int size, final char padChar, final boolean rightAlign, final boolean chopped,
+            final PaddingProcessor paddingProcessor) {
+<span class="fc" id="L54">        super();</span>
+
+<span class="fc" id="L56">        checkPreconditions(size, paddingProcessor);</span>
+
+<span class="fc" id="L58">        this.size = size;</span>
+<span class="fc" id="L59">        this.padChar = padChar;</span>
+<span class="fc" id="L60">        this.rightAlign = rightAlign;</span>
+<span class="fc" id="L61">        this.chopped = chopped;</span>
+<span class="fc" id="L62">        this.paddingProcessor = paddingProcessor;</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * コンストラクタ
+     *
+     * @param size パディングのサイズ
+     * @param padChar パディングする文字。
+     * @param rightAlign 右詰めするかどうか。
+     * @param chopped 処理対象の文字が固定長を超えている場合に、切り出すかどうか。
+     * @param paddingProcessor パディング処理の実装
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     * @throws IllegalArgumentException {@literal length &lt;= 0.}
+     */
+    public MultiPad(final int size, final char padChar, final boolean rightAlign, final boolean chopped,
+            final PaddingProcessor paddingProcessor, final StringCellProcessor next) {
+<span class="fc" id="L78">        super(next);</span>
+
+<span class="fc" id="L80">        checkPreconditions(size, paddingProcessor);</span>
+
+<span class="fc" id="L82">        this.size = size;</span>
+<span class="fc" id="L83">        this.padChar = padChar;</span>
+<span class="fc" id="L84">        this.rightAlign = rightAlign;</span>
+<span class="fc" id="L85">        this.chopped = chopped;</span>
+<span class="fc" id="L86">        this.paddingProcessor = paddingProcessor;</span>
+<span class="fc" id="L87">    }</span>
+
+    private static void checkPreconditions(final int size, final PaddingProcessor paddingProcessor) {
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if(size &lt;= 0) {</span>
+<span class="fc" id="L92">            throw new IllegalArgumentException(String.format(&quot;size should be &gt; 0, but was %d.&quot;, size));</span>
+        }
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if(paddingProcessor == null) {</span>
+<span class="fc" id="L96">            throw new IllegalArgumentException(&quot;paddingProcessor should not be null.&quot;);</span>
+        }
+
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public &lt;T&gt; T execute(final Object value, final CsvContext context) {
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        final String result = paddingProcessor.pad(value == null ? &quot;&quot; : (String) value,</span>
+                size, padChar, rightAlign, chopped);
+<span class="fc" id="L109">        return next.execute(result, context);</span>
+
+    }
+
+    /**
+     * パディングのサイズを取得する。
+     * @return パディングのサイズ
+     */
+    public int getSize() {
+<span class="fc" id="L118">        return size;</span>
+    }
+
+    /**
+     * パディング文字を取得する。
+     * @return パディング文字
+     */
+    public char getPadChar() {
+<span class="fc" id="L126">        return padChar;</span>
+    }
+
+    /**
+     * 右詰めかどうかを取得する。
+     * @return 右詰めかどうか。
+     */
+    public boolean isRightAlign() {
+<span class="fc" id="L134">        return rightAlign;</span>
+    }
+
+    /**
+     * 固定長を超える場合に切り出しをするかどうか取得する。
+     * @return 固定長を超える場合に切り出しをするかどうか。
+     */
+    public boolean isChopped() {
+<span class="fc" id="L142">        return chopped;</span>
+    }
+
+    /**
+     * パディング処理の実装を取得する。
+     * @return パディング処理の実装
+     */
+    public PaddingProcessor getPaddingProcessor() {
+<span class="fc" id="L150">        return paddingProcessor;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

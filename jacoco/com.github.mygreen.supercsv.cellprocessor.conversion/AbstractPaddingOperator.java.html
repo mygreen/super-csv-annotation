@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractPaddingOperator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">AbstractPaddingOperator.java</span></div><h1>AbstractPaddingOperator.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+/**
+ * パディング処理の抽象クラス。
+ * &lt;p&gt;サロゲートペアを考慮します。&lt;/p&gt;
+ *
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L11">public abstract class AbstractPaddingOperator implements PaddingProcessor {</span>
+
+    /**
+     * コードポイントの配列に変換する。
+     * @param text
+     * @return
+     */
+    private int[] toCodePointArray(final String text) {
+<span class="fc" id="L19">        final int length = text.length();</span>
+<span class="fc" id="L20">        final int codePointLength = text.codePointCount(0, length);</span>
+
+<span class="fc" id="L22">        int[] array = new int[codePointLength];</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for(int i=0, j=0, codePoint=0; i &lt; length; j++, i+=Character.charCount(codePoint)) {</span>
+<span class="fc" id="L24">            codePoint = text.codePointAt(i);</span>
+<span class="fc" id="L25">            array[j] = codePoint;</span>
+        }
+
+<span class="fc" id="L28">        return array;</span>
+    }
+
+    @Override
+    public String pad(final String text, final int size, final char padChar, final boolean rightAlign, final boolean chopped) {
+
+<span class="fc" id="L34">        final int currentSize = count(text);</span>
+<span class="fc" id="L35">        final int padCharSize = count(String.valueOf(padChar));</span>
+<span class="fc" id="L36">        final int[] codePointArray = toCodePointArray(text);</span>
+<span class="fc" id="L37">        final int codePointSize = codePointArray.length;</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(rightAlign) {</span>
+            // 右詰
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if(currentSize == size) {</span>
+<span class="fc" id="L42">                return text;</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            } else if(currentSize &gt; size) {</span>
+                // 指定した長さを超える場合
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                if(chopped) {</span>
+                    // 切り出す場合
+
+                    /*
+                     * 左端から長さをカウントしていき、オーバした長さ分を切り取る
+                     */
+<span class="fc" id="L52">                    final int overLength = currentSize - size;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                    for(int i=0, chopLength=0; i &lt; codePointSize; i++) {</span>
+<span class="fc" id="L54">                        final int codePoint = codePointArray[i];</span>
+<span class="fc" id="L55">                        chopLength += count(codePoint);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                        if(chopLength &gt;= overLength) {</span>
+                            // substring(i+1)
+<span class="fc" id="L58">                            String chopText = new String(codePointArray, i+1, codePointSize-(i+1));</span>
+
+                            // 切り取った後の再調整。
+                            // パディング文字が全角の場合は、余分に切り取る場合があるため。
+<span class="fc" id="L62">                            return pad(chopText, size, padChar, rightAlign, chopped);</span>
+                        }
+
+                    }
+
+                    // 全て切り出す場合
+<span class="nc" id="L68">                    return &quot;&quot;;</span>
+
+                } else {
+                    // 切り出さない場合
+<span class="fc" id="L72">                    return text;</span>
+                }
+            } else {
+                // 指定したサイズより少ない場合
+
+                /*
+                 * パディング文字を付与していく
+                 * ・パディング文字が全角の時があり、長さが2以上になるので注意する
+                 */
+<span class="fc" id="L81">                final int lackLength = size - currentSize;</span>
+<span class="fc" id="L82">                int padCount = lackLength / padCharSize;</span>
+
+<span class="fc" id="L84">                StringBuilder appender = new StringBuilder();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                for(int i=0; i &lt; padCount; i++) {</span>
+<span class="fc" id="L86">                    appender.append(padChar);</span>
+                }
+
+<span class="fc" id="L89">                appender.append(text);</span>
+
+<span class="fc" id="L91">                return appender.toString();</span>
+
+            }
+        } else {
+            // 左詰
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if(currentSize == size) {</span>
+<span class="fc" id="L98">                return text;</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            } else if(currentSize &gt; size) {</span>
+                // 指定したサイズを超える場合
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                if(chopped) {</span>
+                    // 切り出す場合
+
+                    /*
+                     * 右端から長さをカウントしていき、オーバした長さ分を切り取る
+                     */
+<span class="fc" id="L108">                    final int overLength = currentSize - size;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                    for(int i=codePointSize-1, chopLength=0; i &gt;= 0; i--) {</span>
+<span class="fc" id="L110">                        final int codePoint = codePointArray[i];</span>
+<span class="fc" id="L111">                        chopLength += count(codePoint);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                        if(chopLength &gt;= overLength) {</span>
+                            // substring(0, i)
+<span class="fc" id="L114">                            String chopText = new String(codePointArray, 0, i);</span>
+
+                            // 切り取った後の再調整。
+                            // パディング文字が全角の場合は、余分に切り取る場合があるため。
+<span class="fc" id="L118">                            return pad(chopText, size, padChar, rightAlign, chopped);</span>
+                        }
+
+                    }
+
+
+                    // 全て切り出す場合
+<span class="nc" id="L125">                    return &quot;&quot;;</span>
+
+                } else {
+                    // 切り出さない場合
+<span class="fc" id="L129">                    return text;</span>
+                }
+            } else {
+                // 指定したサイズより少ない場合
+
+                /*
+                 * パディング文字を付与していく
+                 * ・パディング文字が全角の時があり、長さが2以上になるので注意する
+                 */
+<span class="fc" id="L138">                final int lackLength = size - currentSize;</span>
+<span class="fc" id="L139">                int padCount = lackLength / padCharSize;</span>
+
+<span class="fc" id="L141">                StringBuilder appender = new StringBuilder(text);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                for(int i=0; i &lt; padCount; i++) {</span>
+<span class="fc" id="L143">                    appender.append(padChar);</span>
+                }
+
+<span class="fc" id="L146">                return appender.toString();</span>
+            }
+
+        }
+
+    }
+
+    /**
+     * 文字数をカウントする
+     * @param codePoint カウント対象のコードポイント
+     * @return 文字数
+     */
+    protected abstract int count(int codePoint);
+
+    /**
+     * 文字数をカウントする。
+     * @param text カウント対象の文字列
+     * @return 文字数
+     * @throws NullPointerException {@literal text is null.}
+     */
+    protected abstract int count(String text);
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

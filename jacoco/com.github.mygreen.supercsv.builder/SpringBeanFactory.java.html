@@ -38,7 +38,7 @@ import org.supercsv.util.BeanInterfaceProxy;
 <span class="fc" id="L38">        Objects.requireNonNull(clazz, &quot;clazz should not be null.&quot;);</span>
         
 <span class="fc" id="L40">        final String beanName = getBeanName(clazz);</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if(beanFactory.containsBean(beanName)) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(beanFactory.containsBean(beanName)) {</span>
             // Spring管理のクラスの場合
 <span class="fc" id="L43">            return beanFactory.getBean(beanName, clazz);</span>
             
@@ -46,22 +46,22 @@ import org.supercsv.util.BeanInterfaceProxy;
             // 通常のBeanクラスの場合
             Object obj;
             try {
-<span class="nc bnc" id="L49" title="All 2 branches missed.">                if(clazz.isInterface()) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">                if(clazz.isInterface()) {</span>
 <span class="nc" id="L50">                    obj = BeanInterfaceProxy.createProxy(clazz);</span>
                 } else {
-<span class="nc" id="L52">                    Constructor&lt;?&gt; cons = clazz.getDeclaredConstructor();</span>
-<span class="nc" id="L53">                    cons.setAccessible(true);</span>
-<span class="nc" id="L54">                    obj = cons.newInstance();</span>
+<span class="fc" id="L52">                    Constructor&lt;?&gt; cons = clazz.getDeclaredConstructor();</span>
+<span class="fc" id="L53">                    cons.setAccessible(true);</span>
+<span class="fc" id="L54">                    obj = cons.newInstance();</span>
                 }
                 
 <span class="nc" id="L57">            } catch (ReflectiveOperationException  e) {</span>
 <span class="nc" id="L58">                throw new SuperCsvReflectionException(String.format(&quot;Fail create bean instance of '%s'&quot;, clazz.getName()), e);</span>
-<span class="nc" id="L59">            }</span>
+<span class="fc" id="L59">            }</span>
             
             // Springコンテナ管理外でもインジェクションする。
-<span class="nc" id="L62">            beanFactory.autowireBean(obj);</span>
+<span class="fc" id="L62">            beanFactory.autowireBean(obj);</span>
             
-<span class="nc" id="L64">            return obj;</span>
+<span class="fc" id="L64">            return obj;</span>
         }
     }
     

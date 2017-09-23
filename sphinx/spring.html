@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>10. Spring Frameworkとの連携 &mdash; Super CSV Annotation 2.0.3 ドキュメント</title>
+  <title>12. Spring Frameworkとの連携 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
   
 
+  
+  
   
   
 
@@ -35,9 +37,9 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.0.3 ドキュメント" href="index.html"/>
-        <link rel="next" title="11. システム設定" href="configuration.html"/>
-        <link rel="prev" title="9. ライフサイクルイベントの管理" href="lifecycle.html"/>
+    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+        <link rel="next" title="13. システム設定" href="configuration.html"/>
+        <link rel="prev" title="11. ライフサイクルイベントの管理" href="lifecycle.html"/>
  
 <!-- my theme custom extrahead beacon -->
 
@@ -48,6 +50,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -67,7 +70,7 @@
             
             
               <div class="version">
-                2.0.3
+                2.1
               </div>
             
           
@@ -97,7 +100,10 @@
 
             
             
-                <p class="caption"><span class="caption-text">目次</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">目次</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -153,15 +159,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">4. 値の変換方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conversion.html#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id14">4.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id15">4.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id16">4.1.3. グループの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id17">4.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id18">4.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id19">4.1.3. グループの指定</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="conversion.html#id17">4.2. 独自の変換処理の作成方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conversion.html#id20">4.2. 独自の変換処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="conversion.html#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id20">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id22">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id23">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id25">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 </ul>
@@ -218,53 +224,66 @@
 <li class="toctree-l2"><a class="reference internal" href="partialization.html#id3">7.2. 部分的なカラムの書き込み</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">8. 独自のProcessorBuilderの作成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">8.1. CellProcessorを直接組み立てる場合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">8.2. エラー処理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixedsizecolumn.html">8. 固定長のカラムの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id4">8.1. 基本的な設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id5">8.2. ヘッダー行の固定長の指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id7">8.3. パディング処理方式の切り替え</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">9. ライフサイクルイベントの管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">9.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">9.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#bean">9.1. Beanの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id2">9.2. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id3">9.3. 書き出し方法</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">10. Spring Frameworkとの連携</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">10.1. ライブラリの追加</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#springbeanfactory">10.2. SpringBeanFactoryの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#xml">10.2.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#javaconfig">10.2.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#springbean">10.2.3. SpringBeanとしての定義</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">10.2.3.1. 独自の書式の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">10.2.3.2. 独自の変換/検証の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#processorbuilder">10.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#csvvalidator">10.2.3.4. CsvValidator の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">10.2.3.5. リスナクラスの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">10. 独自のProcessorBuilderの作成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">10.1. CellProcessorを直接組み立てる場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">10.2. エラー処理</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#csvbean">10.2.4. CsvBeanの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">10.2.5. SpringBeanFactoryの使用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">11.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">10.3. エラーメッセージの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id8">10.3.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">10.3.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#springmessageresolver">10.3.3. SpringMessageResolverの使用方法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. Spring Frameworkとの連携</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">12.1. ライブラリの追加</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#springbeanfactory">12.2. SpringBeanFactoryの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xml">12.2.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#javaconfig">12.2.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#springbean">12.2.3. SpringBeanとしての定義</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">12.2.3.1. 独自の書式の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">12.2.3.2. 独自の変換/検証の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#processorbuilder">12.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#csvvalidator">12.2.3.4. CsvValidator の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">12.2.3.5. リスナクラスの作成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#csvbean">12.2.4. CsvBeanの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">12.2.5. SpringBeanFactoryの使用方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">12.3. エラーメッセージの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">12.3.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">12.3.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#springmessageresolver">12.3.3. SpringMessageResolverの使用方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">11. システム設定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">11.1. システム設定の変更方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">11.2. システム設定の項目一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">13.1. システム設定の変更方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">12. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">12.1. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">12.2. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">12.3. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">12.4. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">12.5. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">12.6. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -280,8 +299,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Super CSV Annotation</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Super CSV Annotation</a>
+        
       </nav>
 
 
@@ -290,35 +311,52 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>10. Spring Frameworkとの連携</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>12. Spring Frameworkとの連携</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/spring.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/spring.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <div class="section" id="spring-framework">
-<h1>10. Spring Frameworkとの連携<a class="headerlink" href="#spring-framework" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>12. Spring Frameworkとの連携<a class="headerlink" href="#spring-framework" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>DI(Depenency Injection) 機能のフレームワーク <a class="reference external" href="https://projects.spring.io/spring-framework/">Spring Framework</a> と連携することができます。</p>
 <p>Spring Framework のコンテナで管理可能、DI可能な部分は、次の箇所になります。</p>
 <p>これらの機能・箇所は、 <code class="docutils literal"><span class="pre">BeanFactory</span></code> によるインスタンスを新しく作成する箇所であり、その実装を <code class="docutils literal"><span class="pre">SpringBeanFactory</span></code> に切り替え得ることで、DIを実現します。</p>
-<table border="1" class="docutils" id="id10">
-<caption><span class="caption-number">表 - 10.1 </span><span class="caption-text">Spring Frameworkとの連携可能な箇所</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="colwidths-given docutils" id="id10">
+<caption><span class="caption-number">表 - 12.1 </span><span class="caption-text">Spring Frameworkとの連携可能な箇所</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="40%" />
 <col width="60%" />
@@ -356,7 +394,7 @@
 </tbody>
 </table>
 <div class="section" id="id2">
-<h2>10.1. ライブラリの追加<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.1. ライブラリの追加<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Spring Frameworkを利用する際には、ライブリを追加します。
 Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 <p>Spring Frameworkのバージョンは、3.0以上を指定してください。</p>
@@ -373,9 +411,9 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="springbeanfactory">
-<h2>10.2. SpringBeanFactoryの設定方法<a class="headerlink" href="#springbeanfactory" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.2. SpringBeanFactoryの設定方法<a class="headerlink" href="#springbeanfactory" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="xml">
-<h3>10.2.1. XMLによるコンテナの設定<a class="headerlink" href="#xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.2.1. XMLによるコンテナの設定<a class="headerlink" href="#xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>XMLによる設定方法を説明します。</p>
 <p>コンテナの定義の基本は次のようになります。</p>
 <ul class="simple">
@@ -428,7 +466,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="javaconfig">
-<h3>10.2.2. JavaConfigによるコンテナの設定<a class="headerlink" href="#javaconfig" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.2.2. JavaConfigによるコンテナの設定<a class="headerlink" href="#javaconfig" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
 <p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
 特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
@@ -473,11 +511,11 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="springbean">
-<h3>10.2.3. SpringBeanとしての定義<a class="headerlink" href="#springbean" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.2.3. SpringBeanとしての定義<a class="headerlink" href="#springbean" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ステレオタイプのアノテーション <code class="docutils literal"><span class="pre">&#64;Component/&#64;Service/&#64;Reposition/&#64;Controller</span></code> をサポートしているため、
 これらを使いSpringBeanを定義します。</p>
 <div class="section" id="id3">
-<h4>10.2.3.1. 独自の書式の作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>12.2.3.1. 独自の書式の作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>独自の書式の <code class="docutils literal"><span class="pre">TextFormatter</span></code> を定義する際には、スコープを <em>proptotype</em> にします。
 読み込み時のエラーメッセージが、カラムごとに異なる場合があるため、インスタンスを別にします。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -555,7 +593,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="id4">
-<h4>10.2.3.2. 独自の変換/検証の作成<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>12.2.3.2. 独自の変換/検証の作成<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>検証用の <code class="docutils literal"><span class="pre">ConstraintProcessorFactory</span></code> の例として、DBにユーザが存在するかチェックするCellProcessorで説明します。</p>
 <p>変換用の <code class="docutils literal"><span class="pre">ConversionProcessorFactory</span></code> も同様の実装方法になります。</p>
 <ul class="simple">
@@ -810,7 +848,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="processorbuilder">
-<h4>10.2.3.3. 独自のProcessorBuilderクラスの作成<a class="headerlink" href="#processorbuilder" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>12.2.3.3. 独自のProcessorBuilderクラスの作成<a class="headerlink" href="#processorbuilder" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>独自のクラスタイプのProcessorBuilderは、自身をSpringBeanとして登録します。
 通常は、シングルトンでかまいません。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -880,7 +918,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="csvvalidator">
-<h4>10.2.3.4. CsvValidator の作成<a class="headerlink" href="#csvvalidator" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>12.2.3.4. CsvValidator の作成<a class="headerlink" href="#csvvalidator" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><em>CsvValidator</em> クラスは、シングルトンで管理します。</p>
 <p>SpringBeanをインジェクションしたいものがあれば行います。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -940,7 +978,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="id5">
-<h4>10.2.3.5. リスナクラスの作成<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>12.2.3.5. リスナクラスの作成<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>リスナクラスは、POJOであるため、SpringBeanをインジェクションしたいものがあれば行います。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -996,7 +1034,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </div>
 </div>
 <div class="section" id="csvbean">
-<h3>10.2.4. CsvBeanの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.2.4. CsvBeanの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>CSVのBeanの定義では、SpringBeanとして定義したクラスを指定します。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1065,7 +1103,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </div>
 </div>
 <div class="section" id="id6">
-<h3>10.2.5. SpringBeanFactoryの使用方法<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.2.5. SpringBeanFactoryの使用方法<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1139,10 +1177,10 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </div>
 </div>
 <div class="section" id="id7">
-<h2>10.3. エラーメッセージの設定方法<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>12.3. エラーメッセージの設定方法<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>SpringFrameworkの <code class="docutils literal"><span class="pre">MessageSource</span></code> を利用する方法を説明します。</p>
 <div class="section" id="id8">
-<h3>10.3.1. XMLによるコンテナの設定<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.3.1. XMLによるコンテナの設定<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>XMLによる設定方法を説明します。</p>
 <p>コンテナの定義の基本は次のようになります。</p>
 <ul class="simple">
@@ -1209,7 +1247,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="id9">
-<h3>10.3.2. JavaConfigによるコンテナの設定<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.3.2. JavaConfigによるコンテナの設定<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
 <p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
 特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
@@ -1280,7 +1318,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </td></tr></table></div>
 </div>
 <div class="section" id="springmessageresolver">
-<h3>10.3.3. SpringMessageResolverの使用方法<a class="headerlink" href="#springmessageresolver" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>12.3.3. SpringMessageResolverの使用方法<a class="headerlink" href="#springmessageresolver" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal"><span class="pre">SpringMessageResolver</span></code> を設定します。</p>
 <p>さらに、 <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</p>
 <div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -1358,15 +1396,18 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="configuration.html" class="btn btn-neutral float-right" title="11. システム設定" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="13. システム設定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lifecycle.html" class="btn btn-neutral" title="9. ライフサイクルイベントの管理" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="lifecycle.html" class="btn btn-neutral" title="11. ライフサイクルイベントの管理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1376,7 +1417,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-02-20 22:29:48
+      最終更新: 2017-09-23 19:13:00
 
     </p>
   </div>
@@ -1398,10 +1439,12 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.3',
+            VERSION:'2.1',
+            LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

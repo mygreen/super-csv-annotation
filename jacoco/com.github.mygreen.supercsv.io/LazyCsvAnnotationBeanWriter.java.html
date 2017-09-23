@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LazyCsvAnnotationBeanWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.io</a> &gt; <span class="el_source">LazyCsvAnnotationBeanWriter.java</span></div><h1>LazyCsvAnnotationBeanWriter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.io;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.supercsv.exception.SuperCsvException;
+import org.supercsv.prefs.CsvPreference;
+
+import com.github.mygreen.supercsv.annotation.CsvPartial;
+import com.github.mygreen.supercsv.builder.BeanMapping;
+import com.github.mygreen.supercsv.builder.ColumnMapping;
+import com.github.mygreen.supercsv.builder.BeanMappingFactoryHelper;
+import com.github.mygreen.supercsv.builder.LazyBeanMappingFactory;
+import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
+import com.github.mygreen.supercsv.localization.MessageBuilder;
+
+/**
+ * カラムの定義が曖昧なアノテーションを元にCSVファイルを書き出すためのクラス。
+ * &lt;p&gt;カラム番号が指定されていないBean定義を元にマッピングします。&lt;/p&gt;
+ * 
+ * @param &lt;T&gt; マッピング対象のBeanのクラスタイプ
+ * 
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+public class LazyCsvAnnotationBeanWriter&lt;T&gt; extends AbstractCsvAnnotationBeanWriter&lt;T&gt; {
+    
+    /**
+     * Beanのマッピング情報。
+     * ・初期化は済んでいない場合があるため、キャッシュとは別に管理する。
+     */
+    private final BeanMapping&lt;T&gt; beanMapping;
+    
+    /**
+     * ヘッダー情報を元に初期化済みかどうか
+     */
+<span class="fc" id="L46">    private boolean initialized = false;</span>
+    
+    /**
+     * Beanのクラスタイプを指定して、{@link LazyCsvAnnotationBeanWriter}を作成するコンストラクタ。
+     * &lt;p&gt;{@link BufferedWriter}にラップして実行されるため、ラップする必要はありません。&lt;/p&gt;
+     * 
+     * @param beanType Beanのクラスタイプ。
+     * @param writer the writer
+     * @param preference CSV preferences.
+     * @param groups グループ情報。適用するアノテーションを切り替える際に指定します。
+     * @throws NullPointerException {@literal if beanType or writer or preferences are null.}
+     */
+    public LazyCsvAnnotationBeanWriter(final Class&lt;T&gt; beanType, final Writer writer, final CsvPreference preference,
+            final Class&lt;?&gt;... groups) {
+<span class="fc" id="L60">        super(writer, preference);</span>
+        
+<span class="fc" id="L62">        Objects.requireNonNull(beanType, &quot;beanType should not be null.&quot;);</span>
+        
+<span class="fc" id="L64">        LazyBeanMappingFactory factory = new LazyBeanMappingFactory();</span>
+<span class="fc" id="L65">        this.beanMapping = factory.create(beanType, groups);</span>
+<span class="fc" id="L66">        this.validators.addAll(beanMapping.getValidators());</span>
+        
+<span class="fc" id="L68">    }</span>
+    
+    /**
+     * Beanのマッピング情報を指定して、{@link LazyCsvAnnotationBeanWriter}を作成するコンストラクタ。
+     * &lt;p&gt;{@link BufferedWriter}にラップして実行されるため、ラップする必要はありません。&lt;/p&gt;
+     * &lt;p&gt;Beanのマッピング情報を独自にカスタマイズして、{@link LazyBeanMappingFactory}から作成する場合に利用します。&lt;/p&gt;
+     * 
+     * @param beanMapping Beanのマッピング情報。
+     * @param writer the writer
+     * @param preference the CSV preferences.
+     * @throws NullPointerException {@literal if beanMapping or writer or preferences are null.}
+     */
+    public LazyCsvAnnotationBeanWriter(final BeanMapping&lt;T&gt; beanMapping, final Writer writer, final CsvPreference preference,
+            final Class&lt;?&gt;... groups) {
+<span class="fc" id="L82">        super(writer, preference);</span>
+        
+<span class="fc" id="L84">        Objects.requireNonNull(beanMapping, &quot;beanMapping should not be null.&quot;);</span>
+        
+<span class="fc" id="L86">        this.beanMapping = beanMapping;</span>
+<span class="fc" id="L87">        this.validators.addAll(beanMapping.getValidators());</span>
+        
+<span class="fc" id="L89">    }</span>
+    
+    /**
+     * 初期化が完了していないときに呼ばれたときにスローする例外のインスタンスを作成します。
+     */
+    private IllegalStateException newNotInitialzedException() {
+<span class="fc" id="L95">        return new IllegalStateException(MessageBuilder.create(&quot;noinit.onLazyWrite&quot;).format());</span>
+    }
+    
+    /**
+     * ヘッダー情報を指定しないで初期化を行います。
+     * &lt;p&gt;カラム番号が指定されていないカラムは、フィールドの名称順に空いている番号が割り振られます。&lt;/p&gt;
+     */
+    public void init() {
+<span class="fc" id="L103">        init(new String[]{});</span>
+<span class="fc" id="L104">    }</span>
+    
+    /**
+     * ヘッダー情報を指定して初期化を行います。
+     * &lt;p&gt;カラム番号が指定されていないカラムは、フィールドの名称順に空いている番号が割り振られます。&lt;/p&gt;
+     * @param headers ヘッダー情報
+     */
+    public void init(final String... headers) {
+        
+<span class="fc" id="L113">        setupMappingColumns(headers);</span>
+<span class="fc" id="L114">        this.beanMappingCache = BeanMappingCache.create(beanMapping);</span>
+        
+        // 初期化完了
+<span class="fc" id="L117">        this.initialized = true;</span>
+    
+<span class="fc" id="L119">    }</span>
+    
+    /**
+     * 指定したヘッダーを元に、マッピング情報を補完する。
+     * &lt;p&gt;カラムの位置である番号を確定する。&lt;/p&gt;
+     * &lt;p&gt;存在しないカラムがある場合は、部分的な読み込みとして、ダミーのカラム情報を作成する。&lt;/p&gt;
+     * @param headers
+     * @param SuperCsvInvalidAnnotationException
+     */
+    private void setupMappingColumns(final String[] headers) {
+        
+<span class="fc" id="L130">        final List&lt;ColumnMapping&gt; columnMappingList = beanMapping.getColumns();</span>
+        
+        // 一致するラベルがあれば、カラムの番号を補完する
+<span class="fc" id="L133">        final int headerSize = headers.length;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for(int i=0; i &lt; headerSize;i ++) {</span>
+            
+<span class="fc" id="L136">            final String header = headers[i];</span>
+            
+            /*
+             * 番号が決まっておらず、ラベルが一致するカラム情報を抽出する。
+             * ※既に番号が決まっているが、ラベルが一致しないのものは、後からチェックする。
+             */
+<span class="fc" id="L142">            List&lt;ColumnMapping&gt; undeterminedColumnList = columnMappingList.stream()</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                .filter(col -&gt; !col.isDeterminedNumber())</span>
+<span class="fc" id="L144">                .filter(col -&gt; col.getLabel().equals(header))</span>
+<span class="fc" id="L145">                .collect(Collectors.toList());</span>
+            
+<span class="fc" id="L147">            final int columnNumber = i+1;</span>
+<span class="fc" id="L148">            undeterminedColumnList.forEach(col -&gt; col.setNumber(columnNumber));</span>
+            
+        }
+        
+        // カラムの番号順に並び変える
+<span class="fc" id="L153">        columnMappingList.sort(null);</span>
+        
+        /* 
+         * ヘッダーでは指定されていない番号が未決定のカラムについて、空いている番号に振る
+         * ・@CsvPartialで指定した場合とかぶらないようにすべき？
+         */
+<span class="fc" id="L159">        final Optional&lt;CsvPartial&gt; partialAnno = Optional.ofNullable(beanMapping.getType().getAnnotation(CsvPartial.class));</span>
+<span class="fc" id="L160">        final List&lt;ColumnMapping&gt; undeterminedColumnList = columnMappingList.stream()</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                .filter(col -&gt; !col.isDeterminedNumber())</span>
+<span class="fc" id="L162">                .collect(Collectors.toList());</span>
+        
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if(!undeterminedColumnList.isEmpty()) {</span>
+<span class="fc" id="L165">            final Set&lt;Integer&gt; determinedNumbers = columnMappingList.stream()</span>
+<span class="fc" id="L166">                    .filter(col -&gt; col.isDeterminedNumber())</span>
+<span class="fc" id="L167">                    .map(col -&gt; col.getNumber())</span>
+<span class="fc" id="L168">                    .collect(Collectors.toSet());</span>
+            
+            // @CsvParitalで定義されているカラムは、決定されている番号として処理する。
+<span class="fc" id="L171">            partialAnno.ifPresent(anno -&gt; Arrays.stream(anno.headers()).forEach(header -&gt; determinedNumbers.add(header.number())));</span>
+            
+<span class="fc" id="L173">            int counter = 1;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            for(ColumnMapping col : undeterminedColumnList) {</span>
+                while(true) {
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                    if(!determinedNumbers.contains(counter)) {</span>
+<span class="fc" id="L177">                        break;</span>
+                    }
+<span class="fc" id="L179">                    counter++;</span>
+                }
+                
+<span class="fc" id="L182">                col.setNumber(counter);</span>
+<span class="fc" id="L183">                determinedNumbers.add(counter);</span>
+<span class="fc" id="L184">            }</span>
+            
+            // 第度カラムの番号順に並び変える
+<span class="fc" id="L187">            columnMappingList.sort(null);</span>
+        
+        }
+        
+        // 重複しているカラム番号のチェック
+<span class="fc" id="L192">        BeanMappingFactoryHelper.validateDuplicatedColumnNumber(beanMapping.getType(), columnMappingList);</span>
+        
+        // 不足しているカラム番号の補完
+<span class="fc" id="L195">        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanMapping.getType(), columnMappingList, partialAnno, headers);</span>
+        
+<span class="fc" id="L197">        beanMapping.setColumns(columnMappingList);</span>
+        
+<span class="fc" id="L199">    }</span>
+    
+    /**
+     * ヘッダー情報を書き出します。
+     * &lt;p&gt;ただし、列番号を省略され、定義がされていないカラムは、{@literal column[カラム番号]}の形式となります。&lt;/p&gt;
+     * @throws IOException ファイルの出力に失敗した場合。
+     * @throws IllegalStateException {@link #init()} メソッドによる初期化が完了していない場合
+     */
+    public void writeHeader() throws IOException {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if(!initialized) {</span>
+<span class="fc" id="L209">            throw newNotInitialzedException();</span>
+        }
+        
+<span class="fc" id="L212">        super.writeHeader(getDefinedHeader());</span>
+<span class="fc" id="L213">    }</span>
+    
+    /**
+     * レコードのデータを全て書き込みます。
+     * &lt;p&gt;ヘッダー行も自動的に処理されます。2回目以降に呼び出した場合、ヘッダー情報は書き込まれません。&lt;/p&gt;
+     * &lt;p&gt;レコード処理中に例外が発生した場合、その時点で処理を終了します。&lt;/p&gt;
+     * 
+     * @param sources 書き込むレコードのデータ。
+     * @throws NullPointerException sources is null.
+     * @throws IOException レコードの出力に失敗した場合。
+     * @throws SuperCsvBindingException セルの値に問題がある場合
+     * @throws SuperCsvException 設定など、その他に問題がある場合
+     * 
+     */
+    public void writeAll(final Collection&lt;T&gt; sources) throws IOException {
+<span class="fc" id="L228">        writeAll(sources, false);</span>
+<span class="fc" id="L229">    }</span>
+    
+    /**
+     * レコードのデータを全て書き込みます。
+     * &lt;p&gt;ヘッダー行も自動的に処理されます。2回目以降に呼び出した場合、ヘッダー情報は書き込まれません。&lt;/p&gt;
+     * 
+     * @param sources 書き込むレコードのデータ。
+     * @param continueOnError continueOnError レコードの処理中に、
+     *        例外{@link SuperCsvBindingException}が発生しても、続行するかどうか指定します。
+     *        trueの場合、例外が発生しても、次の処理を行います。
+     * @throws NullPointerException sources is null.
+     * @throws IOException レコードの出力に失敗した場合。
+     * @throws SuperCsvBindingException セルの値に問題がある場合
+     * @throws SuperCsvException 設定など、その他に問題がある場合
+     * 
+     */
+    public void writeAll(final Collection&lt;T&gt; sources, final boolean continueOnError) throws IOException {
+        
+<span class="fc" id="L247">        Objects.requireNonNull(sources, &quot;sources should not be null.&quot;);</span>
+        
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if(!initialized) {</span>
+<span class="fc" id="L250">            init();</span>
+        }
+        
+<span class="fc bfc" id="L253" title="All 4 branches covered.">        if(beanMappingCache.getOriginal().isHeader() &amp;&amp; getLineNumber() == 0) {</span>
+<span class="fc" id="L254">            writeHeader();</span>
+        }
+        
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for(T record : sources) {</span>
+            try {
+<span class="fc" id="L259">                write(record);</span>
+<span class="fc" id="L260">            } catch(SuperCsvBindingException e) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">                if(!continueOnError) {</span>
+<span class="fc" id="L262">                    throw e;</span>
+                }
+<span class="fc" id="L264">            }</span>
+<span class="fc" id="L265">        }</span>
+        
+<span class="fc" id="L267">        super.flush();</span>
+        
+<span class="fc" id="L269">    }</span>
+    
+    /**
+     * {@inheritDoc}
+     * @throws IllegalStateException {@link #init()} メソッドによる初期化が完了していない場合
+     */
+    @Override
+    public void write(final T source) throws IOException {
+        
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        if(!initialized) {</span>
+<span class="fc" id="L279">            throw newNotInitialzedException();</span>
+        }
+        
+<span class="fc" id="L282">        super.write(source);</span>
+        
+<span class="fc" id="L284">    }</span>
+    
+    /**
+     * {@inheritDoc}
+     * @throws IllegalStateException {@link #init()} メソッドによる初期化が完了していない場合
+     */
+    @Override
+    public String[] getDefinedHeader() {
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        if(!initialized) {</span>
+<span class="fc" id="L293">            throw newNotInitialzedException();</span>
+        }
+        
+<span class="fc" id="L296">        return super.getDefinedHeader();</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @throws IllegalStateException {@link #init()} メソッドによる初期化が完了していない場合
+     */
+    @Override
+    public BeanMapping&lt;T&gt; getBeanMapping() {
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        if(!initialized) {</span>
+<span class="fc" id="L306">            throw newNotInitialzedException();</span>
+        }
+        
+<span class="fc" id="L309">        return super.getBeanMapping();</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

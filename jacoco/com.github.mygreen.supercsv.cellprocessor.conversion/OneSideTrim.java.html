@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OneSideTrim.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.conversion</a> &gt; <span class="el_source">OneSideTrim.java</span></div><h1>OneSideTrim.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.conversion;
+
+import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.cellprocessor.ift.StringCellProcessor;
+import org.supercsv.util.CsvContext;
+
+/**
+ * 片方だけトリムするCellProcessor。
+ *
+ * @since 2.1
+ * @author T.TSUCHIE
+ *
+ */
+public class OneSideTrim extends CellProcessorAdaptor implements StringCellProcessor {
+
+    /**
+     * トリム対象の文字
+     */
+    private final char trimChar;
+
+    /**
+     * 左側をトリムするかどうか。
+     * ・トリム対象の文字がある側を指定します。
+     */
+    private final boolean leftAlign;
+
+    /**
+     * コンストラクタ
+     *
+     * @param trimChar トリム対象の文字
+     * @param leftAlign 左側をトリムするかどうか。
+     */
+    public OneSideTrim(final char trimChar, final boolean leftAlign) {
+<span class="fc" id="L35">        super();</span>
+<span class="fc" id="L36">        this.trimChar = trimChar;</span>
+<span class="fc" id="L37">        this.leftAlign = leftAlign;</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * コンストラクタ
+     *
+     * @param trimChar トリム対象の文字
+     * @param leftAlign 左側をトリムするかどうか。
+     * @param next チェインの中で呼ばれる次の{@link CellProcessor}.
+     */
+    public OneSideTrim(final char trimChar, final boolean leftAlign, final StringCellProcessor next) {
+<span class="fc" id="L48">        super(next);</span>
+<span class="fc" id="L49">        this.trimChar = trimChar;</span>
+<span class="fc" id="L50">        this.leftAlign = leftAlign;</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public &lt;T&gt; T execute(final Object value, final CsvContext context) {
+        
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if(value == null) {</span>
+<span class="fc" id="L60">            return next.execute(value,  context);</span>
+        }
+        
+<span class="fc" id="L63">        final String result = trim(value.toString());</span>
+<span class="fc" id="L64">        return next.execute(result, context);</span>
+    }
+
+    /**
+     * 文字をトリミングする
+     * @param str トリミング対象の文字
+     * @return トリムした結果
+     */
+    private String trim(final String str) {
+
+<span class="fc" id="L74">        final int length = str.length();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if(length == 0) {</span>
+<span class="fc" id="L76">            return str;</span>
+        }
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if(leftAlign) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            if(str.charAt(0) != trimChar) {</span>
+                // 左端がトリム対象の文字出ない場合、処理終了
+<span class="fc" id="L82">                return str;</span>
+
+            }
+
+            // 左側から、trimCharに一致しない位置を探す
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            for(int i=0; i &lt; length; i++) {</span>
+<span class="fc" id="L88">                char c = str.charAt(i);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                if(c != trimChar) {</span>
+<span class="fc" id="L90">                    return str.substring(i);</span>
+                }
+            }
+
+            // 全ての文字がトリム対象の場合
+<span class="fc" id="L95">            return &quot;&quot;;</span>
+
+        } else {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if(str.charAt(length - 1) != trimChar) {</span>
+                // 右端がトリム対象の文字出ない場合、処理終了
+<span class="fc" id="L100">                return str;</span>
+
+            }
+
+            // 右側から、trimCharに一致しない位置を探す
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            for(int i=length - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L106">                char c = str.charAt(i);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                if(c != trimChar) {</span>
+<span class="fc" id="L108">                    return str.substring(0, i + 1);</span>
+                }
+            }
+
+            // 全ての文字がトリム対象の場合
+<span class="fc" id="L113">            return &quot;&quot;;</span>
+
+        }
+
+    }
+
+    /**
+     * トリム対象の文字を取得する
+     * @return トリム対象の文字
+     */
+    public char getTrimChar() {
+<span class="fc" id="L124">        return trimChar;</span>
+    }
+
+    /**
+     * 左側をトリムするかどうかを取得する。
+     * @return 左側をトリムするかどうか
+     */
+    public boolean isLeftAlign() {
+<span class="fc" id="L132">        return leftAlign;</span>
+    }
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

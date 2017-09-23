@@ -286,8 +286,8 @@ public class AnnotationExpander {
 <span class="fc" id="L286">            return true;</span>
         }
         
-<span class="pc bpc" id="L289" title="1 of 2 branches missed.">        if(annoType.getAnnotation(CsvConversion.class) != null) {</span>
-<span class="nc" id="L290">            return true;</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        if(annoType.getAnnotation(CsvConversion.class) != null) {</span>
+<span class="fc" id="L290">            return true;</span>
         }
         
 <span class="pc bpc" id="L293" title="1 of 2 branches missed.">        if(annoType.getTypeName().startsWith(&quot;com.github.mygreen.supercsv.annotation.format&quot;)) {</span>
@@ -380,7 +380,7 @@ public class AnnotationExpander {
         // message 属性の取得。
         // 既に取得していたり、@CsvOverridesAttributeが付与されている場合はスキップする。
 <span class="fc bfc" id="L382" title="All 4 branches covered.">        if(!overrideAttrs.containsKey(&quot;message&quot;) &amp;&amp; !overrideMethodNames.contains(&quot;message&quot;)</span>
-<span class="pc bpc" id="L383" title="1 of 2 branches missed.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;message&quot;, String.class)) {</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;message&quot;, String.class)) {</span>
             
 <span class="fc" id="L385">            final Optional&lt;String&gt; messageAttr = Utils.getAnnotationAttribute(compositionAnno, &quot;message&quot;, String.class);</span>
 <span class="pc bpc" id="L386" title="1 of 4 branches missed.">            if(messageAttr.isPresent() &amp;&amp; Utils.isNotEmpty(messageAttr.get())) {</span>
@@ -394,7 +394,7 @@ public class AnnotationExpander {
 <span class="pc bpc" id="L394" title="1 of 2 branches missed.">                &amp;&amp; Utils.hasAnnotationAttribute(originalAnno, &quot;groups&quot;, Class[].class)) {</span>
             
 <span class="fc" id="L396">            final Optional&lt;Class[]&gt; groupsAttr = Utils.getAnnotationAttribute(compositionAnno, &quot;groups&quot;, Class[].class);</span>
-<span class="pc bpc" id="L397" title="1 of 4 branches missed.">            if(groupsAttr.isPresent() &amp;&amp; Utils.isNotEmpty(groupsAttr.get())) {</span>
+<span class="fc bfc" id="L397" title="All 4 branches covered.">            if(groupsAttr.isPresent() &amp;&amp; Utils.isNotEmpty(groupsAttr.get())) {</span>
 <span class="fc" id="L398">                overrideAttrs.put(&quot;groups&quot;, groupsAttr.get());</span>
             }
         }

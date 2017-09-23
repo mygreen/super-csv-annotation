@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemporalFormatWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.cellprocessor.format</a> &gt; <span class="el_source">TemporalFormatWrapper.java</span></div><h1>TemporalFormatWrapper.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.cellprocessor.format;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,8 +16,8 @@ import com.github.mygreen.supercsv.util.Utils;
 
 /**
  * Date and Time APIの{@link DateTimeFormatter}をラップしたクラス。
- * &lt;p&gt;{@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}に対応している。&lt;/p&gt;
  *
+ * @version 2.1
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -29,52 +28,53 @@ public class TemporalFormatWrapper&lt;T extends TemporalAccessor&gt; extends Abs
     
     private final Class&lt;T&gt; type;
     
+    private final Method parseMethod;
+    
     private String pattern;
     
     /**
      * 
      * @param formatter ラップする{@link DateTimeFormatter}を指定します。
-     * @param type {@link TemporalAccessor}の実装クラスである、
-     *        {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}の何れかを指定します。
+     * @param type {@link TemporalAccessor}の実装クラスを指定します。
      * @throws NullPointerException {@literal if formatter or type is null.}
+     * @throws IllegalArgumentException {@literal type is not support class type.}
      */
-<span class="fc" id="L41">    public TemporalFormatWrapper(final DateTimeFormatter formatter, final Class&lt;T&gt; type) {</span>
-<span class="fc" id="L42">        Objects.requireNonNull(formatter);</span>
-<span class="fc" id="L43">        Objects.requireNonNull(type);</span>
+<span class="fc" id="L42">    public TemporalFormatWrapper(final DateTimeFormatter formatter, final Class&lt;T&gt; type) {</span>
+<span class="fc" id="L43">        Objects.requireNonNull(formatter);</span>
+<span class="fc" id="L44">        Objects.requireNonNull(type);</span>
         
-<span class="fc" id="L45">        this.formatter = formatter;</span>
-<span class="fc" id="L46">        this.type = type;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L46">        this.formatter = formatter;</span>
+<span class="fc" id="L47">        this.type = type;</span>
+        
+        
+        try {
+<span class="fc" id="L51">            this.parseMethod = type.getMethod(&quot;parse&quot;, CharSequence.class, DateTimeFormatter.class);</span>
+            
+<span class="nc" id="L53">        } catch (NoSuchMethodException | SecurityException e) {</span>
+<span class="nc" id="L54">            throw new IllegalArgumentException(String.format(&quot;Cannot suuport type : %s.&quot;, type.getName()));</span>
+<span class="fc" id="L55">        }</span>
+        
+<span class="fc" id="L57">    }</span>
     
     /**
      * {@inheritDoc}
      * 
-     * {@link LocalDateTime}/{@link LocalDate}/{@link LocalTime}/{@link ZonedDateTime}以外のクラスタイプの場合、
-     * 例外{@link TextParseException}がスローされます。
+     * サポートしていないクラスタイプの場合、例外{@link TextParseException}がスローされます。
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public T parse(final String text) {
         
         try {
-<span class="fc bfc" id="L60" title="All 2 branches covered.">            if(LocalDateTime.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L61">                return (T) LocalDateTime.parse(text, formatter);</span>
-                
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            } else if(LocalDate.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L64">                return (T) LocalDate.parse(text, formatter);</span>
-                
-<span class="fc bfc" id="L66" title="All 2 branches covered.">            } else if(LocalTime.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L67">                return (T) LocalTime.parse(text, formatter);</span>
-                
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            } else if(ZonedDateTime.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L70">                return (T) ZonedDateTime.parse(text, formatter);</span>
-                
-            }
-<span class="fc" id="L73">        } catch(DateTimeParseException e) {</span>
-<span class="fc" id="L74">            throw new TextParseException(text, type, e);</span>
-<span class="nc" id="L75">        }</span>
+<span class="fc" id="L69">            return (T) parseMethod.invoke(type, text, formatter);</span>
+            
+<span class="fc" id="L71">        } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {</span>
+<span class="fc" id="L72">            throw new TextParseException(text, type, &quot;Cannot suuport type.&quot;);</span>
+            
+<span class="nc" id="L74">        } catch(DateTimeParseException e) {</span>
+<span class="nc" id="L75">            throw new TextParseException(text, type, e);</span>
+        }
         
-<span class="nc" id="L77">        throw new TextParseException(text, type, &quot;Cannot suuport type.&quot;);</span>
     }
     
     @Override
