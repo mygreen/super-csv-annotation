@@ -53,9 +53,9 @@ This library 'Super CSV' extension library with annotation function.
     ```
 
 # Document
-+ Project infomation
- + http://mygreen.github.io/super-csv-annotation/index.html
-+ Manual
- + http://mygreen.github.io/super-csv-annotation/sphinx/index.html
-+ Javadoc
- + http://mygreen.github.io/super-csv-annotation/apidocs/index.html
+- Project infomation
+  - http://mygreen.github.io/super-csv-annotation/index.html
+- Manual
+  - http://mygreen.github.io/super-csv-annotation/sphinx/index.html
+- Javadoc
+  - http://mygreen.github.io/super-csv-annotation/apidocs/index.html
