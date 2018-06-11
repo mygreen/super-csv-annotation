@@ -89,4 +89,22 @@ public class RegexReplaceTest {
         
         assertThat((Object)processor.execute(null, ANONYMOUS_CSVCONTEXT)).isNull();
     }
+
+    /**
+     * Tests unchained/chained execution with partial matching.
+     */
+    @Test
+    public void testExecute_partial_match() {
+        Pattern partialPattern = Pattern.compile("Word");
+        String replacement = "Replace";
+
+        this.processor = new RegexReplace(partialPattern, replacement);
+        this.processorChain = new RegexReplace(partialPattern, replacement, new NextCellProcessor());
+
+        String input = "xxxWordyyyWordzzz";
+        String output = "xxxReplaceyyyReplacezzz";
+
+        assertThat((Object)processor.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(output);
+        assertThat((Object)processorChain.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(output);
+    }
 }

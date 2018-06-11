@@ -75,7 +75,7 @@ public class RegexReplace extends CellProcessorAdaptor implements StringCellProc
         }
         
         final Matcher matcher = pattern.matcher(value.toString());
-        if(matcher.matches()) {
+        if(matcher.find()) {
             final String result = matcher.replaceAll(replacement);
             return next.execute(result, context);
         }
