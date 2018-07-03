@@ -5,24 +5,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.1</version>
+	<version>2.2</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description><![CDATA[
 CSVのJavaライブラリであるSuperCSVに、アノテーション機能を追加したライブラリです。
 ]]></description>
-	
+
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/mygreen/super-csv-annotation/issues</url>
 	</issueManagement>
-	
+
 	<scm>
 		<connection>scm:git:ssh://github.com/mygreen/super-csv-annotation.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/mygreen/super-csv-annotation.git</developerConnection>
 		<url>https://github.com/mygreen/super-csv-annotation</url>
 	</scm>
-	
+
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -36,19 +36,19 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-	
+
 	<organization>
 		<name>mygreen</name>
 		<url>http://mygreen.github.io/super-csv-annotation/</url>
 	</organization>
-	
+
 	<developers>
 		<developer>
 			<id>mygreen</id>
@@ -59,7 +59,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<properties>
 		<java.version>1.8</java.version>
 		<supercsv.version>2.4.0</supercsv.version>
@@ -68,7 +68,76 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
 
 	</properties>
-	
+
+	<!-- ビルド環境によって、sphinxのスクリプトを切り替える -->
+	<profiles>
+		<profile>
+			<id>platform-windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>sphinx-doc</id>
+								<phase>site</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>make_sphinx_html.bat</executable>
+									<arguments>
+										<argument>${project.version}</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>platform-linux</id>
+			<activation>
+				<os>
+					<family>!windows</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>sphinx-doc</id>
+								<phase>site</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>make_sphinx_html.sh</executable>
+									<arguments>
+										<argument>${project.version}</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
 	<build>
 		<resources>
 			<resource>
@@ -106,7 +175,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		</testResources>
 		<pluginManagement>
 			<plugins>
-				
+
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -116,10 +185,10 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
-					<!-- 
+					<!--
 					<failOnError>false</failOnError>
 					 -->
-					<!-- 
+					<!--
 					<compilerArgs>
 						<arg>-Xlint:unchecked</arg>
 					</compilerArgs>
@@ -159,9 +228,9 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 					<additionalparam>--allow-script-in-comments</additionalparam>
 					<header>${project.name} ${project.version}
 <![CDATA[
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
@@ -171,6 +240,7 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
+					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 				<executions>
 					<execution>
@@ -187,7 +257,7 @@ $(document).ready(function() {
 					<downloadSources>true</downloadSources>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -198,6 +268,7 @@ $(document).ready(function() {
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -218,6 +289,7 @@ $(document).ready(function() {
 					</execution>
 				</executions>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -245,7 +317,19 @@ $(document).ready(function() {
 					</execution>
 				</executions>
 			</plugin>
-			
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>3.1.5</version>
+				<dependencies>
+					<!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+					<dependency>
+						<groupId>com.github.spotbugs</groupId>
+						<artifactId>spotbugs</artifactId>
+						<version>3.1.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 			<plugin>
 				<!-- pgp -->
 				<groupId>org.apache.maven.plugins</groupId>
@@ -260,7 +344,7 @@ $(document).ready(function() {
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 	<repositories>
@@ -272,14 +356,14 @@ $(document).ready(function() {
 			<artifactId>super-csv</artifactId>
 			<version>${supercsv.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.9.4</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- 式言語 -->
 		<dependency>
 			<groupId>ognl</groupId>
@@ -291,12 +375,12 @@ $(document).ready(function() {
 			<artifactId>commons-jexl</artifactId>
 			<version>2.1.1</version>
 		</dependency>
-		
+
 		<!-- Bean Validation 2.0 -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.0.Final</version>
+			<version>2.0.1.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -311,9 +395,9 @@ $(document).ready(function() {
 			<version>3.0.1-b08</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Bean Validation 1.1 -->
-		<!-- 
+		<!--
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -333,9 +417,9 @@ $(document).ready(function() {
 			<scope>provided</scope>
 		</dependency>
 		 -->
-		
+
 		<!-- Bean Validation 1.0 -->
-		<!-- 
+		<!--
 		<dependency>
 		<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -347,7 +431,7 @@ $(document).ready(function() {
 			<version>4.3.2.Final</version>
 		</dependency>
 		-->
-		
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -367,7 +451,7 @@ $(document).ready(function() {
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- tester -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -375,14 +459,14 @@ $(document).ready(function() {
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>3.6.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Logger -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -401,12 +485,12 @@ $(document).ready(function() {
 			<version>1.2.14</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 	<reporting>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId> 
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
 				<configuration>
@@ -425,10 +509,10 @@ $(document).ready(function() {
 					<additionalparam>--allow-script-in-comments</additionalparam>
 					<header>${project.name} ${project.version}
  <![CDATA[
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script type="text/javascript">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
     hljs.highlightBlock(block);
@@ -437,6 +521,7 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
+					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -448,7 +533,7 @@ $(document).ready(function() {
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
@@ -456,6 +541,10 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>

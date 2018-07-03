@@ -10,7 +10,7 @@ cd %~p0
 pushd .\src\site\sphinx
 
 rmdir /q /s build
-call make html
+call make html PACKAGE_VERSION=%1
 
 popd
 
