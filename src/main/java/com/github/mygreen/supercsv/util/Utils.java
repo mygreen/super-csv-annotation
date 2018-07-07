@@ -2,10 +2,7 @@ package com.github.mygreen.supercsv.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,7 +14,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 /**
  * ユーティリティクラス。
  * 
- * @version 2.0
+ * @version 2.2
  * @author T.TSUCHIE
  *
  */
@@ -260,17 +257,35 @@ public class Utils {
      * 文字列配列の結合
      * @param array1
      * @param array2
-     * @return
+     * @return 結合した配列。引数のどちらからnullの場合は、cloneした配列を返します。
      */
     public static String[] concat(final String[] array1, final String[] array2) {
         
-        int size = array1.length + array2.length;
-        List<String> list = new ArrayList<>(size);
-        list.addAll(Arrays.asList(array1));
-        list.addAll(Arrays.asList(array2));
+        if(array1 == null || array1.length == 0) {
+            return clone(array2);
+            
+        } else if(array2 == null || array2.length == 0) {
+            return clone(array1);
+        }
         
-        return list.toArray(new String[size]);
+        final String[] joinedArray = new String[array1.length + array2.length];
+        System.arraycopy(array1, 0, joinedArray, 0, array1.length);
+        System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
+        return joinedArray;
         
+    }
+    
+    /**
+     * 文字列の配列をクローンします。
+     * @since 2.2
+     * @param array クローン対象の配列
+     * @return クローンした配列。引数がnullの場合は、nullを返します。
+     */
+    public static String[] clone(final String[] array) {
+        if (array == null) {
+            return null;
+        }
+        return array.clone();
     }
     
     /**

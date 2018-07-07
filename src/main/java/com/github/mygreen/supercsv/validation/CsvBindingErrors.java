@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.github.mygreen.supercsv.util.ArgUtils;
+import com.github.mygreen.supercsv.util.Utils;
 
 /**
  * CSVのエラー情報を管理するためのクラス。
  * <p>SpringFrameworkのBindingResultを参考。</p>
  * <p>現状、ネストしたフィールドはサポートしていないため、パスの機能を省略して実装する。</p>
  *
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -298,7 +300,22 @@ public class CsvBindingErrors implements Serializable {
      * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
      */
     public void reject(final String errorCode, final Map<String, Object> messageVariables, final String defaultMessage) {
-        final String[] codes = messageCodeGenerator.generateCodes(errorCode, getObjectName());
+        reject(new String[]{errorCode}, messageVariables, defaultMessage);
+    }
+    
+    /**
+     * グローバルエラーを登録する。
+     * @since 2.2
+     * @param errorCodes エラーコード
+     * @param messageVariables メッセージ中の変数。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void reject(final String[] errorCodes, final Map<String, Object> messageVariables, final String defaultMessage) {
+        
+        String[] codes = new String[0];
+        for(String errorCode : errorCodes) {
+            codes = Utils.concat(codes, messageCodeGenerator.generateCodes(errorCode, getObjectName()));
+        }
         addError(new CsvError(getObjectName(), codes, messageVariables, defaultMessage));
     }
     
@@ -362,7 +379,26 @@ public class CsvBindingErrors implements Serializable {
     public void rejectValue(final String field, final Class<?> fieldType, final String errorCode, 
             final Map<String, Object> messageVariables, final String defaultMessage) {
         
-        final String[] codes = messageCodeGenerator.generateCodes(errorCode, getObjectName(), field, fieldType);
+        rejectValue(field, fieldType, new String[]{errorCode}, messageVariables, defaultMessage);
+    }
+    
+    /**
+     * フィールドエラーを登録します。
+     * @since 2.2
+     * @param field フィールドパス。
+     * @param fieldType フィールドのタイプ
+     * @param errorCodes エラーコード。
+     * @param messageVariables メッセージ中の変数。
+     * @param defaultMessage 指定したエラーコードに対するメッセージが見つからないときに使用するメッセージです。指定しない場合はnullを設定します。
+     */
+    public void rejectValue(final String field, final Class<?> fieldType, final String[] errorCodes, 
+            final Map<String, Object> messageVariables, final String defaultMessage) {
+        
+        String[] codes = new String[0];
+        for(String errorCode : errorCodes) {
+            codes = Utils.concat(codes, messageCodeGenerator.generateCodes(errorCode, getObjectName(), field, fieldType));
+        }
+        
         addError(new CsvFieldError(getObjectName(), field, false, codes, messageVariables, defaultMessage));
         
     }

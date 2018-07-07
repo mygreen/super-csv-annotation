@@ -34,8 +34,6 @@ public class MessageInterpolator {
     
     private static final Logger logger = LoggerFactory.getLogger(MessageInterpolator.class);
     
-    private final Formatter formatter = new Formatter();
-    
     private ExpressionLanguage expressionLanguage;
     
     /**
@@ -264,7 +262,7 @@ public class MessageInterpolator {
         context.putAll(values);
         
         // フォーマッターの追加
-        context.computeIfAbsent("formatter", key -> formatter);
+        context.computeIfAbsent("formatter", key -> new Formatter());
         
         final String value = expressionLanguage.evaluate(expression, context).toString();
         if(logger.isTraceEnabled()) {

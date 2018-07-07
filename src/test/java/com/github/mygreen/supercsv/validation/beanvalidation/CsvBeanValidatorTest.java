@@ -47,6 +47,7 @@ public class CsvBeanValidatorTest {
     public TestName name = new TestName();
     
     private CsvBeanValidator csvValidator;
+    private CsvBeanValidator csvValidatorDefaultMessage;
     private CsvBeanValidator csvValidatorCustomMessage;
     
     private BeanMappingFactory beanMappingFactory;
@@ -67,11 +68,24 @@ public class CsvBeanValidatorTest {
         
         this.csvValidator = new CsvBeanValidator();
         
+        
         final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        final Validator beanValidator = validatorFactory.usingContext()
-                .messageInterpolator(new MessageInterpolatorAdapter(testMessageResolver, messageInterpolator))
-                .getValidator();
-        this.csvValidatorCustomMessage = new CsvBeanValidator(beanValidator);
+        
+        {
+            // 標準メッセージのValidator
+            final Validator beanValidator = validatorFactory.usingContext()
+                    .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), messageInterpolator))
+                    .getValidator();
+            this.csvValidatorDefaultMessage = new CsvBeanValidator(beanValidator);
+        }
+        
+        {
+            // カスタムメッセージのValidator
+            final Validator beanValidator = validatorFactory.usingContext()
+                    .messageInterpolator(new MessageInterpolatorAdapter(testMessageResolver, messageInterpolator))
+                    .getValidator();
+            this.csvValidatorCustomMessage = new CsvBeanValidator(beanValidator);
+        }
         
     }
     
@@ -142,6 +156,31 @@ public class CsvBeanValidatorTest {
         
         assertThat(messages).hasSize(1)
             .contains("値が未設定です。");
+        
+    }
+    
+    /**
+     * 標準のValidatorの場合 - 標準のCSVメッセージを使う場合
+     */
+    @Test
+    public void testValidate_default_csvMessage() {
+        
+        Class<?>[] groups = groupEmpty;
+        CsvBindingErrors bindingErrors = new CsvBindingErrors(TestCsv.class);
+        
+        BeanMapping<TestCsv> beanMapping = beanMappingFactory.create(TestCsv.class, groupEmpty);
+        ValidationContext<TestCsv> validationContext = new ValidationContext<>(ANONYMOUS_CSVCONTEXT, beanMapping);
+        
+        TestCsv record = new TestCsv();
+        
+        csvValidatorDefaultMessage.validate(record, bindingErrors, (ValidationContext)validationContext);
+        
+        List<String> messages = bindingErrors.getAllErrors().stream()
+                .map(error -> error.format(new ResourceBundleMessageResolver(), messageInterpolator))
+                .collect(Collectors.toList());
+        
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 1列] : 項目「id」の値は必須です。");
         
     }
     
@@ -224,6 +263,34 @@ public class CsvBeanValidatorTest {
         
         assertThat(messages).hasSize(1)
             .contains("20以下の値を設定してください。");
+        
+    }
+    
+    /**
+     * getterメソッドの場合 - 標準のCSVメッセージを使用するう場合
+     */
+    @Test
+    public void testValidate_getter_csvMessage() {
+        
+        Class<?>[] groups = new Class[]{Group3.class};
+        CsvBindingErrors bindingErrors = new CsvBindingErrors(TestCsv.class);
+        
+        BeanMapping<TestCsv> beanMapping = beanMappingFactory.create(TestCsv.class, groupEmpty);
+        ValidationContext<TestCsv> validationContext = new ValidationContext<>(ANONYMOUS_CSVCONTEXT, beanMapping);
+        
+        TestCsv record = new TestCsv();
+        record.id = "a01";
+        record.name = "test";
+        record.age = 40;
+        
+        csvValidatorDefaultMessage.validate(record, bindingErrors, (ValidationContext)validationContext, groups);
+        
+        List<String> messages = bindingErrors.getAllErrors().stream()
+                .map(error -> error.format(new ResourceBundleMessageResolver(), messageInterpolator))
+                .collect(Collectors.toList());
+        
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 3列] : 項目「age」の値（40）は、20以下の値を設定してください。");
         
     }
     

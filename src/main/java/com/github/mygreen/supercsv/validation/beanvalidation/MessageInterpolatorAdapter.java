@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.validation.metadata.ConstraintDescriptor;
 
+import org.hibernate.validator.internal.engine.MessageInterpolatorContext;
+
 import com.github.mygreen.supercsv.localization.MessageInterpolator;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 
@@ -15,6 +17,7 @@ import com.github.mygreen.supercsv.localization.MessageResolver;
  * SuperCsvAnnotationの{@link MessageInterpolator}とBeanValidationの{@link javax.validation.MessageInterpolator}をブリッジする。
  * <p>BeanValidationのメッセージ処理をカスタマイズするために利用する。</p>
  *
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -57,6 +60,11 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
     private Map<String, Object> createMessageVariables(final Context context) {
         
         final Map<String, Object> vars = new HashMap<>();
+        
+        if(context instanceof MessageInterpolatorContext) {
+            MessageInterpolatorContext mic = (MessageInterpolatorContext)context;
+            vars.putAll(mic.getMessageParameters());
+        }
         
         final ConstraintDescriptor<?> descriptor = context.getConstraintDescriptor();
         for(Map.Entry<String, Object> entry : descriptor.getAttributes().entrySet()) {
