@@ -1,5 +1,6 @@
 package com.github.mygreen.supercsv.validation.beanvalidation;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,10 +9,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.MessageInterpolator;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.metadata.ConstraintDescriptor;
+
+import org.hibernate.validator.internal.engine.MessageInterpolatorContext;
+import org.hibernate.validator.internal.engine.ValidatorImpl;
 
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.validation.CsvBindingErrors;
@@ -22,6 +27,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
 /**
  * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)にブリッジする{@link CsvValidator}。
  * 
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -44,13 +50,17 @@ public class CsvBeanValidator implements CsvValidator<Object> {
     
     private final Validator targetValidator;
     
+    private final MessageInterpolator messageInterpolator;
+    
     public CsvBeanValidator(final Validator targetValidator) {
         Objects.requireNonNull(targetValidator);
         this.targetValidator = targetValidator;
+        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);
     }
     
     public CsvBeanValidator() {
         this.targetValidator = createDefaultValidator();
+        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);
     }
     
     /**
@@ -63,6 +73,31 @@ public class CsvBeanValidator implements CsvValidator<Object> {
                 .getValidator();
         
         return validator;
+    }
+    
+    /**
+     * ValidatorからMessageInterpolartorを取得する。
+     * @param validator
+     * @return {@link ValidatorImpl}出ない場合は、nullを返す。
+     * @throws IllegalStateException 取得に失敗した場合。
+     */
+    private static MessageInterpolator getMessageInterpolatorFromValidator(Validator validator) {
+        
+        if(!(validator instanceof ValidatorImpl)) {
+            return null;
+        }
+        
+        try {
+            Field field = ValidatorImpl.class.getDeclaredField("messageInterpolator");
+            field.setAccessible(true);
+            
+            MessageInterpolator interpolator = (MessageInterpolator)field.get(validator);
+            return interpolator;
+            
+        } catch (IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            throw new IllegalStateException("fail reflect MessageInterpolrator from ValidatorImpl.", e);
+        }
+        
     }
     
     /**
@@ -109,7 +144,9 @@ public class CsvBeanValidator implements CsvValidator<Object> {
             
             final String field = violation.getPropertyPath().toString();
             final ConstraintDescriptor<?> cd = violation.getConstraintDescriptor();
-            final String errorCode = cd.getAnnotation().annotationType().getSimpleName();
+            
+            final String[] errorCodes = determineErrorCode(cd);
+            
             final Map<String, Object> errorVars = createVariableForConstraint(cd);
             
             if(isCsvField(field, validationContext)) {
@@ -133,13 +170,14 @@ public class CsvBeanValidator implements CsvValidator<Object> {
                 final Object fieldValue = violation.getInvalidValue();
                 errorVars.computeIfAbsent("validatedValue", key -> fieldValue);
                 
+                String defaultMessage = determineDefaltMessage(errorVars, violation);
+                
                 bindingErrors.rejectValue(field, columnMapping.getField().getType(), 
-                        errorCode, errorVars, violation.getMessage());
+                        errorCodes, errorVars, defaultMessage);
                 
             } else {
                 // オブジェクトエラーの場合
-                bindingErrors.reject(errorCode, errorVars, violation.getMessage());
-                
+                bindingErrors.reject(errorCodes, errorVars, violation.getMessage());
                 
             }
             
@@ -148,6 +186,26 @@ public class CsvBeanValidator implements CsvValidator<Object> {
         
     }
     
+    /**
+     * エラーコードの決定する
+     * @param descriptor フィールド情報
+     * @return エラーコード
+     */
+    protected String[] determineErrorCode(ConstraintDescriptor<?> descriptor) {
+        return new String[] {
+                descriptor.getAnnotation().annotationType().getSimpleName()/*,
+                descriptor.getAnnotation().annotationType().getCanonicalName(),
+                descriptor.getAnnotation().annotationType().getCanonicalName() + ".message"
+                */
+        };
+    }
+    
+    /**
+     * CSVのカラムのフィールドか判定する。
+     * @param field フィールド名
+     * @param validationContext CSVの検証情報
+     * @return trueのとき、CSVのカラムフィールド。
+     */
     private boolean isCsvField(final String field, final ValidationContext<Object> validationContext) {
         return validationContext.getBeanMapping().getColumnMapping(field).isPresent();
     }
@@ -174,6 +232,36 @@ public class CsvBeanValidator implements CsvValidator<Object> {
         }
         
         return vars;
+        
+    }
+    
+    /**
+     * CSVの標準メッセージを取得する。
+     * <p>CSVメッセージ変数で、再度フォーマットを試みる。</p>
+     * 
+     * @param errorVars エラー時の変数
+     * @param violation エラー情報
+     * @return デフォルトメッセージ
+     */
+    protected String determineDefaltMessage(final Map<String, Object> errorVars, ConstraintViolation<Object> violation) {
+        
+        String message = violation.getMessage();
+        if(messageInterpolator == null) {
+            return message;
+            
+        } else if(!(message.contains("{") && message.contains("}"))) {
+            // 変数形式が含まれていない場合は、そのまま返す。
+            return message;
+        }
+        
+        MessageInterpolatorContext context = new MessageInterpolatorContext(
+                violation.getConstraintDescriptor(),
+                violation.getInvalidValue(),
+                violation.getRootBeanClass(),
+                errorVars,
+                Collections.emptyMap());
+        
+        return messageInterpolator.interpolate(violation.getMessageTemplate(), context);
         
     }
     
