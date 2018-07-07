@@ -130,7 +130,7 @@ public class SpringBeanFactoryTest {
      *
      */
     @Configurable
-    private static class TestConfig {
+    public static class TestConfig {
 
         @Description("Springのコンテナを経由するCSV用のBeanFactoryの定義")
         @Bean
