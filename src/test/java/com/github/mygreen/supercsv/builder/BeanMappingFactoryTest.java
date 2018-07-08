@@ -1,11 +1,15 @@
 package com.github.mygreen.supercsv.builder;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 
 import org.junit.Before;
 import org.junit.Test;
+import org.supercsv.exception.SuperCsvException;
 
 import com.github.mygreen.supercsv.annotation.CsvBean;
 import com.github.mygreen.supercsv.annotation.CsvColumn;
@@ -14,8 +18,9 @@ import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 
 /**
- * {@link BeanMappingFactory}のテスタ
+ * {@link BeanMappingFactory}/{@link BeanMappingFactoryHelper}のテスタ
  *
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -24,11 +29,14 @@ public class BeanMappingFactoryTest {
     
     private BeanMappingFactory factory;
     
+    private BeanMappingFactory lazyFactory;
+    
     private final Class<?>[] groupEmpty = new Class[]{};
     
     @Before
     public void setUp() throws Exception {
-        factory = new BeanMappingFactory();
+        this.factory = new BeanMappingFactory();
+        this.lazyFactory = new LazyBeanMappingFactory();
     }
     
     /**
@@ -251,6 +259,25 @@ public class BeanMappingFactoryTest {
     }
     
     /**
+     * カラム番号が未決定のラベルをチェックする
+     */
+    @Test
+    public void testValidateNonDeterminedColumns() {
+        
+        BeanMapping<NonDeterminedColumnBean> beanMapping = lazyFactory.create(NonDeterminedColumnBean.class, groupEmpty);
+        
+        Class<?> beanType = beanMapping.getType();
+        List<ColumnMapping> list = beanMapping.getColumns();
+        String[] headers = new String[] {"カラム", "カラム2", "カラム三"};
+        
+        assertThatThrownBy(() -> BeanMappingFactoryHelper.validateNonDeterminedColumnNumber(beanType, list, headers))
+            .isInstanceOf(SuperCsvException.class)
+            .hasMessage("'%s' のヘッダー（[カラム, カラム2, カラム三]）において、定義しているが一致しないラベル（[カラム1, カラム3]）があります。",
+                    NonDeterminedColumnBean.class.getName());
+        
+    }
+    
+    /**
      * 修飾子の確認用のBean
      *
      */
@@ -407,5 +434,22 @@ public class BeanMappingFactoryTest {
         @CsvColumn(number=4, label="カラム4")
         private String col4;
         
+    }
+    
+    /**
+     * カラムの番号が0以下の場合 - ラベル指定
+     *
+     */
+    @CsvBean
+    private static class NonDeterminedColumnBean {
+        
+        @CsvColumn(label="カラム1")
+        private String col1;
+        
+        @CsvColumn(number=1)
+        private String col2;
+        
+        @CsvColumn(label="カラム3")
+        private String col3;
     }
 }

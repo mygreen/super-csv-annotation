@@ -2,7 +2,6 @@ package com.github.mygreen.supercsv.io;
 
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
 
 import java.io.File;
@@ -397,6 +396,39 @@ public class LazyCsvAnnotationBeanWriterTest {
             .hasMessageContaining(MESSAGE_NOT_INIT);
         
         csvWriter.close();
+    }
+    
+    /**
+     * 初期化に失敗する場合 - Beanに定義してある情報とCSVのヘッダーが一致しない場合
+     * <p>書き込み時はエラーは発生しない。</p>
+     * 
+     * @since 2.2
+     */
+    @Test
+    public void testInit_nonDeterminedColumnNumbers() throws Exception {
+        
+        StringWriter strWriter = new StringWriter();
+        
+        LazyCsvAnnotationBeanWriter<SampleLazyBean> csvWriter = new LazyCsvAnnotationBeanWriter<>(
+                SampleLazyBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        final String[] headers = new String[]{
+                "no",
+                "name1",
+                "生年月日2",
+                "備考",
+                "あああ"
+            };
+        
+        // エラーは発生しない
+        csvWriter.init(headers);
+       
+        final String[] actualHeader = csvWriter.getDefinedHeader();
+        final String[] expetectedHeader = new String[] {"no", "name", "生年月日", "備考"};
+        assertThat(actualHeader).containsExactly(expetectedHeader);
+        
     }
     
     /**
