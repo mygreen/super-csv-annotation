@@ -17,6 +17,7 @@ import org.supercsv.prefs.CsvPreference;
 import com.github.mygreen.supercsv.annotation.CsvPartial;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
+import com.github.mygreen.supercsv.builder.HeaderMapper;
 import com.github.mygreen.supercsv.builder.BeanMappingFactoryHelper;
 import com.github.mygreen.supercsv.builder.LazyBeanMappingFactory;
 import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
@@ -28,6 +29,7 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
  * 
  * @param <T> マッピング対象のBeanのクラスタイプ
  * 
+ * @version 2.2
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -128,6 +130,7 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
     private void setupMappingColumns(final String[] headers) {
         
         final List<ColumnMapping> columnMappingList = beanMapping.getColumns();
+        final HeaderMapper headerMapper = beanMapping.getHeaderMapper();
         
         // 一致するラベルがあれば、カラムの番号を補完する
         final int headerSize = headers.length;
@@ -141,7 +144,7 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
              */
             List<ColumnMapping> undeterminedColumnList = columnMappingList.stream()
                 .filter(col -> !col.isDeterminedNumber())
-                .filter(col -> col.getLabel().equals(header))
+                .filter(col -> headerMapper.toMap(col, beanMapping.getConfiguration(), beanMapping.getGroups()).equals(header))
                 .collect(Collectors.toList());
             
             final int columnNumber = i+1;

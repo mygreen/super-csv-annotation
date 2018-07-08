@@ -394,6 +394,49 @@ public class LazyCsvAnnotationBeanReaderTest {
         
     }
     
+    /**
+     * 固定長のカラムを読み込む
+     */
+    @Test
+    public void testRead_fixedColumn() throws IOException {
+        
+        File file = new File("src/test/data/test_read_lazy_fixedColumn.csv");
+        
+        LazyCsvAnnotationBeanReader<SampleLazyFixedColumnBean> csvReader = new LazyCsvAnnotationBeanReader<>(
+                SampleLazyFixedColumnBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleLazyFixedColumnBean> list = new ArrayList<>();
+        
+        final String[] expectedHeaders = new String[]{
+                "   no",
+                "誕生日____",
+                "ユーザ名　　　　　　",
+                "コメント            "
+            };
+        
+        // read header
+        final String[] csvHeaders = csvReader.init();
+        assertThat(csvHeaders).containsExactly(expectedHeaders);
+        
+        final String[] definitionHeaders = csvReader.getDefinedHeader();
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
+        
+        SampleLazyFixedColumnBean bean;
+        while((bean = csvReader.read()) != null) {
+            list.add(bean);
+            
+            assertBean(bean);
+        }
+        
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
     private void assertBean(final SampleLazyBean bean) {
         
         if(bean.getNo() == 1) {
@@ -429,6 +472,35 @@ public class LazyCsvAnnotationBeanReaderTest {
             assertThat(bean.getName()).isEqualTo("佐藤花子");
             assertThat(bean.getExpiredDate()).isEqualTo(LocalDate.of(2017, 12, 31));
             assertThat(bean.getComment()).isEqualTo("コメント3");
+            
+        }
+        
+    }
+    
+    private void assertBean(final SampleLazyFixedColumnBean bean) {
+        
+        if(bean.getNo() == 1) {
+            assertThat(bean.getUserName()).isEqualTo("山田　太郎");
+            
+            assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(1980, 1, 28));
+            
+            assertThat(bean.getComment()).isEqualTo("全ての項目に値が設定");
+            
+        } else if(bean.getNo() == 2) {
+            
+            assertThat(bean.getUserName()).isEqualTo("田中　次郎");
+            
+            assertThat(bean.getBirthDay()).isNull();
+            
+            assertThat(bean.getComment()).isEqualTo("誕生日の項目が空。");
+            
+        } else if(bean.getNo() == 3) {
+            
+            assertThat(bean.getUserName()).isEqualTo("鈴木　三郎");
+            
+            assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(2000, 3, 25));
+            
+            assertThat(bean.getComment()).isEqualTo("コメントを切落とす。あいう。");
             
         }
         
