@@ -319,6 +319,9 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
         // カラムの番号順に並び変える
         columnMappingList.sort(null);
         
+        // 決定していないカラム番号のチェック
+        BeanMappingFactoryHelper.validateNonDeterminedColumnNumber(beanMapping.getType(), columnMappingList, headers);
+        
         // 重複しているカラム番号のチェック
         BeanMappingFactoryHelper.validateDuplicatedColumnNumber(beanMapping.getType(), columnMappingList);
         

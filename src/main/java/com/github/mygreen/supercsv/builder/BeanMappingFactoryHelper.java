@@ -1,18 +1,24 @@
 package com.github.mygreen.supercsv.builder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.supercsv.exception.SuperCsvException;
+
 import com.github.mygreen.supercsv.annotation.CsvColumn;
 import com.github.mygreen.supercsv.annotation.CsvPartial;
 import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
+import com.github.mygreen.supercsv.io.LazyCsvAnnotationBeanReader;
+import com.github.mygreen.supercsv.io.LazyCsvAnnotationBeanWriter;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
 
 /**
  * {@link BeanMapping}を組み立てる時のヘルパクラス。
  * 
+ * @version 2.2
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -20,10 +26,11 @@ import com.github.mygreen.supercsv.localization.MessageBuilder;
 public class BeanMappingFactoryHelper {
     
     /**
-     * カラム番号が重複しているかチェックする。また、番号が1以上かもチェ句する。
+     * カラム番号が重複しているかチェックする。また、番号が1以上かもチェックする。
      * @param beanType Beanタイプ
      * @param list カラム情報の一覧
      * @return チェック済みの番号
+     * @throws SuperCsvInvalidAnnotationException {@link CsvColumn}の定義が間違っている場合
      */
     public static TreeSet<Integer> validateDuplicatedColumnNumber(final Class<?> beanType, final List<ColumnMapping> list) {
         
@@ -178,6 +185,38 @@ public class BeanMappingFactoryHelper {
         columnMapping.setLabel(label);
         
         return columnMapping;
+        
+    }
+    
+    /**
+     * カラム番号が決定していないカラムをチェックする。
+     * <p>{@link LazyCsvAnnotationBeanReader}/{@link LazyCsvAnnotationBeanWriter}において、
+     *    CSVファイルや初期化時のヘッダーが不正により、該当するラベルがヘッダーに見つからないときをチェックする。
+     * </p>
+     * 
+     * @since 2.2
+     * @param beanType Beanタイプ
+     * @param list カラム情報の一覧
+     * @param headers ヘッダー
+     * @throws SuperCsvException カラム番号が決定していないとき
+     */
+    public static void validateNonDeterminedColumnNumber(final Class<?> beanType, final List<ColumnMapping> list,
+            String[] headers) {
+        
+        final List<String> nonDeterminedLabels = list.stream()
+                .filter(col -> !col.isDeterminedNumber())
+                .map(col -> col.getLabel())
+                .collect(Collectors.toList());
+        
+        if(!nonDeterminedLabels.isEmpty()) {
+            
+            throw new SuperCsvException(MessageBuilder.create("lazy.noDeteminedColumns")
+                    .var("property", beanType.getName())
+                    .var("labels", nonDeterminedLabels)
+                    .var("headers", headers)
+                    .format());
+            
+        }
         
     }
     

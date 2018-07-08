@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.supercsv.exception.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 
 import com.github.mygreen.supercsv.builder.BeanMapping;
@@ -291,6 +292,39 @@ public class LazyCsvAnnotationBeanReaderTest {
         assertThat(csvReader.getErrorMessages())
             .hasSize(1)
             .containsExactly("[1行] : 列数が不正です。 4列で設定すべきですが、実際には5列になっています。");
+    }
+    
+    /**
+     * 初期化に失敗する場合 - Beanに定義してある情報とCSVのヘッダーが一致しない場合
+     * @since 2.2
+     */
+    @Test
+    public void testInit_nonDeterminedColumnNumbers() throws Exception {
+        
+        File file = new File("src/test/data/test_read_lazy.csv");
+        
+        LazyCsvAnnotationBeanReader<SampleLazyBean> csvReader = new LazyCsvAnnotationBeanReader<>(
+                SampleLazyBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        final String[] headers = new String[]{
+                "no",
+                "name1",
+                "生年月日2",
+                "備考",
+                "あああ"
+            };
+        
+        assertThatThrownBy(() -> csvReader.init(headers))
+            .isInstanceOf(SuperCsvException.class)
+            .hasMessage("'%s' のヘッダー（[no, name1, 生年月日2, 備考, あああ]）において、定義しているが一致しないラベル（[生年月日]）があります。",
+                    SampleLazyBean.class.getName());
+        
+        assertThat(csvReader.getErrorMessages())
+            .hasSize(0);
+        
     }
     
     /**
