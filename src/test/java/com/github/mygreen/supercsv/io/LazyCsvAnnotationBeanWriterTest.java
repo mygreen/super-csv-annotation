@@ -542,6 +542,102 @@ public class LazyCsvAnnotationBeanWriterTest {
     }
     
     /**
+     * 固定長のカラムの書き込み - ヘッダーの指定あり
+     */
+    @Test
+    public void testWrite_fixedColumn_setHeader() throws Exception {
+        
+        // テストデータの作成
+        final List<SampleLazyFixedColumnBean> list = createFixedColumnData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        LazyCsvAnnotationBeanWriter<SampleLazyFixedColumnBean> csvWriter = new LazyCsvAnnotationBeanWriter<>(
+                SampleLazyFixedColumnBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        final String[] headers = new String[]{
+                "   no",
+                "ユーザ名　　　　　　",
+                "誕生日____",
+                "コメント            "
+            };
+        
+        csvWriter.init(headers);
+        
+        final String[] definitionHeaders = csvWriter.getDefinedHeader();
+        assertThat(definitionHeaders).containsExactly(headers);
+        
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleLazyFixedColumnBean item : list) {
+            csvWriter.write(item);
+            csvWriter.flush();
+        }
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_lazy_fixedColumn_setHeader.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+        
+    }
+    
+    /**
+     * 固定長のカラムの書き込み - ヘッダーの指定なし
+     */
+    @Test
+    public void testWrite_fixedColumn_noSetHeader() throws Exception {
+        
+        // テストデータの作成
+        final List<SampleLazyFixedColumnBean> list = createFixedColumnData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        LazyCsvAnnotationBeanWriter<SampleLazyFixedColumnBean> csvWriter = new LazyCsvAnnotationBeanWriter<>(
+                SampleLazyFixedColumnBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        final String[] expectedHeaders = new String[]{
+                "   no",
+                "誕生日____",
+                "コメント            ",
+                "ユーザ名　　　　　　"
+            };
+        
+        csvWriter.init();
+        
+        final String[] definitionHeaders = csvWriter.getDefinedHeader();
+        assertThat(definitionHeaders).containsExactly(expectedHeaders);
+        
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleLazyFixedColumnBean item : list) {
+            csvWriter.write(item);
+            csvWriter.flush();
+        }
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_lazy_fixedColumn_noSetHeader.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+        
+    }
+    
+    /**
      * 書き込み用のデータを作成する
      * @return
      */
@@ -607,6 +703,48 @@ public class LazyCsvAnnotationBeanWriterTest {
             bean.setName("佐藤花子");
             bean.setExpiredDate(LocalDate.of(1983, 3, 4));
             bean.setComment("コメント3");
+            
+            list.add(bean);
+        }
+        
+        return list;
+        
+    }
+    
+    /**
+     * 固定長カラムの書き込み用のデータを作成する。
+     * @return
+     */
+    private List<SampleLazyFixedColumnBean> createFixedColumnData() {
+        
+        final List<SampleLazyFixedColumnBean> list = new ArrayList<>();
+        
+        {
+            final SampleLazyFixedColumnBean bean = new SampleLazyFixedColumnBean();
+            bean.setNo(1);
+            bean.setUserName("山田　太郎");
+            bean.setBirthDay(LocalDate.of(1980, 1, 28));
+            bean.setComment("全ての項目に値が設定");
+            
+            list.add(bean);
+        }
+        
+        {
+            final SampleLazyFixedColumnBean bean = new SampleLazyFixedColumnBean();
+            bean.setNo(2);
+            bean.setUserName("田中　次郎");
+            bean.setBirthDay(null);
+            bean.setComment("生日の項目が空。");
+            
+            list.add(bean);
+        }
+        
+        {
+            final SampleLazyFixedColumnBean bean = new SampleLazyFixedColumnBean();
+            bean.setNo(1);
+            bean.setUserName("鈴木　三郎");
+            bean.setBirthDay(LocalDate.of(2000, 3, 25));
+            bean.setComment("コメントを切落とす。あいう。");
             
             list.add(bean);
         }
