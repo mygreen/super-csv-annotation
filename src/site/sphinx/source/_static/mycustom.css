@@ -1,10 +1,18 @@
 @charset "UTF-8";
 
 /**
+ * コンテンツの領域の広さを広げる
+ */
+.wy-nav-content {
+	max-width: 100%;
+}
+
+/**
  * 表内の改行のインデントを解除する
  */
 td div.line-block {
 	margin-left: 0 !important;
+	margin-bottom: 0 !important;
 }
 
 /**
@@ -13,6 +21,24 @@ td div.line-block {
 div.wy-menu p.caption {
 	background-color: #AAAAAA;
 	margin-top: 10px;
+	font-size: 105%;
+	padding: 0 1.018em;
+	color: #232722;
+}
+
+/**
+ * 狭いときのナビゲーション
+ */
+.wy-nav-top {
+	background-color: #00807B;
+}
+
+/**
+ * 検索コンテナの背景色
+ */
+.wy-side-nav-search {
+	
+	background-color: #00807B;
 }
 
 /**
