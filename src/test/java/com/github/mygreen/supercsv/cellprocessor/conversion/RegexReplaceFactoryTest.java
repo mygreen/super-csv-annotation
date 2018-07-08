@@ -29,6 +29,7 @@ import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 /**
  * {@link RegexReplaceFactory}のテスタ
  *
+ * @since 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -60,6 +61,10 @@ public class RegexReplaceFactoryTest {
         @CsvRegexReplace(regex="([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})", replacement="$1年$2月$3日", flags=PatternFlag.CASE_INSENSITIVE)
         private String col_default;
         
+        @CsvColumn(number=2)
+        @CsvRegexReplace(regex="Word", replacement="Replace", partialMatched=true)
+        private String col_partial;
+        
     }
     
     @CsvBean
@@ -90,6 +95,7 @@ public class RegexReplaceFactoryTest {
             assertThat(actual.getRegex()).isEqualTo("([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})");
             assertThat(actual.getReplacement()).isEqualTo("$1年$2月$3日");
             assertThat(actual.getFlags()).isEqualTo(Pattern.CASE_INSENSITIVE);
+            assertThat(actual.isPartialMatched()).isFalse();
             
             {
                 String input = "2016/3/12";
@@ -109,10 +115,62 @@ public class RegexReplaceFactoryTest {
             assertThat(actual.getRegex()).isEqualTo("([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})");
             assertThat(actual.getReplacement()).isEqualTo("$1年$2月$3日");
             assertThat(actual.getFlags()).isEqualTo(Pattern.CASE_INSENSITIVE);
+            assertThat(actual.isPartialMatched()).isFalse();
             
             {
                 String input = "2016/3/12";
                 String expected = "2016年3月12日";
+                assertThat((Object)actual.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            }
+        }
+        
+    }
+    
+    @Test
+    public void testCreate_partial() {
+        
+        FieldAccessor field = getFieldAccessor(TestCsv.class, "col_partial", comparator);
+        StringProcessorBuilder builder = (StringProcessorBuilder) builderResolver.resolve(String.class);
+        TextFormatter<String> formatter = builder.getFormatter(field, config);
+        
+        CsvRegexReplace anno = field.getAnnotationsByGroup(CsvRegexReplace.class, groupEmpty).get(0);
+        
+        {
+            //next null
+            Optional<CellProcessor> processor = factory.create(anno, Optional.empty(), field, formatter, config);
+            printCellProcessorChain(processor.get(), name.getMethodName());
+            
+            assertThat(processor.get()).isInstanceOf(RegexReplace.class);
+            
+            RegexReplace actual = (RegexReplace)processor.get();
+            assertThat(actual.getRegex()).isEqualTo("Word");
+            assertThat(actual.getReplacement()).isEqualTo("Replace");
+            assertThat(actual.getFlags()).isEqualTo(0);
+            assertThat(actual.isPartialMatched()).isTrue();
+            
+            {
+                String input = "xxxWordyyyWordzzz";
+                String expected = "xxxReplaceyyyReplacezzz";
+                assertThat((Object)actual.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
+            }
+        }
+        
+        {
+            //next exist
+            Optional<CellProcessor> processor = factory.create(anno, Optional.of(new NextCellProcessor()), field, formatter, config);
+            printCellProcessorChain(processor.get(), name.getMethodName());
+            
+            assertThat(processor.get()).isInstanceOf(RegexReplace.class);
+            
+            RegexReplace actual = (RegexReplace)processor.get();
+            assertThat(actual.getRegex()).isEqualTo("Word");
+            assertThat(actual.getReplacement()).isEqualTo("Replace");
+            assertThat(actual.getFlags()).isEqualTo(0);
+            assertThat(actual.isPartialMatched()).isTrue();
+            
+            {
+                String input = "xxxWordyyyWordzzz";
+                String expected = "xxxReplaceyyyReplacezzz";
                 assertThat((Object)actual.execute(input, ANONYMOUS_CSVCONTEXT)).isEqualTo(expected);
             }
         }

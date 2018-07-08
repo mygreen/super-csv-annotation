@@ -6,6 +6,7 @@ import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.mygreen.supercsv.annotation.DefaultGroup;
@@ -46,6 +47,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
  * }
  * </code></pre>
  * 
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -77,6 +79,18 @@ public @interface CsvRegexReplace {
      * @return 正規表現のコンパイルする際のフラグ。
      */
     PatternFlag[] flags() default {};
+    
+    /**
+     * 正規表現で一致するものを検索するときに、部分一致で検索するかどうか。
+     * <ul>
+     *  <li>部分一致のとき、{@link Matcher#find()} を使用する。</li>
+     *  <li>全体一致のとき、{@link Matcher#matches()} を使用する。</li>
+     * </ul>
+     * 
+     * @since 2.2
+     * @return trueのとき部分一致。falseのとき全体一致。
+     */
+    boolean partialMatched() default false;
     
     /**
      * 適用するケースを指定します。

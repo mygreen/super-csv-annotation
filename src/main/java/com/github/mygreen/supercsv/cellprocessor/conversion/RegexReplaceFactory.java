@@ -20,6 +20,7 @@ import com.github.mygreen.supercsv.util.Utils;
 /**
  * アノテーション{@link CsvRegexReplace}をハンドリングして、値を置換するCellProcessorの{@link RegexReplace}を追加する。
  * 
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -45,9 +46,10 @@ public class RegexReplaceFactory implements ConversionProcessorFactory<CsvRegexR
         }
         
         final String replacement = anno.replacement();
+        final boolean partialMatched = anno.partialMatched();
         
-        final RegexReplace processor = next.map(n ->  new RegexReplace(pattern, replacement, (StringCellProcessor) n))
-                .orElseGet(() -> new RegexReplace(pattern, replacement));
+        final RegexReplace processor = next.map(n ->  new RegexReplace(pattern, replacement, partialMatched, (StringCellProcessor) n))
+                .orElseGet(() -> new RegexReplace(pattern, replacement, partialMatched));
         
         return Optional.of(processor);
     }
