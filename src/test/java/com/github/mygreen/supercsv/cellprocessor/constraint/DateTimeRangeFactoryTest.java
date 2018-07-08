@@ -24,7 +24,6 @@ import com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat;
 import com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
-import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.Configuration;
 import com.github.mygreen.supercsv.builder.FieldAccessor;

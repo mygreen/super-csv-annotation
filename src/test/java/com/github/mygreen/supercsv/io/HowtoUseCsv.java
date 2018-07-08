@@ -9,7 +9,6 @@ import com.github.mygreen.supercsv.annotation.constraint.CsvRequire;
 import com.github.mygreen.supercsv.annotation.constraint.CsvUnique;
 import com.github.mygreen.supercsv.annotation.conversion.CsvDefaultValue;
 import com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert;
-import com.github.mygreen.supercsv.annotation.format.CsvBooleanFormat;
 import com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat;
 import com.github.mygreen.supercsv.annotation.format.CsvNumberFormat;
 import com.github.mygreen.supercsv.builder.BuildCase;

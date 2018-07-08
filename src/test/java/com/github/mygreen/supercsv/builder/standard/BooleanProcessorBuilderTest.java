@@ -20,7 +20,6 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import com.github.mygreen.supercsv.annotation.CsvBean;
 import com.github.mygreen.supercsv.annotation.CsvColumn;
 import com.github.mygreen.supercsv.annotation.format.CsvBooleanFormat;
-import com.github.mygreen.supercsv.annotation.format.CsvNumberFormat;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
