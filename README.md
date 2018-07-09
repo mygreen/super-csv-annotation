@@ -66,3 +66,4 @@ This library 'Super CSV' extension library with annotation function.
   - http://mygreen.github.io/super-csv-annotation/sphinx/index.html
 - Javadoc
   - http://mygreen.github.io/super-csv-annotation/apidocs/index.html
+  - http://javadoc.io/doc/com.github.mygreen/super-csv-annotation/
