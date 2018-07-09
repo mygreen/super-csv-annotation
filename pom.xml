@@ -66,7 +66,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		<slf4j.version>1.7.1</slf4j.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
-
 	</properties>
 
 	<!-- ビルド環境によって、sphinxのスクリプトを切り替える -->
@@ -240,7 +239,6 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
-					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 				<executions>
 					<execution>
@@ -300,7 +298,7 @@ $(document).ready(function() {
 			<plugin>
 		        <groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.8</version>
+				<version>0.7.9</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -521,7 +519,6 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
-					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 			</plugin>
 			<plugin>
