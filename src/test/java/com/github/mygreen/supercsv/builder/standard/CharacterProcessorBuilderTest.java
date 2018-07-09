@@ -28,6 +28,7 @@ import com.github.mygreen.supercsv.builder.FieldAccessor;
 import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 import com.github.mygreen.supercsv.cellprocessor.format.TextParseException;
 import com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -165,7 +166,7 @@ public class CharacterProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final Character TEST_VALUE_1_OBJ = toCharacter("a");
@@ -266,7 +267,7 @@ public class CharacterProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final char TEST_VALUE_PRIMITIVE_INIT_OBJ = '\u0000';

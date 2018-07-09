@@ -23,6 +23,7 @@ import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.util.Utils;
@@ -53,7 +54,7 @@ public class CalendarProcessorBuilderTest {
         this.beanMappingFactory = new BeanMappingFactory();
         this.exceptionConverter = new CsvExceptionConverter();
         
-        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
     }
     
     private static final String TEST_DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";

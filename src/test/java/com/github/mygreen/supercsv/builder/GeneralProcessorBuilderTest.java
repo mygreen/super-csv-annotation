@@ -41,6 +41,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextParseException;
 import com.github.mygreen.supercsv.cellprocessor.format.TextPrintException;
 import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 import com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -70,7 +71,7 @@ public class GeneralProcessorBuilderTest {
         this.beanMappingFactory = new BeanMappingFactory();
         this.exceptionConverter = new CsvExceptionConverter();
         
-        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         
     }
     
