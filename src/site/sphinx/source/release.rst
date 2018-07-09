@@ -3,6 +3,37 @@
 ======================================
 
 --------------------------------------------------------
+ver.2.2 - 2018-07-14
+--------------------------------------------------------
+
+* 修正内容
+  
+  * `#38 <https://github.com/mygreen/super-csv-annotation/pull/38>`_ - BeanValidationを使ったときのメッセージの処理を改善しました。
+  
+    * ``MessageInterpolator`` において、``java.text.Formatter`` は、スレッドセーフではないので、インスタンスを都度生成するよう修正。
+    * ``CsvBindingErrors#reject()`` メソッドにおいて、エラーコードが複数できるよう追加。
+    * ``CsvBeanValidator`` において、BeanValidationのメッセージを、CSVの変数を使用して再フォーマットする処理を追加。
+    * ``MessageInterpolatorAdapter`` において、再フォーマットするときに渡したCSVのメッセージ変数を参照するよう修正。
+    * メッセージ定義 ``SuperCsvMessages.properties`` において、JEXLを使ったとき、値をフォーマットする ``printer`` 変数のnull判定を追加。
+  
+  * `#39 <https://github.com/mygreen/super-csv-annotation/pull/39>`_ - ``LazyCsvAnnotationReader/Writer`` で、固定長のカラムを読み書きする際に、ヘッダー情報として、``@CsvBean(header=true, headerMapper=FixedSizeHeaderMapper.class)`` を指定していても、反映されない事象を修正しました。
+
+* 変更内容。
+
+  * `#30 <https://github.com/mygreen/super-csv-annotation/pull/30>`_ / `#41 <https://github.com/mygreen/super-csv-annotation/pull/41>`_ - ``ResourceBundleMessageResolver`` を使用してプロパティファイルをResouceBundleとして読み込む時に、UTF-8のテキストファイルとして読み込むよう修正しました。
+  
+    * これにより、ASCIIコードに変換する必要は無くなります。
+    * ただし、バージョンアップする際には、クラスパスルートに配置している ``SuperCsvMessages.properties`` は、文字コードUTF-8のテキストに変換する必要があります。
+  
+  * `#33 <https://github.com/mygreen/super-csv-annotation/issues/33>`_ / `#40 <https://github.com/mygreen/super-csv-annotation/pull/40>`_ - ``LazyCsvAnnotationBeanReader`` を使用し、CSVファイルを読み込むときに、アノテーションに定義しているラベルが実際のファイルの見出しに存在しないときのエラーメッセージを改善しました。
+  
+  * `#34 <https://github.com/mygreen/super-csv-annotation/pull/34>`_ / `#35 <https://github.com/mygreen/super-csv-annotation/pull/35>`_ - ``@CsvRegexReplace`` に属性 ``partialMatched`` を追加し、全体一致か、部分一致かを選択できるようにしました。
+    
+    * 初期値は、false で全体一致です。
+  
+
+
+--------------------------------------------------------
 ver.2.1 - 2017-09-23
 --------------------------------------------------------
 
