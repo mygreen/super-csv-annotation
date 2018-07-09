@@ -1,3 +1,5 @@
+[![Javadocs](http://javadoc.io/badge/com.github.mygreen/super-csv-annotation.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/super-csv-annotation)
+
 Supre CSV Annotation
 ====================
 
