@@ -18,7 +18,7 @@ import com.github.mygreen.supercsv.util.ArgUtils;
  * <p>クラスパスのルートにリソース名が{@literal SuperCsvMessages}のプロパティファイルを配置していると自動的に読み込みます。</p>
  * <p>デフォルトでは、{@link ResourceBundleMessageResolver#DEFAULT_MESSAGE}に配置されているリソースファイルを読み込みます。</p>
  * 
- * @version 2.0
+ * @version 2.2
  * @author T.TSUCHIE
  *
  */
@@ -44,7 +44,7 @@ public class ResourceBundleMessageResolver implements MessageResolver {
     public ResourceBundleMessageResolver(final String baseName, final boolean appendUserResource) {
         ArgUtils.notEmpty(baseName, "baseName");
         
-        addResourceBundle(ResourceBundle.getBundle(baseName));
+        addResourceBundle(ResourceBundle.getBundle(baseName, new EncodingControl("UTF-8")));
         
         // ユーザ定義のリソースを読み込む
         if(appendUserResource) {
@@ -53,7 +53,7 @@ public class ResourceBundleMessageResolver implements MessageResolver {
             if(index > 0) {
                 final String userName = baseName.substring(index+1);
                 try {
-                    addResourceBundle(ResourceBundle.getBundle(userName));
+                    addResourceBundle(ResourceBundle.getBundle(userName, new EncodingControl("UTF-8")));
                 } catch(Throwable e) { }
             }
         }

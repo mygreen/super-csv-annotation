@@ -24,6 +24,7 @@ import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.io.CsvAnnotationBeanReader;
 import com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 
@@ -38,7 +39,7 @@ public class CsvValidatorTest  {
     
     private BeanMappingFactory beanMappingFactory;
     private CsvExceptionConverter exceptionConverter;
-    private MessageResolver testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+    private MessageResolver testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
     
     @Before
     public void setUp() throws Exception {

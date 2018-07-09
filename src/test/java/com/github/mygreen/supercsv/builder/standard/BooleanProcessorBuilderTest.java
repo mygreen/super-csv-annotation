@@ -24,6 +24,7 @@ import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -60,7 +61,7 @@ public class BooleanProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final Boolean TEST_VALUE_TRUE_OBJ = Boolean.TRUE;
@@ -675,7 +676,7 @@ public class BooleanProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final boolean TEST_VALUE_PRIMITIVE_INIT_OBJ = false;

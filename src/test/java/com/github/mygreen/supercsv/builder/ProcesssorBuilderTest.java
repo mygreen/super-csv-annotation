@@ -24,6 +24,7 @@ import org.supercsv.exception.SuperCsvConstraintViolationException;
 
 import com.github.mygreen.supercsv.annotation.CsvBean;
 import com.github.mygreen.supercsv.annotation.CsvColumn;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -54,7 +55,7 @@ public class ProcesssorBuilderTest {
         this.beanMappingFactory = new BeanMappingFactory();
         this.exceptionConverter = new CsvExceptionConverter();
         
-        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+        this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
     }
     
     @CsvBean

@@ -24,6 +24,7 @@ import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+import com.github.mygreen.supercsv.localization.EncodingControl;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -60,7 +61,7 @@ public class IntegerProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final String TEST_FORMATTED_PATTERN = "#,###";
@@ -781,7 +782,7 @@ public class IntegerProcessorBuilderTest {
             this.beanMappingFactory = new BeanMappingFactory();
             this.exceptionConverter = new CsvExceptionConverter();
             
-            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages"));
+            this.testMessageResolver = new ResourceBundleMessageResolver(ResourceBundle.getBundle("TestMessages", new EncodingControl("UTF-8")));
         }
         
         private static final int TEST_VALUE_PRIMITIVE_INIT_OBJ = 0;
