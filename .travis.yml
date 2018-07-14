@@ -7,9 +7,14 @@ addons:
   apt:
     packages:
       - fonts-ipafont
+      - language-pack-ja
+env:
+    global:
+        - LANG="ja_JP.UTF-8"
+        - LC_ALL="ja_JP.UTF-8"
 #script:
 #  mvn clean verify -Dgpg.skip=true
-#  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
+  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 cache:
   directories:
     - $HOME/.m2
