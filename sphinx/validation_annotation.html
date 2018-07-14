@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>値の検証用の既存のアノテーション &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>値の検証用の既存のアノテーション &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -365,19 +362,19 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvRequire</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvRequire</span></code></td>
 <td>必須チェックを行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvRequire.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvEquals</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvEquals</span></code></td>
 <td>指定した値と等しいか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvEquals.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvUnique</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvUnique</span></code></td>
 <td>他のレコードの値と異なるか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUnique.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvUniqueHashCode</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvUniqueHashCode</span></code></td>
 <td>他のレコードの値と異なるかハッシュコードにより検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUniqueHashCode.html">JavaDoc</a></td>
 </tr>
@@ -397,35 +394,35 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvPattern</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPattern</span></code></td>
 <td>正規表現と一致するか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvPattern.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthMin</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthMin</span></code></td>
 <td>指定した文字長以上か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthMax</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthMax</span></code></td>
 <td>指定した文字長以内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthBetween</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthBetween</span></code></td>
 <td>指定した文字長の範囲内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthBetween.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthExact</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthExact</span></code></td>
 <td>指定した文字長か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthExact</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthExact</span></code></td>
 <td>指定した文字長か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvWordForbid</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvWordForbid</span></code></td>
 <td>指定した語彙を含んでいないか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordForbid.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvWordRequire</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvWordRequire</span></code></td>
 <td>指定した語彙を含んでいるか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordRequire.html">JavaDoc</a></td>
 </tr>
@@ -445,15 +442,15 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberMin</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberMin</span></code></td>
 <td>指定した下限値以上か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberMax</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberMax</span></code></td>
 <td>指定した上限値以下か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberRange</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberRange</span></code></td>
 <td>指定した値の範囲内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberRange.html">JavaDoc</a></td>
 </tr>
@@ -473,15 +470,15 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeMin</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeMin</span></code></td>
 <td>指定した値以降（下限値以上）か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeMax</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeMax</span></code></td>
 <td>指定した値以前（上限値以下）か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeRange</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeRange</span></code></td>
 <td>指定した値の期間内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeRange.html">JavaDoc</a></td>
 </tr>
@@ -489,18 +486,18 @@
 </table>
 <div class="section" id="id19">
 <h2>処理順序の指定<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>属性 <code class="docutils literal"><span class="pre">order</span></code> で処理順序を指定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">order</span></code> で処理順序を指定することができます。</p>
 <ul class="simple">
 <li>値が大きいほど後から実行されます。</li>
 <li>値が同じ場合は、アノテーションのFQCN（完全限定クラス名）の昇順で実行されます。<ul>
-<li>属性orderを省略した場合は、デフォルト値 <code class="docutils literal"><span class="pre">0</span></code> が適用されます。</li>
-<li>ただし、必須チェック用の <code class="docutils literal"><span class="pre">&#64;CsvRequire</span></code> は、初めに実行されるよう、属性orderのデフォルト値にはIntegerの最小値（-2147483648）が設定されています。</li>
+<li>属性orderを省略した場合は、デフォルト値 <code class="docutils literal notranslate"><span class="pre">0</span></code> が適用されます。</li>
+<li>ただし、必須チェック用の <code class="docutils literal notranslate"><span class="pre">&#64;CsvRequire</span></code> は、初めに実行されるよう、属性orderのデフォルト値にはIntegerの最小値（-2147483648）が設定されています。</li>
 </ul>
 </li>
 <li>読み込み時、書き込み時とも同じ処理順序になります。</li>
-<li>属性 <code class="docutils literal"><span class="pre">order</span></code> が付与されていないアノテーションは順番が付与されているものよりも後になります。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">order</span></code> が付与されていないアノテーションは順番が付与されているものよりも後になります。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -536,16 +533,16 @@
 </div>
 <div class="section" id="id20">
 <h2>処理ケースの指定<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>属性 <code class="docutils literal"><span class="pre">cases</span></code> で、アノテーションを適用するケースとして「読み込み時」「書き込み時」を限定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">cases</span></code> で、アノテーションを適用するケースとして「読み込み時」「書き込み時」を限定することができます。</p>
 <ul class="simple">
-<li>列挙型 <code class="docutils literal"><span class="pre">BuildCase</span></code> で指定します。<ul>
-<li><code class="docutils literal"><span class="pre">BuildCase.Read</span></code> が読み込み時、 <code class="docutils literal"><span class="pre">BuildCase.Write</span></code> が書き込み時を表します。</li>
+<li>列挙型 <code class="docutils literal notranslate"><span class="pre">BuildCase</span></code> で指定します。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">BuildCase.Read</span></code> が読み込み時、 <code class="docutils literal notranslate"><span class="pre">BuildCase.Write</span></code> が書き込み時を表します。</li>
 </ul>
 </li>
 <li>属性の値が空（配列が空）の場合、または、属性 cases を指定しない場合は、全てのケースに該当します。</li>
 <li>既存のアノテーションは、基本的に全て属性値が空が設定され、全てのケースに該当します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -583,19 +580,19 @@
 </div>
 <div class="section" id="id21">
 <h2>グループの指定<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>属性 <code class="docutils literal"><span class="pre">groups</span></code> で、グループ用クラスを指定することで、属性 <em>cases</em> より柔軟に適用するケースをを限定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">groups</span></code> で、グループ用クラスを指定することで、属性 <em>cases</em> より柔軟に適用するケースをを限定することができます。</p>
 <ul class="simple">
 <li>Bean Validation のgroupと同じような考え方ですが、適用される順序は関係ありません。<ul>
 <li>本ライブラリでは、順序を指定したいときは、属性 <em>order</em> を指定します。</li>
 </ul>
 </li>
-<li>属性を指定しない（空の）場合は、デフォルトのグループ <code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.annotation.DefaultGroup</span></code> が適用されたと同じ意味になります。<ul>
-<li>Bean Validationのデフォルトグループ <code class="docutils literal"><span class="pre">javax.validation.groups.Default</span></code> とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。</li>
+<li>属性を指定しない（空の）場合は、デフォルトのグループ <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.annotation.DefaultGroup</span></code> が適用されたと同じ意味になります。<ul>
+<li>Bean Validationのデフォルトグループ <code class="docutils literal notranslate"><span class="pre">javax.validation.groups.Default</span></code> とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。</li>
 </ul>
 </li>
 <li>グループ用クラスは、実装が必要ないため、通常はインタフェースで作成します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -636,8 +633,8 @@
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">interface</span> <span class="nc">NormalGroup</span> <span class="o">{}</span>
 </pre></div>
 </td></tr></table></div>
-<p>実行時は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter/BeanMappingFactory</span></code> の引数で指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>実行時は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter/BeanMappingFactory</span></code> の引数で指定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -759,9 +756,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -770,12 +765,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -793,7 +788,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -809,19 +804,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

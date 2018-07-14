@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>独自の変換処理の作成方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>独自の変換処理の作成方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -361,7 +358,7 @@
 <h2>CellProcessorの実装クラスの作成<a class="headerlink" href="#cellprocessor" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>サンプルとして、任意の文字列を追加するCellProcessorを作成します。</p>
 <ul class="simple">
-<li>抽象クラス <code class="docutils literal"><span class="pre">CellProcessorAdaptor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html">JavaDoc</a> ] を継承します。</li>
+<li>抽象クラス <code class="docutils literal notranslate"><span class="pre">CellProcessorAdaptor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html">JavaDoc</a> ] を継承します。</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
@@ -369,22 +366,22 @@
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li>インタフェースとして <code class="docutils literal"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。<ul>
+<li>インタフェースとして <code class="docutils literal notranslate"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。<ul>
 <li>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
 CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。</li>
 <li>変換処理は、必ず文字列に対して行うため実装しておきます。</li>
 </ul>
 </li>
 <li>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
-<li>メソッド <code class="docutils literal"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
 <li>nullの場合、次の処理に委譲するようにします。
-Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を呼びnullチェックを行いますが、
+Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
 本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</li>
 <li>変換した値を次の処理に渡します。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -477,19 +474,19 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <div class="section" id="id3">
 <h2>変換処理用のアノテーションクラスの作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
 <li>通常はFieldのみで問題ないですが、 <a class="reference internal" href="composition.html"><span class="doc">アノテーションを合成</span></a> するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</li>
 </ul>
 </li>
-<li><code class="docutils literal"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
 <li>内部クラスのアノテーションとして、 <em>List</em> を定義します。</li>
 </ul>
 </li>
-<li>変換用のアノテーションと示すためのメタアノテーション <code class="docutils literal"><span class="pre">&#64;CsvConversion</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html">JavaDoc</a> ]を指定します。</li>
-<li>共通の属性として、 <code class="docutils literal"><span class="pre">cases</span></code> と <code class="docutils literal"><span class="pre">groups</span></code> 、 <code class="docutils literal"><span class="pre">order</span></code> を定義します。</li>
-<li>固有の属性 として、<code class="docutils literal"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</li>
+<li>変換用のアノテーションと示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvConversion</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html">JavaDoc</a> ]を指定します。</li>
+<li>共通の属性として、 <code class="docutils literal notranslate"><span class="pre">cases</span></code> と <code class="docutils literal notranslate"><span class="pre">groups</span></code> 、 <code class="docutils literal notranslate"><span class="pre">order</span></code> を定義します。</li>
+<li>固有の属性 として、<code class="docutils literal notranslate"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -575,11 +572,11 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <h2>変換処理用のファクトリクラスの作成<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。</p>
 <ul class="simple">
-<li>インタフェース <code class="docutils literal"><span class="pre">ConversionProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html">JavaDoc</a> ] を実装します。</li>
+<li>インタフェース <code class="docutils literal notranslate"><span class="pre">ConversionProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html">JavaDoc</a> ] を実装します。</li>
 <li>独自のCellProcessorのCustomConversionのインスタンスを作成します。</li>
 <li>Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -627,9 +624,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -638,12 +633,12 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -661,7 +656,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -677,19 +672,13 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

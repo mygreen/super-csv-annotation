@@ -20,37 +20,39 @@ import com.github.mygreen.supercsv.util.Utils;
 /**
  * アノテーション{@link CsvRegexReplace}をハンドリングして、値を置換するCellProcessorの{@link RegexReplace}を追加する。
  * 
+ * @version 2.2
  * @since 2.0
  * @author T.TSUCHIE
  *
  */
-<span class="fc" id="L27">public class RegexReplaceFactory implements ConversionProcessorFactory&lt;CsvRegexReplace&gt; {</span>
+<span class="fc" id="L28">public class RegexReplaceFactory implements ConversionProcessorFactory&lt;CsvRegexReplace&gt; {</span>
     
     @Override
     public Optional&lt;CellProcessor&gt; create(final CsvRegexReplace anno, final Optional&lt;CellProcessor&gt; next,
             final FieldAccessor field, final TextFormatter&lt;?&gt; formatter, final Configuration config) {
         
-<span class="fc" id="L33">        final int flags = Utils.buildRegexFlags(anno.flags());</span>
+<span class="fc" id="L34">        final int flags = Utils.buildRegexFlags(anno.flags());</span>
         final Pattern pattern;
         try {
-<span class="fc" id="L36">            pattern = Pattern.compile(anno.regex(), flags);</span>
-<span class="fc" id="L37">        } catch(PatternSyntaxException e) {</span>
-<span class="fc" id="L38">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
-<span class="fc" id="L39">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
-<span class="fc" id="L40">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
-<span class="fc" id="L41">                    .var(&quot;attrName&quot;, &quot;regex&quot;)</span>
-<span class="fc" id="L42">                    .var(&quot;attrValue&quot;, anno.regex())</span>
-<span class="fc" id="L43">                    .var(&quot;type&quot;, &quot;{key.regex}&quot;)</span>
-<span class="fc" id="L44">                    .format(true));</span>
-<span class="fc" id="L45">        }</span>
+<span class="fc" id="L37">            pattern = Pattern.compile(anno.regex(), flags);</span>
+<span class="fc" id="L38">        } catch(PatternSyntaxException e) {</span>
+<span class="fc" id="L39">            throw new SuperCsvInvalidAnnotationException(anno, MessageBuilder.create(&quot;anno.attr.invalidType&quot;)</span>
+<span class="fc" id="L40">                    .var(&quot;property&quot;, field.getNameWithClass())</span>
+<span class="fc" id="L41">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
+<span class="fc" id="L42">                    .var(&quot;attrName&quot;, &quot;regex&quot;)</span>
+<span class="fc" id="L43">                    .var(&quot;attrValue&quot;, anno.regex())</span>
+<span class="fc" id="L44">                    .var(&quot;type&quot;, &quot;{key.regex}&quot;)</span>
+<span class="fc" id="L45">                    .format(true));</span>
+<span class="fc" id="L46">        }</span>
         
-<span class="fc" id="L47">        final String replacement = anno.replacement();</span>
+<span class="fc" id="L48">        final String replacement = anno.replacement();</span>
+<span class="fc" id="L49">        final boolean partialMatched = anno.partialMatched();</span>
         
-<span class="fc" id="L49">        final RegexReplace processor = next.map(n -&gt;  new RegexReplace(pattern, replacement, (StringCellProcessor) n))</span>
-<span class="fc" id="L50">                .orElseGet(() -&gt; new RegexReplace(pattern, replacement));</span>
+<span class="fc" id="L51">        final RegexReplace processor = next.map(n -&gt;  new RegexReplace(pattern, replacement, partialMatched, (StringCellProcessor) n))</span>
+<span class="fc" id="L52">                .orElseGet(() -&gt; new RegexReplace(pattern, replacement, partialMatched));</span>
         
-<span class="fc" id="L52">        return Optional.of(processor);</span>
+<span class="fc" id="L54">        return Optional.of(processor);</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

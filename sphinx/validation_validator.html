@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bean単位での値の検証方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>Bean単位での値の検証方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -351,26 +348,26 @@
   <div class="section" id="bean">
 <h1>Bean単位での値の検証方法<a class="headerlink" href="#bean" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>CellProcessorは、フィールド1つに対する単項目チェックです。</p>
-<p>項目間に対する相関チェックを行う場合は、<code class="docutils literal"><span class="pre">CsvValidator</span></code> で1レコード分のBeanに対するチェック処理を実装します。</p>
+<p>項目間に対する相関チェックを行う場合は、<code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> で1レコード分のBeanに対するチェック処理を実装します。</p>
 <div class="section" id="csvvalidator">
 <h2>CsvValidatorの実装<a class="headerlink" href="#csvvalidator" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">CsvValidator</span></code> のメソッド <code class="docutils literal"><span class="pre">validate(...)</span></code> を実装します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> のメソッド <code class="docutils literal notranslate"><span class="pre">validate(...)</span></code> を実装します。</p>
 <ul class="simple">
-<li>エラー情報は、<code class="docutils literal"><span class="pre">CsvBindingErrors</span></code> に格納し管理されています。<ul>
-<li>フィールドに対してエラーメッセージを追加する場合は、<code class="docutils literal"><span class="pre">CsvBindingErrors#rejectValue(...)</span></code> で追加します。</li>
-<li>項目間などのグローバルなエラーメッセージを追加する場合は、<code class="docutils literal"><span class="pre">CsvBindingErrors#reject(...)</span></code> で追加します。</li>
+<li>エラー情報は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors</span></code> に格納し管理されています。<ul>
+<li>フィールドに対してエラーメッセージを追加する場合は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#rejectValue(...)</span></code> で追加します。</li>
+<li>項目間などのグローバルなエラーメッセージを追加する場合は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#reject(...)</span></code> で追加します。</li>
 </ul>
 </li>
 <li>CsvValidatorは、CellProcessorの後に実行され、もしエラーがある場合、そのフィールドの値は空が設定されており、
-<code class="docutils literal"><span class="pre">CsvBindingErrors#getFieldErrors(&lt;フィールド名&gt;)</span></code> でフィールドに対するエラーがあるかどうか判定する必要があります。<ul>
-<li>既にエラーがある場合などの判定処理を巻単位するため、<code class="docutils literal"><span class="pre">CsvField</span></code> クラスを利用します。</li>
+<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#getFieldErrors(&lt;フィールド名&gt;)</span></code> でフィールドに対するエラーがあるかどうか判定する必要があります。<ul>
+<li>既にエラーがある場合などの判定処理を巻単位するため、<code class="docutils literal notranslate"><span class="pre">CsvField</span></code> クラスを利用します。</li>
 <li></li>
 </ul>
 </li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">CsvValidatorの実装例</span><a class="headerlink" href="#id3" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -518,7 +515,7 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<p><code class="docutils literal"><span class="pre">CsvFieldValidator#createMessageVariables(...)</span></code> を利用すると、以下の良く使用するCSV情報に関する変数を作ることができます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvFieldValidator#createMessageVariables(...)</span></code> を利用すると、以下の良く使用するCSV情報に関する変数を作ることができます。</p>
 <table border="1" class="colwidths-given docutils" id="id4">
 <caption><span class="caption-text">よく使用するな変数</span><a class="headerlink" href="#id4" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
@@ -555,7 +552,7 @@
 </tr>
 <tr class="row-odd"><td><em>label</em></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
 <div class="line">label属性を指定していない場合は、フィールド名になります。</div>
 </div>
 </td>
@@ -568,17 +565,17 @@
 </tr>
 <tr class="row-odd"><td><em>printer</em></td>
 <td><div class="first last line-block">
-<div class="line">各フィールドの <code class="docutils literal"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
-<div class="line"><code class="docutils literal"><span class="pre">${print#print(validatedValue)}</span></code> でパース済みのオブジェクトをフォーマットするのに利用します。</div>
+<div class="line">各フィールドの <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">${print#print(validatedValue)}</span></code> でパース済みのオブジェクトをフォーマットするのに利用します。</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>作成したCsvValidatorは、 <code class="docutils literal"><span class="pre">&#64;CsvBean(validators=)</span></code> で指定します。</p>
+<p>作成したCsvValidatorは、 <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validators=)</span></code> で指定します。</p>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-text">Beanの実装例</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -629,15 +626,16 @@
 </div>
 <div class="section" id="id1">
 <h2>エラーメッセージの定義<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">CsvBindingErrors#reject(...)/rejectValue(...)</span></code> でエラーメッセージを追加する場合、エラーコードを指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#reject(...)/rejectValue(...)</span></code> でエラーメッセージを追加する場合、エラーコードを指定します。</p>
 <ul class="simple">
-<li>エラーメッセージは、クラスパスのルートに配置したプロパティファイル <code class="docutils literal"><span class="pre">SuperCsvMessages.properties</span></code> が自動的に読み込まれるため、そこに定義します。</li>
+<li>エラーメッセージは、クラスパスのルートに配置したプロパティファイル <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> が自動的に読み込まれるため、そこに定義します。</li>
+<li>プロパティファイルは、UTF-8、ASCIIコード変換なしで作成します。 <cite>[ver.2.2]</cite></li>
 <li>メッセージキーは、「エラーコード」「クラス名」「フィールド名」「フィールドのクラスタイプ」を組み合わせて、優先順位の高いものに一致した物が採用されます。</li>
 <li>メッセージ中では変数が利用可能で、予め利用可能な変数は下記が登録されています。<ul>
-<li>メッセージ変数は、<code class="docutils literal"><span class="pre">{key}</span></code> で参照可能です。</li>
+<li>メッセージ変数は、<code class="docutils literal notranslate"><span class="pre">{key}</span></code> で参照可能です。</li>
 </ul>
 </li>
-<li>さらに、<code class="docutils literal"><span class="pre">${exp}</span></code> の形式だと、式言語として <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用可能です。</li>
+<li>さらに、<code class="docutils literal notranslate"><span class="pre">${exp}</span></code> の形式だと、式言語として <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用可能です。</li>
 <li>ただし、 <a class="reference internal" href="spring_message.html"><span class="doc">Spring Frameworkと連携してエラーメッセージの取得方法を変更</span></a> している場合は、定義する箇所は異なります。</li>
 </ul>
 <table border="1" class="colwidths-given docutils" id="id6">
@@ -655,7 +653,7 @@
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>1</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;Beanのクラス名&gt;.&lt;フィールド名&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;Beanのクラス名&gt;.&lt;フィールド名&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.SampleCsv.age</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -663,7 +661,7 @@
 </td>
 </tr>
 <tr class="row-odd"><td>2</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールド名&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールド名&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.age</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -671,7 +669,7 @@
 </td>
 </tr>
 <tr class="row-even"><td>3</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスパス&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスパス&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.java.lang.Integer</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -680,7 +678,7 @@
 </tr>
 <tr class="row-odd"><td>4</td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスタイプの親のクラスパス&gt;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスタイプの親のクラスパス&gt;</span></code></div>
 <div class="line">※数値型と列挙型のみ</div>
 </div>
 </td>
@@ -692,7 +690,7 @@
 </td>
 </tr>
 <tr class="row-even"><td>5</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -703,7 +701,7 @@
 </table>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-text">SuperCsvMessage.propertiesの定義例</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-properties"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-properties notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -728,16 +726,16 @@
 </div>
 <div class="section" id="id2">
 <h2>エラーのハンドリング<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>CsvValidatorの中でCsvBindingErrorsにエラー情報を追加すると、例外 <code class="docutils literal"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
+<p>CsvValidatorの中でCsvBindingErrorsにエラー情報を追加すると、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
 <ul class="simple">
-<li>例外クラスは、 <code class="docutils literal"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
-<li><em>CsvExceptionConverter</em> は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
-メソッド <code class="docutils literal"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
+<li>例外クラスは、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
+<li><em>CsvExceptionConverter</em> は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
+メソッド <code class="docutils literal notranslate"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
 <li>詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のエラーメッセージ</span></a> を参照してください。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -823,9 +821,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -834,12 +830,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -857,7 +853,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -873,19 +869,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

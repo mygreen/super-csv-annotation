@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. システム設定 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>13. システム設定 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,22 +24,13 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="next" title="14. リリースノート" href="release.html"/>
-        <link rel="prev" title="12. Spring Frameworkとの連携" href="spring.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="14. マイグレーション" href="migration.html" />
+    <link rel="prev" title="12. Spring Frameworkとの連携" href="spring.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -48,7 +39,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -70,7 +61,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -276,14 +267,19 @@
 <li class="toctree-l2"><a class="reference internal" href="#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +294,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -306,9 +302,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -354,9 +351,9 @@
 <h1>13. システム設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id2">
 <h2>13.1. システム設定の変更方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>CellProcessorを組み立てる際の動作を <code class="docutils literal"><span class="pre">Configuration</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/Configuration.html">JavaDoc</a> ]クラスでカスタマイズすることができます。</p>
+<p>CellProcessorを組み立てる際の動作を <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/Configuration.html">JavaDoc</a> ]クラスでカスタマイズすることができます。</p>
 <ul class="simple">
-<li>Configuration は、<code class="docutils literal"><span class="pre">BeanMappingFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html">JavaDoc</a> ]から設定／取得できます。</li>
+<li>Configuration は、<code class="docutils literal notranslate"><span class="pre">BeanMappingFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html">JavaDoc</a> ]から設定／取得できます。</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
@@ -364,9 +361,9 @@
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li>BeanMappingFactoryの設定を変更した場合は、BeanMappingを <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader</span></code> や <code class="docutils literal"><span class="pre">CsvAnnoationBeanWriter</span></code> に直接渡します。</li>
+<li>BeanMappingFactoryの設定を変更した場合は、BeanMappingを <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader</span></code> や <code class="docutils literal notranslate"><span class="pre">CsvAnnoationBeanWriter</span></code> に直接渡します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -442,7 +439,7 @@
 </div>
 <div class="section" id="id4">
 <h2>13.2. システム設定の項目一覧<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">Configuration</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/Configuration.html">JavaDoc</a> ]で設定可能な項目一覧を下記に示します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Configuration</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/Configuration.html">JavaDoc</a> ]で設定可能な項目一覧を下記に示します。</p>
 <table border="1" class="colwidths-given docutils" id="id8">
 <caption><span class="caption-number">表 - 13.2.1 </span><span class="caption-text">システム設定の項目一覧</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
@@ -459,20 +456,20 @@
 <td><div class="first last line-block">
 <div class="line">独自のTextFormatter/ConstraintProcessorFactory/ConversionProcessorFactoryなどの</div>
 <div class="line">インスタンスを作成するためのクラスです。</div>
-<div class="line"><code class="docutils literal"><span class="pre">SpringBeanFactory</span></code> に切り替えることで、Spring FrameworkのDI機能を使用することができます。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">SpringBeanFactory</span></code> に切り替えることで、Spring FrameworkのDI機能を使用することができます。</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><em>annoationComparator</em></td>
 <td><div class="first last line-block">
 <div class="line">アノテーションを取得する際に、順番を一定に保つために並び変えるためのクラスです。</div>
-<div class="line">標準のクラス <code class="docutils literal"><span class="pre">AnnotationComparator</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/AnnotationComparator.html">JavaDoc</a> ]は、アノテーションの属性「order」を元に並び変えます。</div>
+<div class="line">標準のクラス <code class="docutils literal notranslate"><span class="pre">AnnotationComparator</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/AnnotationComparator.html">JavaDoc</a> ]は、アノテーションの属性「order」を元に並び変えます。</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><em>builderResolver</em></td>
 <td><div class="first last line-block">
-<div class="line">各タイプの <code class="docutils literal"><span class="pre">ProcessorBuilder</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html">JavaDoc</a> ]のインスタンスを管理するためのクラスです。</div>
+<div class="line">各タイプの <code class="docutils literal notranslate"><span class="pre">ProcessorBuilder</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html">JavaDoc</a> ]のインスタンスを管理するためのクラスです。</div>
 <div class="line">基本的に、各種アノテーションで独自のクラスタイプに対応・カスタマイズすることができますが、</div>
 <div class="line">既存の実装を切り替えることもできます。</div>
 </div>
@@ -492,15 +489,13 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="release.html" class="btn btn-neutral float-right" title="14. リリースノート" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="migration.html" class="btn btn-neutral float-right" title="14. マイグレーション" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="spring.html" class="btn btn-neutral" title="12. Spring Frameworkとの連携" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -512,12 +507,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -535,7 +530,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -551,19 +546,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

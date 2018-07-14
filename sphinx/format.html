@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. 書式の指定方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>3. 書式の指定方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,22 +24,13 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="next" title="4. 値の変換方法" href="conversion.html"/>
-        <link rel="prev" title="2. 機能概要" href="basic.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="4. 値の変換方法" href="conversion.html" />
+    <link rel="prev" title="2. 機能概要" href="basic.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -48,7 +39,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -70,7 +61,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -276,14 +267,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +294,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -306,9 +302,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -394,19 +391,19 @@
 <p>通常の「true、false」以外に、「○、×」などでのマッピングが可能となります。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、 <code class="docutils literal"><span class="pre">false</span></code> が設定されます。
-初期値を変更したい場合は、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvDefaultValue</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a>]を使用してください。</p>
+<p class="last">プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、 <code class="docutils literal notranslate"><span class="pre">false</span></code> が設定されます。
+初期値を変更したい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvDefaultValue</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a>]を使用してください。</p>
 </div>
 <div class="section" id="id7">
 <h4>3.1.1.1. 読み込み時の値の指定<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>属性 <code class="docutils literal"><span class="pre">readForTrue</span></code> 、 <code class="docutils literal"><span class="pre">readForFalse</span></code> で、読み込み時のtrueまたはfalseと判定する候補の値を指定します。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">readForTrue</span></code> 、 <code class="docutils literal notranslate"><span class="pre">readForFalse</span></code> で、読み込み時のtrueまたはfalseと判定する候補の値を指定します。</p>
 <ul class="simple">
 <li>属性readForTrueとreadForFalseの値に重複がある場合、readForTrueの定義が優先されまます。</li>
-<li>属性readForTrueを指定しない場合、デフォルトで「」true」, 「1」, 「yes」, 「on」, 「y」, 「t」」が設定されます。</li>
-<li>属性readForFalseを指定しない場合、デフォルトで「」false」, 「0」, 「no」, 「off」, 「f」, 「n」」が設定されます。</li>
-<li>属性 <code class="docutils literal"><span class="pre">ignoreCase</span></code> の値をtrueにすると、読み込み時に大文字・小文字の区別なく候補の値と比較します。</li>
+<li>属性readForTrueを指定しない場合、デフォルトで「&quot;true&quot;, &quot;1&quot;, &quot;yes&quot;, &quot;on&quot;, &quot;y&quot;, &quot;t&quot;」が設定されます。</li>
+<li>属性readForFalseを指定しない場合、デフォルトで「&quot;false&quot;, &quot;0&quot;, &quot;no&quot;, &quot;off&quot;, &quot;f&quot;, &quot;n&quot;」が設定されます。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">ignoreCase</span></code> の値をtrueにすると、読み込み時に大文字・小文字の区別なく候補の値と比較します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -458,13 +455,13 @@
 </div>
 <div class="section" id="id8">
 <h4>3.1.1.2. 書き込み時の値の指定<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>属性 <code class="docutils literal"><span class="pre">writeAsTrue</span></code> と <code class="docutils literal"><span class="pre">writeAsFalse</span></code> で、書き込み時のtrueまたはfalse値に該当する文字を指定します。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">writeAsTrue</span></code> と <code class="docutils literal notranslate"><span class="pre">writeAsFalse</span></code> で、書き込み時のtrueまたはfalse値に該当する文字を指定します。</p>
 <ul class="simple">
-<li>属性writeAsTrueを指定しない場合は、デフォルトで」true」が設定され、セルのタイプもブール型になります。</li>
-<li>属性writeAsFalseを指定しない場合は、デフォルトで」false」が設定され、セルのタイプもブール型になります。</li>
+<li>属性writeAsTrueを指定しない場合は、デフォルトで&quot;true&quot;が設定され、セルのタイプもブール型になります。</li>
+<li>属性writeAsFalseを指定しない場合は、デフォルトで&quot;false&quot;が設定され、セルのタイプもブール型になります。</li>
 <li>読み込みと書き込みの両方を行う場合、属性readForTrueとreadForFalseの値に属性writeAsTrueとwriteAsFalseの値を含める必要があります。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -506,11 +503,11 @@
 </div>
 <div class="section" id="id9">
 <h4>3.1.1.3. 読み込み時の値のパースに失敗した際の処理<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>読み込み時にtrueまたはfalseに変換できない場合、例外 <code class="docutils literal"><span class="pre">SuperCsvValidationException</span></code> が発生します。</p>
+<p>読み込み時にtrueまたはfalseに変換できない場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> が発生します。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">failToFalse</span></code> をtrueに設定することで、変換できない場合に強制的に値をfalseとして読み込み、例外を発生しなくできます。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">failToFalse</span></code> をtrueに設定することで、変換できない場合に強制的に値をfalseとして読み込み、例外を発生しなくできます。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -548,12 +545,12 @@
 </div>
 <div class="section" id="id10">
 <h4>3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal"><span class="pre">message</span></code> で指定することができます。</p>
+<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で指定することができます。</p>
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
 <p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html">JavaDoc</a> を参照してください。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -589,34 +586,34 @@
 <p>数値型に対する書式を指定する際に利用するアノテーションです。</p>
 <p>対応するJavaのクラスタイプは以下の通りです。</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">byte/short/int/long/float/double</span></code> のプリミティブ型とそのラッパークラス。</li>
-<li><code class="docutils literal"><span class="pre">java.math.BigDecimal</span></code> / <code class="docutils literal"><span class="pre">java.math.BigInteger</span></code> の数値クラス。</li>
+<li><code class="docutils literal notranslate"><span class="pre">byte/short/int/long/float/double</span></code> のプリミティブ型とそのラッパークラス。</li>
+<li><code class="docutils literal notranslate"><span class="pre">java.math.BigDecimal</span></code> / <code class="docutils literal notranslate"><span class="pre">java.math.BigInteger</span></code> の数値クラス。</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、それぞれのプリミティブ型の初期値が設定されます。</p>
-<p class="last">整数型の場合は <code class="docutils literal"><span class="pre">0</span></code> が、小数型の場合は <code class="docutils literal"><span class="pre">0.0</span></code> が設定されます。
-初期値を変更したい場合は、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvDefaultValue</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a>]を使用してください。</p>
+<p class="last">整数型の場合は <code class="docutils literal notranslate"><span class="pre">0</span></code> が、小数型の場合は <code class="docutils literal notranslate"><span class="pre">0.0</span></code> が設定されます。
+初期値を変更したい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvDefaultValue</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html">JavaDoc</a>]を使用してください。</p>
 </div>
 <div class="section" id="id13">
 <h4>3.1.2.1. 読み込み/書き込み時の書式を指定したい場合<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">pattern</span></code> で書式を指定します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> で書式を指定します。<ul>
 <li>Javaのクラス <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/text/DecimalFormat.html">java.text.DecimalFormat</a> で解釈可能な書式を設定します。</li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal"><span class="pre">locale</span></code> でロケールを指定します。<ul>
-<li>言語コードのみを指定する場合、』ja’の2桁で指定します。</li>
-<li>言語コードと国コードを指定する場合、』ja _JP’のようにアンダーバーで区切り指定します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">locale</span></code> でロケールを指定します。<ul>
+<li>言語コードのみを指定する場合、'ja'の2桁で指定します。</li>
+<li>言語コードと国コードを指定する場合、'ja _JP'のようにアンダーバーで区切り指定します。</li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal"><span class="pre">currency</span></code> で通貨コード（ <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_4217">ISO-4217コード</a> ）を指定します。<ul>
-<li>Javaのクラス <code class="docutils literal"><span class="pre">java.util.Currency</span></code> で解釈可能なコードを指定します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">currency</span></code> で通貨コード（ <a class="reference external" href="https://ja.wikipedia.org/wiki/ISO_4217">ISO-4217コード</a> ）を指定します。<ul>
+<li>Javaのクラス <code class="docutils literal notranslate"><span class="pre">java.util.Currency</span></code> で解釈可能なコードを指定します。</li>
 </ul>
 </li>
-<li>書式に合わない値をパースした場合、例外 <code class="docutils literal"><span class="pre">SuperCsvValidationException</span></code> が発生します。</li>
+<li>書式に合わない値をパースした場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> が発生します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -654,18 +651,18 @@
 </div>
 <div class="section" id="id14">
 <h4>3.1.2.2. 読み込み時に曖昧に解析したい場合<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>曖昧なケースでも読み込めるようにしたいときは、属性 <code class="docutils literal"><span class="pre">lenient</span></code> の値をtrueにします。</p>
+<p>曖昧なケースでも読み込めるようにしたいときは、属性 <code class="docutils literal notranslate"><span class="pre">lenient</span></code> の値をtrueにします。</p>
 <p>例えば、 <em>12.51</em> と小数を整数型にマッピングする場合、<em>13</em> と丸めの補正が行われます。
 また、 <em>123,456.0ab</em> のように、途中から数値以外の文字が出現した場合、それまでの文字 <em>123,456.0</em> を抽出して処理が行われます。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p>数値型へのパースは、本ライブラリでは <code class="docutils literal"><span class="pre">java.text.DecimalFormat</span></code> を利用し、
-結果を一旦 <code class="docutils literal"><span class="pre">java.math.BigDecimal</span></code> で読み込み、そこからさらに、各クラスタイプに変換しています。</p>
-<p><em>DecimalFormat#parse(…)</em> は、<code class="docutils literal"><span class="pre">123,456.0abc</span></code> のように、途中から数値以外の文字が出現した場合、それまでの文字を読み込み、正常処理することができます。</p>
-<p class="last"><em>BigDecimal</em> で、<cite>1234.567</cite> という小数を読み込み、その値を <code class="docutils literal"><span class="pre">BigDecimal#intValue()</span></code> で整数のint型として取得した場合、小数部分は無視されます。
+<p>数値型へのパースは、本ライブラリでは <code class="docutils literal notranslate"><span class="pre">java.text.DecimalFormat</span></code> を利用し、
+結果を一旦 <code class="docutils literal notranslate"><span class="pre">java.math.BigDecimal</span></code> で読み込み、そこからさらに、各クラスタイプに変換しています。</p>
+<p><em>DecimalFormat#parse(...)</em> は、<code class="docutils literal notranslate"><span class="pre">123,456.0abc</span></code> のように、途中から数値以外の文字が出現した場合、それまでの文字を読み込み、正常処理することができます。</p>
+<p class="last"><em>BigDecimal</em> で、<cite>1234.567</cite> という小数を読み込み、その値を <code class="docutils literal notranslate"><span class="pre">BigDecimal#intValue()</span></code> で整数のint型として取得した場合、小数部分は無視されます。
 int型で扱える桁数を超えたときも自動的に切り捨てられます。</p>
 </div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -704,21 +701,21 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 <div class="section" id="id15">
 <h4>3.1.2.3. 丸めの精度と方法を指定したい場合<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">precision</span></code> で丸めの精度を指定することができます。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">precision</span></code> で丸めの精度を指定することができます。<ul>
 <li>この属性は、属性patternを書式を指定しない場合に有効になります。</li>
 <li>主に小数の場合に有効桁数を揃える際に利用します。
-例えば、precision=4で、文字列 <code class="docutils literal"><span class="pre">123.45</span></code> を double型にマッピングする場合、結果は <code class="docutils literal"><span class="pre">123.4</span></code> として読み込まれます。</li>
+例えば、precision=4で、文字列 <code class="docutils literal notranslate"><span class="pre">123.45</span></code> を double型にマッピングする場合、結果は <code class="docutils literal notranslate"><span class="pre">123.4</span></code> として読み込まれます。</li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal"><span class="pre">rounding</span></code> で、丸め方の方法を指定します。<ul>
-<li>値は、列挙型 <code class="docutils literal"><span class="pre">java.math.RoundingMode</span></code> を設定します。</li>
-<li>デフォルトでは、<code class="docutils literal"><span class="pre">RoundingMode.HALF_EVEN</span></code> です。
+<li>属性 <code class="docutils literal notranslate"><span class="pre">rounding</span></code> で、丸め方の方法を指定します。<ul>
+<li>値は、列挙型 <code class="docutils literal notranslate"><span class="pre">java.math.RoundingMode</span></code> を設定します。</li>
+<li>デフォルトでは、<code class="docutils literal notranslate"><span class="pre">RoundingMode.HALF_EVEN</span></code> です。
 詳細は、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html">RoundingModeのJavaDoc</a> を参照してください。</li>
 <li>属性patternを指定した場合は、書式自身が精度を表現しており、属性roundingで丸めの方法を指定することができます。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -764,12 +761,12 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id16">
 <h4>3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal"><span class="pre">message</span></code> で指定することができます。</p>
+<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で指定することができます。</p>
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
 <p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html">JavaDoc</a> を参照してください。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -801,7 +798,7 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 <div class="section" id="csvdatetimeformat">
 <h3>3.1.3. &#64;CsvDateTimeFormat<a class="headerlink" href="#csvdatetimeformat" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>日時型に対する書式を指定する際に利用するアノテーションです。</p>
-<p>アノテーションを付与しないときや属性 <code class="docutils literal"><span class="pre">pattern</span></code> を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
+<p>アノテーションを付与しないときや属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
 対応するJavaのクラスタイプと標準の書式は以下の通りです。</p>
 <table border="1" class="colwidths-given docutils" id="id34">
 <caption><span class="caption-number">表 - 3.1.2 </span><span class="caption-text">対応する日時のクラスタイプと標準の書式</span><a class="headerlink" href="#id34" title="このテーブルへのパーマリンク">¶</a></caption>
@@ -815,40 +812,40 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">java.util.Date</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.util.Date</span></code></td>
 <td><em>yyyy-MM-dd HH:mm:ss</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">java.util.Calendar</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.util.Calendar</span></code></td>
 <td><em>yyyy-MM-dd HH:mm:ss</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">java.sql.Date</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Date</span></code></td>
 <td><em>yyyy-MM-dd</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">java.sql.Time</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Time</span></code></td>
 <td><em>HH:mm:ss</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">java.sql.Timestamp</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Timestamp</span></code></td>
 <td><em>yyyy-MM-dd HH:mm:ss.SSS</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">java.time.LocalDateTime</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.time.LocalDateTime</span></code></td>
 <td><em>uuuu-MM-dd HH:mm:ss</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">java.time.LocalDate</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.time.LocalDate</span></code></td>
 <td><em>uuuu-MM-dd</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">java.time.ZonedDateTime</span></code></td>
-<td><em>uuuu-MM-dd HH:mm:ssxxx』[『VV』]』</em></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.time.ZonedDateTime</span></code></td>
+<td><em>uuuu-MM-dd HH:mm:ssxxx'['VV']'</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">org.joda.time.LocalDateTime</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDateTime</span></code></td>
 <td><em>yyyy-MM-dd HH:mm:ss</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">org.joda.time.LocalDate</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDate</span></code></td>
 <td><em>yyyy-MM-dd</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">org.joda.time.LocalTime</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalTime</span></code></td>
 <td><em>HH:mm:ss</em></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">org.joda.time.DateTime</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.DateTime</span></code></td>
 <td><em>yyyy-MM-dd HH:mm:ssZZ</em></td>
 </tr>
 </tbody>
@@ -856,27 +853,27 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 <div class="section" id="id19">
 <h4>3.1.3.1. 読み込み/書き込み時の書式を指定したい場合<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">pattern</span></code> で書式を指定します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> で書式を指定します。<ul>
 <li>省略した場合、クラスタイプごとの標準の書式が適用されます。</li>
 <li>java.util.Date/java.util.Calendar/java.sql.XXXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/text/SimpleDateFormat.html">java.text.SimpleDateFormat</a> で解釈可能な書式を設定します。</li>
 <li>java.time.XXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html">java.time.format.DateTimeFormatter</a> で解釈可能な書式を設定します。</li>
 <li>org.joda.time.XXX系のクラスの場合は、 <a class="reference external" href="http://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html">org.joda.time.format.DateTimeFormat</a> で解釈可能な書式を設定します。</li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal"><span class="pre">locale</span></code> でロケールを指定します。<ul>
-<li>言語コードのみを指定する場合、 <code class="docutils literal"><span class="pre">ja</span></code> の2桁で指定します。</li>
-<li>言語コードと国コードを指定する場合、 <code class="docutils literal"><span class="pre">ja_JP</span></code> のようにアンダーバーで区切り指定します。</li>
-<li>和暦を扱う時など、バリアントを指定する場合も同様に、 <code class="docutils literal"><span class="pre">ja_JP_JP</span></code> のようにさらにアンダーバーで区切り指定します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">locale</span></code> でロケールを指定します。<ul>
+<li>言語コードのみを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja</span></code> の2桁で指定します。</li>
+<li>言語コードと国コードを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja_JP</span></code> のようにアンダーバーで区切り指定します。</li>
+<li>和暦を扱う時など、バリアントを指定する場合も同様に、 <code class="docutils literal notranslate"><span class="pre">ja_JP_JP</span></code> のようにさらにアンダーバーで区切り指定します。</li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal"><span class="pre">timezone</span></code> でタイムゾーンを指定します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">timezone</span></code> でタイムゾーンを指定します。<ul>
 <li>Asia/Tokyo, GMT, GMT+09:00などの値を指定します。</li>
 <li>ただし、オフセットを持たないクラスタイプ「LocalDateTime, LocalDate, LocalTime」の時は、指定しても意味がありません。</li>
 </ul>
 </li>
-<li>書式に合わない値をパースした場合、例外 <code class="docutils literal"><span class="pre">SuperCsvValidationException</span></code> が発生します。</li>
+<li>書式に合わない値をパースした場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> が発生します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -922,9 +919,9 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id20">
 <h4>3.1.3.2. 読み込み時に曖昧に解析したい場合<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>曖昧なケースでも読み込めるようにしたいときは、属性 <code class="docutils literal"><span class="pre">lenient</span></code> の値をtrueにします。</p>
+<p>曖昧なケースでも読み込めるようにしたいときは、属性 <code class="docutils literal notranslate"><span class="pre">lenient</span></code> の値をtrueにします。</p>
 <p>例えば、 <em>2016-02-31</em> と存在しない日を解析する場合、 <em>2016-03-02</em> と補正が行われます。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -958,12 +955,12 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id21">
 <h4>3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal"><span class="pre">message</span></code> で指定することができます。</p>
+<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で指定することができます。</p>
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
 <p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvDateTimeFormat.html">JavaDoc</a> を参照してください。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1001,13 +998,13 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 <p>列挙型の変換規則の設定を行うためのアノテーションです。</p>
 <div class="section" id="id24">
 <h4>3.1.4.1. 基本的な使い方<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>列挙型の場合、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvEnumFormat</span></code> を付与しなくてもマッピングできます。
+<p>列挙型の場合、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvEnumFormat</span></code> を付与しなくてもマッピングできます。
 その際は、カラムの値と列挙型の要素の値をマッピングさせます。
-要素の値とは、 <code class="docutils literal"><span class="pre">Enum#name()</span></code> で取得できる値です。</p>
+要素の値とは、 <code class="docutils literal notranslate"><span class="pre">Enum#name()</span></code> で取得できる値です。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">ignoreCase</span></code> の値をtrueにすると、読み込み時に大文字/小文字の区別なく変換します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">ignoreCase</span></code> の値をtrueにすると、読み込み時に大文字/小文字の区別なく変換します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1055,9 +1052,9 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id25">
 <h4>3.1.4.2. 別名でマッピングする場合<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>別名でマッピングする場合、属性 <code class="docutils literal"><span class="pre">selector</span></code> で列挙型の要素の別名を取得するメソッド名を指定します。</p>
+<p>別名でマッピングする場合、属性 <code class="docutils literal notranslate"><span class="pre">selector</span></code> で列挙型の要素の別名を取得するメソッド名を指定します。</p>
 <p>次の例では、読み込み時に入力値が <em>一般権限</em> の場合、 <em>RoleType.Normal</em> にマッピングされます。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1123,12 +1120,12 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id26">
 <h4>3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal"><span class="pre">message</span></code> で指定することができます。</p>
+<p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で指定することができます。</p>
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
 <p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvEnumFormat.html">JavaDoc</a> を参照してください。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1172,31 +1169,31 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 <h2>3.2. 独自のクラスタイプへの対応<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>独自の変換処理を実装するには、2つのステップを踏む必要があります。</p>
 <ol class="arabic simple">
-<li><code class="docutils literal"><span class="pre">TextFormatter</span></code> の実装クラスの作成</li>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvFormat</span></code> で作成したTextFormatterの指定</li>
+<li><code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> の実装クラスの作成</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFormat</span></code> で作成したTextFormatterの指定</li>
 </ol>
 <p>以下、それぞれに対して解説していきます。</p>
 <div class="section" id="textformatter">
 <h3>3.2.1. TextFormatterの実装クラスの作成<a class="headerlink" href="#textformatter" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>サンプルとして、 <code class="docutils literal"><span class="pre">java.net.URL</span></code> にマッピングするTextFromatterを作成します。</p>
+<p>サンプルとして、 <code class="docutils literal notranslate"><span class="pre">java.net.URL</span></code> にマッピングするTextFromatterを作成します。</p>
 <ul class="simple">
-<li>抽象クラス <code class="docutils literal"><span class="pre">AbstractTextFormatter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html">JavaDoc</a> ] を継承します。</li>
-<li>メソッド <code class="docutils literal"><span class="pre">parse(...)</span></code> で、読み込み時の文字列からオブジェクト型に変換するメソッドの実装を行います。<ul>
-<li>変換に失敗した場合、例外 <code class="docutils literal"><span class="pre">TextParseException</span></code> をスローします。
+<li>抽象クラス <code class="docutils literal notranslate"><span class="pre">AbstractTextFormatter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html">JavaDoc</a> ] を継承します。</li>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">parse(...)</span></code> で、読み込み時の文字列からオブジェクト型に変換するメソッドの実装を行います。<ul>
+<li>変換に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">TextParseException</span></code> をスローします。
 既存の例外が発生する場合は、ラップするようにします。</li>
 </ul>
 </li>
-<li>メソッド <code class="docutils literal"><span class="pre">print(...)</span></code> で、書き込みにオブジェクト型から文字列に変換するメソッドの実装を行います。<ul>
-<li>変換に失敗した場合、例外 <code class="docutils literal"><span class="pre">TextPrintException</span></code> をスローします。
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">print(...)</span></code> で、書き込みにオブジェクト型から文字列に変換するメソッドの実装を行います。<ul>
+<li>変換に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">TextPrintException</span></code> をスローします。
 既存の例外が発生する場合は、ラップするようにします。</li>
 </ul>
 </li>
-<li>メソッド <code class="docutils literal"><span class="pre">getMessageVariables(...)</span></code> で、エラーメッセージ中の変数を定義することができます。<ul>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">getMessageVariables(...)</span></code> で、エラーメッセージ中の変数を定義することができます。<ul>
 <li>必要がなければ実装する必要はありません。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1284,12 +1281,12 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 </div>
 <div class="section" id="id31">
 <h3>3.2.2. 作成したTextFormatterの指定<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>作成したTextFormatterを指定するには、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvFormat</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html">JavaDoc</a> ]を使用します。</p>
+<p>作成したTextFormatterを指定するには、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFormat</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html">JavaDoc</a> ]を使用します。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">formatter</span></code> で、TextFormatterの実装クラスを指定します。</li>
-<li>属性 <code class="docutils literal"><span class="pre">message</span></code> で、読み込み時のエラーメッセージを指定することができます。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">formatter</span></code> で、TextFormatterの実装クラスを指定します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で、読み込み時のエラーメッセージを指定することができます。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1330,9 +1327,7 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1350,12 +1345,12 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1373,7 +1368,7 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1389,19 +1384,13 @@ int型で扱える桁数を超えたときも自動的に切り捨てられま�
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

@@ -18,7 +18,7 @@ import com.github.mygreen.supercsv.util.ArgUtils;
  * &lt;p&gt;クラスパスのルートにリソース名が{@literal SuperCsvMessages}のプロパティファイルを配置していると自動的に読み込みます。&lt;/p&gt;
  * &lt;p&gt;デフォルトでは、{@link ResourceBundleMessageResolver#DEFAULT_MESSAGE}に配置されているリソースファイルを読み込みます。&lt;/p&gt;
  * 
- * @version 2.0
+ * @version 2.2
  * @author T.TSUCHIE
  *
  */
@@ -44,7 +44,7 @@ public class ResourceBundleMessageResolver implements MessageResolver {
 <span class="fc" id="L44">    public ResourceBundleMessageResolver(final String baseName, final boolean appendUserResource) {</span>
 <span class="fc" id="L45">        ArgUtils.notEmpty(baseName, &quot;baseName&quot;);</span>
         
-<span class="fc" id="L47">        addResourceBundle(ResourceBundle.getBundle(baseName));</span>
+<span class="fc" id="L47">        addResourceBundle(ResourceBundle.getBundle(baseName, new EncodingControl(&quot;UTF-8&quot;)));</span>
         
         // ユーザ定義のリソースを読み込む
 <span class="fc bfc" id="L50" title="All 2 branches covered.">        if(appendUserResource) {</span>
@@ -53,7 +53,7 @@ public class ResourceBundleMessageResolver implements MessageResolver {
 <span class="pc bpc" id="L53" title="1 of 2 branches missed.">            if(index &gt; 0) {</span>
 <span class="fc" id="L54">                final String userName = baseName.substring(index+1);</span>
                 try {
-<span class="nc" id="L56">                    addResourceBundle(ResourceBundle.getBundle(userName));</span>
+<span class="nc" id="L56">                    addResourceBundle(ResourceBundle.getBundle(userName, new EncodingControl(&quot;UTF-8&quot;)));</span>
 <span class="pc" id="L57">                } catch(Throwable e) { }</span>
             }
         }
@@ -141,4 +141,4 @@ public class ResourceBundleMessageResolver implements MessageResolver {
 <span class="nc" id="L141">        return true;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>9. ラベルによるカラムのマッピング &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>9. ラベルによるカラムのマッピング &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,22 +24,13 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="next" title="10. 独自のProcessorBuilderの作成" href="processorbuilder.html"/>
-        <link rel="prev" title="8. 固定長のカラムの読み書き" href="fixedsizecolumn.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="10. 独自のProcessorBuilderの作成" href="processorbuilder.html" />
+    <link rel="prev" title="8. 固定長のカラムの読み書き" href="fixedsizecolumn.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -48,7 +39,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -70,7 +61,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -276,14 +267,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +294,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -306,9 +302,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -357,17 +354,17 @@
 <div class="section" id="bean">
 <h2>9.1. Beanの定義<a class="headerlink" href="#bean" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li>ラベルのみによるマッピングは、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvColumn</span></code> の属性 <code class="docutils literal"><span class="pre">number</span></code> を省略します。</li>
-<li>フィールド名とCSVのヘッダー行の該当する見出しが異なる場合は、 <code class="docutils literal"><span class="pre">label</span></code> で指定します。</li>
-<li>従来の属性 <code class="docutils literal"><span class="pre">number</span></code> でカラム番号で指定することもできます。<ul>
+<li>ラベルのみによるマッピングは、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn</span></code> の属性 <code class="docutils literal notranslate"><span class="pre">number</span></code> を省略します。</li>
+<li>フィールド名とCSVのヘッダー行の該当する見出しが異なる場合は、 <code class="docutils literal notranslate"><span class="pre">label</span></code> で指定します。</li>
+<li>従来の属性 <code class="docutils literal notranslate"><span class="pre">number</span></code> でカラム番号で指定することもできます。<ul>
 <li>最終的にマッピングする場合、別々なフィールドに対して同じカラムをマッピングするこはできません。</li>
-<li>見出しが同じ値の場合は、 <code class="docutils literal"><span class="pre">number</span></code> を指定して区別するようにしてください。</li>
+<li>見出しが同じ値の場合は、 <code class="docutils literal notranslate"><span class="pre">number</span></code> を指定して区別するようにしてください。</li>
 </ul>
 </li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id5">
 <div class="code-block-caption"><span class="caption-number">コード - 9.1.1 </span><span class="caption-text">Beanの定義</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -424,19 +421,19 @@
 </div>
 <div class="section" id="id2">
 <h2>9.2. 読み込み方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ラベルによるマッピングを行い読み込むには、 <code class="docutils literal"><span class="pre">LazyCsvAnnotationBeanReader</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html">JavaDoc</a> ] を使用します。</p>
+<p>ラベルによるマッピングを行い読み込むには、 <code class="docutils literal notranslate"><span class="pre">LazyCsvAnnotationBeanReader</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html">JavaDoc</a> ] を使用します。</p>
 <ul class="simple">
-<li>全件読み込む場合の使用方法は、基本的に既存の <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader</span></code> と変わりません。</li>
-<li>１件ずつ読み込む場合は、メソッド <code class="docutils literal"><span class="pre">LazyCsvAnnotationBeanReader#init()</span></code> を呼んでマッピング情報を初期化します。<ul>
+<li>全件読み込む場合の使用方法は、基本的に既存の <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader</span></code> と変わりません。</li>
+<li>1件ずつ読み込む場合は、メソッド <code class="docutils literal notranslate"><span class="pre">LazyCsvAnnotationBeanReader#init()</span></code> を呼んでマッピング情報を初期化します。<ul>
 <li>処理内容としては、ヘッダー行を読み込み、それを元にBeanのフィールドとマッピングを行い、カラムの番号を決定します。</li>
-<li>全件読み込むメソッド <code class="docutils literal"><span class="pre">readAll()</span></code> 内では、メソッド <code class="docutils literal"><span class="pre">init()</span></code> が呼ばれているため、初期化が省略することができます。
-特に、 <code class="docutils literal"><span class="pre">readAll()</span></code> を呼び出す前に、 <code class="docutils literal"><span class="pre">init()</span></code> を実行してもかまいません。</li>
+<li>全件読み込むメソッド <code class="docutils literal notranslate"><span class="pre">readAll()</span></code> 内では、メソッド <code class="docutils literal notranslate"><span class="pre">init()</span></code> が呼ばれているため、初期化が省略することができます。
+特に、 <code class="docutils literal notranslate"><span class="pre">readAll()</span></code> を呼び出す前に、 <code class="docutils literal notranslate"><span class="pre">init()</span></code> を実行してもかまいません。</li>
 </ul>
 </li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-number">コード - 9.2.1 </span><span class="caption-text">ラベルによるマッピング - 読み込み</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -526,11 +523,11 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<p>ヘッダー行が存在しないファイルの場合は、メソッド <code class="docutils literal"><span class="pre">init(&quot;見出し1&quot;,&quot;見出し2&quot;,...)</span></code> でヘッダー情報を直接指定し、初期化します。
-その場合、メソッド <code class="docutils literal"><span class="pre">readAll()</span></code> を呼ぶ前にも、直接ヘッダー情報を指定して初期化する必要があります。</p>
+<p>ヘッダー行が存在しないファイルの場合は、メソッド <code class="docutils literal notranslate"><span class="pre">init(&quot;見出し1&quot;,&quot;見出し2&quot;,...)</span></code> でヘッダー情報を直接指定し、初期化します。
+その場合、メソッド <code class="docutils literal notranslate"><span class="pre">readAll()</span></code> を呼ぶ前にも、直接ヘッダー情報を指定して初期化する必要があります。</p>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-number">コード - 9.2.2 </span><span class="caption-text">ヘッダー行が存在しないときの読み込み方法</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -629,20 +626,20 @@
 </div>
 <div class="section" id="id3">
 <h2>9.3. 書き出し方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ラベルによるマッピングを行い書き出すには、 <code class="docutils literal"><span class="pre">LazyCsvAnnotationBeanWriter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html">JavaDoc</a> ] を使用します。</p>
+<p>ラベルによるマッピングを行い書き出すには、 <code class="docutils literal notranslate"><span class="pre">LazyCsvAnnotationBeanWriter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html">JavaDoc</a> ] を使用します。</p>
 <ul class="simple">
-<li>全件読み出す場合の使用方法は、基本的に既存の <code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter</span></code> と変わりません。</li>
-<li>１件ずつ書き出す場合は、メソッド <code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter#init()</span></code> を呼んでマッピング情報を初期化します。<ul>
+<li>全件読み出す場合の使用方法は、基本的に既存の <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter</span></code> と変わりません。</li>
+<li>1件ずつ書き出す場合は、メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter#init()</span></code> を呼んでマッピング情報を初期化します。<ul>
 <li>処理内容としては、カラムの番号を決定します。カラムの番号は、フィールド名の昇順になります。</li>
 <li>Beanの定義中にカラム番号を指定しているフィールドと指定していないフィールドが混在する場合、カラム番号が空いているものが利用されます。</li>
-<li>全件書き出すメソッド <code class="docutils literal"><span class="pre">writeAll()</span></code> 内では、メソッド <code class="docutils literal"><span class="pre">init()</span></code> が呼ばれているため、初期化が省略することができます。
-特に、 <code class="docutils literal"><span class="pre">writeAll()</span></code> を呼び出す前に、 <code class="docutils literal"><span class="pre">init()</span></code> を実行してもかまいません。</li>
+<li>全件書き出すメソッド <code class="docutils literal notranslate"><span class="pre">writeAll()</span></code> 内では、メソッド <code class="docutils literal notranslate"><span class="pre">init()</span></code> が呼ばれているため、初期化が省略することができます。
+特に、 <code class="docutils literal notranslate"><span class="pre">writeAll()</span></code> を呼び出す前に、 <code class="docutils literal notranslate"><span class="pre">init()</span></code> を実行してもかまいません。</li>
 </ul>
 </li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption"><span class="caption-number">コード - 9.3.1 </span><span class="caption-text">ラベルによるマッピング - 書き出し</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -798,11 +795,11 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<p>カラム順を独自に指定したい場合、メソッド <code class="docutils literal"><span class="pre">init(&quot;見出し1&quot;,&quot;見出し2&quot;,...)</span></code> でヘッダー情報を直接指定し、初期化します。
-その場合、メソッド <code class="docutils literal"><span class="pre">writeAll()</span></code> を呼ぶ前にも、直接ヘッダー情報を指定して初期化する必要があります。</p>
+<p>カラム順を独自に指定したい場合、メソッド <code class="docutils literal notranslate"><span class="pre">init(&quot;見出し1&quot;,&quot;見出し2&quot;,...)</span></code> でヘッダー情報を直接指定し、初期化します。
+その場合、メソッド <code class="docutils literal notranslate"><span class="pre">writeAll()</span></code> を呼ぶ前にも、直接ヘッダー情報を指定して初期化する必要があります。</p>
 <div class="literal-block-wrapper docutils container" id="id9">
 <div class="code-block-caption"><span class="caption-number">コード - 9.3.2 </span><span class="caption-text">カラムの順番を指定し書き出す</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -919,9 +916,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -939,12 +934,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -962,7 +957,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -978,19 +973,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

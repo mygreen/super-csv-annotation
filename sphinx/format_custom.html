@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>独自のクラスタイプへの対応 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>独自のクラスタイプへの対応 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -352,31 +349,31 @@
 <h1>独自のクラスタイプへの対応<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>独自の変換処理を実装するには、2つのステップを踏む必要があります。</p>
 <ol class="arabic simple">
-<li><code class="docutils literal"><span class="pre">TextFormatter</span></code> の実装クラスの作成</li>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvFormat</span></code> で作成したTextFormatterの指定</li>
+<li><code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> の実装クラスの作成</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFormat</span></code> で作成したTextFormatterの指定</li>
 </ol>
 <p>以下、それぞれに対して解説していきます。</p>
 <div class="section" id="textformatter">
 <h2>TextFormatterの実装クラスの作成<a class="headerlink" href="#textformatter" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>サンプルとして、 <code class="docutils literal"><span class="pre">java.net.URL</span></code> にマッピングするTextFromatterを作成します。</p>
+<p>サンプルとして、 <code class="docutils literal notranslate"><span class="pre">java.net.URL</span></code> にマッピングするTextFromatterを作成します。</p>
 <ul class="simple">
-<li>抽象クラス <code class="docutils literal"><span class="pre">AbstractTextFormatter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html">JavaDoc</a> ] を継承します。</li>
-<li>メソッド <code class="docutils literal"><span class="pre">parse(...)</span></code> で、読み込み時の文字列からオブジェクト型に変換するメソッドの実装を行います。<ul>
-<li>変換に失敗した場合、例外 <code class="docutils literal"><span class="pre">TextParseException</span></code> をスローします。
+<li>抽象クラス <code class="docutils literal notranslate"><span class="pre">AbstractTextFormatter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/format/AbstractTextFormatter.html">JavaDoc</a> ] を継承します。</li>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">parse(...)</span></code> で、読み込み時の文字列からオブジェクト型に変換するメソッドの実装を行います。<ul>
+<li>変換に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">TextParseException</span></code> をスローします。
 既存の例外が発生する場合は、ラップするようにします。</li>
 </ul>
 </li>
-<li>メソッド <code class="docutils literal"><span class="pre">print(...)</span></code> で、書き込みにオブジェクト型から文字列に変換するメソッドの実装を行います。<ul>
-<li>変換に失敗した場合、例外 <code class="docutils literal"><span class="pre">TextPrintException</span></code> をスローします。
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">print(...)</span></code> で、書き込みにオブジェクト型から文字列に変換するメソッドの実装を行います。<ul>
+<li>変換に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">TextPrintException</span></code> をスローします。
 既存の例外が発生する場合は、ラップするようにします。</li>
 </ul>
 </li>
-<li>メソッド <code class="docutils literal"><span class="pre">getMessageVariables(...)</span></code> で、エラーメッセージ中の変数を定義することができます。<ul>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">getMessageVariables(...)</span></code> で、エラーメッセージ中の変数を定義することができます。<ul>
 <li>必要がなければ実装する必要はありません。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -464,12 +461,12 @@
 </div>
 <div class="section" id="id2">
 <h2>作成したTextFormatterの指定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>作成したTextFormatterを指定するには、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvFormat</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html">JavaDoc</a> ]を使用します。</p>
+<p>作成したTextFormatterを指定するには、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFormat</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html">JavaDoc</a> ]を使用します。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal"><span class="pre">formatter</span></code> で、TextFormatterの実装クラスを指定します。</li>
-<li>属性 <code class="docutils literal"><span class="pre">message</span></code> で、読み込み時のエラーメッセージを指定することができます。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">formatter</span></code> で、TextFormatterの実装クラスを指定します。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で、読み込み時のエラーメッセージを指定することができます。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -509,9 +506,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -520,12 +515,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -543,7 +538,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -559,19 +554,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

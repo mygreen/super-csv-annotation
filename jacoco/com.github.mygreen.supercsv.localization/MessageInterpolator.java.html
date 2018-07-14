@@ -34,8 +34,6 @@ public class MessageInterpolator {
     
 <span class="fc" id="L35">    private static final Logger logger = LoggerFactory.getLogger(MessageInterpolator.class);</span>
     
-<span class="pc" id="L37">    private final Formatter formatter = new Formatter();</span>
-    
     private ExpressionLanguage expressionLanguage;
     
     /**
@@ -45,26 +43,26 @@ public class MessageInterpolator {
      * &lt;/p&gt;
      * 
      */
-<span class="fc" id="L48">    public MessageInterpolator() {</span>
+<span class="fc" id="L46">    public MessageInterpolator() {</span>
         
         // EL式中で使用可能な関数の登録
-<span class="fc" id="L51">        ExpressionLanguageJEXLImpl el = new ExpressionLanguageJEXLImpl();</span>
+<span class="fc" id="L49">        ExpressionLanguageJEXLImpl el = new ExpressionLanguageJEXLImpl();</span>
         
-<span class="fc" id="L53">        Map&lt;String, Object&gt; funcs = new HashMap&lt;&gt;(); </span>
-<span class="fc" id="L54">        funcs.put(&quot;f&quot;, CustomFunctions.class);</span>
-<span class="fc" id="L55">        el.getJexlEngine().setFunctions(funcs);</span>
+<span class="fc" id="L51">        Map&lt;String, Object&gt; funcs = new HashMap&lt;&gt;(); </span>
+<span class="fc" id="L52">        funcs.put(&quot;f&quot;, CustomFunctions.class);</span>
+<span class="fc" id="L53">        el.getJexlEngine().setFunctions(funcs);</span>
         
-<span class="fc" id="L57">        setExpressionLanguage(el);</span>
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L55">        setExpressionLanguage(el);</span>
+<span class="fc" id="L56">    }</span>
     
     /**
      * 式言語の実装を指定するコンストラクタ
      * @param expressionLanguage EL式を評価する実装。
      */
-<span class="nc" id="L64">    public MessageInterpolator(final ExpressionLanguage expressionLanguage) {</span>
-<span class="nc" id="L65">        Objects.requireNonNull(expressionLanguage, &quot;expressionLanguage should not be null.&quot;);</span>
-<span class="nc" id="L66">        this.expressionLanguage = expressionLanguage;</span>
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L62">    public MessageInterpolator(final ExpressionLanguage expressionLanguage) {</span>
+<span class="nc" id="L63">        Objects.requireNonNull(expressionLanguage, &quot;expressionLanguage should not be null.&quot;);</span>
+<span class="nc" id="L64">        this.expressionLanguage = expressionLanguage;</span>
+<span class="nc" id="L65">    }</span>
     
     /**
      * メッセージを引数varsで指定した変数で補完する。
@@ -74,7 +72,7 @@ public class MessageInterpolator {
      * @return 補完したメッセージ。
      */
     public String interpolate(final String message, final Map&lt;String, ?&gt; vars) {
-<span class="nc" id="L77">        return interpolate(message, vars, false);</span>
+<span class="nc" id="L75">        return interpolate(message, vars, false);</span>
     }
     
     /**
@@ -86,7 +84,7 @@ public class MessageInterpolator {
      * @return 補完したメッセージ。
      */
     public String interpolate(final String message, final Map&lt;String, ?&gt; vars, boolean recursive) {
-<span class="nc" id="L89">        return parse(message, vars, recursive, null);</span>
+<span class="nc" id="L87">        return parse(message, vars, recursive, null);</span>
     }
     
     /**
@@ -101,7 +99,7 @@ public class MessageInterpolator {
      */
     public String interpolate(final String message, final Map&lt;String, ?&gt; vars, boolean recursive,
             final MessageResolver messageResolver) {
-<span class="fc" id="L104">        return parse(message, vars, recursive, messageResolver);</span>
+<span class="fc" id="L102">        return parse(message, vars, recursive, messageResolver);</span>
     }
     
     /**
@@ -114,140 +112,140 @@ public class MessageInterpolator {
     protected String parse(final String message, final Map&lt;String, ?&gt; vars, boolean recursive, final MessageResolver messageResolver) {
         
         // 評価したメッセージを格納するバッファ。
-<span class="fc" id="L117">        final StringBuilder sb = new StringBuilder(message.length());</span>
+<span class="fc" id="L115">        final StringBuilder sb = new StringBuilder(message.length());</span>
         
         /*
          * 変数とEL式を解析する際に使用する、スタック変数。
          * 式の開始が現れたらスタックに積み、式の終了が現れたらスタックから全てを取り出す。
          * スタックに積まれるのは、1つ文の変数またはEL式。
          */
-<span class="fc" id="L124">        final LinkedList&lt;String&gt; stack = new LinkedList&lt;String&gt;();</span>
+<span class="fc" id="L122">        final LinkedList&lt;String&gt; stack = new LinkedList&lt;String&gt;();</span>
         
-<span class="fc" id="L126">        final int length = message.length();</span>
+<span class="fc" id="L124">        final int length = message.length();</span>
         
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
-<span class="fc" id="L129">            final char c = message.charAt(i);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
+<span class="fc" id="L127">            final char c = message.charAt(i);</span>
             
-<span class="fc bfc" id="L131" title="All 2 branches covered.">            if(StackUtils.equalsTopElement(stack, &quot;\\&quot;)) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if(StackUtils.equalsTopElement(stack, &quot;\\&quot;)) {</span>
                 // 直前の文字がエスケープ文字の場合、エスケープ文字として結合する。
-<span class="fc" id="L133">                String escapedChar = StackUtils.popup(stack) + c;</span>
+<span class="fc" id="L131">                String escapedChar = StackUtils.popup(stack) + c;</span>
                 
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">                if(!stack.isEmpty()) {</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">                if(!stack.isEmpty()) {</span>
                     // 取り出した後もスタックがある場合は、式の途中であるため、再度スタックに積む。
-<span class="nc" id="L137">                    stack.push(escapedChar);</span>
+<span class="nc" id="L135">                    stack.push(escapedChar);</span>
                     
                 } else {
                     // 取り出した後にスタックがない場合は、エスケープを解除して通常の文字として積む。
-<span class="fc" id="L141">                    sb.append(c);</span>
+<span class="fc" id="L139">                    sb.append(c);</span>
                     
                 }
                 
-<span class="fc bfc" id="L145" title="All 2 branches covered.">            } else if(c == '\\') {</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            } else if(c == '\\') {</span>
                 // エスケープ文字の場合はスタックに積む。
-<span class="fc" id="L147">                stack.push(String.valueOf(c));</span>
+<span class="fc" id="L145">                stack.push(String.valueOf(c));</span>
                 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">            } else if(c == '$') {</span>
-<span class="fc" id="L150">                stack.push(String.valueOf(c));</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            } else if(c == '$') {</span>
+<span class="fc" id="L148">                stack.push(String.valueOf(c));</span>
                 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">            } else if(c == '{') {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            } else if(c == '{') {</span>
                 
-<span class="pc bpc" id="L154" title="1 of 4 branches missed.">                if(!stack.isEmpty() &amp;&amp; !StackUtils.equalsAnyBottomElement(stack, new String[]{&quot;$&quot;, &quot;{&quot;})) {</span>
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">                if(!stack.isEmpty() &amp;&amp; !StackUtils.equalsAnyBottomElement(stack, new String[]{&quot;$&quot;, &quot;{&quot;})) {</span>
                     // スタックの先頭が式の開始形式でない場合
-<span class="nc" id="L156">                    throw new MessageParseException(message, &quot;expression not start with '{' or '$'&quot;);</span>
+<span class="nc" id="L154">                    throw new MessageParseException(message, &quot;expression not start with '{' or '$'&quot;);</span>
                     
                 } else {
-<span class="fc" id="L159">                    stack.push(String.valueOf(c));</span>
+<span class="fc" id="L157">                    stack.push(String.valueOf(c));</span>
                 }
                 
                 
-<span class="fc bfc" id="L163" title="All 2 branches covered.">            } else if(c == '}') {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            } else if(c == '}') {</span>
                 
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                if(StackUtils.equalsAnyBottomElement(stack, new String[]{&quot;{&quot;, &quot;$&quot;})) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                if(StackUtils.equalsAnyBottomElement(stack, new String[]{&quot;{&quot;, &quot;$&quot;})) {</span>
                     // 式の終わりの場合は、式を取り出し評価する。
-<span class="fc" id="L167">                    String expression = StackUtils.popupAndConcat(stack) + c;</span>
+<span class="fc" id="L165">                    String expression = StackUtils.popupAndConcat(stack) + c;</span>
                     
                     // エスケープを解除する
-<span class="fc" id="L170">                    expression = removeEscapeChar(expression, '\\');</span>
+<span class="fc" id="L168">                    expression = removeEscapeChar(expression, '\\');</span>
                     
-<span class="fc" id="L172">                    String result = evaluate(expression, vars, recursive, messageResolver);</span>
-<span class="fc" id="L173">                    sb.append(result);</span>
+<span class="fc" id="L170">                    String result = evaluate(expression, vars, recursive, messageResolver);</span>
+<span class="fc" id="L171">                    sb.append(result);</span>
                     
-<span class="fc" id="L175">                } else {</span>
-<span class="nc" id="L176">                    sb.append(c);</span>
+<span class="fc" id="L173">                } else {</span>
+<span class="nc" id="L174">                    sb.append(c);</span>
                     
                 }
                 
             } else {
                 
-<span class="fc bfc" id="L182" title="All 2 branches covered.">                if(stack.isEmpty()) {</span>
-<span class="fc" id="L183">                    sb.append(c);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                if(stack.isEmpty()) {</span>
+<span class="fc" id="L181">                    sb.append(c);</span>
                     
                 } else {
-<span class="fc" id="L186">                    stack.push(String.valueOf(c));</span>
+<span class="fc" id="L184">                    stack.push(String.valueOf(c));</span>
                 }
                 
             }
             
         }
         
-<span class="fc bfc" id="L193" title="All 2 branches covered.">        if(!stack.isEmpty()) {</span>
-<span class="fc" id="L194">            String val = StackUtils.popupAndConcat(stack);</span>
-<span class="fc" id="L195">            val = removeEscapeChar(val, '\\');</span>
-<span class="fc" id="L196">            sb.append(val);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if(!stack.isEmpty()) {</span>
+<span class="fc" id="L192">            String val = StackUtils.popupAndConcat(stack);</span>
+<span class="fc" id="L193">            val = removeEscapeChar(val, '\\');</span>
+<span class="fc" id="L194">            sb.append(val);</span>
         }
         
-<span class="fc" id="L199">        return sb.toString();</span>
+<span class="fc" id="L197">        return sb.toString();</span>
     }
     
     private String evaluate(final String expression, final Map&lt;String, ?&gt; values, final boolean recursive,
             final MessageResolver messageResolver) {
         
-<span class="fc bfc" id="L205" title="All 2 branches covered.">        if(expression.startsWith(&quot;{&quot;)) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        if(expression.startsWith(&quot;{&quot;)) {</span>
             // 変数の置換の場合
-<span class="fc" id="L207">            final String varName = expression.substring(1, expression.length()-1);</span>
+<span class="fc" id="L205">            final String varName = expression.substring(1, expression.length()-1);</span>
             
-<span class="fc bfc" id="L209" title="All 2 branches covered.">            if(values.containsKey(varName)) {</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if(values.containsKey(varName)) {</span>
                 // 該当するキーが存在する場合
-<span class="fc" id="L211">                final Object value = values.get(varName);</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">                final String eval = (value == null) ? &quot;&quot; : value.toString();</span>
-<span class="fc bfc" id="L213" title="All 4 branches covered.">                if(!eval.isEmpty() &amp;&amp; recursive) {</span>
-<span class="fc" id="L214">                    return parse(eval, values, recursive, messageResolver);</span>
+<span class="fc" id="L209">                final Object value = values.get(varName);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                final String eval = (value == null) ? &quot;&quot; : value.toString();</span>
+<span class="fc bfc" id="L211" title="All 4 branches covered.">                if(!eval.isEmpty() &amp;&amp; recursive) {</span>
+<span class="fc" id="L212">                    return parse(eval, values, recursive, messageResolver);</span>
                 } else {
-<span class="fc" id="L216">                    return eval;</span>
+<span class="fc" id="L214">                    return eval;</span>
                 }
                 
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            } else if(messageResolver != null) {</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">            } else if(messageResolver != null) {</span>
                 // メッセージコードをとして解決をする。
-<span class="fc" id="L221">                final Optional&lt;String&gt; eval = messageResolver.getMessage(varName);</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">                if(!eval.isPresent()) {</span>
+<span class="fc" id="L219">                final Optional&lt;String&gt; eval = messageResolver.getMessage(varName);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                if(!eval.isPresent()) {</span>
                     // 該当するキーが存在しない場合は、値をそのまま返す。
-<span class="fc" id="L224">                    return String.format(&quot;{%s}&quot;, varName);</span>
+<span class="fc" id="L222">                    return String.format(&quot;{%s}&quot;, varName);</span>
                 }
                 
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">                if(recursive) {</span>
-<span class="fc" id="L228">                    return parse(eval.get(), values, recursive, messageResolver);</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">                if(recursive) {</span>
+<span class="fc" id="L226">                    return parse(eval.get(), values, recursive, messageResolver);</span>
                 } else {
-<span class="nc" id="L230">                    return eval.get();</span>
+<span class="nc" id="L228">                    return eval.get();</span>
                 }
                 
             } else {
                 // 該当するキーが存在しない場合は、値をそのまま返す。
-<span class="nc" id="L235">                return expression.toString();</span>
+<span class="nc" id="L233">                return expression.toString();</span>
             }
             
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        } else if(expression.startsWith(&quot;${&quot;)) {</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        } else if(expression.startsWith(&quot;${&quot;)) {</span>
             // EL式で処理する
-<span class="fc" id="L240">            final String expr = expression.substring(2, expression.length()-1);</span>
-<span class="fc" id="L241">            final String eval = evaluateExpression(expr, values);</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">            if(recursive) {</span>
-<span class="fc" id="L243">                return parse(eval, values, recursive, messageResolver);</span>
+<span class="fc" id="L238">            final String expr = expression.substring(2, expression.length()-1);</span>
+<span class="fc" id="L239">            final String eval = evaluateExpression(expr, values);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">            if(recursive) {</span>
+<span class="fc" id="L241">                return parse(eval, values, recursive, messageResolver);</span>
             } else {
-<span class="fc" id="L245">                return eval;</span>
+<span class="fc" id="L243">                return eval;</span>
             }
             
         }
         
-<span class="nc" id="L250">        throw new MessageParseException(expression, &quot;not support expression.&quot;);</span>
+<span class="nc" id="L248">        throw new MessageParseException(expression, &quot;not support expression.&quot;);</span>
         
     }
     
@@ -260,18 +258,18 @@ public class MessageInterpolator {
      */
     protected String evaluateExpression(final String expression, final Map&lt;String, ?&gt; values) throws ExpressionEvaluationException {
         
-<span class="fc" id="L263">        final Map&lt;String, Object&gt; context = new LinkedHashMap&lt;String, Object&gt;();</span>
-<span class="fc" id="L264">        context.putAll(values);</span>
+<span class="fc" id="L261">        final Map&lt;String, Object&gt; context = new LinkedHashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L262">        context.putAll(values);</span>
         
         // フォーマッターの追加
-<span class="fc" id="L267">        context.computeIfAbsent(&quot;formatter&quot;, key -&gt; formatter);</span>
+<span class="fc" id="L265">        context.computeIfAbsent(&quot;formatter&quot;, key -&gt; new Formatter());</span>
         
-<span class="fc" id="L269">        final String value = expressionLanguage.evaluate(expression, context).toString();</span>
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        if(logger.isTraceEnabled()) {</span>
-<span class="nc" id="L271">            logger.trace(&quot;evaluate expression language: expression='{}' ===&gt; value='{}'&quot;, expression, value);</span>
+<span class="fc" id="L267">        final String value = expressionLanguage.evaluate(expression, context).toString();</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">        if(logger.isTraceEnabled()) {</span>
+<span class="nc" id="L269">            logger.trace(&quot;evaluate expression language: expression='{}' ===&gt; value='{}'&quot;, expression, value);</span>
         }
         
-<span class="fc" id="L274">        return value;</span>
+<span class="fc" id="L272">        return value;</span>
     }
     
     /**
@@ -282,39 +280,39 @@ public class MessageInterpolator {
      */
     private String removeEscapeChar(final String str, final char escapeChar) {
         
-<span class="pc bpc" id="L285" title="2 of 4 branches missed.">        if(str == null || str.isEmpty()) {</span>
-<span class="nc" id="L286">            return str;</span>
+<span class="pc bpc" id="L283" title="2 of 4 branches missed.">        if(str == null || str.isEmpty()) {</span>
+<span class="nc" id="L284">            return str;</span>
         }
         
-<span class="fc" id="L289">        final String escapeStr = String.valueOf(escapeChar);</span>
-<span class="fc" id="L290">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L287">        final String escapeStr = String.valueOf(escapeChar);</span>
+<span class="fc" id="L288">        StringBuilder sb = new StringBuilder();</span>
         
-<span class="fc" id="L292">        final LinkedList&lt;String&gt; stack = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L290">        final LinkedList&lt;String&gt; stack = new LinkedList&lt;&gt;();</span>
         
-<span class="fc" id="L294">        final int length = str.length();</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
-<span class="fc" id="L296">            final char c = str.charAt(i);</span>
+<span class="fc" id="L292">        final int length = str.length();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
+<span class="fc" id="L294">            final char c = str.charAt(i);</span>
             
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">            if(StackUtils.equalsTopElement(stack, escapeStr)) {</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">            if(StackUtils.equalsTopElement(stack, escapeStr)) {</span>
                 // スタックの一番上がエスケープ文字の場合
-<span class="nc" id="L300">                StackUtils.popup(stack);</span>
-<span class="nc" id="L301">                sb.append(c);</span>
+<span class="nc" id="L298">                StackUtils.popup(stack);</span>
+<span class="nc" id="L299">                sb.append(c);</span>
                 
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">            } else if(c == escapeChar) {</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">            } else if(c == escapeChar) {</span>
                 // スタックに積む
-<span class="nc" id="L305">                stack.push(String.valueOf(c));</span>
+<span class="nc" id="L303">                stack.push(String.valueOf(c));</span>
                 
             } else {
-<span class="fc" id="L308">                sb.append(c);</span>
+<span class="fc" id="L306">                sb.append(c);</span>
             }
             
         }
         
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">        if(!stack.isEmpty()) {</span>
-<span class="nc" id="L314">            sb.append(StackUtils.popupAndConcat(stack));</span>
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">        if(!stack.isEmpty()) {</span>
+<span class="nc" id="L312">            sb.append(StackUtils.popupAndConcat(stack));</span>
         }
         
-<span class="fc" id="L317">        return sb.toString();</span>
+<span class="fc" id="L315">        return sb.toString();</span>
         
     }
     
@@ -323,7 +321,7 @@ public class MessageInterpolator {
      * @return
      */
     public ExpressionLanguage getExpressionLanguage() {
-<span class="nc" id="L326">        return expressionLanguage;</span>
+<span class="nc" id="L324">        return expressionLanguage;</span>
     }
     
     /**
@@ -331,8 +329,8 @@ public class MessageInterpolator {
      * @param expressionLanguage EL式の解析するクラスの実装。
      */
     public void setExpressionLanguage(ExpressionLanguage expressionLanguage) {
-<span class="fc" id="L334">        this.expressionLanguage = expressionLanguage;</span>
-<span class="fc" id="L335">    }</span>
+<span class="fc" id="L332">        this.expressionLanguage = expressionLanguage;</span>
+<span class="fc" id="L333">    }</span>
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

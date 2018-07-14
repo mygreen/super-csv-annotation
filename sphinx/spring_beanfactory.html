@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SpringBeanFactoryの設定方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>SpringBeanFactoryの設定方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -357,9 +354,9 @@
 <ul class="simple">
 <li>アノテーションによるDIの有効化を行います。</li>
 <li>コンポーネントスキャン対象のパッケージの指定を行います。</li>
-<li><code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
 </ul>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -408,7 +405,7 @@
 <p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
 <p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
 特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -450,13 +447,13 @@
 </div>
 <div class="section" id="springbean">
 <h2>SpringBeanとしての定義<a class="headerlink" href="#springbean" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ステレオタイプのアノテーション <code class="docutils literal"><span class="pre">&#64;Component/&#64;Service/&#64;Reposition/&#64;Controller</span></code> をサポートしているため、
+<p>ステレオタイプのアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Component/&#64;Service/&#64;Reposition/&#64;Controller</span></code> をサポートしているため、
 これらを使いSpringBeanを定義します。</p>
 <div class="section" id="id1">
 <h3>独自の書式の作成<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>独自の書式の <code class="docutils literal"><span class="pre">TextFormatter</span></code> を定義する際には、スコープを <em>proptotype</em> にします。
+<p>独自の書式の <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> を定義する際には、スコープを <em>proptotype</em> にします。
 読み込み時のエラーメッセージが、カラムごとに異なる場合があるため、インスタンスを別にします。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -532,15 +529,15 @@
 </div>
 <div class="section" id="id2">
 <h3>独自の変換/検証の作成<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>検証用の <code class="docutils literal"><span class="pre">ConstraintProcessorFactory</span></code> の例として、DBにユーザが存在するかチェックするCellProcessorで説明します。</p>
-<p>変換用の <code class="docutils literal"><span class="pre">ConversionProcessorFactory</span></code> も同様の実装方法になります。</p>
+<p>検証用の <code class="docutils literal notranslate"><span class="pre">ConstraintProcessorFactory</span></code> の例として、DBにユーザが存在するかチェックするCellProcessorで説明します。</p>
+<p>変換用の <code class="docutils literal notranslate"><span class="pre">ConversionProcessorFactory</span></code> も同様の実装方法になります。</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">ConstraintProcessorFactory</span></code> はシングルトンで定義します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">ConstraintProcessorFactory</span></code> はシングルトンで定義します。</li>
 <li>CellProcessorは、カラムごとに固有なインスタンスにするため、Springのコンテナ管理外とします。</li>
 <li>CellProcessor内で、SpringBeanを利用したい場合は、 <em>ConstraintProcessorFactory</em> クラスでインジェクションしておき、
 それをコンストラクタやsetterメソッドで渡すようにします。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -612,7 +609,7 @@
 </pre></div>
 </td></tr></table></div>
 <p><em>CellProcessor</em> は、コンストラクタで渡されたSpringBean(UserService)のメソッドを呼び出します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -719,7 +716,7 @@
 </td></tr></table></div>
 <p>アノテーションの作成法補は、通常と変わりません。</p>
 <p>メタアノテーション <em>&#64;CsvConstraint</em> で ConstraintProcessorFactoryを実装したクラスUserNameExistFactoryを指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -789,7 +786,7 @@
 <h3>独自のProcessorBuilderクラスの作成<a class="headerlink" href="#processorbuilder" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>独自のクラスタイプのProcessorBuilderは、自身をSpringBeanとして登録します。
 通常は、シングルトンでかまいません。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -859,7 +856,7 @@
 <h3>CsvValidator の作成<a class="headerlink" href="#csvvalidator" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><em>CsvValidator</em> クラスは、シングルトンで管理します。</p>
 <p>SpringBeanをインジェクションしたいものがあれば行います。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -918,7 +915,7 @@
 <div class="section" id="id3">
 <h3>リスナクラスの作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>リスナクラスは、POJOであるため、SpringBeanをインジェクションしたいものがあれば行います。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -974,7 +971,7 @@
 <div class="section" id="csvbean">
 <h2>CsvBeanの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CSVのBeanの定義では、SpringBeanとして定義したクラスを指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1042,8 +1039,8 @@
 </div>
 <div class="section" id="id4">
 <h2>SpringBeanFactoryの使用方法<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1117,9 +1114,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1128,12 +1123,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1151,7 +1146,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1167,19 +1162,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

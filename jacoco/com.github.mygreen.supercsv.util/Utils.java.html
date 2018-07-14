@@ -2,10 +2,7 @@
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,11 +14,11 @@ import com.github.mygreen.supercsv.builder.BuildCase;
 /**
  * ユーティリティクラス。
  * 
- * @version 2.0
+ * @version 2.2
  * @author T.TSUCHIE
  *
  */
-<span class="nc" id="L24">public class Utils {</span>
+<span class="nc" id="L21">public class Utils {</span>
     
     /**
      * &lt;a href=&quot;http://www.joda.org/joda-time/&quot; target=&quot;_blank&quot;&gt;Joda-Time&lt;/a&gt;のライブラリが利用可能かどうか。
@@ -30,13 +27,13 @@ import com.github.mygreen.supercsv.builder.BuildCase;
     static {
         boolean enabled;
         try {
-<span class="fc" id="L33">            Class.forName(&quot;org.joda.time.LocalDateTime&quot;);</span>
-<span class="fc" id="L34">            enabled = true;</span>
-<span class="nc" id="L35">        } catch(ClassNotFoundException e) {</span>
-<span class="nc" id="L36">            enabled = false;</span>
-<span class="fc" id="L37">        }</span>
-<span class="fc" id="L38">        ENABLED_LIB_JODA_TIME = enabled;</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L30">            Class.forName(&quot;org.joda.time.LocalDateTime&quot;);</span>
+<span class="fc" id="L31">            enabled = true;</span>
+<span class="nc" id="L32">        } catch(ClassNotFoundException e) {</span>
+<span class="nc" id="L33">            enabled = false;</span>
+<span class="fc" id="L34">        }</span>
+<span class="fc" id="L35">        ENABLED_LIB_JODA_TIME = enabled;</span>
+<span class="fc" id="L36">    }</span>
     
     /**
      * 文字列が空文字か判定する。
@@ -44,15 +41,15 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return
      */
     public static boolean isEmpty(final String str) {
-<span class="fc bfc" id="L47" title="All 4 branches covered.">        if(str == null || str.isEmpty()) {</span>
-<span class="fc" id="L48">            return true;</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        if(str == null || str.isEmpty()) {</span>
+<span class="fc" id="L45">            return true;</span>
         }
         
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(str.length() == 1) {</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            return str.charAt(0) == '\u0000';</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(str.length() == 1) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">            return str.charAt(0) == '\u0000';</span>
         }
         
-<span class="fc" id="L55">        return false;</span>
+<span class="fc" id="L52">        return false;</span>
     }
     
     /**
@@ -61,7 +58,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return
      */
     public static boolean isNotEmpty(final String str) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        return !isEmpty(str);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return !isEmpty(str);</span>
     }
     
     /**
@@ -70,15 +67,15 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return nullまたはサイズが0のときにtrueを返す。
      */
     public static boolean isEmpty(final Collection&lt;?&gt; collection) {
-<span class="nc bnc" id="L73" title="All 4 branches missed.">        if(collection == null || collection.isEmpty()) {</span>
-<span class="nc" id="L74">            return true;</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">        if(collection == null || collection.isEmpty()) {</span>
+<span class="nc" id="L71">            return true;</span>
         }
         
-<span class="nc" id="L77">        return false;</span>
+<span class="nc" id="L74">        return false;</span>
     }
     
     public static boolean isNotEmpty(final Collection&lt;?&gt; collection) {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        return !isEmpty(collection);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        return !isEmpty(collection);</span>
     }
     
     /**
@@ -87,11 +84,11 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return nullまたは、配列のサイズが0のときにtrueを返す。
      */
     public static boolean isEmpty(final Object[] arrays) {
-<span class="pc bpc" id="L90" title="1 of 4 branches missed.">        if(arrays == null || arrays.length == 0) {</span>
-<span class="fc" id="L91">            return true;</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">        if(arrays == null || arrays.length == 0) {</span>
+<span class="fc" id="L88">            return true;</span>
         }
         
-<span class="fc" id="L94">        return false;</span>
+<span class="fc" id="L91">        return false;</span>
     }
     
     /**
@@ -100,7 +97,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return
      */
     public static boolean isNotEmpty(final Object[] arrays) {
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        return !isEmpty(arrays);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        return !isEmpty(arrays);</span>
     }
     
     /**
@@ -112,20 +109,20 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static Locale getLocale(final String str) {
         
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        if(isEmpty(str)) {</span>
-<span class="fc" id="L116">            return Locale.getDefault();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if(isEmpty(str)) {</span>
+<span class="fc" id="L113">            return Locale.getDefault();</span>
         }
         
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if(!str.contains(&quot;_&quot;)) {</span>
-<span class="nc" id="L120">            return new Locale(str);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if(!str.contains(&quot;_&quot;)) {</span>
+<span class="nc" id="L117">            return new Locale(str);</span>
         }
         
-<span class="fc" id="L123">        final String[] split = str.split(&quot;_&quot;);</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if(split.length == 2) {</span>
-<span class="fc" id="L125">            return new Locale(split[0], split[1]);</span>
+<span class="fc" id="L120">        final String[] split = str.split(&quot;_&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if(split.length == 2) {</span>
+<span class="fc" id="L122">            return new Locale(split[0], split[1]);</span>
             
         } else {
-<span class="fc" id="L128">            return new Locale(split[0], split[1], split[2]);</span>
+<span class="fc" id="L125">            return new Locale(split[0], split[1], split[2]);</span>
         }
         
     }
@@ -142,17 +139,17 @@ import com.github.mygreen.supercsv.builder.BuildCase;
     public static &lt;T&gt; Optional&lt;T&gt; getAnnotationAttribute(final Annotation anno, final String attrName, final Class&lt;T&gt; attrType) {
         
         try {
-<span class="fc" id="L145">            final Method method = anno.annotationType().getMethod(attrName);</span>
-<span class="fc" id="L146">            method.setAccessible(true);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            if(!attrType.equals(method.getReturnType())) {</span>
-<span class="nc" id="L148">                return Optional.empty();</span>
+<span class="fc" id="L142">            final Method method = anno.annotationType().getMethod(attrName);</span>
+<span class="fc" id="L143">            method.setAccessible(true);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">            if(!attrType.equals(method.getReturnType())) {</span>
+<span class="nc" id="L145">                return Optional.empty();</span>
             }
             
-<span class="fc" id="L151">            final Object value = method.invoke(anno);</span>
-<span class="fc" id="L152">            return Optional.of((T)value);</span>
+<span class="fc" id="L148">            final Object value = method.invoke(anno);</span>
+<span class="fc" id="L149">            return Optional.of((T)value);</span>
             
-<span class="fc" id="L154">        } catch (Exception e) {</span>
-<span class="fc" id="L155">            return Optional.empty();</span>
+<span class="fc" id="L151">        } catch (Exception e) {</span>
+<span class="fc" id="L152">            return Optional.empty();</span>
         }
         
     }
@@ -167,7 +164,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static &lt;T&gt;  boolean hasAnnotationAttribute(final Annotation anno, final String attrName, final Class&lt;T&gt; attrType) {
         
-<span class="fc" id="L170">        return getAnnotationAttribute(anno, attrName, attrType).isPresent();</span>
+<span class="fc" id="L167">        return getAnnotationAttribute(anno, attrName, attrType).isPresent();</span>
         
     }
     
@@ -182,28 +179,28 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static boolean containsBuildCase(final Annotation anno, final BuildCase buildCase) {
         
-<span class="fc" id="L185">        Objects.requireNonNull(anno);</span>
-<span class="fc" id="L186">        Objects.requireNonNull(buildCase);</span>
+<span class="fc" id="L182">        Objects.requireNonNull(anno);</span>
+<span class="fc" id="L183">        Objects.requireNonNull(buildCase);</span>
         
-<span class="fc" id="L188">        final Optional&lt;BuildCase[]&gt; attrCases = getAnnotationAttribute(anno, &quot;cases&quot;, BuildCase[].class);</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        if(attrCases.isPresent()) {</span>
-<span class="fc" id="L190">            final BuildCase[] casesValue = attrCases.get();</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">            if(casesValue.length == 0) {</span>
+<span class="fc" id="L185">        final Optional&lt;BuildCase[]&gt; attrCases = getAnnotationAttribute(anno, &quot;cases&quot;, BuildCase[].class);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        if(attrCases.isPresent()) {</span>
+<span class="fc" id="L187">            final BuildCase[] casesValue = attrCases.get();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            if(casesValue.length == 0) {</span>
                 // 値が空の配列の場合
-<span class="fc" id="L193">                return true;</span>
+<span class="fc" id="L190">                return true;</span>
             }
             
-<span class="fc bfc" id="L196" title="All 2 branches covered.">            for(BuildCase value : casesValue) {</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">                if(value == buildCase) {</span>
-<span class="fc" id="L198">                    return true;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            for(BuildCase value : casesValue) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                if(value == buildCase) {</span>
+<span class="fc" id="L195">                    return true;</span>
                 }
             }
             
-<span class="fc" id="L202">            return false;</span>
+<span class="fc" id="L199">            return false;</span>
         }
         
         // 属性を持たない場合
-<span class="fc" id="L206">        return true;</span>
+<span class="fc" id="L203">        return true;</span>
     }
     
     /**
@@ -211,7 +208,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @return {@literal true}利用可能。
      */
     public static boolean isEnabledJodaTime() {
-<span class="fc" id="L214">        return ENABLED_LIB_JODA_TIME;</span>
+<span class="fc" id="L211">        return ENABLED_LIB_JODA_TIME;</span>
     }
     
     /**
@@ -222,37 +219,37 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static Object getPrimitiveDefaultValue(final Class&lt;?&gt; type) {
         
-<span class="fc" id="L225">        Objects.requireNonNull(type, &quot;type should not be null.&quot;);</span>
+<span class="fc" id="L222">        Objects.requireNonNull(type, &quot;type should not be null.&quot;);</span>
         
-<span class="fc bfc" id="L227" title="All 2 branches covered.">        if(!type.isPrimitive()) {</span>
-<span class="fc" id="L228">            return null;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if(!type.isPrimitive()) {</span>
+<span class="fc" id="L225">            return null;</span>
             
-<span class="fc bfc" id="L230" title="All 2 branches covered.">        } else if(boolean.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L231">            return false;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        } else if(boolean.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L228">            return false;</span>
             
-<span class="fc bfc" id="L233" title="All 2 branches covered.">        } else if(char.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L234">            return '\u0000';</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        } else if(char.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L231">            return '\u0000';</span>
             
-<span class="fc bfc" id="L236" title="All 2 branches covered.">        } else if(byte.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L237">            return (byte)0;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        } else if(byte.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L234">            return (byte)0;</span>
             
-<span class="fc bfc" id="L239" title="All 2 branches covered.">        } else if(short.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L240">            return (short)0;</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        } else if(short.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L237">            return (short)0;</span>
             
-<span class="fc bfc" id="L242" title="All 2 branches covered.">        } else if(int.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L243">            return 0;</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        } else if(int.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L240">            return 0;</span>
             
-<span class="fc bfc" id="L245" title="All 2 branches covered.">        } else if(long.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L246">            return 0l;</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        } else if(long.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L243">            return 0l;</span>
             
-<span class="fc bfc" id="L248" title="All 2 branches covered.">        } else if(float.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L249">            return 0.0f;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        } else if(float.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L246">            return 0.0f;</span>
             
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        } else if(double.class.isAssignableFrom(type)) {</span>
-<span class="fc" id="L252">            return 0.0d;</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">        } else if(double.class.isAssignableFrom(type)) {</span>
+<span class="fc" id="L249">            return 0.0d;</span>
         }
         
-<span class="nc" id="L255">        return null;</span>
+<span class="nc" id="L252">        return null;</span>
         
     }
     
@@ -260,17 +257,35 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * 文字列配列の結合
      * @param array1
      * @param array2
-     * @return
+     * @return 結合した配列。引数のどちらからnullの場合は、cloneした配列を返します。
      */
     public static String[] concat(final String[] array1, final String[] array2) {
         
-<span class="fc" id="L267">        int size = array1.length + array2.length;</span>
-<span class="fc" id="L268">        List&lt;String&gt; list = new ArrayList&lt;&gt;(size);</span>
-<span class="fc" id="L269">        list.addAll(Arrays.asList(array1));</span>
-<span class="fc" id="L270">        list.addAll(Arrays.asList(array2));</span>
+<span class="pc bpc" id="L264" title="1 of 4 branches missed.">        if(array1 == null || array1.length == 0) {</span>
+<span class="fc" id="L265">            return clone(array2);</span>
+            
+<span class="pc bpc" id="L267" title="2 of 4 branches missed.">        } else if(array2 == null || array2.length == 0) {</span>
+<span class="nc" id="L268">            return clone(array1);</span>
+        }
         
-<span class="fc" id="L272">        return list.toArray(new String[size]);</span>
+<span class="fc" id="L271">        final String[] joinedArray = new String[array1.length + array2.length];</span>
+<span class="fc" id="L272">        System.arraycopy(array1, 0, joinedArray, 0, array1.length);</span>
+<span class="fc" id="L273">        System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);</span>
+<span class="fc" id="L274">        return joinedArray;</span>
         
+    }
+    
+    /**
+     * 文字列の配列をクローンします。
+     * @since 2.2
+     * @param array クローン対象の配列
+     * @return クローンした配列。引数がnullの場合は、nullを返します。
+     */
+    public static String[] clone(final String[] array) {
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">        if (array == null) {</span>
+<span class="nc" id="L286">            return null;</span>
+        }
+<span class="fc" id="L288">        return array.clone();</span>
     }
     
     /**
@@ -280,18 +295,18 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      * @throws NullPointerException collection is null.
      */
     public static int[] toArray(final Collection&lt;Integer&gt; collection) {
-<span class="fc" id="L283">        Objects.requireNonNull(collection);</span>
+<span class="fc" id="L298">        Objects.requireNonNull(collection);</span>
         
-<span class="fc" id="L285">        final int size = collection.size();</span>
-<span class="fc" id="L286">        final int[] array = new int[size];</span>
+<span class="fc" id="L300">        final int size = collection.size();</span>
+<span class="fc" id="L301">        final int[] array = new int[size];</span>
         
-<span class="fc" id="L288">        int i=0;</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">        for(Integer value : collection) {</span>
-<span class="fc" id="L290">            array[i] = value;</span>
-<span class="fc" id="L291">            i++;</span>
-<span class="fc" id="L292">        }</span>
+<span class="fc" id="L303">        int i=0;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        for(Integer value : collection) {</span>
+<span class="fc" id="L305">            array[i] = value;</span>
+<span class="fc" id="L306">            i++;</span>
+<span class="fc" id="L307">        }</span>
         
-<span class="fc" id="L294">        return array;</span>
+<span class="fc" id="L309">        return array;</span>
     }
     
     /**
@@ -301,12 +316,12 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static int buildRegexFlags(final PatternFlag[] flags) {
         
-<span class="fc" id="L304">        int intFlag = 0;</span>
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        for(PatternFlag flag : flags) {</span>
-<span class="fc" id="L306">            intFlag = intFlag | flag.getValue();</span>
+<span class="fc" id="L319">        int intFlag = 0;</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">        for(PatternFlag flag : flags) {</span>
+<span class="fc" id="L321">            intFlag = intFlag | flag.getValue();</span>
         }
         
-<span class="fc" id="L309">        return intFlag;</span>
+<span class="fc" id="L324">        return intFlag;</span>
         
     }
     
@@ -317,15 +332,15 @@ import com.github.mygreen.supercsv.builder.BuildCase;
      */
     public static String uncapitalize(final String str) {
         final int strLen;
-<span class="nc bnc" id="L320" title="All 4 branches missed.">        if(str == null || (strLen = str.length()) == 0) {</span>
-<span class="nc" id="L321">            return str;</span>
+<span class="nc bnc" id="L335" title="All 4 branches missed.">        if(str == null || (strLen = str.length()) == 0) {</span>
+<span class="nc" id="L336">            return str;</span>
         }
         
-<span class="nc" id="L324">        return new StringBuilder(strLen)</span>
-<span class="nc" id="L325">            .append(String.valueOf(str.charAt(0)).toLowerCase())</span>
-<span class="nc" id="L326">            .append(str.substring(1))</span>
-<span class="nc" id="L327">            .toString();</span>
+<span class="nc" id="L339">        return new StringBuilder(strLen)</span>
+<span class="nc" id="L340">            .append(String.valueOf(str.charAt(0)).toLowerCase())</span>
+<span class="nc" id="L341">            .append(str.substring(1))</span>
+<span class="nc" id="L342">            .toString();</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

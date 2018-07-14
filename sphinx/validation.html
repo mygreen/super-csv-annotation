@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. 値の検証方法 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>5. 値の検証方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,22 +24,13 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="next" title="6. アノテーションの合成" href="composition.html"/>
-        <link rel="prev" title="4. 値の変換方法" href="conversion.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="6. アノテーションの合成" href="composition.html" />
+    <link rel="prev" title="4. 値の変換方法" href="conversion.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -48,7 +39,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -70,7 +61,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -276,14 +267,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +294,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -306,9 +302,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -369,19 +366,19 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvRequire</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvRequire</span></code></td>
 <td>必須チェックを行います。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvRequire.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvEquals</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvEquals</span></code></td>
 <td>指定した値と等しいか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvEquals.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvUnique</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvUnique</span></code></td>
 <td>他のレコードの値と異なるか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUnique.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvUniqueHashCode</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvUniqueHashCode</span></code></td>
 <td>他のレコードの値と異なるかハッシュコードにより検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvUniqueHashCode.html">JavaDoc</a></td>
 </tr>
@@ -401,35 +398,35 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvPattern</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPattern</span></code></td>
 <td>正規表現と一致するか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvPattern.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthMin</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthMin</span></code></td>
 <td>指定した文字長以上か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthMax</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthMax</span></code></td>
 <td>指定した文字長以内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthBetween</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthBetween</span></code></td>
 <td>指定した文字長の範囲内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthBetween.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthExact</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthExact</span></code></td>
 <td>指定した文字長か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvLengthExact</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvLengthExact</span></code></td>
 <td>指定した文字長か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvLengthExact.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvWordForbid</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvWordForbid</span></code></td>
 <td>指定した語彙を含んでいないか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordForbid.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvWordRequire</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvWordRequire</span></code></td>
 <td>指定した語彙を含んでいるか検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvWordRequire.html">JavaDoc</a></td>
 </tr>
@@ -449,15 +446,15 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberMin</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberMin</span></code></td>
 <td>指定した下限値以上か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberMax</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberMax</span></code></td>
 <td>指定した上限値以下か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvNumberRange</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberRange</span></code></td>
 <td>指定した値の範囲内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvNumberRange.html">JavaDoc</a></td>
 </tr>
@@ -477,15 +474,15 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeMin</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeMin</span></code></td>
 <td>指定した値以降（下限値以上）か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMin.html">JavaDoc</a></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeMax</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeMax</span></code></td>
 <td>指定した値以前（上限値以下）か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeMax.html">JavaDoc</a></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">&#64;CsvDateTimeRange</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvDateTimeRange</span></code></td>
 <td>指定した値の期間内か検証します。</td>
 <td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvDateTimeRange.html">JavaDoc</a></td>
 </tr>
@@ -493,18 +490,18 @@
 </table>
 <div class="section" id="id20">
 <h3>5.1.1. 処理順序の指定<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>属性 <code class="docutils literal"><span class="pre">order</span></code> で処理順序を指定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">order</span></code> で処理順序を指定することができます。</p>
 <ul class="simple">
 <li>値が大きいほど後から実行されます。</li>
 <li>値が同じ場合は、アノテーションのFQCN（完全限定クラス名）の昇順で実行されます。<ul>
-<li>属性orderを省略した場合は、デフォルト値 <code class="docutils literal"><span class="pre">0</span></code> が適用されます。</li>
-<li>ただし、必須チェック用の <code class="docutils literal"><span class="pre">&#64;CsvRequire</span></code> は、初めに実行されるよう、属性orderのデフォルト値にはIntegerの最小値（-2147483648）が設定されています。</li>
+<li>属性orderを省略した場合は、デフォルト値 <code class="docutils literal notranslate"><span class="pre">0</span></code> が適用されます。</li>
+<li>ただし、必須チェック用の <code class="docutils literal notranslate"><span class="pre">&#64;CsvRequire</span></code> は、初めに実行されるよう、属性orderのデフォルト値にはIntegerの最小値（-2147483648）が設定されています。</li>
 </ul>
 </li>
 <li>読み込み時、書き込み時とも同じ処理順序になります。</li>
-<li>属性 <code class="docutils literal"><span class="pre">order</span></code> が付与されていないアノテーションは順番が付与されているものよりも後になります。</li>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">order</span></code> が付与されていないアノテーションは順番が付与されているものよりも後になります。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -540,16 +537,16 @@
 </div>
 <div class="section" id="id21">
 <h3>5.1.2. 処理ケースの指定<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>属性 <code class="docutils literal"><span class="pre">cases</span></code> で、アノテーションを適用するケースとして「読み込み時」「書き込み時」を限定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">cases</span></code> で、アノテーションを適用するケースとして「読み込み時」「書き込み時」を限定することができます。</p>
 <ul class="simple">
-<li>列挙型 <code class="docutils literal"><span class="pre">BuildCase</span></code> で指定します。<ul>
-<li><code class="docutils literal"><span class="pre">BuildCase.Read</span></code> が読み込み時、 <code class="docutils literal"><span class="pre">BuildCase.Write</span></code> が書き込み時を表します。</li>
+<li>列挙型 <code class="docutils literal notranslate"><span class="pre">BuildCase</span></code> で指定します。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">BuildCase.Read</span></code> が読み込み時、 <code class="docutils literal notranslate"><span class="pre">BuildCase.Write</span></code> が書き込み時を表します。</li>
 </ul>
 </li>
 <li>属性の値が空（配列が空）の場合、または、属性 cases を指定しない場合は、全てのケースに該当します。</li>
 <li>既存のアノテーションは、基本的に全て属性値が空が設定され、全てのケースに該当します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -587,19 +584,19 @@
 </div>
 <div class="section" id="id22">
 <h3>5.1.3. グループの指定<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>属性 <code class="docutils literal"><span class="pre">groups</span></code> で、グループ用クラスを指定することで、属性 <em>cases</em> より柔軟に適用するケースをを限定することができます。</p>
+<p>属性 <code class="docutils literal notranslate"><span class="pre">groups</span></code> で、グループ用クラスを指定することで、属性 <em>cases</em> より柔軟に適用するケースをを限定することができます。</p>
 <ul class="simple">
 <li>Bean Validation のgroupと同じような考え方ですが、適用される順序は関係ありません。<ul>
 <li>本ライブラリでは、順序を指定したいときは、属性 <em>order</em> を指定します。</li>
 </ul>
 </li>
-<li>属性を指定しない（空の）場合は、デフォルトのグループ <code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.annotation.DefaultGroup</span></code> が適用されたと同じ意味になります。<ul>
-<li>Bean Validationのデフォルトグループ <code class="docutils literal"><span class="pre">javax.validation.groups.Default</span></code> とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。</li>
+<li>属性を指定しない（空の）場合は、デフォルトのグループ <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.annotation.DefaultGroup</span></code> が適用されたと同じ意味になります。<ul>
+<li>Bean Validationのデフォルトグループ <code class="docutils literal notranslate"><span class="pre">javax.validation.groups.Default</span></code> とは異なるため、特にBeanValidationのアノテーションと混在させる場合は注意してください。</li>
 </ul>
 </li>
 <li>グループ用クラスは、実装が必要ないため、通常はインタフェースで作成します。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -640,8 +637,8 @@
 <span class="kd">public</span> <span class="kd">static</span> <span class="kd">interface</span> <span class="nc">NormalGroup</span> <span class="o">{}</span>
 </pre></div>
 </td></tr></table></div>
-<p>実行時は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter/BeanMappingFactory</span></code> の引数で指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>実行時は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter/BeanMappingFactory</span></code> の引数で指定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -773,31 +770,31 @@
 <h3>5.2.1. CellProcessorの実装クラスの作成<a class="headerlink" href="#cellprocessor" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>サンプルとして、最後が任意の文字で終わるか検証するCellProcessorを作成します。</p>
 <ul class="simple">
-<li>抽象クラス <code class="docutils literal"><span class="pre">ValidationCellProcessor</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ValidationCellProcessor.html">JavaDoc</a> ] を継承して作成します。<ul>
+<li>抽象クラス <code class="docutils literal notranslate"><span class="pre">ValidationCellProcessor</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ValidationCellProcessor.html">JavaDoc</a> ] を継承して作成します。<ul>
 <li><em>ValidationCellProcessor</em> は、値の検証に特化したCellProcessorの実装です。</li>
 <li>CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。</li>
 </ul>
 </li>
-<li>今回は、文字列型の値を検証するため、インタフェースとして <code class="docutils literal"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。<ul>
+<li>今回は、文字列型の値を検証するため、インタフェースとして <code class="docutils literal notranslate"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。<ul>
 <li>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
 CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。</li>
-<li>扱う値が数値型のときは <code class="docutils literal"><span class="pre">LongCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html">JavaDoc</a> ]などと、扱う値によって変更してください。</li>
+<li>扱う値が数値型のときは <code class="docutils literal notranslate"><span class="pre">LongCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/LongCellProcessor.html">JavaDoc</a> ]などと、扱う値によって変更してください。</li>
 </ul>
 </li>
 <li>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
-<li>メソッド <code class="docutils literal"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
 <li>nullの場合、次の処理に委譲するようにします。
-Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を呼びnullチェックを行いますが、
+Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
 本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</li>
-<li>検証対象のクラスタイプが不正な場合は、例外 <code class="docutils literal"><span class="pre">SuperCsvCellProcessorException</span></code> をスローします。
+<li>検証対象のクラスタイプが不正な場合は、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvCellProcessorException</span></code> をスローします。
 アノテーションを間違った型に付与した場合に発生する場合がありますが、ファクトリクラスの段階で弾いてもかまいません。</li>
 <li>正常な値であれば、次の処理に渡します。</li>
-<li>問題がある場合、例外 <code class="docutils literal"><span class="pre">SuperCsvValidationException</span></code> をスローします。
-その際に、メソッド <em>createValidationException(…)</em> を呼び出して、ビルダクラスを利用して例外クラスを組み立てます。</li>
+<li>問題がある場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> をスローします。
+その際に、メソッド <em>createValidationException(...)</em> を呼び出して、ビルダクラスを利用して例外クラスを組み立てます。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -930,25 +927,25 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <div class="section" id="id27">
 <h3>5.2.2. 値の検証用のアノテーションクラスの作成<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
 <li>通常はFieldのみで問題ないですが、 <a class="reference internal" href="composition.html"><span class="doc">アノテーションを合成</span></a> するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</li>
 </ul>
 </li>
-<li><code class="docutils literal"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
 <li>内部アノテーションとして、 <em>List</em> を定義します。</li>
 </ul>
 </li>
-<li>値の検証用のアノテーションであることを示すためのメタアノテーション <code class="docutils literal"><span class="pre">&#64;CsvConstraint</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvConstraint.html">JavaDoc</a> ]を指定します。<ul>
-<li>属性 <code class="docutils literal"><span class="pre">value</span></code> に、<code class="docutils literal"><span class="pre">ConstraintProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html">JavaDoc</a> ]を実装したCellProcessorのファクトリクラスの実装を指定します。</li>
+<li>値の検証用のアノテーションであることを示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvConstraint</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/constraint/CsvConstraint.html">JavaDoc</a> ]を指定します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">value</span></code> に、<code class="docutils literal notranslate"><span class="pre">ConstraintProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html">JavaDoc</a> ]を実装したCellProcessorのファクトリクラスの実装を指定します。</li>
 </ul>
 </li>
-<li>共通の属性として、 <code class="docutils literal"><span class="pre">cases</span></code> と <code class="docutils literal"><span class="pre">groups</span></code> 、 <code class="docutils literal"><span class="pre">order</span></code> を定義します。<ul>
+<li>共通の属性として、 <code class="docutils literal notranslate"><span class="pre">cases</span></code> と <code class="docutils literal notranslate"><span class="pre">groups</span></code> 、 <code class="docutils literal notranslate"><span class="pre">order</span></code> を定義します。<ul>
 <li>省略した場合は、それぞれのデフォルト値が適用されます。</li>
 </ul>
 </li>
-<li>必要であれば、固有の属性を定義します。今回は、<code class="docutils literal"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</li>
+<li>必要であれば、固有の属性を定義します。今回は、<code class="docutils literal notranslate"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1034,12 +1031,12 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <h3>5.2.3. 値の検証用のファクトリクラスの作成<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。</p>
 <ul class="simple">
-<li>インタフェース <code class="docutils literal"><span class="pre">ConstraintProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html">JavaDoc</a> ]を実装します。</li>
+<li>インタフェース <code class="docutils literal notranslate"><span class="pre">ConstraintProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConstraintProcessorFactory.html">JavaDoc</a> ]を実装します。</li>
 <li>アノテーションが検証対象のクラスタイプ以外に付与される場合があるため、その際は無視するようにします。</li>
 <li>独自のCellProcessorのCustomConstraintのインスタンスを作成します。</li>
 <li>Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。</li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1097,26 +1094,26 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <div class="section" id="bean">
 <h2>5.3. Bean単位での値の検証方法<a class="headerlink" href="#bean" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>CellProcessorは、フィールド1つに対する単項目チェックです。</p>
-<p>項目間に対する相関チェックを行う場合は、<code class="docutils literal"><span class="pre">CsvValidator</span></code> で1レコード分のBeanに対するチェック処理を実装します。</p>
+<p>項目間に対する相関チェックを行う場合は、<code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> で1レコード分のBeanに対するチェック処理を実装します。</p>
 <div class="section" id="csvvalidator">
 <h3>5.3.1. CsvValidatorの実装<a class="headerlink" href="#csvvalidator" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">CsvValidator</span></code> のメソッド <code class="docutils literal"><span class="pre">validate(...)</span></code> を実装します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> のメソッド <code class="docutils literal notranslate"><span class="pre">validate(...)</span></code> を実装します。</p>
 <ul class="simple">
-<li>エラー情報は、<code class="docutils literal"><span class="pre">CsvBindingErrors</span></code> に格納し管理されています。<ul>
-<li>フィールドに対してエラーメッセージを追加する場合は、<code class="docutils literal"><span class="pre">CsvBindingErrors#rejectValue(...)</span></code> で追加します。</li>
-<li>項目間などのグローバルなエラーメッセージを追加する場合は、<code class="docutils literal"><span class="pre">CsvBindingErrors#reject(...)</span></code> で追加します。</li>
+<li>エラー情報は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors</span></code> に格納し管理されています。<ul>
+<li>フィールドに対してエラーメッセージを追加する場合は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#rejectValue(...)</span></code> で追加します。</li>
+<li>項目間などのグローバルなエラーメッセージを追加する場合は、<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#reject(...)</span></code> で追加します。</li>
 </ul>
 </li>
 <li>CsvValidatorは、CellProcessorの後に実行され、もしエラーがある場合、そのフィールドの値は空が設定されており、
-<code class="docutils literal"><span class="pre">CsvBindingErrors#getFieldErrors(&lt;フィールド名&gt;)</span></code> でフィールドに対するエラーがあるかどうか判定する必要があります。<ul>
-<li>既にエラーがある場合などの判定処理を巻単位するため、<code class="docutils literal"><span class="pre">CsvField</span></code> クラスを利用します。</li>
+<code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#getFieldErrors(&lt;フィールド名&gt;)</span></code> でフィールドに対するエラーがあるかどうか判定する必要があります。<ul>
+<li>既にエラーがある場合などの判定処理を巻単位するため、<code class="docutils literal notranslate"><span class="pre">CsvField</span></code> クラスを利用します。</li>
 <li></li>
 </ul>
 </li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id49">
 <div class="code-block-caption"><span class="caption-number">コード - 5.3.1 </span><span class="caption-text">CsvValidatorの実装例</span><a class="headerlink" href="#id49" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1264,7 +1261,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </pre></div>
 </td></tr></table></div>
 </div>
-<p><code class="docutils literal"><span class="pre">CsvFieldValidator#createMessageVariables(...)</span></code> を利用すると、以下の良く使用するCSV情報に関する変数を作ることができます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvFieldValidator#createMessageVariables(...)</span></code> を利用すると、以下の良く使用するCSV情報に関する変数を作ることができます。</p>
 <table border="1" class="colwidths-given docutils" id="id50">
 <caption><span class="caption-number">表 - 5.3.1 </span><span class="caption-text">よく使用するな変数</span><a class="headerlink" href="#id50" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
@@ -1301,7 +1298,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </tr>
 <tr class="row-odd"><td><em>label</em></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
 <div class="line">label属性を指定していない場合は、フィールド名になります。</div>
 </div>
 </td>
@@ -1314,17 +1311,17 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </tr>
 <tr class="row-odd"><td><em>printer</em></td>
 <td><div class="first last line-block">
-<div class="line">各フィールドの <code class="docutils literal"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
-<div class="line"><code class="docutils literal"><span class="pre">${print#print(validatedValue)}</span></code> でパース済みのオブジェクトをフォーマットするのに利用します。</div>
+<div class="line">各フィールドの <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">${print#print(validatedValue)}</span></code> でパース済みのオブジェクトをフォーマットするのに利用します。</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>作成したCsvValidatorは、 <code class="docutils literal"><span class="pre">&#64;CsvBean(validators=)</span></code> で指定します。</p>
+<p>作成したCsvValidatorは、 <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validators=)</span></code> で指定します。</p>
 <div class="literal-block-wrapper docutils container" id="id51">
 <div class="code-block-caption"><span class="caption-number">コード - 5.3.2 </span><span class="caption-text">Beanの実装例</span><a class="headerlink" href="#id51" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1375,15 +1372,16 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </div>
 <div class="section" id="id32">
 <h3>5.3.2. エラーメッセージの定義<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">CsvBindingErrors#reject(...)/rejectValue(...)</span></code> でエラーメッセージを追加する場合、エラーコードを指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#reject(...)/rejectValue(...)</span></code> でエラーメッセージを追加する場合、エラーコードを指定します。</p>
 <ul class="simple">
-<li>エラーメッセージは、クラスパスのルートに配置したプロパティファイル <code class="docutils literal"><span class="pre">SuperCsvMessages.properties</span></code> が自動的に読み込まれるため、そこに定義します。</li>
+<li>エラーメッセージは、クラスパスのルートに配置したプロパティファイル <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> が自動的に読み込まれるため、そこに定義します。</li>
+<li>プロパティファイルは、UTF-8、ASCIIコード変換なしで作成します。 <cite>[ver.2.2]</cite></li>
 <li>メッセージキーは、「エラーコード」「クラス名」「フィールド名」「フィールドのクラスタイプ」を組み合わせて、優先順位の高いものに一致した物が採用されます。</li>
 <li>メッセージ中では変数が利用可能で、予め利用可能な変数は下記が登録されています。<ul>
-<li>メッセージ変数は、<code class="docutils literal"><span class="pre">{key}</span></code> で参照可能です。</li>
+<li>メッセージ変数は、<code class="docutils literal notranslate"><span class="pre">{key}</span></code> で参照可能です。</li>
 </ul>
 </li>
-<li>さらに、<code class="docutils literal"><span class="pre">${exp}</span></code> の形式だと、式言語として <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用可能です。</li>
+<li>さらに、<code class="docutils literal notranslate"><span class="pre">${exp}</span></code> の形式だと、式言語として <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用可能です。</li>
 <li>ただし、 <a class="reference internal" href="spring_message.html"><span class="doc">Spring Frameworkと連携してエラーメッセージの取得方法を変更</span></a> している場合は、定義する箇所は異なります。</li>
 </ul>
 <table border="1" class="colwidths-given docutils" id="id52">
@@ -1401,7 +1399,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>1</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;Beanのクラス名&gt;.&lt;フィールド名&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;Beanのクラス名&gt;.&lt;フィールド名&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.SampleCsv.age</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -1409,7 +1407,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </td>
 </tr>
 <tr class="row-odd"><td>2</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールド名&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールド名&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.age</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -1417,7 +1415,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </td>
 </tr>
 <tr class="row-even"><td>3</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスパス&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスパス&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired.java.lang.Integer</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -1426,7 +1424,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </tr>
 <tr class="row-odd"><td>4</td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスタイプの親のクラスパス&gt;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;.&lt;フィールドのクラスタイプの親のクラスパス&gt;</span></code></div>
 <div class="line">※数値型と列挙型のみ</div>
 </div>
 </td>
@@ -1438,7 +1436,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </td>
 </tr>
 <tr class="row-even"><td>5</td>
-<td><code class="docutils literal"><span class="pre">&lt;エラーコード&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;エラーコード&gt;</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><em>age.reqired</em></div>
 <div class="line">※「age.required」がエラーコード</div>
@@ -1449,7 +1447,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </table>
 <div class="literal-block-wrapper docutils container" id="id53">
 <div class="code-block-caption"><span class="caption-number">コード - 5.3.3 </span><span class="caption-text">SuperCsvMessage.propertiesの定義例</span><a class="headerlink" href="#id53" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-properties"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-properties notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1474,16 +1472,16 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </div>
 <div class="section" id="id33">
 <h3>5.3.3. エラーのハンドリング<a class="headerlink" href="#id33" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>CsvValidatorの中でCsvBindingErrorsにエラー情報を追加すると、例外 <code class="docutils literal"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
+<p>CsvValidatorの中でCsvBindingErrorsにエラー情報を追加すると、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
 <ul class="simple">
-<li>例外クラスは、 <code class="docutils literal"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
-<li><em>CsvExceptionConverter</em> は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
-メソッド <code class="docutils literal"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
+<li>例外クラスは、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
+<li><em>CsvExceptionConverter</em> は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
+メソッド <code class="docutils literal notranslate"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
 <li>詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のエラーメッセージ</span></a> を参照してください。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1570,14 +1568,14 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <h2>5.4. エラー処理の方法<a class="headerlink" href="#id34" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id35">
 <h3>5.4.1. 例外の種類とハンドリング<a class="headerlink" href="#id35" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>読み込み時の書式の不正や値の検証時に失敗した場合、例外 <code class="docutils literal"><span class="pre">org.supercsv.exception.SuperCsvException</span></code> がスローされます。</p>
+<p>読み込み時の書式の不正や値の検証時に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">org.supercsv.exception.SuperCsvException</span></code> がスローされます。</p>
 <p>エラー内容を画面に表示するようなシステムの場合、例外の内容をメッセージに変換する必要があります。
-そのような時には、<code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.validation.CsvExceptionConverter</span></code> を使い、エラーメッセージに変換します。</p>
+そのような時には、<code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.CsvExceptionConverter</span></code> を使い、エラーメッセージに変換します。</p>
 <p>CsvExceptionConverter は、CsvAnnotaionBeanReader/CsvAnnotaionBeanWriterに組み込まれており、
 例外発生時に自動的にエラーメッセージに変換されたものがため込まれます。</p>
 <div class="literal-block-wrapper docutils container" id="id54">
 <div class="code-block-caption"><span class="caption-number">コード - 5.4.1 </span><span class="caption-text">Super CSV Annotationの例外体系</span><a class="headerlink" href="#id54" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-none"><div class="highlight"><pre><span></span>java.lang.RuntimeException
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>java.lang.RuntimeException
   └ org.supercsv.exception.SuperCsvException
       ├ org.supercsv.exception.SuperCsvReflectionException
       ├ org.supercsv.exception.SuperCsvCellProcessorException
@@ -1624,14 +1622,14 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <tr class="row-even"><td><em>SuperCsvCellProcessorException</em></td>
 <td><div class="first last line-block">
 <div class="line">CellProcessor内で、処理対象のセルの値のクラスタイプが不正などのときのときにスローされる例外。</div>
-<div class="line">例えば、文字列を日時にパースするCellProcessor <code class="docutils literal"><span class="pre">ParseDate</span></code> で、パースに失敗した場合。</div>
+<div class="line">例えば、文字列を日時にパースするCellProcessor <code class="docutils literal notranslate"><span class="pre">ParseDate</span></code> で、パースに失敗した場合。</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><em>SuperCsvConstraintViolationException</em></td>
 <td><div class="first last line-block">
 <div class="line">制約のCellProcessor内で、値が制約違反となり不正のときのにスローされる例外。</div>
-<div class="line">例えば、CellProcessor <code class="docutils literal"><span class="pre">LMinMax</span></code> で、セルの値が指定した数値の範囲以外のときにスローされる例外。</div>
+<div class="line">例えば、CellProcessor <code class="docutils literal notranslate"><span class="pre">LMinMax</span></code> で、セルの値が指定した数値の範囲以外のときにスローされる例外。</div>
 </div>
 </td>
 </tr>
@@ -1651,7 +1649,7 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 <tbody valign="top">
 <tr class="row-even"><td><em>SuperCsvValidationException</em></td>
 <td><div class="first last line-block">
-<div class="line">Super CSV Annotationの CellProcessor <code class="docutils literal"><span class="pre">ValidationCellProcessor</span></code> を</div>
+<div class="line">Super CSV Annotationの CellProcessor <code class="docutils literal notranslate"><span class="pre">ValidationCellProcessor</span></code> を</div>
 <div class="line">実装しているCellProcessorの制約違反の例外。</div>
 <div class="line">メッセージ変数などの情報が格納されている。</div>
 </div>
@@ -1665,14 +1663,14 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </tr>
 <tr class="row-even"><td><em>SuperCsvNoMatchHeaderException</em></td>
 <td><div class="first last line-block">
-<div class="line">ヘッダー行を読み込む際に、<code class="docutils literal"><span class="pre">&#64;CsvColumn(label=&quot;&quot;)</span></code> で定義している</div>
+<div class="line">ヘッダー行を読み込む際に、<code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&quot;)</span></code> で定義している</div>
 <div class="line">値と異なる場合にスローされる例外。</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><em>SuperCsvNoMatchColumnSizeException</em></td>
 <td><div class="first last line-block">
-<div class="line">ヘッダー行やレコードを読み込む際に、<code class="docutils literal"><span class="pre">&#64;CsvColumn</span></code> で定義している</div>
+<div class="line">ヘッダー行やレコードを読み込む際に、<code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn</span></code> で定義している</div>
 <div class="line">カラムサイズと異なる場合にスローされる例外。</div>
 </div>
 </td>
@@ -1693,17 +1691,17 @@ Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(…)を
 </tr>
 </tbody>
 </table>
-<p>レコードの値の読み書きを行う場合に業務例外として扱うものは、<code class="docutils literal"><span class="pre">SuperCsvNoMatchColumnSizeException</span></code> と <code class="docutils literal"><span class="pre">SuperCsvBindingException</span></code> の2つと考えて処理すればよいです。
+<p>レコードの値の読み書きを行う場合に業務例外として扱うものは、<code class="docutils literal notranslate"><span class="pre">SuperCsvNoMatchColumnSizeException</span></code> と <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> の2つと考えて処理すればよいです。
 他の例外は、設定が不正な場合にスローされるため、基本はシステムエラー(ランタイムエラー)として扱うことになります。
-ただし、ヘッダー行の読み込み時は、<code class="docutils literal"><span class="pre">SuperCsvNoMatchHeaderException</span></code> も考慮する必要があります。</p>
-<p>CsvAnnotationBeanReader/CsvAnnotationBeanWriter は <code class="docutils literal"><span class="pre">AutoCloseable</span></code> が実装されていますが、
+ただし、ヘッダー行の読み込み時は、<code class="docutils literal notranslate"><span class="pre">SuperCsvNoMatchHeaderException</span></code> も考慮する必要があります。</p>
+<p>CsvAnnotationBeanReader/CsvAnnotationBeanWriter は <code class="docutils literal notranslate"><span class="pre">AutoCloseable</span></code> が実装されていますが、
 try-with-resources 文を使用する場合は注意が必要です。アノテーションの解析などはコンストラクタ内で行うので、
 もし、その中で例外が発生するとCSVファイルに関連するリソースが解放されないくなるため分割して定義します。</p>
 <p>また、1レコードずつ処理すると、例外発生時に処理が終わってしまうため、全レコードの値を検証したい場合は、
-<code class="docutils literal"><span class="pre">readAll(...)/readWrite(...)</span></code> メソッドの使用をお勧めします。</p>
+<code class="docutils literal notranslate"><span class="pre">readAll(...)/readWrite(...)</span></code> メソッドの使用をお勧めします。</p>
 <div class="literal-block-wrapper docutils container" id="id57">
 <div class="code-block-caption"><span class="caption-number">コード - 5.4.2 </span><span class="caption-text">読み込み時のエラー処理</span><a class="headerlink" href="#id57" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1857,7 +1855,7 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 </div>
 <div class="literal-block-wrapper docutils container" id="id58">
 <div class="code-block-caption"><span class="caption-number">コード - 5.4.3 </span><span class="caption-text">書き込み時のエラー処理</span><a class="headerlink" href="#id58" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2009,8 +2007,8 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 <div class="section" id="id36">
 <h3>5.4.2. 書き込み時の値の検証のスキップ<a class="headerlink" href="#id36" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>書き込み時の値をスキップしたい場合は、グループによる指定もできますが、システム設定を変更することで一律にスキップすることができます。</p>
-<p><code class="docutils literal"><span class="pre">BeanMappingFactory</span></code> から <code class="docutils literal"><span class="pre">Configuration</span></code> を取得し、そのプロパティ <code class="docutils literal"><span class="pre">skipValidationOnWrite</span></code> の値を trueに設定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory</span></code> から <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> を取得し、そのプロパティ <code class="docutils literal notranslate"><span class="pre">skipValidationOnWrite</span></code> の値を trueに設定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2075,13 +2073,13 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 </div>
 <div class="section" id="id37">
 <h2>5.5. 値の検証時のエラーメッセージ<a class="headerlink" href="#id37" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>セルの値の検証時など例外がスローされ、 <code class="docutils literal"><span class="pre">CsvExceptionConverter</span></code> によりメッセージに変換します。
+<p>セルの値の検証時など例外がスローされ、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> によりメッセージに変換します。
 <em>CsvExceptionConverter</em> は、<em>CsvAnnotationBeanReader/CsvAnnotationBeanWriter</em> に設定します。</p>
-<p>メッセージリソースは <code class="docutils literal"><span class="pre">MessageResolver</span></code> で管理されてます。</p>
+<p>メッセージリソースは <code class="docutils literal notranslate"><span class="pre">MessageResolver</span></code> で管理されてます。</p>
 <ul class="simple">
-<li>デフォルトでは、 <code class="docutils literal"><span class="pre">ResourceBundleMessageResolver</span></code> が設定されています。<ul>
-<li><em>ResourceBundleMessageResolver</em> では、システムのプロパティファイル <code class="docutils literal"><span class="pre">com/github/mygreen/supercsv/localization/SuperCsvMessages.properties</span></code> が読み込まれます。</li>
-<li>独自のメッセージは、クラスパスのルート配置した <code class="docutils literal"><span class="pre">SuperCsvMessages.properties</span></code> が読み込まれます。</li>
+<li>デフォルトでは、 <code class="docutils literal notranslate"><span class="pre">ResourceBundleMessageResolver</span></code> が設定されています。<ul>
+<li><em>ResourceBundleMessageResolver</em> では、システムのプロパティファイル <code class="docutils literal notranslate"><span class="pre">com/github/mygreen/supercsv/localization/SuperCsvMessages.properties</span></code> が読み込まれます。</li>
+<li>独自のメッセージは、クラスパスのルート配置した <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> が読み込まれます。</li>
 </ul>
 </li>
 <li>実装を切り替えることで、他の形式のファイルからも取得することができます。</li>
@@ -2100,34 +2098,34 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 <tbody valign="top">
 <tr class="row-even"><td><em>ResourceBundleMessageResolver</em></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">java.util.ResourceBundle</span></code> を経由してメッセージを参照します。</div>
-<div class="line">デフォルトでは <code class="docutils literal"><span class="pre">SuperCsvMessages.properties</span></code> を読み込みます。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">java.util.ResourceBundle</span></code> を経由してメッセージを参照します。</div>
+<div class="line">デフォルトでは <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> を読み込みます。</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><em>PropertiesMessageResolver</em></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">java.util.Properties</span></code> を経由してメッセージを参照します。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">java.util.Properties</span></code> を経由してメッセージを参照します。</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><em>SpringMessageResolver</em></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">org.springframework.context.MessageSource</span></code> を経由してメッセージを参照します。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">org.springframework.context.MessageSource</span></code> を経由してメッセージを参照します。</div>
 <div class="line">詳細は、 <a class="reference internal" href="spring_message.html"><span class="doc">Spring Frameworkとの連携（エラーメッセージの設定方法）</span></a> を参照してください。</div>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>また、メッセージ中には <code class="docutils literal"><span class="pre">{var}</span></code> の形式で変数が可能です。
-さらに、<code class="docutils literal"><span class="pre">${exp}</span></code> の形式で 式言語の <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">Java Expression Language (JEXL)</a> が利用可能です。</p>
+<p>また、メッセージ中には <code class="docutils literal notranslate"><span class="pre">{var}</span></code> の形式で変数が可能です。
+さらに、<code class="docutils literal notranslate"><span class="pre">${exp}</span></code> の形式で 式言語の <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">Java Expression Language (JEXL)</a> が利用可能です。</p>
 <p>デフォルト設定では、式言語ので呼び出し可能な関数が登録されています。
-<code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.expression.CustomFunction</span></code> のメソッドが接頭語 <cite>f:</cite> を付けて呼び出し可能です。
+<code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.expression.CustomFunction</span></code> のメソッドが接頭語 <cite>f:</cite> を付けて呼び出し可能です。
 また、独自の関数も登録可能です。</p>
 <div class="literal-block-wrapper docutils container" id="id60">
 <div class="code-block-caption"><span class="caption-number">コード - 5.5.1 </span><span class="caption-text">メッセージと式言語の設定</span><a class="headerlink" href="#id60" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2243,7 +2241,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id61">
 <div class="code-block-caption"><span class="caption-number">コード - 5.6.1 </span><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.1を利用する場合）</span><a class="headerlink" href="#id61" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2285,7 +2283,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用できます。</p>
 <div class="literal-block-wrapper docutils container" id="id62">
 <div class="code-block-caption"><span class="caption-number">コード - 5.6.2 </span><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.0を利用する場合）</span><a class="headerlink" href="#id62" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2312,10 +2310,10 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 </div>
 <div class="section" id="id41">
 <h3>5.6.2. Bean Validationの利用方法<a class="headerlink" href="#id41" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvBean(validatosr=CsvBeanValidator.class)</span></code> を指定します。</p>
-<p><code class="docutils literal"><span class="pre">CsvBeanValidator</span></code> は、Bean Validation と、本ライブラリの <code class="docutils literal"><span class="pre">CsvValidator</span></code> をブリッジするクラスです。</p>
-<p>独自のメッセージソースは、クラスパスのルートに <code class="docutils literal"><span class="pre">HibernateValidation.properties</span></code> を配置しておけば自動的に読み込まれます。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validatosr=CsvBeanValidator.class)</span></code> を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> は、Bean Validation と、本ライブラリの <code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> をブリッジするクラスです。</p>
+<p>独自のメッセージソースは、クラスパスのルートに <code class="docutils literal notranslate"><span class="pre">HibernateValidation.properties</span></code> を配置しておけば自動的に読み込まれます。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2404,16 +2402,16 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 <span class="o">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>Bean Validation による値の検証でエラーがある場合は、例外 <code class="docutils literal"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
+<p>Bean Validation による値の検証でエラーがある場合は、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
 <ul class="simple">
-<li>例外クラスは、 <code class="docutils literal"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
-<li><em>CsvExceptionConverter</em> は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
-メソッド <code class="docutils literal"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
+<li>例外クラスは、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
+<li><em>CsvExceptionConverter</em> は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
+メソッド <code class="docutils literal notranslate"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
 <li>詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のエラーメッセージ</span></a> を参照してください。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2499,9 +2497,9 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 <h3>5.6.3. Bean Validationのカスタマイズ<a class="headerlink" href="#id42" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>本ライブラリ用のメッセージソースや <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> に切り替える場合、
 Bean Validationのインスタンスを変更する必要があります。</p>
-<p>その場合は、<code class="docutils literal"><span class="pre">&#64;CsvBean(validators=CsvBeanValidator.class)</span></code> で指定するのではなく、
-メソッド <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader#addValidators(...)</span></code> 、<code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter#addValidators(...)</span></code> で直接追加します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>その場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validators=CsvBeanValidator.class)</span></code> で指定するのではなく、
+メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#addValidators(...)</span></code> 、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter#addValidators(...)</span></code> で直接追加します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2627,7 +2625,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </tr>
 <tr class="row-odd"><td>label</td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
 <div class="line">label属性を指定していない場合は、フィールド名になります。</div>
 </div>
 </td>
@@ -2640,8 +2638,8 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </tr>
 <tr class="row-odd"><td>printer</td>
 <td><div class="first last line-block">
-<div class="line">各クラスの <code class="docutils literal"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
-<div class="line"><code class="docutils literal"><span class="pre">${printer.print(validatedValue)}</span></code> で、オブジェクトをフォーマットするのに利用します。</div>
+<div class="line">各クラスの <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">${printer.print(validatedValue)}</span></code> で、オブジェクトをフォーマットするのに利用します。</div>
 </div>
 </td>
 </tr>
@@ -2659,15 +2657,15 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <ul class="simple">
 <li>アノテーションによるDIの有効化を行います。</li>
 <li>コンポーネントスキャン対象のパッケージの指定を行います。</li>
-<li><code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
-<li>Springの <code class="docutils literal"><span class="pre">MessageSource</span></code> で、本ライブラリのエラーメッセージ <code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.localization.SuperCsvMessages</span></code> を読み込んでおきます。
+<li><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
+<li>Springの <code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> で、本ライブラリのエラーメッセージ <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SuperCsvMessages</span></code> を読み込んでおきます。
 * 独自のエラーメッセージがあれば、追加で定義します。<ul>
-<li><code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.localization.SpringMessageResolver</span></code> に、<code class="docutils literal"><span class="pre">MessageSource</span></code> を渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SpringMessageResolver</span></code> に、<code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> を渡します。</li>
 </ul>
 </li>
-<li><code class="docutils literal"><span class="pre">CsvBeanValidator</span></code> に、Springの <code class="docutils literal"><span class="pre">LocalValidatorFactoryBean</span></code> で作成したBeanValidationのValidtorのインスタンスを渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> に、Springの <code class="docutils literal notranslate"><span class="pre">LocalValidatorFactoryBean</span></code> で作成したBeanValidationのValidtorのインスタンスを渡します。</li>
 </ul>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2774,7 +2772,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
 <p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
 特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2908,18 +2906,18 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <h4>5.6.4.3. 独自のConstraintValidatorの作成<a class="headerlink" href="#constraintvalidator" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Bean Validationの独自のアノテーションを作成する際には、通常の方法と同じです。</p>
 <ul class="simple">
-<li>メタアノテーション <code class="docutils literal"><span class="pre">&#64;Constraint</span></code> を付与します。<ul>
-<li>属性 <code class="docutils literal"><span class="pre">validatedBy</span></code> に、 <code class="docutils literal"><span class="pre">ConsraintValidator</span></code> の実装クラスを指定します。</li>
+<li>メタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Constraint</span></code> を付与します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">validatedBy</span></code> に、 <code class="docutils literal notranslate"><span class="pre">ConsraintValidator</span></code> の実装クラスを指定します。</li>
 </ul>
 </li>
-<li>複数指定可能できるように、内部クラス <code class="docutils literal"><span class="pre">List</span></code> を定義しておきます。<ul>
-<li>Bean Validation 1.1の段階では、Java8から追加された <code class="docutils literal"><span class="pre">&#64;Repeatable</span></code> は対応していませんが、
+<li>複数指定可能できるように、内部クラス <code class="docutils literal notranslate"><span class="pre">List</span></code> を定義しておきます。<ul>
+<li>Bean Validation 1.1の段階では、Java8から追加された <code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> は対応していませんが、
 従来の定義方法と揃えておくことで、<em>&#64;Repeatable</em> を使ってJava8のスタイルで使用することができます。</li>
 <li>ただし、今後リリース予定のBeanValidator2.0から <em>&#64;Repeatable</em> 対応するため、定義しておいても問題はありません。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -2984,9 +2982,9 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <span class="o">}</span>
 </pre></div>
 </td></tr></table></div>
-<p><code class="docutils literal"><span class="pre">ConstraintValidator</span></code> の実装中で、SpringBeanのインジェクションを行いたい場合は、アノテーション <code class="docutils literal"><span class="pre">&#64;Resource/&#64;Autowired</span></code> など使います。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ConstraintValidator</span></code> の実装中で、SpringBeanのインジェクションを行いたい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Resource/&#64;Autowired</span></code> など使います。</p>
 <p><em>ConstraintValidator</em> 自身は、SpringBeanとして登録する必要はありません。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -3050,8 +3048,8 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </div>
 <div class="section" id="csvbean">
 <h4>5.6.4.4. CsvBeanの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>CSVのBeanの定義では、<code class="docutils literal"><span class="pre">&#64;CsvBean(validator=CsvBeanValidator.class)</span></code> で、CsvBeanValidatorを指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>CSVのBeanの定義では、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validator=CsvBeanValidator.class)</span></code> で、CsvBeanValidatorを指定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -3086,13 +3084,13 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <div class="section" id="id44">
 <h4>5.6.4.5. 値の検証方法<a class="headerlink" href="#id44" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</li>
-<li><code class="docutils literal"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal"><span class="pre">SpringMessageResolver</span></code> を設定します。<ul>
-<li>さらに、 <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal notranslate"><span class="pre">SpringMessageResolver</span></code> を設定します。<ul>
+<li>さらに、 <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -3222,9 +3220,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -3242,12 +3238,12 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -3265,7 +3261,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -3281,19 +3277,13 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

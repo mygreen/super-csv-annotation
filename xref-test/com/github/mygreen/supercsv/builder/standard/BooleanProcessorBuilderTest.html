@@ -30,11 +30,11 @@
 <a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvBean;
 <a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvColumn;
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.format.CsvBooleanFormat;
-<a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.format.CsvNumberFormat;
-<a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMapping;
-<a class="jxr_linenumber" name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMappingFactory;
-<a class="jxr_linenumber" name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ColumnMapping;
-<a class="jxr_linenumber" name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+<a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMapping;
+<a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMappingFactory;
+<a class="jxr_linenumber" name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ColumnMapping;
+<a class="jxr_linenumber" name="26" href="#26">26</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.exception.SuperCsvValidationException;
+<a class="jxr_linenumber" name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.localization.EncodingControl;
 <a class="jxr_linenumber" name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.localization.MessageResolver;
 <a class="jxr_linenumber" name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.validation.CsvExceptionConverter;
@@ -71,7 +71,7 @@
 <a class="jxr_linenumber" name="61" href="#61">61</a>              <strong class="jxr_keyword">this</strong>.beanMappingFactory = <strong class="jxr_keyword">new</strong> BeanMappingFactory();
 <a class="jxr_linenumber" name="62" href="#62">62</a>              <strong class="jxr_keyword">this</strong>.exceptionConverter = <strong class="jxr_keyword">new</strong> CsvExceptionConverter();
 <a class="jxr_linenumber" name="63" href="#63">63</a>              
-<a class="jxr_linenumber" name="64" href="#64">64</a>              <strong class="jxr_keyword">this</strong>.testMessageResolver = <strong class="jxr_keyword">new</strong> ResourceBundleMessageResolver(ResourceBundle.getBundle(<span class="jxr_string">"TestMessages"</span>));
+<a class="jxr_linenumber" name="64" href="#64">64</a>              <strong class="jxr_keyword">this</strong>.testMessageResolver = <strong class="jxr_keyword">new</strong> ResourceBundleMessageResolver(ResourceBundle.getBundle(<span class="jxr_string">"TestMessages"</span>, <strong class="jxr_keyword">new</strong> EncodingControl(<span class="jxr_string">"UTF-8"</span>)));
 <a class="jxr_linenumber" name="65" href="#65">65</a>          }
 <a class="jxr_linenumber" name="66" href="#66">66</a>          
 <a class="jxr_linenumber" name="67" href="#67">67</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Boolean TEST_VALUE_TRUE_OBJ = Boolean.TRUE;
@@ -686,7 +686,7 @@
 <a class="jxr_linenumber" name="676" href="#676">676</a>             <strong class="jxr_keyword">this</strong>.beanMappingFactory = <strong class="jxr_keyword">new</strong> BeanMappingFactory();
 <a class="jxr_linenumber" name="677" href="#677">677</a>             <strong class="jxr_keyword">this</strong>.exceptionConverter = <strong class="jxr_keyword">new</strong> CsvExceptionConverter();
 <a class="jxr_linenumber" name="678" href="#678">678</a>             
-<a class="jxr_linenumber" name="679" href="#679">679</a>             <strong class="jxr_keyword">this</strong>.testMessageResolver = <strong class="jxr_keyword">new</strong> ResourceBundleMessageResolver(ResourceBundle.getBundle(<span class="jxr_string">"TestMessages"</span>));
+<a class="jxr_linenumber" name="679" href="#679">679</a>             <strong class="jxr_keyword">this</strong>.testMessageResolver = <strong class="jxr_keyword">new</strong> ResourceBundleMessageResolver(ResourceBundle.getBundle(<span class="jxr_string">"TestMessages"</span>, <strong class="jxr_keyword">new</strong> EncodingControl(<span class="jxr_string">"UTF-8"</span>)));
 <a class="jxr_linenumber" name="680" href="#680">680</a>         }
 <a class="jxr_linenumber" name="681" href="#681">681</a>         
 <a class="jxr_linenumber" name="682" href="#682">682</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> TEST_VALUE_PRIMITIVE_INIT_OBJ = false;

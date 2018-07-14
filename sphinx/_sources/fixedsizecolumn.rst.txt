@@ -133,15 +133,15 @@
 --------------------------------------------------------
 
 固定長としてパディングする場合、サイズカウント方法の考え方は、複数あります。
-例えば、半角は１文字、全角は2文字ぶんとして換算する。
+例えば、半角は1文字、全角は2文字分として換算する。
 または、文字のバイト数で換算することもあります。
 
 * パディング処理の実装を切り替えることができ、``@CsvFixedSize`` の属性 ``paddingProcessor`` でパディング処理の実装クラスを指定します。
 * 本ライブラリでは、以下のパディング処理の実装が提供されています。
 
-  * ``SimplePaddingProcessor`` - 文字の種別にかかわらず１文字としてカウントしてパディングします。
-  * ``CharWidthPaddingProcessor`` - 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。デフォルトの実装です。
-  * ``ByteSizePaddingProcessor`` - バイト数によってカウントしてパディングします。
+  * ``SimplePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/SimplePaddingProcessor.html>`_ ] - 文字の種別にかかわらず１文字としてカウントしてパディングします。
+  * ``CharWidthPaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/CharWidthPaddingProcessor.html>`_ ] - 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。デフォルトの実装です。
+  * ``ByteSizePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/ByteSizePaddingProcessor.html>`_ ] - バイト数によってカウントしてパディングします。
 
     * バイト数で換算する場合、文字コードに依存するため、文字コードに対応したサブクラスを指定する必要があります。
 

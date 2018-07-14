@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14. リリースノート &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>15. リリースノート &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,21 +24,12 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="prev" title="13. システム設定" href="configuration.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="14. マイグレーション" href="migration.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -47,7 +38,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -69,7 +60,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -275,14 +266,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -297,7 +293,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -305,9 +301,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -330,7 +327,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>14. リリースノート</li>
+      <li>15. リリースノート</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -350,55 +347,85 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>14. リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="ver-2-1-2017-09-23">
-<h2>14.1. ver.2.1 - 2017-09-23<a class="headerlink" href="#ver-2-1-2017-09-23" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>15. リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="ver-2-2-2018-07-14">
+<h2>15.1. ver.2.2 - 2018-07-14<a class="headerlink" href="#ver-2-2-2018-07-14" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>修正内容<ul>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/27">#27</a> - <code class="docutils literal"><span class="pre">MessageInterpolatorAdapter.java</span></code> 内の変数 <code class="docutils literal"><span class="pre">defautlMessage</span></code> のタイプミスとして、 <code class="docutils literal"><span class="pre">defaultMessage</span></code> に修正。</li>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/28">#28</a> - メッセージコードを生成するメソッド <code class="docutils literal"><span class="pre">MessageCodeGenerator#addCode(...)</span></code> の不良の修正。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/38">#38</a> - BeanValidationを使ったときのメッセージの処理を改善しました。<ul>
+<li><code class="docutils literal notranslate"><span class="pre">MessageInterpolator</span></code> において、<code class="docutils literal notranslate"><span class="pre">java.text.Formatter</span></code> は、スレッドセーフではないので、インスタンスを都度生成するよう修正。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvBindingErrors#reject()</span></code> メソッドにおいて、エラーコードが複数できるよう追加。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> において、BeanValidationのメッセージを、CSVの変数を使用して再フォーマットする処理を追加。</li>
+<li><code class="docutils literal notranslate"><span class="pre">MessageInterpolatorAdapter</span></code> において、再フォーマットするときに渡したCSVのメッセージ変数を参照するよう修正。</li>
+<li>メッセージ定義 <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> において、JEXLを使ったとき、値をフォーマットする <code class="docutils literal notranslate"><span class="pre">printer</span></code> 変数のnull判定を追加。</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/39">#39</a> - <code class="docutils literal notranslate"><span class="pre">LazyCsvAnnotationReader/Writer</span></code> で、固定長のカラムを読み書きする際に、ヘッダー情報として、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(header=true,</span> <span class="pre">headerMapper=FixedSizeHeaderMapper.class)</span></code> を指定していても、反映されない事象を修正しました。</li>
 </ul>
 </li>
 <li>変更内容。<ul>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/26">#26</a> - 固定長のサイズのカラムに対応し、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvFixedSize</span></code> を追加しました。<ul>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/30">#30</a> / <a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/41">#41</a> - <code class="docutils literal notranslate"><span class="pre">ResourceBundleMessageResolver</span></code> を使用してプロパティファイルをResouceBundleとして読み込む時に、UTF-8のテキストファイルとして読み込むよう修正しました。<ul>
+<li>これにより、ASCIIコードに変換する必要は無くなります。</li>
+<li>ただし、バージョンアップする際には、クラスパスルートに配置している <code class="docutils literal notranslate"><span class="pre">SuperCsvMessages.properties</span></code> は、文字コードUTF-8のテキストに変換する必要があります。</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/33">#33</a> / <a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/40">#40</a> - <code class="docutils literal notranslate"><span class="pre">LazyCsvAnnotationBeanReader</span></code> を使用し、CSVファイルを読み込むときに、アノテーションに定義しているラベルが実際のファイルの見出しに存在しないときのエラーメッセージを改善しました。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/34">#34</a> / <a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/35">#35</a> - <code class="docutils literal notranslate"><span class="pre">&#64;CsvRegexReplace</span></code> に属性 <code class="docutils literal notranslate"><span class="pre">partialMatched</span></code> を追加し、全体一致か、部分一致かを選択できるようにしました。<ul>
+<li>初期値は、false で全体一致です。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ver-2-1-2017-09-23">
+<h2>15.2. ver.2.1 - 2017-09-23<a class="headerlink" href="#ver-2-1-2017-09-23" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>修正内容<ul>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/27">#27</a> - <code class="docutils literal notranslate"><span class="pre">MessageInterpolatorAdapter.java</span></code> 内の変数 <code class="docutils literal notranslate"><span class="pre">defautlMessage</span></code> のタイプミスとして、 <code class="docutils literal notranslate"><span class="pre">defaultMessage</span></code> に修正。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/28">#28</a> - メッセージコードを生成するメソッド <code class="docutils literal notranslate"><span class="pre">MessageCodeGenerator#addCode(...)</span></code> の不良の修正。</li>
+</ul>
+</li>
+<li>変更内容。<ul>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/26">#26</a> - 固定長のサイズのカラムに対応し、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFixedSize</span></code> を追加しました。<ul>
 <li>詳細は、「 <a class="reference internal" href="fixedsizecolumn.html"><span class="doc">固定長のカラムの読み書き</span></a> 」を参照してください。</li>
 </ul>
 </li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/29">#29</a> / <a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/31">#31</a> - BeanValdiation2.0に対応しました。さらに、以下の日時型に対応しました。<ul>
-<li>JSR-310(Date and Time)のクラスタイプとして、<code class="docutils literal"><span class="pre">OffsetDateTime/OffsetTime/Year/YearMonth/MonthDay</span></code> に対応しました。</li>
-<li>Joda-Timeのクラスタイプとして、<code class="docutils literal"><span class="pre">YearMonth/MonthDay</span></code> に対応しました。</li>
+<li>JSR-310(Date and Time)のクラスタイプとして、<code class="docutils literal notranslate"><span class="pre">OffsetDateTime/OffsetTime/Year/YearMonth/MonthDay</span></code> に対応しました。</li>
+<li>Joda-Timeのクラスタイプとして、<code class="docutils literal notranslate"><span class="pre">YearMonth/MonthDay</span></code> に対応しました。</li>
 </ul>
 </li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/pull/32">#32</a> - カラム番号を指定しないで、ラベルによるマッピングする機能を追加しました。<ul>
 <li>詳細は、「 <a class="reference internal" href="labelledcolumn.html"><span class="doc">ラベルによるカラムのマッピング</span></a> 」 を参照してください。</li>
 </ul>
 </li>
-<li>メソッド <code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter#writeAll()</span></code>  呼び出しの最後に、 <code class="docutils literal"><span class="pre">flush()</span></code> メソッドを呼ぶよう修正。</li>
+<li>メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter#writeAll()</span></code>  呼び出しの最後に、 <code class="docutils literal notranslate"><span class="pre">flush()</span></code> メソッドを呼ぶよう修正。</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="ver-2-0-3-2017-02-20">
-<h2>14.2. ver.2.0.3 - 2017-02-20<a class="headerlink" href="#ver-2-0-3-2017-02-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.3. ver.2.0.3 - 2017-02-20<a class="headerlink" href="#ver-2-0-3-2017-02-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>修正内容。<ul>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/24">#24</a> - 値の変換用のアノテーション <code class="docutils literal"><span class="pre">&#64;CsvFullChar/&#64;CsvHalfChar</span></code> を設定しても値が変換されない事象を修正。</li>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/25">#25</a> - 書き込み前の処理をコールバックするアノテーション <code class="docutils literal"><span class="pre">&#64;CsvPreWrite</span></code> を利用し、フィールドの値を書き換えても、出力されるファイルに結果が反映されない事象を修正。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/24">#24</a> - 値の変換用のアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFullChar/&#64;CsvHalfChar</span></code> を設定しても値が変換されない事象を修正。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/25">#25</a> - 書き込み前の処理をコールバックするアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvPreWrite</span></code> を利用し、フィールドの値を書き換えても、出力されるファイルに結果が反映されない事象を修正。</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="ver-2-0-2-2017-01-30">
-<h2>14.3. ver.2.0.2 - 2017-01-30<a class="headerlink" href="#ver-2-0-2-2017-01-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.4. ver.2.0.2 - 2017-01-30<a class="headerlink" href="#ver-2-0-2-2017-01-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>修正内容。<ul>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/22">#22</a> - メソッド <code class="docutils literal"><span class="pre">CsvAnnotationWriter#writeAll(...)</span></code> を呼ぶと、StackOverflowError が発生する事象を修正。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/22">#22</a> - メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationWriter#writeAll(...)</span></code> を呼ぶと、StackOverflowError が発生する事象を修正。</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="ver-2-0-1-2016-12-18">
-<h2>14.4. ver.2.0.1 - 2016-12-18<a class="headerlink" href="#ver-2-0-1-2016-12-18" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.5. ver.2.0.1 - 2016-12-18<a class="headerlink" href="#ver-2-0-1-2016-12-18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>修正内容。<ul>
 <li>ドキュメントの誤字の見直し。</li>
@@ -406,13 +433,13 @@
 </ul>
 </li>
 <li>変更内容<ul>
-<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/21">#21</a> - 置換語彙を取得するプロバイダのメソッド <code class="docutils literal"><span class="pre">RepalcedWordProvider#getReplacedWords(...)</span></code> の戻り値を変更。語彙を格納するクラスを内部クラスに変更。</li>
+<li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/21">#21</a> - 置換語彙を取得するプロバイダのメソッド <code class="docutils literal notranslate"><span class="pre">RepalcedWordProvider#getReplacedWords(...)</span></code> の戻り値を変更。語彙を格納するクラスを内部クラスに変更。</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="ver-2-0-2016-12-11">
-<h2>14.5. ver.2.0 - 2016-12-11<a class="headerlink" href="#ver-2-0-2016-12-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.6. ver.2.0 - 2016-12-11<a class="headerlink" href="#ver-2-0-2016-12-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>根本から作り直し、大幅に変更。<ul>
 <li>ver.1.x系とは互換性はありません。</li>
@@ -422,7 +449,7 @@
 </ul>
 </div>
 <div class="section" id="ver-1-2-2016-09-03">
-<h2>14.6. ver.1.2 - 2016-09-03<a class="headerlink" href="#ver-1-2-2016-09-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.7. ver.1.2 - 2016-09-03<a class="headerlink" href="#ver-1-2-2016-09-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p class="first">機能追加.</p>
 <ul class="simple">
@@ -432,13 +459,13 @@
 </li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/15">#15</a> - Super CSV 2.4.0に対応。</li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/17">#17</a> - 非推奨のアノテーションの属性の削除。<ul>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvDateConverter</span></code> の属性 language, countryの削除。</li>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvNumberConverter</span></code> の属性 language, countryの削除。</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvDateConverter</span></code> の属性 language, countryの削除。</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvNumberConverter</span></code> の属性 language, countryの削除。</li>
 </ul>
 </li>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/18">#18</a> - アノテーションの属性名の変更。<ul>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvBooleanConverter</span></code> の属性 lenientをignoreCaseに変更。</li>
-<li>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvEnumConverter</span></code> の属性 lenientをignoreCaseに変更。</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvBooleanConverter</span></code> の属性 lenientをignoreCaseに変更。</li>
+<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvEnumConverter</span></code> の属性 lenientをignoreCaseに変更。</li>
 </ul>
 </li>
 </ul>
@@ -456,7 +483,7 @@
 </ul>
 </div>
 <div class="section" id="ver-1-1-2014-11-30">
-<h2>14.7. ver.1.1 - 2014-11-30<a class="headerlink" href="#ver-1-1-2014-11-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>15.8. ver.1.1 - 2014-11-30<a class="headerlink" href="#ver-1-1-2014-11-30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>機能追加.<ul>
 <li><a class="reference external" href="https://github.com/mygreen/super-csv-annotation/issues/9">#9</a>- CellProcessorBuilderのインスタンス生成をカスタマイズ可能にする。</li>
@@ -477,16 +504,14 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="configuration.html" class="btn btn-neutral" title="13. システム設定" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="migration.html" class="btn btn-neutral" title="14. マイグレーション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -495,12 +520,12 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -518,7 +543,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -534,19 +559,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

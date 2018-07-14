@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bean Validationとの連携 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
+  <title>Bean Validationとの連携 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
   
 
   
@@ -24,20 +24,11 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
 
@@ -46,7 +37,7 @@
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -68,7 +59,7 @@
             
             
               <div class="version">
-                2.1
+                2.2
               </div>
             
           
@@ -274,14 +265,19 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +292,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
@@ -304,9 +300,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -365,7 +362,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id7">
 <div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.1を利用する場合）</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -407,7 +404,7 @@ Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
 Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用できます。</p>
 <div class="literal-block-wrapper docutils container" id="id8">
 <div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.0を利用する場合）</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -434,10 +431,10 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 </div>
 <div class="section" id="id3">
 <h2>Bean Validationの利用方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>アノテーション <code class="docutils literal"><span class="pre">&#64;CsvBean(validatosr=CsvBeanValidator.class)</span></code> を指定します。</p>
-<p><code class="docutils literal"><span class="pre">CsvBeanValidator</span></code> は、Bean Validation と、本ライブラリの <code class="docutils literal"><span class="pre">CsvValidator</span></code> をブリッジするクラスです。</p>
-<p>独自のメッセージソースは、クラスパスのルートに <code class="docutils literal"><span class="pre">HibernateValidation.properties</span></code> を配置しておけば自動的に読み込まれます。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validatosr=CsvBeanValidator.class)</span></code> を指定します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> は、Bean Validation と、本ライブラリの <code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> をブリッジするクラスです。</p>
+<p>独自のメッセージソースは、クラスパスのルートに <code class="docutils literal notranslate"><span class="pre">HibernateValidation.properties</span></code> を配置しておけば自動的に読み込まれます。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -526,16 +523,16 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 <span class="o">}</span>
 </pre></div>
 </td></tr></table></div>
-<p>Bean Validation による値の検証でエラーがある場合は、例外 <code class="docutils literal"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
+<p>Bean Validation による値の検証でエラーがある場合は、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
 <ul class="simple">
-<li>例外クラスは、 <code class="docutils literal"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
-<li><em>CsvExceptionConverter</em> は、<code class="docutils literal"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
-メソッド <code class="docutils literal"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
+<li>例外クラスは、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</li>
+<li><em>CsvExceptionConverter</em> は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
+メソッド <code class="docutils literal notranslate"><span class="pre">#getErrorMessages()</span></code> で取得できます。<ul>
 <li>詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のエラーメッセージ</span></a> を参照してください。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -621,9 +618,9 @@ Bean Validation 1.0では、メッセージ中でEL式は利用できません�
 <h2>Bean Validationのカスタマイズ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>本ライブラリ用のメッセージソースや <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> に切り替える場合、
 Bean Validationのインスタンスを変更する必要があります。</p>
-<p>その場合は、<code class="docutils literal"><span class="pre">&#64;CsvBean(validators=CsvBeanValidator.class)</span></code> で指定するのではなく、
-メソッド <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader#addValidators(...)</span></code> 、<code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter#addValidators(...)</span></code> で直接追加します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>その場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validators=CsvBeanValidator.class)</span></code> で指定するのではなく、
+メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#addValidators(...)</span></code> 、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter#addValidators(...)</span></code> で直接追加します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -749,7 +746,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </tr>
 <tr class="row-odd"><td>label</td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
 <div class="line">label属性を指定していない場合は、フィールド名になります。</div>
 </div>
 </td>
@@ -762,8 +759,8 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </tr>
 <tr class="row-odd"><td>printer</td>
 <td><div class="first last line-block">
-<div class="line">各クラスの <code class="docutils literal"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
-<div class="line"><code class="docutils literal"><span class="pre">${printer.print(validatedValue)}</span></code> で、オブジェクトをフォーマットするのに利用します。</div>
+<div class="line">各クラスの <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">${printer.print(validatedValue)}</span></code> で、オブジェクトをフォーマットするのに利用します。</div>
 </div>
 </td>
 </tr>
@@ -781,15 +778,15 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <ul class="simple">
 <li>アノテーションによるDIの有効化を行います。</li>
 <li>コンポーネントスキャン対象のパッケージの指定を行います。</li>
-<li><code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
-<li>Springの <code class="docutils literal"><span class="pre">MessageSource</span></code> で、本ライブラリのエラーメッセージ <code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.localization.SuperCsvMessages</span></code> を読み込んでおきます。
+<li><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</li>
+<li>Springの <code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> で、本ライブラリのエラーメッセージ <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SuperCsvMessages</span></code> を読み込んでおきます。
 * 独自のエラーメッセージがあれば、追加で定義します。<ul>
-<li><code class="docutils literal"><span class="pre">com.github.mygreen.supercsv.localization.SpringMessageResolver</span></code> に、<code class="docutils literal"><span class="pre">MessageSource</span></code> を渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SpringMessageResolver</span></code> に、<code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> を渡します。</li>
 </ul>
 </li>
-<li><code class="docutils literal"><span class="pre">CsvBeanValidator</span></code> に、Springの <code class="docutils literal"><span class="pre">LocalValidatorFactoryBean</span></code> で作成したBeanValidationのValidtorのインスタンスを渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> に、Springの <code class="docutils literal notranslate"><span class="pre">LocalValidatorFactoryBean</span></code> で作成したBeanValidationのValidtorのインスタンスを渡します。</li>
 </ul>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -896,7 +893,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
 <p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
 特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1030,18 +1027,18 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <h3>独自のConstraintValidatorの作成<a class="headerlink" href="#constraintvalidator" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Bean Validationの独自のアノテーションを作成する際には、通常の方法と同じです。</p>
 <ul class="simple">
-<li>メタアノテーション <code class="docutils literal"><span class="pre">&#64;Constraint</span></code> を付与します。<ul>
-<li>属性 <code class="docutils literal"><span class="pre">validatedBy</span></code> に、 <code class="docutils literal"><span class="pre">ConsraintValidator</span></code> の実装クラスを指定します。</li>
+<li>メタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Constraint</span></code> を付与します。<ul>
+<li>属性 <code class="docutils literal notranslate"><span class="pre">validatedBy</span></code> に、 <code class="docutils literal notranslate"><span class="pre">ConsraintValidator</span></code> の実装クラスを指定します。</li>
 </ul>
 </li>
-<li>複数指定可能できるように、内部クラス <code class="docutils literal"><span class="pre">List</span></code> を定義しておきます。<ul>
-<li>Bean Validation 1.1の段階では、Java8から追加された <code class="docutils literal"><span class="pre">&#64;Repeatable</span></code> は対応していませんが、
+<li>複数指定可能できるように、内部クラス <code class="docutils literal notranslate"><span class="pre">List</span></code> を定義しておきます。<ul>
+<li>Bean Validation 1.1の段階では、Java8から追加された <code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> は対応していませんが、
 従来の定義方法と揃えておくことで、<em>&#64;Repeatable</em> を使ってJava8のスタイルで使用することができます。</li>
 <li>ただし、今後リリース予定のBeanValidator2.0から <em>&#64;Repeatable</em> 対応するため、定義しておいても問題はありません。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1106,9 +1103,9 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <span class="o">}</span>
 </pre></div>
 </td></tr></table></div>
-<p><code class="docutils literal"><span class="pre">ConstraintValidator</span></code> の実装中で、SpringBeanのインジェクションを行いたい場合は、アノテーション <code class="docutils literal"><span class="pre">&#64;Resource/&#64;Autowired</span></code> など使います。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ConstraintValidator</span></code> の実装中で、SpringBeanのインジェクションを行いたい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Resource/&#64;Autowired</span></code> など使います。</p>
 <p><em>ConstraintValidator</em> 自身は、SpringBeanとして登録する必要はありません。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1172,8 +1169,8 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 </div>
 <div class="section" id="csvbean">
 <h3>CsvBeanの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>CSVのBeanの定義では、<code class="docutils literal"><span class="pre">&#64;CsvBean(validator=CsvBeanValidator.class)</span></code> で、CsvBeanValidatorを指定します。</p>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<p>CSVのBeanの定義では、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validator=CsvBeanValidator.class)</span></code> で、CsvBeanValidatorを指定します。</p>
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1208,13 +1205,13 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 <div class="section" id="id6">
 <h3>値の検証方法<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</li>
-<li><code class="docutils literal"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal"><span class="pre">SpringMessageResolver</span></code> を設定します。<ul>
-<li>さらに、 <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</li>
+<li><code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal notranslate"><span class="pre">SpringMessageResolver</span></code> を設定します。<ul>
+<li>さらに、 <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -1343,9 +1340,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1354,12 +1349,12 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
+        &copy; Copyright 2016-2018, T.TSUCHIE.
+      最終更新: 2018-07-14 09:50:22
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1377,7 +1372,7 @@ Bean Validationのインスタンスを変更する必要があります。</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1',
+            VERSION:'2.2',
             LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1393,19 +1388,13 @@ Bean Validationのインスタンスを変更する必要があります。</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">

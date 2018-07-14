@@ -28,7 +28,7 @@
 <a class="jxr_linenumber" name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;クラスパスのルートにリソース名が{@literal SuperCsvMessages}のプロパティファイルを配置していると自動的に読み込みます。&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="19" href="#19">19</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;デフォルトでは、{@link ResourceBundleMessageResolver#DEFAULT_MESSAGE}に配置されているリソースファイルを読み込みます。&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="20" href="#20">20</a>  <em class="jxr_javadoccomment"> * </em>
-<a class="jxr_linenumber" name="21" href="#21">21</a>  <em class="jxr_javadoccomment"> * @version 2.0</em>
+<a class="jxr_linenumber" name="21" href="#21">21</a>  <em class="jxr_javadoccomment"> * @version 2.2</em>
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="23" href="#23">23</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment"> */</em>
@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="44" href="#44">44</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../com/github/mygreen/supercsv/localization/ResourceBundleMessageResolver.html">ResourceBundleMessageResolver</a>(<strong class="jxr_keyword">final</strong> String baseName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> appendUserResource) {
 <a class="jxr_linenumber" name="45" href="#45">45</a>          ArgUtils.notEmpty(baseName, <span class="jxr_string">"baseName"</span>);
 <a class="jxr_linenumber" name="46" href="#46">46</a>          
-<a class="jxr_linenumber" name="47" href="#47">47</a>          addResourceBundle(ResourceBundle.getBundle(baseName));
+<a class="jxr_linenumber" name="47" href="#47">47</a>          addResourceBundle(ResourceBundle.getBundle(baseName, <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/localization/EncodingControl.html">EncodingControl</a>(<span class="jxr_string">"UTF-8"</span>)));
 <a class="jxr_linenumber" name="48" href="#48">48</a>          
 <a class="jxr_linenumber" name="49" href="#49">49</a>          <em class="jxr_comment">// ユーザ定義のリソースを読み込む</em>
 <a class="jxr_linenumber" name="50" href="#50">50</a>          <strong class="jxr_keyword">if</strong>(appendUserResource) {
@@ -63,7 +63,7 @@
 <a class="jxr_linenumber" name="53" href="#53">53</a>              <strong class="jxr_keyword">if</strong>(index &gt; 0) {
 <a class="jxr_linenumber" name="54" href="#54">54</a>                  <strong class="jxr_keyword">final</strong> String userName = baseName.substring(index+1);
 <a class="jxr_linenumber" name="55" href="#55">55</a>                  <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="56" href="#56">56</a>                      addResourceBundle(ResourceBundle.getBundle(userName));
+<a class="jxr_linenumber" name="56" href="#56">56</a>                      addResourceBundle(ResourceBundle.getBundle(userName, <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/supercsv/localization/EncodingControl.html">EncodingControl</a>(<span class="jxr_string">"UTF-8"</span>)));
 <a class="jxr_linenumber" name="57" href="#57">57</a>                  } <strong class="jxr_keyword">catch</strong>(Throwable e) { }
 <a class="jxr_linenumber" name="58" href="#58">58</a>              }
 <a class="jxr_linenumber" name="59" href="#59">59</a>          }
