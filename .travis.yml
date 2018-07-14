@@ -16,7 +16,7 @@ env:
 script:
   mvn clean verify -Dgpg.skip=true
 #  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
-#  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
+#  mvn install -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 cache:
   directories:
     - $HOME/.m2
