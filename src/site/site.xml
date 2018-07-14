@@ -32,6 +32,7 @@
 			<item name="ライフサイクルイベントの管理" href="sphinx/lifecycle.html" />
 			<item name="Spring Frameworkとの連携" href="sphinx/spring.html" />
 			<item name="システム設定" href="sphinx/configuration.html" />
+			<item name="マイグレーション" href="sphinx/migration.html" />
 			<item name="リリースノート" href="sphinx/release.html" />
 			<item name="JavaDoc" href="apidocs/index.html" />
 			

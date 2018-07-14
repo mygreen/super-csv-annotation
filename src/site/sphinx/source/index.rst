@@ -26,6 +26,7 @@ JavaのCSVファイルのライブラリ「 `Super CSV <http://super-csv.github.
    lifecycle
    spring
    configuration
+   migration
    release
 
 
