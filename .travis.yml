@@ -12,7 +12,8 @@ env:
     global:
         - LANG="ja_JP.UTF-8"
         - LC_ALL="ja_JP.UTF-8"
-#script:
+        - TZ="Asia/Tokyo"
+script:
 #  mvn clean verify -Dgpg.skip=true
   mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 cache:
