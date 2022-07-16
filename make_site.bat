@@ -3,13 +3,12 @@
 %~d0
 cd %~p0
 
-if NOT "%JAVA_HOME_8%" == "" (
-    set JAVA_HOME="%JAVA_HOME_8%"
-)
+call env.bat
+call mvn -version
 
 call mvn clean
 mkdir target
-call mvn site -Dgpg.skip=true > target/site.log 2>&1
+call mvn site -Dgpg.skip=true -Dfile.encoding=UTF-8 > target/site.log 2>&1
 
 start target/site.log
 
