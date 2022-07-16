@@ -256,7 +256,7 @@ html_search_language = 'ja'
 # 'zh' user can custom change `jieba` dictionary path.
 #
 #html_search_options = {'type': 'default'}
-#html_search_options = {'type': 'janome'}
+html_search_options = {'type': 'sphinx.search.ja.JanomeSplitter'}
 
 # The name of a javascript file (relative to the configuration directory) that
 # implements a search results scorer. If empty, the default will be used.
