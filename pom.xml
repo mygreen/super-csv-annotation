@@ -58,7 +58,9 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 	</developers>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<supercsv.version>2.4.0</supercsv.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
@@ -186,22 +188,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>UTF-8</encoding>
-					<!--
-					<failOnError>false</failOnError>
-					 -->
-					<!--
-					<compilerArgs>
-						<arg>-Xlint:unchecked</arg>
-					</compilerArgs>
-					-->
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -505,7 +491,7 @@ $(document).ready(function() {
 			<version>1.2.14</version>
 			<scope>test</scope>
 		</dependency>
-
+		
 	</dependencies>
 	<reporting>
 		<plugins>
