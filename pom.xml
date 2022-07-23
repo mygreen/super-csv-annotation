@@ -58,9 +58,10 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 	</developers>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<supercsv.version>2.4.0</supercsv.version>
-		<slf4j.version>1.7.1</slf4j.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
 
@@ -186,22 +187,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>UTF-8</encoding>
-					<!--
-					<failOnError>false</failOnError>
-					 -->
-					<!--
-					<compilerArgs>
-						<arg>-Xlint:unchecked</arg>
-					</compilerArgs>
-					-->
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -386,11 +371,6 @@ $(document).ready(function() {
 
 		<!-- 式言語 -->
 		<dependency>
-			<groupId>ognl</groupId>
-			<artifactId>ognl</artifactId>
-			<version>3.0.8</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-jexl</artifactId>
 			<version>2.1.1</version>
@@ -476,14 +456,14 @@ $(document).ready(function() {
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.6.1</version>
+			<version>3.6.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -491,21 +471,15 @@ $(document).ready(function() {
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>1.7.36</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.11</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-			<scope>test</scope>
-		</dependency>
-
+		
 	</dependencies>
 	<reporting>
 		<plugins>
