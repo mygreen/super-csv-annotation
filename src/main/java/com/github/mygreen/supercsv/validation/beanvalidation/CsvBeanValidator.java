@@ -1,6 +1,5 @@
 package com.github.mygreen.supercsv.validation.beanvalidation;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,16 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.MessageInterpolator;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.metadata.ConstraintDescriptor;
 
-import org.hibernate.validator.internal.engine.MessageInterpolatorContext;
-import org.hibernate.validator.internal.engine.ValidatorImpl;
-
 import com.github.mygreen.supercsv.builder.ColumnMapping;
+import com.github.mygreen.supercsv.localization.MessageInterpolator;
+import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvBindingErrors;
 import com.github.mygreen.supercsv.validation.CsvFieldError;
 import com.github.mygreen.supercsv.validation.CsvValidator;
@@ -27,7 +24,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
 /**
  * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)にブリッジする{@link CsvValidator}。
  * 
- * @version 2.2
+ * @version 2.3
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -50,54 +47,27 @@ public class CsvBeanValidator implements CsvValidator<Object> {
     
     private final Validator targetValidator;
     
-    private final MessageInterpolator messageInterpolator;
-    
     public CsvBeanValidator(final Validator targetValidator) {
         Objects.requireNonNull(targetValidator);
         this.targetValidator = targetValidator;
-        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);
     }
     
     public CsvBeanValidator() {
         this.targetValidator = createDefaultValidator();
-        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);
     }
     
     /**
      * Bean Validatonのデフォルトのインスタンスを取得する。
-     * @return
+     * @return 
      */
     private Validator createDefaultValidator() {
         final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        
         final Validator validator = validatorFactory.usingContext()
+                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))
                 .getValidator();
         
         return validator;
-    }
-    
-    /**
-     * ValidatorからMessageInterpolartorを取得する。
-     * @param validator
-     * @return {@link ValidatorImpl}出ない場合は、nullを返す。
-     * @throws IllegalStateException 取得に失敗した場合。
-     */
-    private static MessageInterpolator getMessageInterpolatorFromValidator(Validator validator) {
-        
-        if(!(validator instanceof ValidatorImpl)) {
-            return null;
-        }
-        
-        try {
-            Field field = ValidatorImpl.class.getDeclaredField("messageInterpolator");
-            field.setAccessible(true);
-            
-            MessageInterpolator interpolator = (MessageInterpolator)field.get(validator);
-            return interpolator;
-            
-        } catch (IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            throw new IllegalStateException("fail reflect MessageInterpolrator from ValidatorImpl.", e);
-        }
-        
     }
     
     /**
@@ -170,7 +140,7 @@ public class CsvBeanValidator implements CsvValidator<Object> {
                 final Object fieldValue = violation.getInvalidValue();
                 errorVars.computeIfAbsent("validatedValue", key -> fieldValue);
                 
-                String defaultMessage = determineDefaltMessage(errorVars, violation);
+                String defaultMessage = violation.getMessage();
                 
                 bindingErrors.rejectValue(field, columnMapping.getField().getType(), 
                         errorCodes, errorVars, defaultMessage);
@@ -232,36 +202,6 @@ public class CsvBeanValidator implements CsvValidator<Object> {
         }
         
         return vars;
-        
-    }
-    
-    /**
-     * CSVの標準メッセージを取得する。
-     * <p>CSVメッセージ変数で、再度フォーマットを試みる。</p>
-     * 
-     * @param errorVars エラー時の変数
-     * @param violation エラー情報
-     * @return デフォルトメッセージ
-     */
-    protected String determineDefaltMessage(final Map<String, Object> errorVars, ConstraintViolation<Object> violation) {
-        
-        String message = violation.getMessage();
-        if(messageInterpolator == null) {
-            return message;
-            
-        } else if(!(message.contains("{") && message.contains("}"))) {
-            // 変数形式が含まれていない場合は、そのまま返す。
-            return message;
-        }
-        
-        MessageInterpolatorContext context = new MessageInterpolatorContext(
-                violation.getConstraintDescriptor(),
-                violation.getInvalidValue(),
-                violation.getRootBeanClass(),
-                errorVars,
-                Collections.emptyMap());
-        
-        return messageInterpolator.interpolate(violation.getMessageTemplate(), context);
         
     }
     

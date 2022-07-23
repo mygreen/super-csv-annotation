@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * 式言語<a href="http://commons.apache.org/proper/commons-jexl/" target="_blank">JEXL(Java Expression Language)</a>の実装。
  * <p>利用する際には、JEXL2.1のライブラリが必要です。
  *
+ * @version 2.3
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -27,7 +28,9 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
     private final ObjectCache<String, Expression> expressionCache = new ObjectCache<>();
     
     public ExpressionLanguageJEXLImpl() {
-        this(new JexlEngine());
+        JexlEngine engine = new JexlEngine();
+        engine.setSilent(true);
+        this.jexlEngine = engine;
     }
     
     /**
