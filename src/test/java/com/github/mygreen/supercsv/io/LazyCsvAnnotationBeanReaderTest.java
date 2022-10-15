@@ -1,8 +1,8 @@
 package com.github.mygreen.supercsv.io;
 
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
-import static com.github.mygreen.supercsv.tool.TestUtils.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,18 +19,17 @@ import org.supercsv.exception.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 
 import com.github.mygreen.supercsv.builder.BeanMapping;
-import com.github.mygreen.supercsv.builder.BeanMappingFactory;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.LazyBeanMappingFactory;
 import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
 import com.github.mygreen.supercsv.exception.SuperCsvNoMatchColumnSizeException;
-import com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException;
 import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 
 
 /**
  * {@link LazyCsvAnnotationBeanReader}のテスタ
  * 
+ * @version 2.3
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -468,6 +467,78 @@ public class LazyCsvAnnotationBeanReaderTest {
         assertThat(csvReader.getErrorMessages()).hasSize(0);
         
         csvReader.close();
+        
+    }
+    
+    /**
+     * ハンドラ指定で読み込むテスト - 正常データのみ
+     * @since 2.3
+     */
+    @Test
+    public void testRead_withHandler_normal() throws IOException {
+        
+        File file = new File("src/test/data/test_read_lazy.csv");
+        
+        LazyCsvAnnotationBeanReader<SampleLazyBean> csvReader = new LazyCsvAnnotationBeanReader<>(
+                SampleLazyBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleLazyBean> list = new ArrayList<>();
+        
+        // read header
+        final String[] csvHeaders = csvReader.init();
+        assertThat(csvHeaders).hasSize(4);
+        
+        while(csvReader.read(
+                record -> {
+                    list.add(record);
+                    assertBean(record);
+                },
+                error -> fail(error.getMessage())) != CsvReadStatus.EOF) {
+            
+        }
+        
+        assertThat(list).hasSize(2);
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * Streamで読み込むテスト - 正常時
+     * @since 2.3
+     */
+    @Test
+    public void testLines_normal() throws IOException {
+        
+        File file = new File("src/test/data/test_read_lazy.csv");
+        
+        LazyCsvAnnotationBeanReader<SampleLazyBean> csvReader = new LazyCsvAnnotationBeanReader<>(
+                SampleLazyBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleLazyBean> list = new ArrayList<>();
+        
+        // read header
+        final String[] csvHeaders = csvReader.init();
+        assertThat(csvHeaders).hasSize(4);
+        
+        csvReader.lines().forEach(record -> {
+            list.add(record);
+            assertBean(record);
+        });
+        
+        assertThat(list).hasSize(2);
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        // 順番の確認
+        assertThat(list.get(0)).hasFieldOrPropertyWithValue("no", 1);
+        assertThat(list.get(1)).hasFieldOrPropertyWithValue("no", 2);
         
     }
     

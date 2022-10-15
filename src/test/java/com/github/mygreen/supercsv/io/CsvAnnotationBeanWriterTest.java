@@ -1,8 +1,8 @@
 package com.github.mygreen.supercsv.io;
 
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -26,7 +26,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link CsvAnnotationBeanReader}のテスタ
  *
- * @version 2.1
+ * @version 2.3
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -478,6 +478,88 @@ public class CsvAnnotationBeanWriterTest {
         assertThat(csvWriter.getErrorMessages()).hasSize(0);
         
         csvWriter.close();
+    }
+    
+    /**
+     * ハンドラ指定で書き込むテスト - 正常処理
+     * @since 2.3
+     */
+    @Test
+    public void testWrite_withHandler_normal() throws IOException {
+        
+        // テストデータの作成
+        final List<SampleNormalBean> list = createNormalData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        CsvAnnotationBeanWriter<SampleNormalBean> csvWriter = new CsvAnnotationBeanWriter<>(
+                SampleNormalBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.WriteGroup.class);
+        
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleNormalBean item : list) {
+            csvWriter.write(item, error -> fail(error.getMessage()));
+            csvWriter.flush();
+        }
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_normal.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+        
+    }
+    
+    /**
+     * ハンドラ指定で書き込むテスト - エラーがある場合
+     * @since 2.3
+     */
+    @Test
+    public void testWrite_withHandler_error_column() throws IOException {
+        
+        // テストデータの作成
+        final List<SampleNormalBean> list = createNormalData();
+        
+        // データ1
+        final SampleNormalBean bean1 = list.get(0);
+        bean1.setNumber1(1_000_000);   // 最大値を超える
+        bean1.setString1(null); // 必須
+        
+        StringWriter strWriter = new StringWriter();
+        
+        CsvAnnotationBeanWriter<SampleNormalBean> csvWriter = new CsvAnnotationBeanWriter<>(
+                SampleNormalBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.WriteGroup.class);
+        
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleNormalBean item : list) {
+            csvWriter.write(item, error -> {
+                assertThat(error).isInstanceOf(SuperCsvBindingException.class);
+            });
+            csvWriter.flush();
+        }
+        
+        // convert error messages.
+        List<String> messages = csvWriter.getErrorMessages();
+        assertThat(messages).hasSize(2)
+            .contains("[2行, 2列] : 項目「数字1」の値（1,000,000）は、999,999以下の値でなければなりません。"
+                    , "[2行, 4列] : 項目「string1」の値は必須です。");
+        messages.forEach(System.out::println);
+        
+        csvWriter.close();
+        
     }
     
     /**

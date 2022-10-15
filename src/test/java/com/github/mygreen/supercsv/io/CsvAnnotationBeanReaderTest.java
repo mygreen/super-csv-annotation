@@ -1,8 +1,8 @@
 package com.github.mygreen.supercsv.io;
 
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +30,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link CsvAnnotationBeanReader}のテスタ。
  *
- * @version 2.1
+ * @version 2.3
  * @since 1.2
  * @author T.TSUCHIE
  *
@@ -566,6 +566,124 @@ public class CsvAnnotationBeanReaderTest {
         
         csvReader.close();
         
+    }
+    
+    /**
+     * ハンドラ指定で読み込むテスト - 正常データのみ
+     * @since 2.3
+     */
+    @Test
+    public void testRead_withHandler_normal() throws IOException {
+        
+        File file = new File("src/test/data/test_read_normal.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleNormalBean> list = new ArrayList<>();
+        
+        String[] headers = csvReader.getHeader(true);
+        assertThat(headers).hasSize(11);
+        
+        while(csvReader.read(
+                record -> {
+                    list.add(record);
+                    assertBean(record);
+                },
+                error -> fail(error.getMessage())) != CsvReadStatus.EOF) {
+            
+        }
+        
+        assertThat(list).hasSize(2);
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * ハンドラ指定で読み込むテスト - エラーがある場合
+     * @since 2.3
+     */
+    @Test
+    public void testRead_withHandler_error_column() throws IOException {
+        
+        File file = new File("src/test/data/test_read_error_wrong_pattern.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleNormalBean> list = new ArrayList<>();
+        
+        String[] headers = csvReader.getHeader(true);
+        assertThat(headers).hasSize(11);
+        
+        while(csvReader.read(
+                record -> {
+                    list.add(record);
+                    assertBean(record);
+                },
+                error -> {
+                    assertThat(error).isInstanceOf(SuperCsvBindingException.class);
+                }
+                ) != CsvReadStatus.EOF) {
+            
+        }
+        
+        assertThat(list).hasSize(1);
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。");
+        messages.forEach(System.out::println);
+        
+        csvReader.close();
+        
+    }
+    
+    /**
+     * Streamで読み込むテスト - 正常時
+     * @since 2.3
+     */
+    @Test
+    public void testLines_normal() throws IOException {
+        
+        File file = new File("src/test/data/test_read_normal.csv");
+        
+        CsvAnnotationBeanReader<SampleNormalBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleNormalBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleNormalBean> list = new ArrayList<>();
+        
+        String[] headers = csvReader.getHeader(true);
+        assertThat(headers).hasSize(11);
+        
+        csvReader.lines().forEach(record -> {
+            list.add(record);
+            assertBean(record);
+        });
+        
+        assertThat(list).hasSize(2);
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        // 順番の確認
+        assertThat(list.get(0)).hasFieldOrPropertyWithValue("id", 1);
+        assertThat(list.get(1)).hasFieldOrPropertyWithValue("id", 2);
+        
+        csvReader.close();
     }
     
     private void assertBean(final SampleNormalBean bean) {

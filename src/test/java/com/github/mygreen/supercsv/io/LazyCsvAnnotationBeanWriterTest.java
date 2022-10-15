@@ -1,17 +1,12 @@
 package com.github.mygreen.supercsv.io;
 
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +24,7 @@ import com.github.mygreen.supercsv.validation.CsvExceptionConverter;
 /**
  * {@link LazyCsvAnnotationBeanWriter}のテスタ
  *
+ * @version 2.3
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -661,6 +657,44 @@ public class LazyCsvAnnotationBeanWriterTest {
         System.out.println(actual);
         
         String expected = getTextFromFile("src/test/data/test_write_lazy_fixedColumn_noSetHeader.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+        
+    }
+    
+    /**
+     * 全て書き出す - 初期化は自動的に行う。
+     */
+    @Test
+    public void testWrite_withHandler_normal() throws Exception {
+        
+        // テストデータの作成
+        final List<SampleLazyBean> list = createNormalData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        LazyCsvAnnotationBeanWriter<SampleLazyBean> csvWriter = new LazyCsvAnnotationBeanWriter<>(
+                SampleLazyBean.class,
+                strWriter,
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        
+        csvWriter.init("no", "name", "生年月日", "備考");
+        csvWriter.writeHeader();
+        csvWriter.flush();
+        
+        for(SampleLazyBean item : list) {
+            csvWriter.write(item, error -> fail(error.getMessage()));
+            csvWriter.flush();
+        }
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_lazy_setHeader.csv", Charset.forName("UTF-8"));
         assertThat(actual).isEqualTo(expected);
         
         assertThat(csvWriter.getErrorMessages()).hasSize(0);
