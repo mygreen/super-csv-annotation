@@ -39,6 +39,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
  * @param <T> マッピング対象のBeanのクラスタイプ
  *
  * @see CsvBeanReader
+ * @version 2.3
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -141,6 +142,34 @@ public abstract class AbstractCsvAnnotationBeanReader<T> extends AbstractCsvRead
         
         return null; // EOF
         
+        
+    }
+    
+    /**
+     * 成功時、例外発生時の処理を指定して、1レコード分を読み込みます。
+     * 
+     * @since 2.3
+     * @param successHandler 読み込み成功時の処理の実装。
+     * @param errorHandler CSVに関する例外発生時の処理の実装。
+     * @return CSVの読み込み処理ステータスを返します。
+     * @throws IOException 致命的なレコードの読み込みに失敗した場合にスローされます。
+     */
+    public CsvReadStatus read(final CsvSuccessHandler<T> successHandler, final CsvErrorHandler errorHandler) throws IOException {
+        
+        try {
+            final T bean = read();
+            if(bean != null) {
+                successHandler.onSuccess(bean);
+                return CsvReadStatus.SUCCESS;
+            } else {
+                return CsvReadStatus.EOF;
+            }
+        
+        } catch(SuperCsvException e) {
+            errorHandler.onError(e);
+            return CsvReadStatus.ERROR;
+            
+        }
         
     }
     
