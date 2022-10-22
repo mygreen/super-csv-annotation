@@ -220,9 +220,9 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 					<additionalparam>--allow-script-in-comments</additionalparam>
 					<header>${project.name} ${project.version}
 <![CDATA[
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
@@ -503,9 +503,9 @@ $(document).ready(function() {
 					<additionalparam>--allow-script-in-comments</additionalparam>
 					<header>${project.name} ${project.version}
  <![CDATA[
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
