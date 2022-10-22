@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.2</version>
+	<version>2.3</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description><![CDATA[
