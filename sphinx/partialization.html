@@ -1,72 +1,42 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. 部分的なカラムの読み書き &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>7. 部分的なカラムの読み書き &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="next" title="8. 固定長のカラムの読み書き" href="fixedsizecolumn.html" />
     <link rel="prev" title="6. アノテーションの合成" href="composition.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,12 +44,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -89,12 +54,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -272,324 +232,183 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>7. 部分的なカラムの読み書き</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">7. </span>部分的なカラムの読み書き</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/partialization.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="id1">
-<h1>7. 部分的なカラムの読み書き<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">7. </span>部分的なカラムの読み書き<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <p>Beanに定義しているカラムのみ処理する方法を説明します。</p>
 <div class="section" id="id2">
-<h2>7.1. 部分的なカラムの読み込み<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">7.1. </span>部分的なカラムの読み込み<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>CSVファイルで一部のカラムを読み込みたい場合は、フィールドの定義を単純に行わなければマッピングできます。</p>
 <ul class="simple">
-<li>最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvPartial(columnSize=&lt;カラムサイズ&gt;)</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html">JavaDoc</a> ] で、実際のカラムサイズを指定します。</li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validateHeader=false)</span></code> に設定し、ヘッダー行の検証をスキップするようにしてください。<ul>
-<li>値を <em>true</em> にして、ヘッダー行の検証を行うと、定義していない見出しがあり、値が一致しないためエラーとなります。</li>
+<li><p>最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvPartial(columnSize=&lt;カラムサイズ&gt;)</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html">JavaDoc</a> ] で、実際のカラムサイズを指定します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validateHeader=false)</span></code> に設定し、ヘッダー行の検証をスキップするようにしてください。</p>
+<ul>
+<li><p>値を <em>true</em> にして、ヘッダー行の検証を行うと、定義していない見出しがあり、値が一致しないためエラーとなります。</p></li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="o">;</span>
-
-
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> <span class="n">validateHeader</span><span class="o">=</span><span class="kc">false</span><span class="o">)</span> <span class="c1">// ヘッダー行がある場合は、検証をスキップします。</span>
-<span class="nd">@CsvPartial</span><span class="o">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="o">)</span>   <span class="c1">// 実際のCSVファイルのカラムサイズを指定します。</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号3は読み込まない場合は、定義を行いません。</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号5を読み込まない場合は、定義を行いません。</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">validateHeader</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span> <span class="c1">// ヘッダー行がある場合は、検証をスキップします。</span>
+<span class="linenos"> 7</span><span class="nd">@CsvPartial</span><span class="p">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>   <span class="c1">// 実際のCSVファイルのカラムサイズを指定します。</span>
+<span class="linenos"> 8</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="c1">// カラム番号3は読み込まない場合は、定義を行いません。</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="p">)</span>
+<span class="linenos">19</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>    <span class="c1">// カラム番号5を読み込まない場合は、定義を行いません。</span>
+<span class="linenos">22</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validateHeader=true)</span></code> にして、ヘッダー行の検証を行いたい場合は、定義していないカラムの見出しの定義が必要となるため、
 <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(headers={})</span></code> でカラムの見出しの定義を行います。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="o">;</span>
-
-
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> <span class="n">validateHeader</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span> <span class="c1">// ヘッダー行の検証を行う</span>
-<span class="nd">@CsvPartial</span><span class="o">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">headers</span><span class="o">={</span>          <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="o">)</span>
-<span class="o">})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号3を読み込まない場合は、定義を行いません。</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号5を読み込まない場合は、定義を行いません。</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">validateHeader</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span> <span class="c1">// ヘッダー行の検証を行う</span>
+<span class="linenos"> 7</span><span class="nd">@CsvPartial</span><span class="p">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span>          <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
+<span class="linenos"> 8</span>    <span class="nd">@CsvPartial.Header</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="p">),</span>
+<span class="linenos"> 9</span>    <span class="nd">@CsvPartial.Header</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="p">})</span>
+<span class="linenos">11</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>    <span class="c1">// カラム番号3を読み込まない場合は、定義を行いません。</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="p">)</span>
+<span class="linenos">22</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>    <span class="c1">// カラム番号5を読み込まない場合は、定義を行いません。</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>7.2. 部分的なカラムの書き込み<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">7.2. </span>部分的なカラムの書き込み<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>部分的なカラムの書き込みも、読み込み時と同様に行います。
 定義していないカラムの値は、空として出力されます。</p>
 <ul class="simple">
-<li>最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvPartial(columnSize=&lt;カラムサイズ&gt;)</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html">JavaDoc</a> ]で、実際のカラムサイズを指定します。</li>
-<li>ヘッダー行を書き込む場合、定義されていないカラムの見出しは、 <code class="docutils literal notranslate"><span class="pre">column&lt;カラム番号&gt;</span></code> の形式となります。<ul>
-<li>定義していないカラムの見出しの値を指定したい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(headers={})</span></code> で設定します。</li>
+<li><p>最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvPartial(columnSize=&lt;カラムサイズ&gt;)</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html">JavaDoc</a> ]で、実際のカラムサイズを指定します。</p></li>
+<li><p>ヘッダー行を書き込む場合、定義されていないカラムの見出しは、 <code class="docutils literal notranslate"><span class="pre">column&lt;カラム番号&gt;</span></code> の形式となります。</p>
+<ul>
+<li><p>定義していないカラムの見出しの値を指定したい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(headers={})</span></code> で設定します。</p></li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="o">;</span>
-
-
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
-<span class="nd">@CsvPartial</span><span class="o">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">headers</span><span class="o">={</span>   <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="o">),</span>
-    <span class="nd">@CsvPartial.Header</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="o">)</span>
-<span class="o">})</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号3を書き込みまない場合は、定義を行いません。</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
-
-    <span class="c1">// カラム番号5を書き込みまない場合は、定義を行いません。</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPartial</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="nd">@CsvPartial</span><span class="p">(</span><span class="n">columnSize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span>   <span class="c1">// 定義されていないカラムの見出しを定義します。</span>
+<span class="linenos"> 8</span>    <span class="nd">@CsvPartial.Header</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;電話番号&quot;</span><span class="p">),</span>
+<span class="linenos"> 9</span>    <span class="nd">@CsvPartial.Header</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="p">})</span>
+<span class="linenos">11</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>    <span class="c1">// カラム番号3を書き込みまない場合は、定義を行いません。</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="p">)</span>
+<span class="linenos">22</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>    <span class="c1">// カラム番号5を書き込みまない場合は、定義を行いません。</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="fixedsizecolumn.html" class="btn btn-neutral float-right" title="8. 固定長のカラムの読み書き" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="composition.html" class="btn btn-neutral" title="6. アノテーションの合成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="composition.html" class="btn btn-neutral float-left" title="6. アノテーションの合成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fixedsizecolumn.html" class="btn btn-neutral float-right" title="8. 固定長のカラムの読み書き" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });

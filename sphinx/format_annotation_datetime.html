@@ -1,70 +1,40 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@CsvDateTimeFormat &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>@CsvDateTimeFormat &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,12 +42,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -87,12 +52,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -270,333 +230,222 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>&#64;CsvDateTimeFormat</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/format_annotation_datetime.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="csvdatetimeformat">
-<h1>&#64;CsvDateTimeFormat<a class="headerlink" href="#csvdatetimeformat" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>&#64;CsvDateTimeFormat<a class="headerlink" href="#csvdatetimeformat" title="Permalink to this heading"></a></h1>
 <p>日時型に対する書式を指定する際に利用するアノテーションです。</p>
 <p>アノテーションを付与しないときや属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> を指定しないときは、クラスタイプごとに決まった標準の書式が適用されます。
 対応するJavaのクラスタイプと標準の書式は以下の通りです。</p>
-<table border="1" class="colwidths-given docutils" id="id4">
-<caption><span class="caption-text">対応する日時のクラスタイプと標準の書式</span><a class="headerlink" href="#id4" title="このテーブルへのパーマリンク">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id4">
+<caption><span class="caption-text">対応する日時のクラスタイプと標準の書式</span><a class="headerlink" href="#id4" title="このテーブルへのパーマリンク"></a></caption>
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">クラスタイプ</th>
-<th class="head">標準の書式</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>クラスタイプ</p></th>
+<th class="head"><p>標準の書式</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.util.Date</span></code></td>
-<td><em>yyyy-MM-dd HH:mm:ss</em></td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">java.util.Date</span></code></p></td>
+<td><p><em>yyyy-MM-dd HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.util.Calendar</span></code></td>
-<td><em>yyyy-MM-dd HH:mm:ss</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">java.util.Calendar</span></code></p></td>
+<td><p><em>yyyy-MM-dd HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Date</span></code></td>
-<td><em>yyyy-MM-dd</em></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">java.sql.Date</span></code></p></td>
+<td><p><em>yyyy-MM-dd</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Time</span></code></td>
-<td><em>HH:mm:ss</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">java.sql.Time</span></code></p></td>
+<td><p><em>HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.sql.Timestamp</span></code></td>
-<td><em>yyyy-MM-dd HH:mm:ss.SSS</em></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">java.sql.Timestamp</span></code></p></td>
+<td><p><em>yyyy-MM-dd HH:mm:ss.SSS</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.time.LocalDateTime</span></code></td>
-<td><em>uuuu-MM-dd HH:mm:ss</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">java.time.LocalDateTime</span></code></p></td>
+<td><p><em>uuuu-MM-dd HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">java.time.LocalDate</span></code></td>
-<td><em>uuuu-MM-dd</em></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">java.time.LocalDate</span></code></p></td>
+<td><p><em>uuuu-MM-dd</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">java.time.ZonedDateTime</span></code></td>
-<td><em>uuuu-MM-dd HH:mm:ssxxx'['VV']'</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">java.time.ZonedDateTime</span></code></p></td>
+<td><p><em>uuuu-MM-dd HH:mm:ssxxx'['VV']'</em></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDateTime</span></code></td>
-<td><em>yyyy-MM-dd HH:mm:ss</em></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDateTime</span></code></p></td>
+<td><p><em>yyyy-MM-dd HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDate</span></code></td>
-<td><em>yyyy-MM-dd</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalDate</span></code></p></td>
+<td><p><em>yyyy-MM-dd</em></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalTime</span></code></td>
-<td><em>HH:mm:ss</em></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">org.joda.time.LocalTime</span></code></p></td>
+<td><p><em>HH:mm:ss</em></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">org.joda.time.DateTime</span></code></td>
-<td><em>yyyy-MM-dd HH:mm:ssZZ</em></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">org.joda.time.DateTime</span></code></p></td>
+<td><p><em>yyyy-MM-dd HH:mm:ssZZ</em></p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="id1">
-<h2>読み込み/書き込み時の書式を指定したい場合<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>読み込み/書き込み時の書式を指定したい場合<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li>属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> で書式を指定します。<ul>
-<li>省略した場合、クラスタイプごとの標準の書式が適用されます。</li>
-<li>java.util.Date/java.util.Calendar/java.sql.XXXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/text/SimpleDateFormat.html">java.text.SimpleDateFormat</a> で解釈可能な書式を設定します。</li>
-<li>java.time.XXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html">java.time.format.DateTimeFormatter</a> で解釈可能な書式を設定します。</li>
-<li>org.joda.time.XXX系のクラスの場合は、 <a class="reference external" href="http://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html">org.joda.time.format.DateTimeFormat</a> で解釈可能な書式を設定します。</li>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> で書式を指定します。</p>
+<ul>
+<li><p>省略した場合、クラスタイプごとの標準の書式が適用されます。</p></li>
+<li><p>java.util.Date/java.util.Calendar/java.sql.XXXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/text/SimpleDateFormat.html">java.text.SimpleDateFormat</a> で解釈可能な書式を設定します。</p></li>
+<li><p>java.time.XXX系のクラスの場合、 <a class="reference external" href="https://docs.oracle.com/javase/jp/8/docs/api/java/time/format/DateTimeFormatter.html">java.time.format.DateTimeFormatter</a> で解釈可能な書式を設定します。</p></li>
+<li><p>org.joda.time.XXX系のクラスの場合は、 <a class="reference external" href="http://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html">org.joda.time.format.DateTimeFormat</a> で解釈可能な書式を設定します。</p></li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal notranslate"><span class="pre">locale</span></code> でロケールを指定します。<ul>
-<li>言語コードのみを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja</span></code> の2桁で指定します。</li>
-<li>言語コードと国コードを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja_JP</span></code> のようにアンダーバーで区切り指定します。</li>
-<li>和暦を扱う時など、バリアントを指定する場合も同様に、 <code class="docutils literal notranslate"><span class="pre">ja_JP_JP</span></code> のようにさらにアンダーバーで区切り指定します。</li>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">locale</span></code> でロケールを指定します。</p>
+<ul>
+<li><p>言語コードのみを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja</span></code> の2桁で指定します。</p></li>
+<li><p>言語コードと国コードを指定する場合、 <code class="docutils literal notranslate"><span class="pre">ja_JP</span></code> のようにアンダーバーで区切り指定します。</p></li>
+<li><p>和暦を扱う時など、バリアントを指定する場合も同様に、 <code class="docutils literal notranslate"><span class="pre">ja_JP_JP</span></code> のようにさらにアンダーバーで区切り指定します。</p></li>
 </ul>
 </li>
-<li>属性 <code class="docutils literal notranslate"><span class="pre">timezone</span></code> でタイムゾーンを指定します。<ul>
-<li>Asia/Tokyo, GMT, GMT+09:00などの値を指定します。</li>
-<li>ただし、オフセットを持たないクラスタイプ「LocalDateTime, LocalDate, LocalTime」の時は、指定しても意味がありません。</li>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">timezone</span></code> でタイムゾーンを指定します。</p>
+<ul>
+<li><p>Asia/Tokyo, GMT, GMT+09:00などの値を指定します。</p></li>
+<li><p>ただし、オフセットを持たないクラスタイプ「LocalDateTime, LocalDate, LocalTime」の時は、指定しても意味がありません。</p></li>
 </ul>
 </li>
-<li>書式に合わない値をパースした場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> が発生します。</li>
+<li><p>書式に合わない値をパースした場合、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvValidationException</span></code> が発生します。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="c1">// 和暦を扱う場合</span>
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="nd">@CsvDateTimeFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;GGGGyy年MM月dd日&quot;</span><span class="o">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;ja_JP_JP&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Date</span> <span class="n">japaneseDate</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;更新日時&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvDateTimeFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu/MM/dd HH:mm:ss&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">LocalDateTime</span> <span class="n">updateTime</span><span class="o">;</span>
-
-    <span class="c1">// setter/getterは省略</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.util.Date</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="nd">@CsvBean</span>
+<span class="linenos"> 9</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="c1">// 和暦を扱う場合</span>
+<span class="linenos">12</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">13</span>    <span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;GGGGyy年MM月dd日&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;ja_JP_JP&quot;</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="kd">private</span> <span class="n">Date</span> <span class="n">japaneseDate</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;更新日時&quot;</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu/MM/dd HH:mm:ss&quot;</span><span class="p">)</span>
+<span class="linenos">18</span>    <span class="kd">private</span> <span class="n">LocalDateTime</span> <span class="n">updateTime</span><span class="p">;</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="c1">// setter/getterは省略</span>
+<span class="linenos">21</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id2">
-<h2>読み込み時に曖昧に解析したい場合<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>読み込み時に曖昧に解析したい場合<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>曖昧なケースでも読み込めるようにしたいときは、属性 <code class="docutils literal notranslate"><span class="pre">lenient</span></code> の値をtrueにします。</p>
 <p>例えば、 <em>2016-02-31</em> と存在しない日を解析する場合、 <em>2016-03-02</em> と補正が行われます。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.time.LocalDate</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;誕生日&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvDateTimeFormat</span><span class="o">(</span><span class="n">lenient</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="o">;</span>
-
-    <span class="c1">// setter/getterは省略</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.time.LocalDate</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="nd">@CsvBean</span>
+<span class="linenos"> 8</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;誕生日&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">lenient</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="c1">// setter/getterは省略</span>
+<span class="linenos">15</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>読み込み時の値のパースに失敗した際のメッセージ<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 <code class="docutils literal notranslate"><span class="pre">message</span></code> で指定することができます。</p>
 <p>メッセージ中は、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> による式言語を使うことができ、
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
 詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のメッセージ</span></a> を参照してください。</p>
 <p>メッセージ中で利用可能な変数は、<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/format/CsvDateTimeFormat.html">JavaDoc</a> を参照してください。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.time.LocalDate</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;誕生日&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvDateTimeFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu/M/d&quot;</span><span class="o">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、日付の書式「{pattern}」として不正です。&quot;</span>
-    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="o">;</span>
-
-    <span class="c1">// setter/getterは省略</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.time.LocalDate</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="nd">@CsvBean</span>
+<span class="linenos"> 8</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;誕生日&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu/M/d&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、日付の書式「{pattern}」として不正です。&quot;</span>
+<span class="linenos">12</span>    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="c1">// setter/getterは省略</span>
+<span class="linenos">15</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });

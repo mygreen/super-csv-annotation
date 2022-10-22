@@ -1,70 +1,40 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>独自の変換処理の作成方法 &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>独自の変換処理の作成方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,12 +42,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -87,12 +52,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -270,411 +230,247 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>独自の変換処理の作成方法</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/conversion_custom.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="id1">
-<h1>独自の変換処理の作成方法<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>独自の変換処理の作成方法<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <p>独自の変換処理を実装するには、3つのステップを踏む必要があります。</p>
 <ol class="arabic simple">
-<li>CellProcessorの実装クラスの作成</li>
-<li>アノテーションクラスの作成</li>
-<li>CellProcessorを作成するためのファクトリクラスの作成</li>
+<li><p>CellProcessorの実装クラスの作成</p></li>
+<li><p>アノテーションクラスの作成</p></li>
+<li><p>CellProcessorを作成するためのファクトリクラスの作成</p></li>
 </ol>
 <p>以下、それぞれに対して解説していきます。</p>
 <div class="section" id="cellprocessor">
-<h2>CellProcessorの実装クラスの作成<a class="headerlink" href="#cellprocessor" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>CellProcessorの実装クラスの作成<a class="headerlink" href="#cellprocessor" title="Permalink to this heading"></a></h2>
 <p>サンプルとして、任意の文字列を追加するCellProcessorを作成します。</p>
 <ul class="simple">
-<li>抽象クラス <code class="docutils literal notranslate"><span class="pre">CellProcessorAdaptor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html">JavaDoc</a> ] を継承します。</li>
+<li><p>抽象クラス <code class="docutils literal notranslate"><span class="pre">CellProcessorAdaptor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/CellProcessorAdaptor.html">JavaDoc</a> ] を継承します。</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。</li>
+<li><p>CellProcessorは、「Chain of Responsibility」パターンであるため、その構造を表現するためのクラスとなります。</p></li>
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li>インタフェースとして <code class="docutils literal notranslate"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。<ul>
-<li>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
-CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。</li>
-<li>変換処理は、必ず文字列に対して行うため実装しておきます。</li>
+<li><p>インタフェースとして <code class="docutils literal notranslate"><span class="pre">StringCellProcessor</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/cellprocessor/ift/StringCellProcessor.html">JavaDoc</a> ] を実装します。</p>
+<ul>
+<li><p>この実装は特に必要ないですが、扱うカラムの値の種類を表現するめのものです。
+CellProcessorを直接組み立てる時に、これらのインタフェースでchainとして追加する次のCellProcessorを限定するために使用します。</p></li>
+<li><p>変換処理は、必ず文字列に対して行うため実装しておきます。</p></li>
 </ul>
 </li>
-<li>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</li>
-<li>メソッド <code class="docutils literal notranslate"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。<ul>
-<li>nullの場合、次の処理に委譲するようにします。
+<li><p>コンストラクタとして、chainの次の処理となるCellProcessorを引数に持つものと、持たないものを必ず2つ実装します。</p></li>
+<li><p>メソッド <code class="docutils literal notranslate"><span class="pre">execute(...)</span></code> 内で処理の実装を行います。</p>
+<ul>
+<li><p>nullの場合、次の処理に委譲するようにします。
 Super CSVの既存のCellProcessorではメソッドvalidateInputNotNull(...)を呼びnullチェックを行いますが、
-本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</li>
-<li>変換した値を次の処理に渡します。</li>
+本ライブラリではnullに対する処理は他のCellProcessorで行うため、次の処理に渡します。</p></li>
+<li><p>変換した値を次の処理に渡します。</p></li>
 </ul>
 </li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.CellProcessorAdaptor</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.ift.CellProcessor</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.ift.StringCellProcessor</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.util.CsvContext</span><span class="o">;</span>
-
-<span class="c1">// 独自の変換用のCellProcessor</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomConversion</span> <span class="kd">extends</span> <span class="n">CellProcessorAdaptor</span> <span class="kd">implements</span> <span class="n">StringCellProcessor</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">text</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">CustomConversion</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">();</span>
-        <span class="n">checkPreconditions</span><span class="o">(</span><span class="n">text</span><span class="o">);</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="nf">CustomConversion</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="o">,</span> <span class="kd">final</span> <span class="n">CellProcessor</span> <span class="n">next</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">(</span><span class="n">next</span><span class="o">);</span>
-        <span class="n">checkPreconditions</span><span class="o">(</span><span class="n">text</span><span class="o">);</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="c1">// コンストラクタで渡した独自の引数のチェック処理</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPreconditions</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">text</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">(</span><span class="s">&quot;text should not be null.&quot;</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">execute</span><span class="o">(</span><span class="kd">final</span> <span class="n">Object</span> <span class="n">value</span><span class="o">,</span> <span class="kd">final</span> <span class="n">CsvContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// nullの場合、次の処理に委譲します。</span>
-            <span class="k">return</span> <span class="n">next</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">context</span><span class="o">);</span>
-        <span class="o">}</span>
-
-        <span class="c1">// 最後尾に文字列を足す</span>
-        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="n">text</span><span class="o">;</span>
-
-        <span class="c1">// 変換した値を次の処理に委譲します。</span>
-        <span class="k">return</span> <span class="n">next</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">context</span><span class="o">);</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.CellProcessorAdaptor</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.ift.CellProcessor</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">org.supercsv.cellprocessor.ift.StringCellProcessor</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">org.supercsv.util.CsvContext</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c1">// 独自の変換用のCellProcessor</span>
+<span class="linenos"> 7</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomConversion</span> <span class="kd">extends</span> <span class="n">CellProcessorAdaptor</span> <span class="kd">implements</span> <span class="n">StringCellProcessor</span> <span class="p">{</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">text</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="kd">public</span> <span class="nf">CustomConversion</span><span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">12</span>        <span class="kd">super</span><span class="p">();</span>
+<span class="linenos">13</span>        <span class="n">checkPreconditions</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<span class="linenos">14</span>        <span class="k">this</span><span class="p">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="p">}</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="kd">public</span> <span class="nf">CustomConversion</span><span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="p">,</span> <span class="kd">final</span> <span class="n">CellProcessor</span> <span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">18</span>        <span class="kd">super</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
+<span class="linenos">19</span>        <span class="n">checkPreconditions</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<span class="linenos">20</span>        <span class="k">this</span><span class="p">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">;</span>
+<span class="linenos">21</span>    <span class="p">}</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="c1">// コンストラクタで渡した独自の引数のチェック処理</span>
+<span class="linenos">24</span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkPreconditions</span><span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">text</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">25</span>        <span class="k">if</span><span class="p">(</span><span class="n">text</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">26</span>            <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="p">(</span><span class="s">&quot;text should not be null.&quot;</span><span class="p">);</span>
+<span class="linenos">27</span>        <span class="p">}</span>
+<span class="linenos">28</span>    <span class="p">}</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>    <span class="nd">@Override</span>
+<span class="linenos">31</span>    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">execute</span><span class="p">(</span><span class="kd">final</span> <span class="n">Object</span> <span class="n">value</span><span class="p">,</span> <span class="kd">final</span> <span class="n">CsvContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">32</span>        <span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">33</span>            <span class="c1">// nullの場合、次の処理に委譲します。</span>
+<span class="linenos">34</span>            <span class="k">return</span> <span class="n">next</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
+<span class="linenos">35</span>        <span class="p">}</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>        <span class="c1">// 最後尾に文字列を足す</span>
+<span class="linenos">38</span>        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span> <span class="o">+</span> <span class="n">text</span><span class="p">;</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>        <span class="c1">// 変換した値を次の処理に委譲します。</span>
+<span class="linenos">41</span>        <span class="k">return</span> <span class="n">next</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">context</span><span class="p">);</span>
+<span class="linenos">42</span>    <span class="p">}</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>変換処理用のアノテーションクラスの作成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>変換処理用のアノテーションクラスの作成<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
-<li>通常はFieldのみで問題ないですが、 <a class="reference internal" href="composition.html"><span class="doc">アノテーションを合成</span></a> するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。</p>
+<ul>
+<li><p>通常はFieldのみで問題ないですが、 <a class="reference internal" href="composition.html"><span class="doc">アノテーションを合成</span></a> するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
-<li>内部クラスのアノテーションとして、 <em>List</em> を定義します。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。</p>
+<ul>
+<li><p>内部クラスのアノテーションとして、 <em>List</em> を定義します。</p></li>
 </ul>
 </li>
-<li>変換用のアノテーションと示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvConversion</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html">JavaDoc</a> ]を指定します。</li>
-<li>共通の属性として、 <code class="docutils literal notranslate"><span class="pre">cases</span></code> と <code class="docutils literal notranslate"><span class="pre">groups</span></code> 、 <code class="docutils literal notranslate"><span class="pre">order</span></code> を定義します。</li>
-<li>固有の属性 として、<code class="docutils literal notranslate"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</li>
+<li><p>変換用のアノテーションと示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvConversion</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvConversion.html">JavaDoc</a> ]を指定します。</p></li>
+<li><p>共通の属性として、 <code class="docutils literal notranslate"><span class="pre">cases</span></code> と <code class="docutils literal notranslate"><span class="pre">groups</span></code> 、 <code class="docutils literal notranslate"><span class="pre">order</span></code> を定義します。</p></li>
+<li><p>固有の属性 として、<code class="docutils literal notranslate"><span class="pre">text</span></code> を定義します。これはCellProcessorに渡す値となります。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.CsvConversion</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildCase</span><span class="o">;</span>
-
-
-<span class="c1">// 独自の変換用のアノテーション</span>
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvCustomConversion</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvConversion</span><span class="o">(</span><span class="n">CustomConversionFactory</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>  <span class="c1">// ファクトリクラスを指定</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvCustomConversion</span> <span class="o">{</span>
-
-    <span class="c1">// 固有の属性 - 追加する値を指定します。</span>
-    <span class="n">String</span> <span class="nf">text</span><span class="o">();</span>
-
-    <span class="c1">// 共通の属性 - ケース</span>
-    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 共通の属性 - グループ</span>
-    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 共通の属性 - 並び順</span>
-    <span class="kt">int</span> <span class="nf">order</span><span class="o">()</span> <span class="k">default</span> <span class="mi">0</span><span class="o">;</span>
-
-    <span class="c1">// 繰り返しのアノテーションの格納用アノテーションの定義</span>
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvCustomConversion</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.CsvConversion</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildCase</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1">// 独自の変換用のアノテーション</span>
+<span class="linenos">13</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">14</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">15</span><span class="nd">@Documented</span>
+<span class="linenos">16</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvCustomConversion</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">17</span><span class="nd">@CsvConversion</span><span class="p">(</span><span class="n">CustomConversionFactory</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>  <span class="c1">// ファクトリクラスを指定</span>
+<span class="linenos">18</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvCustomConversion</span> <span class="p">{</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="c1">// 固有の属性 - 追加する値を指定します。</span>
+<span class="linenos">21</span>    <span class="n">String</span> <span class="nf">text</span><span class="p">();</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="c1">// 共通の属性 - ケース</span>
+<span class="linenos">24</span>    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>    <span class="c1">// 共通の属性 - グループ</span>
+<span class="linenos">27</span>    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>    <span class="c1">// 共通の属性 - 並び順</span>
+<span class="linenos">30</span>    <span class="kt">int</span> <span class="nf">order</span><span class="p">()</span> <span class="k">default</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="c1">// 繰り返しのアノテーションの格納用アノテーションの定義</span>
+<span class="linenos">33</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">34</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="nd">@Documented</span>
+<span class="linenos">36</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>        <span class="n">CsvCustomConversion</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">39</span>    <span class="p">}</span>
+<span class="linenos">40</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id5">
-<h2>変換処理用のファクトリクラスの作成<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>変換処理用のファクトリクラスの作成<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <p>アノテーションをハンドリングして、CellProcessorを作成するためのファクトリクラスを作成します。</p>
 <ul class="simple">
-<li>インタフェース <code class="docutils literal notranslate"><span class="pre">ConversionProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html">JavaDoc</a> ] を実装します。</li>
-<li>独自のCellProcessorのCustomConversionのインスタンスを作成します。</li>
-<li>Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。</li>
+<li><p>インタフェース <code class="docutils literal notranslate"><span class="pre">ConversionProcessorFactory</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/cellprocessor/ConversionProcessorFactory.html">JavaDoc</a> ] を実装します。</p></li>
+<li><p>独自のCellProcessorのCustomConversionのインスタンスを作成します。</p></li>
+<li><p>Chainの次の処理となるCellProcessorの変数「next」は、空であることがあるため、コンストラクタで分けます。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.FieldAccessor</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.format.TextFormatter</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomConversionFactory</span> <span class="kd">implements</span> <span class="n">ConversionProcessorFactory</span><span class="o">&lt;</span><span class="n">CsvCustomConversion</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">CellProcessor</span><span class="o">&gt;</span> <span class="nf">create</span><span class="o">(</span><span class="n">CsvCustomConversion</span> <span class="n">anno</span><span class="o">,</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">CellProcessor</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">,</span>
-            <span class="n">FieldAccessor</span> <span class="n">field</span><span class="o">,</span> <span class="n">TextFormatter</span><span class="o">&lt;?&gt;</span> <span class="n">formatter</span><span class="o">,</span> <span class="n">Configuration</span> <span class="n">config</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// CellProcessorのインスタンスを作成します</span>
-        <span class="kd">final</span> <span class="n">CustomConversion</span> <span class="n">processor</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">n</span> <span class="o">-&gt;</span>  <span class="k">new</span> <span class="n">CustomConversion</span><span class="o">(</span><span class="n">anno</span><span class="o">.</span><span class="na">text</span><span class="o">(),</span> <span class="n">n</span><span class="o">))</span>
-                <span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">CustomConversion</span><span class="o">(</span><span class="n">anno</span><span class="o">.</span><span class="na">text</span><span class="o">()));</span>
-
-        <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">processor</span><span class="o">);</span>
-
-    <span class="o">}</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildType</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.Configuration</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.FieldAccessor</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.format.TextFormatter</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomConversionFactory</span> <span class="kd">implements</span> <span class="n">ConversionProcessorFactory</span><span class="o">&lt;</span><span class="n">CsvCustomConversion</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="nd">@Override</span>
+<span class="linenos">10</span>    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">CellProcessor</span><span class="o">&gt;</span> <span class="nf">create</span><span class="p">(</span><span class="n">CsvCustomConversion</span> <span class="n">anno</span><span class="p">,</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">CellProcessor</span><span class="o">&gt;</span> <span class="n">next</span><span class="p">,</span>
+<span class="linenos">11</span>            <span class="n">FieldAccessor</span> <span class="n">field</span><span class="p">,</span> <span class="n">TextFormatter</span><span class="o">&lt;?&gt;</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">Configuration</span> <span class="n">config</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>        <span class="c1">// CellProcessorのインスタンスを作成します</span>
+<span class="linenos">14</span>        <span class="kd">final</span> <span class="n">CustomConversion</span> <span class="n">processor</span> <span class="o">=</span> <span class="n">next</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">n</span> <span class="o">-&gt;</span>  <span class="k">new</span> <span class="n">CustomConversion</span><span class="p">(</span><span class="n">anno</span><span class="p">.</span><span class="na">text</span><span class="p">(),</span> <span class="n">n</span><span class="p">))</span>
+<span class="linenos">15</span>                <span class="p">.</span><span class="na">orElseGet</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">CustomConversion</span><span class="p">(</span><span class="n">anno</span><span class="p">.</span><span class="na">text</span><span class="p">()));</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>        <span class="k">return</span> <span class="n">Optional</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">processor</span><span class="p">);</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>    <span class="p">}</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });

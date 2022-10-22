@@ -15,7 +15,7 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
-        <version>2.2</version>
+        <version>2.3</version>
     </dependency>
 
 
@@ -23,18 +23,37 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
 
 .. sourcecode:: xml
     :linenos:
-    :caption: ロギングライブラリの実装の追加（Log4jの場合）
+    :caption: ロギングライブラリの実装の追加（Lobbackの場合）
     
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.1</version>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.11</version>
+        <scope>test</scope>
     </dependency>
-    <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
-    </dependency>
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: logback.xml
+    
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n</Pattern>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>TRACE</level>
+            </filter>
+        </appender>
+        <logger name="com.github.mygreen.supercsv" level="DEBUG">
+            <appender-ref ref="CONSOLE" />
+        </logger>
+        <root>
+            <level value="WARN" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </configuration>
 
 
 --------------------------------------
@@ -113,6 +132,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 * CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
 * 一度に全レコードを読み込む場合は、メソッド ``readAll(...)`` を使用します。
 * 1件ずつ読み込む場合は、メソッド ``read(...)`` を使用します。
+* Stream API による読み込みを行う場合は、メソッド ``lines(...)`` を使用します。 *[v2.3+]*
 
 .. sourcecode:: java
     :linenos:
@@ -163,8 +183,31 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             
             csvReader.close();
         }
+
+        // Stream APIによる読み込む場合
+        public void sampleReadStream() {
+        
+            CsvAnnotationBeanReader<UserCsv> csvReader = new CsvAnnotationBeanReader<>(
+                    UserCsv.class,
+                    Files.newBufferedReader(new File("sample.csv").toPath(), Charset.forName("Windows-31j")),
+                    CsvPreference.STANDARD_PREFERENCE);
+            
+            // ヘッダー行の読み込み
+            String headers[] = csvReader.getHeader(true);
+            
+            List<UserCsv> list = new ArrayList<>();
+            
+            // Streamによる読み込み
+            csvReader.lines().forEach(record -> {
+                list.add(record);
+            });
+            
+            csvReader.close();
+        
+        }
+
     }
-    
+
 
 --------------------------------------
 書き込み方法

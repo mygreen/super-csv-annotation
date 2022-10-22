@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CsvBeanValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Super CSV Annotation</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.supercsv.validation.beanvalidation</a> &gt; <span class="el_source">CsvBeanValidator.java</span></div><h1>CsvBeanValidator.java</h1><pre class="source lang-java linenums">package com.github.mygreen.supercsv.validation.beanvalidation;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,16 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.MessageInterpolator;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.metadata.ConstraintDescriptor;
 
-import org.hibernate.validator.internal.engine.MessageInterpolatorContext;
-import org.hibernate.validator.internal.engine.ValidatorImpl;
-
 import com.github.mygreen.supercsv.builder.ColumnMapping;
+import com.github.mygreen.supercsv.localization.MessageInterpolator;
+import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
 import com.github.mygreen.supercsv.validation.CsvBindingErrors;
 import com.github.mygreen.supercsv.validation.CsvFieldError;
 import com.github.mygreen.supercsv.validation.CsvValidator;
@@ -27,7 +24,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
 /**
  * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)にブリッジする{@link CsvValidator}。
  * 
- * @version 2.2
+ * @version 2.3
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -40,64 +37,37 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      */
     private static final Set&lt;String&gt; EXCLUDE_MESSAGE_ANNOTATION_ATTRIBUTES;
     static {
-<span class="fc" id="L43">        Set&lt;String&gt; set = new HashSet&lt;String&gt;(3);</span>
-<span class="fc" id="L44">        set.add(&quot;message&quot;);</span>
-<span class="fc" id="L45">        set.add(&quot;groups&quot;);</span>
-<span class="fc" id="L46">        set.add(&quot;payload&quot;);</span>
+<span class="fc" id="L40">        Set&lt;String&gt; set = new HashSet&lt;String&gt;(3);</span>
+<span class="fc" id="L41">        set.add(&quot;message&quot;);</span>
+<span class="fc" id="L42">        set.add(&quot;groups&quot;);</span>
+<span class="fc" id="L43">        set.add(&quot;payload&quot;);</span>
         
-<span class="fc" id="L48">        EXCLUDE_MESSAGE_ANNOTATION_ATTRIBUTES = Collections.unmodifiableSet(set);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L45">        EXCLUDE_MESSAGE_ANNOTATION_ATTRIBUTES = Collections.unmodifiableSet(set);</span>
+<span class="fc" id="L46">    }</span>
     
     private final Validator targetValidator;
     
-    private final MessageInterpolator messageInterpolator;
+<span class="fc" id="L50">    public CsvBeanValidator(final Validator targetValidator) {</span>
+<span class="fc" id="L51">        Objects.requireNonNull(targetValidator);</span>
+<span class="fc" id="L52">        this.targetValidator = targetValidator;</span>
+<span class="fc" id="L53">    }</span>
     
-<span class="fc" id="L55">    public CsvBeanValidator(final Validator targetValidator) {</span>
-<span class="fc" id="L56">        Objects.requireNonNull(targetValidator);</span>
-<span class="fc" id="L57">        this.targetValidator = targetValidator;</span>
-<span class="fc" id="L58">        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);</span>
-<span class="fc" id="L59">    }</span>
-    
-<span class="fc" id="L61">    public CsvBeanValidator() {</span>
-<span class="fc" id="L62">        this.targetValidator = createDefaultValidator();</span>
-<span class="fc" id="L63">        this.messageInterpolator = getMessageInterpolatorFromValidator(targetValidator);</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L55">    public CsvBeanValidator() {</span>
+<span class="fc" id="L56">        this.targetValidator = createDefaultValidator();</span>
+<span class="fc" id="L57">    }</span>
     
     /**
      * Bean Validatonのデフォルトのインスタンスを取得する。
-     * @return
+     * @return 
      */
     private Validator createDefaultValidator() {
-<span class="fc" id="L71">        final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();</span>
-<span class="fc" id="L72">        final Validator validator = validatorFactory.usingContext()</span>
-<span class="fc" id="L73">                .getValidator();</span>
+<span class="fc" id="L64">        final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();</span>
         
-<span class="fc" id="L75">        return validator;</span>
-    }
-    
-    /**
-     * ValidatorからMessageInterpolartorを取得する。
-     * @param validator
-     * @return {@link ValidatorImpl}出ない場合は、nullを返す。
-     * @throws IllegalStateException 取得に失敗した場合。
-     */
-    private static MessageInterpolator getMessageInterpolatorFromValidator(Validator validator) {
+<span class="fc" id="L66">        final Validator validator = validatorFactory.usingContext()</span>
+<span class="fc" id="L67">                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))</span>
+<span class="fc" id="L68">                .getValidator();</span>
         
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if(!(validator instanceof ValidatorImpl)) {</span>
-<span class="fc" id="L87">            return null;</span>
-        }
-        
-        try {
-<span class="fc" id="L91">            Field field = ValidatorImpl.class.getDeclaredField(&quot;messageInterpolator&quot;);</span>
-<span class="fc" id="L92">            field.setAccessible(true);</span>
-            
-<span class="fc" id="L94">            MessageInterpolator interpolator = (MessageInterpolator)field.get(validator);</span>
-<span class="fc" id="L95">            return interpolator;</span>
-            
-<span class="nc" id="L97">        } catch (IllegalAccessException | NoSuchFieldException | SecurityException e) {</span>
-<span class="nc" id="L98">            throw new IllegalStateException(&quot;fail reflect MessageInterpolrator from ValidatorImpl.&quot;, e);</span>
-        }
-        
+<span class="fc" id="L70">        return validator;</span>
     }
     
     /**
@@ -105,15 +75,15 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      * @return
      */
     public Validator getTargetValidator() {
-<span class="fc" id="L108">        return targetValidator;</span>
+<span class="fc" id="L78">        return targetValidator;</span>
     }
     
     @Override
     public void validate(final Object record, final CsvBindingErrors bindingErrors, 
             final ValidationContext&lt;Object&gt; validationContext) {
-<span class="fc" id="L114">        validate(record, bindingErrors, validationContext, validationContext.getBeanMapping().getGroups());</span>
+<span class="fc" id="L84">        validate(record, bindingErrors, validationContext, validationContext.getBeanMapping().getGroups());</span>
         
-<span class="fc" id="L116">    }</span>
+<span class="fc" id="L86">    }</span>
     
     /**
      * グループを指定して検証を実行する。
@@ -124,12 +94,12 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      */
     public void validate(final Object record, final CsvBindingErrors bindingErrors, 
             final ValidationContext&lt;Object&gt; validationContext, final Class&lt;?&gt;... groups) {
-<span class="fc" id="L127">        Objects.requireNonNull(record);</span>
-<span class="fc" id="L128">        Objects.requireNonNull(bindingErrors);</span>
-<span class="fc" id="L129">        Objects.requireNonNull(validationContext);</span>
+<span class="fc" id="L97">        Objects.requireNonNull(record);</span>
+<span class="fc" id="L98">        Objects.requireNonNull(bindingErrors);</span>
+<span class="fc" id="L99">        Objects.requireNonNull(validationContext);</span>
         
-<span class="fc" id="L131">        processConstraintViolation(getTargetValidator().validate(record, groups), bindingErrors, validationContext);</span>
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L101">        processConstraintViolation(getTargetValidator().validate(record, groups), bindingErrors, validationContext);</span>
+<span class="fc" id="L102">    }</span>
     
     /**
      * BeanValidationの検証結果をSheet用のエラーに変換する
@@ -140,51 +110,51 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
     private void processConstraintViolation(final Set&lt;ConstraintViolation&lt;Object&gt;&gt; violations,
             final CsvBindingErrors bindingErrors, final ValidationContext&lt;Object&gt; validationContext) {
         
-<span class="fc bfc" id="L143" title="All 2 branches covered.">        for(ConstraintViolation&lt;Object&gt; violation : violations) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for(ConstraintViolation&lt;Object&gt; violation : violations) {</span>
             
-<span class="fc" id="L145">            final String field = violation.getPropertyPath().toString();</span>
-<span class="fc" id="L146">            final ConstraintDescriptor&lt;?&gt; cd = violation.getConstraintDescriptor();</span>
+<span class="fc" id="L115">            final String field = violation.getPropertyPath().toString();</span>
+<span class="fc" id="L116">            final ConstraintDescriptor&lt;?&gt; cd = violation.getConstraintDescriptor();</span>
             
-<span class="fc" id="L148">            final String[] errorCodes = determineErrorCode(cd);</span>
+<span class="fc" id="L118">            final String[] errorCodes = determineErrorCode(cd);</span>
             
-<span class="fc" id="L150">            final Map&lt;String, Object&gt; errorVars = createVariableForConstraint(cd);</span>
+<span class="fc" id="L120">            final Map&lt;String, Object&gt; errorVars = createVariableForConstraint(cd);</span>
             
-<span class="fc bfc" id="L152" title="All 2 branches covered.">            if(isCsvField(field, validationContext)) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if(isCsvField(field, validationContext)) {</span>
                 // フィールドエラーの場合
                 
-<span class="fc" id="L155">                final CsvFieldError fieldError = bindingErrors.getFirstFieldError(field);</span>
-<span class="pc bpc" id="L156" title="3 of 4 branches missed.">                if(fieldError != null &amp;&amp; fieldError.isProcessingFailure()) {</span>
+<span class="fc" id="L125">                final CsvFieldError fieldError = bindingErrors.getFirstFieldError(field);</span>
+<span class="pc bpc" id="L126" title="3 of 4 branches missed.">                if(fieldError != null &amp;&amp; fieldError.isProcessingFailure()) {</span>
                     // CellProcessorで発生したエラーが既ににある場合は、処理をスキップする。
-<span class="nc" id="L158">                    continue;</span>
+<span class="nc" id="L128">                    continue;</span>
                 }
                 
-<span class="fc" id="L161">                final ColumnMapping columnMapping = validationContext.getBeanMapping().getColumnMapping(field).get();</span>
+<span class="fc" id="L131">                final ColumnMapping columnMapping = validationContext.getBeanMapping().getColumnMapping(field).get();</span>
                 
-<span class="fc" id="L163">                errorVars.put(&quot;lineNumber&quot;, validationContext.getCsvContext().getLineNumber());</span>
-<span class="fc" id="L164">                errorVars.put(&quot;rowNumber&quot;, validationContext.getCsvContext().getRowNumber());</span>
-<span class="fc" id="L165">                errorVars.put(&quot;columnNumber&quot;, columnMapping.getNumber());</span>
-<span class="fc" id="L166">                errorVars.put(&quot;label&quot;, columnMapping.getLabel());</span>
-<span class="fc" id="L167">                errorVars.computeIfAbsent(&quot;printer&quot;, key -&gt; columnMapping.getFormatter());</span>
+<span class="fc" id="L133">                errorVars.put(&quot;lineNumber&quot;, validationContext.getCsvContext().getLineNumber());</span>
+<span class="fc" id="L134">                errorVars.put(&quot;rowNumber&quot;, validationContext.getCsvContext().getRowNumber());</span>
+<span class="fc" id="L135">                errorVars.put(&quot;columnNumber&quot;, columnMapping.getNumber());</span>
+<span class="fc" id="L136">                errorVars.put(&quot;label&quot;, columnMapping.getLabel());</span>
+<span class="fc" id="L137">                errorVars.computeIfAbsent(&quot;printer&quot;, key -&gt; columnMapping.getFormatter());</span>
                 
                 // 実際の値を取得する
-<span class="fc" id="L170">                final Object fieldValue = violation.getInvalidValue();</span>
-<span class="fc" id="L171">                errorVars.computeIfAbsent(&quot;validatedValue&quot;, key -&gt; fieldValue);</span>
+<span class="fc" id="L140">                final Object fieldValue = violation.getInvalidValue();</span>
+<span class="fc" id="L141">                errorVars.computeIfAbsent(&quot;validatedValue&quot;, key -&gt; fieldValue);</span>
                 
-<span class="fc" id="L173">                String defaultMessage = determineDefaltMessage(errorVars, violation);</span>
+<span class="fc" id="L143">                String defaultMessage = violation.getMessage();</span>
                 
-<span class="fc" id="L175">                bindingErrors.rejectValue(field, columnMapping.getField().getType(), </span>
+<span class="fc" id="L145">                bindingErrors.rejectValue(field, columnMapping.getField().getType(), </span>
                         errorCodes, errorVars, defaultMessage);
                 
-<span class="fc" id="L178">            } else {</span>
+<span class="fc" id="L148">            } else {</span>
                 // オブジェクトエラーの場合
-<span class="fc" id="L180">                bindingErrors.reject(errorCodes, errorVars, violation.getMessage());</span>
+<span class="fc" id="L150">                bindingErrors.reject(errorCodes, errorVars, violation.getMessage());</span>
                 
             }
             
-<span class="fc" id="L184">        }</span>
+<span class="fc" id="L154">        }</span>
         
         
-<span class="fc" id="L187">    }</span>
+<span class="fc" id="L157">    }</span>
     
     /**
      * エラーコードの決定する
@@ -192,8 +162,8 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      * @return エラーコード
      */
     protected String[] determineErrorCode(ConstraintDescriptor&lt;?&gt; descriptor) {
-<span class="fc" id="L195">        return new String[] {</span>
-<span class="fc" id="L196">                descriptor.getAnnotation().annotationType().getSimpleName()/*,</span>
+<span class="fc" id="L165">        return new String[] {</span>
+<span class="fc" id="L166">                descriptor.getAnnotation().annotationType().getSimpleName()/*,</span>
                 descriptor.getAnnotation().annotationType().getCanonicalName(),
                 descriptor.getAnnotation().annotationType().getCanonicalName() + &quot;.message&quot;
                 */
@@ -207,7 +177,7 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      * @return trueのとき、CSVのカラムフィールド。
      */
     private boolean isCsvField(final String field, final ValidationContext&lt;Object&gt; validationContext) {
-<span class="fc" id="L210">        return validationContext.getBeanMapping().getColumnMapping(field).isPresent();</span>
+<span class="fc" id="L180">        return validationContext.getBeanMapping().getColumnMapping(field).isPresent();</span>
     }
     
     /**
@@ -217,53 +187,23 @@ public class CsvBeanValidator implements CsvValidator&lt;Object&gt; {
      */
     private Map&lt;String, Object&gt; createVariableForConstraint(final ConstraintDescriptor&lt;?&gt; descriptor) {
         
-<span class="fc" id="L220">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L190">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
         
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        for(Map.Entry&lt;String, Object&gt; entry : descriptor.getAttributes().entrySet()) {</span>
-<span class="fc" id="L223">            final String attrName = entry.getKey();</span>
-<span class="fc" id="L224">            final Object attrValue = entry.getValue();</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        for(Map.Entry&lt;String, Object&gt; entry : descriptor.getAttributes().entrySet()) {</span>
+<span class="fc" id="L193">            final String attrName = entry.getKey();</span>
+<span class="fc" id="L194">            final Object attrValue = entry.getValue();</span>
             
             // メッセージ変数で必要ないものを除外する
-<span class="fc bfc" id="L227" title="All 2 branches covered.">            if(EXCLUDE_MESSAGE_ANNOTATION_ATTRIBUTES.contains(attrName)) {</span>
-<span class="fc" id="L228">                continue;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">            if(EXCLUDE_MESSAGE_ANNOTATION_ATTRIBUTES.contains(attrName)) {</span>
+<span class="fc" id="L198">                continue;</span>
             }
             
-<span class="fc" id="L231">            vars.put(attrName, attrValue);</span>
-<span class="fc" id="L232">        }</span>
+<span class="fc" id="L201">            vars.put(attrName, attrValue);</span>
+<span class="fc" id="L202">        }</span>
         
-<span class="fc" id="L234">        return vars;</span>
-        
-    }
-    
-    /**
-     * CSVの標準メッセージを取得する。
-     * &lt;p&gt;CSVメッセージ変数で、再度フォーマットを試みる。&lt;/p&gt;
-     * 
-     * @param errorVars エラー時の変数
-     * @param violation エラー情報
-     * @return デフォルトメッセージ
-     */
-    protected String determineDefaltMessage(final Map&lt;String, Object&gt; errorVars, ConstraintViolation&lt;Object&gt; violation) {
-        
-<span class="fc" id="L248">        String message = violation.getMessage();</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">        if(messageInterpolator == null) {</span>
-<span class="fc" id="L250">            return message;</span>
-            
-<span class="pc bpc" id="L252" title="1 of 4 branches missed.">        } else if(!(message.contains(&quot;{&quot;) &amp;&amp; message.contains(&quot;}&quot;))) {</span>
-            // 変数形式が含まれていない場合は、そのまま返す。
-<span class="fc" id="L254">            return message;</span>
-        }
-        
-<span class="fc" id="L257">        MessageInterpolatorContext context = new MessageInterpolatorContext(</span>
-<span class="fc" id="L258">                violation.getConstraintDescriptor(),</span>
-<span class="fc" id="L259">                violation.getInvalidValue(),</span>
-<span class="fc" id="L260">                violation.getRootBeanClass(),</span>
-                errorVars,
-<span class="fc" id="L262">                Collections.emptyMap());</span>
-        
-<span class="fc" id="L264">        return messageInterpolator.interpolate(violation.getMessageTemplate(), context);</span>
+<span class="fc" id="L204">        return vars;</span>
         
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

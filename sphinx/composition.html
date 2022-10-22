@@ -1,72 +1,42 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. アノテーションの合成 &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>6. アノテーションの合成 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="next" title="7. 部分的なカラムの読み書き" href="partialization.html" />
     <link rel="prev" title="5. 値の検証方法" href="validation.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,12 +44,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -89,12 +54,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -272,655 +232,359 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>6. アノテーションの合成</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">6. </span>アノテーションの合成</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/composition.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="id1">
-<h1>6. アノテーションの合成<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">6. </span>アノテーションの合成<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <p>既存のアノテーションを組み合わせて、容易にアノテーションを作成することができます。</p>
 <p>この機能は、同じアノテーションの組み合わせを他の多くのフィールドに設定したくないときに利用します。</p>
 <div class="section" id="id2">
-<h2>6.1. アノテーションの合成の基本<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">6.1. </span>アノテーションの合成の基本<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>合成可能なアノテーションは決まっており、 <a class="reference internal" href="format.html"><span class="doc">書式の指定用</span></a> 、 <a class="reference internal" href="conversion.html"><span class="doc">値の変換用</span></a> 、 <a class="reference internal" href="validation.html"><span class="doc">値の検証用</span></a> の3種のアノテーションです。
 カラム指定用の <code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn</span></code> などは合成できません。</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。<ul>
-<li>通常はFieldのみで問題ないですが、 さらに合成するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Target</span></code> として、<code class="docutils literal notranslate"><span class="pre">ElementType.FIELD</span></code> と <code class="docutils literal notranslate"><span class="pre">ElementType.ANNOTATION_TYPE</span></code> の2つを指定します。</p>
+<ul>
+<li><p>通常はFieldのみで問題ないですが、 さらに合成するときがあるため、 <em>ANNOTATION_TYPE</em> も追加しておきます。</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。<ul>
-<li>内部クラスのアノテーションとして、 <em>List</em> を定義します。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> として、複数のアノテーションを設定できるようにします。</p>
+<ul>
+<li><p>内部クラスのアノテーションとして、 <em>List</em> を定義します。</p></li>
 </ul>
 </li>
-<li>合成したのアノテーションと示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvComposition</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html">JavaDoc</a> ]を指定します。</li>
+<li><p>合成したのアノテーションと示すためのメタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvComposition</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html">JavaDoc</a> ]を指定します。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="o">;</span>
-
-
-<span class="c1">// 合成したアノテーション</span>
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvSalary</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvComposition</span>                                      <span class="c1">// 合成のアノテーションを表現するために指定します。</span>
-<span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>                   <span class="c1">// 書式の指定用のアノテーション</span>
-<span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>  <span class="c1">// 値の変換用のアノテーション</span>
-<span class="nd">@CsvRequire</span>                                          <span class="c1">// 値の検証用のアノテーション（必須チェック）</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>          <span class="c1">// 値の検証用のアノテーション（範囲チェック）</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>    <span class="c1">// 値の検証用のアノテーション（範囲チェック）</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="o">{</span>
-
-    <span class="c1">// 繰り返しのアノテーションの格納用アノテーションの定義</span>
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="c1">// 合成したアノテーション</span>
+<span class="linenos">16</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">17</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">18</span><span class="nd">@Documented</span>
+<span class="linenos">19</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvSalary</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">20</span><span class="nd">@CsvComposition</span>                                      <span class="c1">// 合成のアノテーションを表現するために指定します。</span>
+<span class="linenos">21</span><span class="nd">@CsvNumberFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="p">)</span>                   <span class="c1">// 書式の指定用のアノテーション</span>
+<span class="linenos">22</span><span class="nd">@CsvDefaultValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>  <span class="c1">// 値の変換用のアノテーション</span>
+<span class="linenos">23</span><span class="nd">@CsvRequire</span>                                          <span class="c1">// 値の検証用のアノテーション（必須チェック）</span>
+<span class="linenos">24</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>          <span class="c1">// 値の検証用のアノテーション（範囲チェック）</span>
+<span class="linenos">25</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>    <span class="c1">// 値の検証用のアノテーション（範囲チェック）</span>
+<span class="linenos">26</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="p">{</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c1">// 繰り返しのアノテーションの格納用アノテーションの定義</span>
+<span class="linenos">29</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">30</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">31</span>    <span class="nd">@Documented</span>
+<span class="linenos">32</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">35</span>    <span class="p">}</span>
+<span class="linenos">36</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>使用する際には、他のアノテーションと同様にフィールドに付与します。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="nd">@CsvSalary</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">salary</span><span class="o">;</span>
-
-    <span class="c1">// getter/setterは省略</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nd">@CsvBean</span>
+<span class="linenos"> 5</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 8</span>    <span class="nd">@CsvSalary</span>
+<span class="linenos"> 9</span>    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">salary</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="c1">// getter/setterは省略</span>
+<span class="linenos">12</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>6.2. 属性の上書き<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">6.2. </span>属性の上書き<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvOverridesAttribute</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html">JavaDoc</a> ]を使用します。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal notranslate"><span class="pre">annotation</span></code> で上書き対象のアノテーションを指定し、属性 <code class="docutils literal notranslate"><span class="pre">name</span></code> で属性名を指定します。</li>
-<li>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvOverridesAttribute</span></code> を複数付与することで、1つの属性で複数の属性を上書きすることができます。</li>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">annotation</span></code> で上書き対象のアノテーションを指定し、属性 <code class="docutils literal notranslate"><span class="pre">name</span></code> で属性名を指定します。</p></li>
+<li><p>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvOverridesAttribute</span></code> を複数付与することで、1つの属性で複数の属性を上書きすることができます。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="o">;</span>
-
-
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvSalary</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvComposition</span>
-<span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>
-<span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>  <span class="c1">// 上書き対象のアノテーション</span>
-<span class="nd">@CsvRequire</span>                                          <span class="c1">// 上書き対象のアノテーション</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="o">{</span>
-
-    <span class="c1">// @CsvDefaultValueの属性valueの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvDefaultValue</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="o">)</span>
-    <span class="n">String</span> <span class="nf">defaultValueRead</span><span class="o">();</span>
-
-    <span class="c1">// @CsvRequireの属性considerBlankとconsiderEmptyの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvRequire</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;considerBlank&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvRequire</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;considerEmpty&quot;</span><span class="o">)</span>
-    <span class="kt">boolean</span> <span class="nf">considerSpace</span><span class="o">()</span> <span class="k">default</span> <span class="kc">true</span><span class="o">;</span>
-
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="p">;</span>
+<span class="linenos">13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="p">;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">17</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">18</span><span class="nd">@Documented</span>
+<span class="linenos">19</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvSalary</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">20</span><span class="nd">@CsvComposition</span>
+<span class="linenos">21</span><span class="nd">@CsvNumberFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="p">)</span>
+<span class="linenos">22</span><span class="nd">@CsvDefaultValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>  <span class="c1">// 上書き対象のアノテーション</span>
+<span class="linenos">23</span><span class="nd">@CsvRequire</span>                                          <span class="c1">// 上書き対象のアノテーション</span>
+<span class="linenos">24</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">25</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">26</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="p">{</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c1">// @CsvDefaultValueの属性valueの上書き</span>
+<span class="linenos">29</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvDefaultValue</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">)</span>
+<span class="linenos">30</span>    <span class="n">String</span> <span class="nf">defaultValueRead</span><span class="p">();</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="c1">// @CsvRequireの属性considerBlankとconsiderEmptyの上書き</span>
+<span class="linenos">33</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvRequire</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;considerBlank&quot;</span><span class="p">)</span>
+<span class="linenos">34</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvRequire</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;considerEmpty&quot;</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="kt">boolean</span> <span class="nf">considerSpace</span><span class="p">()</span> <span class="k">default</span> <span class="kc">true</span><span class="p">;</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">38</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">39</span>    <span class="nd">@Documented</span>
+<span class="linenos">40</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">43</span>    <span class="p">}</span>
+<span class="linenos">44</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>上書き対象のアノテーション自体が複数付与されている場合、区別するために <code class="docutils literal notranslate"><span class="pre">&#64;CsvOverridesAttribute(index=&lt;インデックス&gt;)</span></code> で指定します。</p>
 <ul class="simple">
-<li>属性 <code class="docutils literal notranslate"><span class="pre">index</span></code> は0から始まります。</li>
-<li>インデックスを指定しない場合は、該当するアノテーションの属性が全て上書きされます。</li>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">index</span></code> は0から始まります。</p></li>
+<li><p>インデックスを指定しない場合は、該当するアノテーションの属性が全て上書きされます。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="o">;</span>
-
-
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvSalary</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvComposition</span>
-<span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>
-<span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvRequire</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>       <span class="c1">// 1番目（index=0）のアノテーション</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="c1">// 2番目（index=1）のアノテーション</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="o">{</span>
-
-    <span class="c1">// 2番目（インデックスが1）の@CsvNumberRangeの属性maxの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;max&quot;</span><span class="o">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="n">String</span> <span class="nf">managerSalaryMax</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;100,000,000,000,000&quot;</span><span class="o">;</span>
-
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="p">;</span>
+<span class="linenos">13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="p">;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">17</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">18</span><span class="nd">@Documented</span>
+<span class="linenos">19</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvSalary</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">20</span><span class="nd">@CsvComposition</span>
+<span class="linenos">21</span><span class="nd">@CsvNumberFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="p">)</span>
+<span class="linenos">22</span><span class="nd">@CsvDefaultValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">23</span><span class="nd">@CsvRequire</span>
+<span class="linenos">24</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>       <span class="c1">// 1番目（index=0）のアノテーション</span>
+<span class="linenos">25</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span> <span class="c1">// 2番目（index=1）のアノテーション</span>
+<span class="linenos">26</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="p">{</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c1">// 2番目（インデックスが1）の@CsvNumberRangeの属性maxの上書き</span>
+<span class="linenos">29</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;max&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">30</span>    <span class="n">String</span> <span class="nf">managerSalaryMax</span><span class="p">()</span> <span class="k">default</span> <span class="s">&quot;100,000,000,000,000&quot;</span><span class="p">;</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">33</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">34</span>    <span class="nd">@Documented</span>
+<span class="linenos">35</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">38</span>    <span class="p">}</span>
+<span class="linenos">39</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id5">
-<h2>6.3. 共通の属性の上書き<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">6.3. </span>共通の属性の上書き<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
 <p>共通の属性である <code class="docutils literal notranslate"><span class="pre">cases</span></code>, <code class="docutils literal notranslate"><span class="pre">groups</span></code> , <code class="docutils literal notranslate"><span class="pre">message</span></code> は、アノテーション <em>&#64;CsvOverridesAttribute</em> が無くても上書きすることができます。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildCase</span><span class="o">;</span>
-
-
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvSalary</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvComposition</span>
-<span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>                                           <span class="c1">// 共通の属性messageを持つ</span>
-<span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>                          <span class="c1">// 共通の属性groupsを持つ</span>
-<span class="nd">@CsvRequire</span>                                                                  <span class="c1">// 共通の属性message, groupsを持つ</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>         <span class="c1">// 共通の属性message, groupsを持つ</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>   <span class="c1">// 共通の属性message, groupsを持つ</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="o">{</span>
-
-    <span class="c1">// 共通の属性 - エラーメッセージ</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-
-    <span class="c1">// 共通の属性 - ケース</span>
-    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 共通の属性 - グループ</span>
-    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="p">;</span>
+<span class="linenos">13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="p">;</span>
+<span class="linenos">14</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildCase</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">18</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">19</span><span class="nd">@Documented</span>
+<span class="linenos">20</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvSalary</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">21</span><span class="nd">@CsvComposition</span>
+<span class="linenos">22</span><span class="nd">@CsvNumberFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="p">)</span>                                           <span class="c1">// 共通の属性messageを持つ</span>
+<span class="linenos">23</span><span class="nd">@CsvDefaultValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>                          <span class="c1">// 共通の属性groupsを持つ</span>
+<span class="linenos">24</span><span class="nd">@CsvRequire</span>                                                                  <span class="c1">// 共通の属性message, groupsを持つ</span>
+<span class="linenos">25</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>         <span class="c1">// 共通の属性message, groupsを持つ</span>
+<span class="linenos">26</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>   <span class="c1">// 共通の属性message, groupsを持つ</span>
+<span class="linenos">27</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="p">{</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>    <span class="c1">// 共通の属性 - エラーメッセージ</span>
+<span class="linenos">30</span>    <span class="n">String</span> <span class="nf">message</span><span class="p">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="c1">// 共通の属性 - ケース</span>
+<span class="linenos">33</span>    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="c1">// 共通の属性 - グループ</span>
+<span class="linenos">36</span>    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">39</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">40</span>    <span class="nd">@Documented</span>
+<span class="linenos">41</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">44</span>    <span class="p">}</span>
+<span class="linenos">45</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>もちろん、共通の属性 <em>cases</em> 、 <em>message</em> 、 <em>groups</em> も、アノテーション <em>&#64;CsvOverridesAttribute</em> を使用して、特定のアノテーションの属性を上書きすることができます。</p>
 <p>下記の例の場合、<em>&#64;CsvOverridesAttribute</em> で上書きされていないアノテーションの属性 <em>cases</em> 、 <em>message</em> 、 <em>groups</em> は、共通の属性 <em>cases</em> 、 <em>message</em> 、 <em>groups</em> で上書きされます。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="o">;</span>
-
-
-<span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-<span class="nd">@Documented</span>
-<span class="nd">@Repeatable</span><span class="o">(</span><span class="n">CsvSalary</span><span class="o">.</span><span class="na">List</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="nd">@CsvComposition</span>
-<span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>                                            <span class="c1">// 共通の属性messageを持つ</span>
-<span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>                          <span class="c1">// 共通の属性cases, groupsを持つ</span>
-<span class="nd">@CsvRequire</span>                                                                  <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>        <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
-<span class="nd">@CsvNumberRange</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="o">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>   <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
-<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="o">{</span>
-
-    <span class="c1">// 共通の属性 - エラーメッセージ</span>
-    <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-
-    <span class="c1">// 2番目（index=1）の@CsvNumberRangeの属性messageの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;message&quot;</span><span class="o">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="n">String</span> <span class="nf">rangeMessage</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;管理者の場合の給料は、{min}～{max}の範囲内で設定してください。&quot;</span><span class="o">;</span>
-
-    <span class="c1">// 共通の属性 - ケース</span>
-    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 1番目（index=0）の@CsvNumberRangeの属性casesの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;cases&quot;</span><span class="o">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="o">)</span>
-    <span class="n">BuildCases</span><span class="o">[]</span> <span class="nf">normalRangeCases</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 共通の属性 - グループ</span>
-    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="c1">// 1番目（index=0）の@CsvNumberRangeの属性groupsの上書き</span>
-    <span class="nd">@CsvOverridesAttribute</span><span class="o">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;groups&quot;</span><span class="o">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="o">)</span>
-    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">normalRangeGroups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
-
-    <span class="nd">@Target</span><span class="o">({</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="n">ElementType</span><span class="o">.</span><span class="na">ANNOTATION_TYPE</span><span class="o">})</span>
-    <span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-    <span class="nd">@Documented</span>
-    <span class="nd">@interface</span> <span class="n">List</span> <span class="o">{</span>
-
-        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Annotation</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvComposition</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvOverridesAttribute</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.*</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.*</span><span class="p">;</span>
+<span class="linenos">13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.*</span><span class="p">;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">17</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">18</span><span class="nd">@Documented</span>
+<span class="linenos">19</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">CsvSalary</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">20</span><span class="nd">@CsvComposition</span>
+<span class="linenos">21</span><span class="nd">@CsvNumberFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="p">)</span>                                            <span class="c1">// 共通の属性messageを持つ</span>
+<span class="linenos">22</span><span class="nd">@CsvDefaultValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ReadGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>                          <span class="c1">// 共通の属性cases, groupsを持つ</span>
+<span class="linenos">23</span><span class="nd">@CsvRequire</span>                                                                  <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
+<span class="linenos">24</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">NormalGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>        <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
+<span class="linenos">25</span><span class="nd">@CsvNumberRange</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">max</span><span class="o">=</span><span class="s">&quot;100,000,000,000&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">ManagerGroup</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>   <span class="c1">// 共通の属性cases, message, groupsを持つ</span>
+<span class="linenos">26</span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">CsvSalary</span> <span class="p">{</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c1">// 共通の属性 - エラーメッセージ</span>
+<span class="linenos">29</span>    <span class="n">String</span> <span class="nf">message</span><span class="p">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>    <span class="c1">// 2番目（index=1）の@CsvNumberRangeの属性messageの上書き</span>
+<span class="linenos">32</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;message&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">33</span>    <span class="n">String</span> <span class="nf">rangeMessage</span><span class="p">()</span> <span class="k">default</span> <span class="s">&quot;管理者の場合の給料は、{min}～{max}の範囲内で設定してください。&quot;</span><span class="p">;</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="c1">// 共通の属性 - ケース</span>
+<span class="linenos">36</span>    <span class="n">BuildCase</span><span class="o">[]</span> <span class="nf">cases</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="c1">// 1番目（index=0）の@CsvNumberRangeの属性casesの上書き</span>
+<span class="linenos">39</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;cases&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">40</span>    <span class="n">BuildCases</span><span class="o">[]</span> <span class="nf">normalRangeCases</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>    <span class="c1">// 共通の属性 - グループ</span>
+<span class="linenos">43</span>    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span>    <span class="c1">// 1番目（index=0）の@CsvNumberRangeの属性groupsの上書き</span>
+<span class="linenos">46</span>    <span class="nd">@CsvOverridesAttribute</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">CsvNumberRange</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;groups&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="linenos">47</span>    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">normalRangeGroups</span><span class="p">()</span> <span class="k">default</span> <span class="p">{};</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span>    <span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span> <span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">50</span>    <span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">51</span>    <span class="nd">@Documented</span>
+<span class="linenos">52</span>    <span class="nd">@interface</span> <span class="n">List</span> <span class="p">{</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>        <span class="n">CsvSalary</span><span class="o">[]</span> <span class="nf">value</span><span class="p">();</span>
+<span class="linenos">55</span>    <span class="p">}</span>
+<span class="linenos">56</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="partialization.html" class="btn btn-neutral float-right" title="7. 部分的なカラムの読み書き" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="validation.html" class="btn btn-neutral" title="5. 値の検証方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="validation.html" class="btn btn-neutral float-left" title="5. 値の検証方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="partialization.html" class="btn btn-neutral float-right" title="7. 部分的なカラムの読み書き" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });

@@ -8,7 +8,7 @@ Super CSV Annotation,com.github.mygreen.supercsv.builder.joda,DateTimeProcessorB
 Super CSV Annotation,com.github.mygreen.supercsv.builder.joda,AbstractJodaProcessorBuilder,0,146,0,10,0,35,0,13,0,8
 Super CSV Annotation,com.github.mygreen.supercsv.expression,CustomFunctions,3,124,0,22,1,36,1,21,1,10
 Super CSV Annotation,com.github.mygreen.supercsv.expression,ObjectCache,78,52,10,4,13,15,9,4,3,3
-Super CSV Annotation,com.github.mygreen.supercsv.expression,ExpressionLanguageJEXLImpl,0,80,1,3,0,19,1,6,0,5
+Super CSV Annotation,com.github.mygreen.supercsv.expression,ExpressionLanguageJEXLImpl,11,81,1,3,3,19,2,5,1,4
 Super CSV Annotation,com.github.mygreen.supercsv.expression,ExpressionEvaluationException,6,11,0,0,2,4,2,1,2,1
 Super CSV Annotation,com.github.mygreen.supercsv.builder.time,YearMonthProcessorBuilder,0,5,0,0,0,2,0,2,0,2
 Super CSV Annotation,com.github.mygreen.supercsv.builder.time,LocalDateTimeProcessorBuilder,0,5,0,0,0,2,0,2,0,2
@@ -20,7 +20,7 @@ Super CSV Annotation,com.github.mygreen.supercsv.builder.time,LocalDateProcessor
 Super CSV Annotation,com.github.mygreen.supercsv.builder.time,OffsetDateTimeProcessorBuilder,0,5,0,0,0,2,0,2,0,2
 Super CSV Annotation,com.github.mygreen.supercsv.builder.time,LocalTimeProcessorBuilder,0,5,0,0,0,2,0,2,0,2
 Super CSV Annotation,com.github.mygreen.supercsv.builder.time,ZonedDateTimeProcessorBuilder,0,5,0,0,0,2,0,2,0,2
-Super CSV Annotation,com.github.mygreen.supercsv.annotation,PatternFlag,5,96,0,0,0,12,1,4,1,4
+Super CSV Annotation,com.github.mygreen.supercsv.annotation,PatternFlag,0,92,0,0,0,12,0,3,0,3
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,BooleanFormatter,0,207,0,14,0,39,0,15,0,8
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,SimpleNumberFormatter,13,337,1,69,1,52,1,43,0,9
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,JodaFormatWrapper,40,104,2,4,6,22,2,8,0,7
@@ -37,8 +37,8 @@ Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,PrintProce
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,TextParser,0,6,0,0,0,3,0,3,0,3
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,TextPrintException,18,7,0,0,7,3,3,1,3,1
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.format,EnumFormatter,19,332,0,14,5,73,2,25,2,18
-Super CSV Annotation,com.github.mygreen.supercsv.validation.beanvalidation,CsvBeanValidator,11,308,4,16,3,78,3,22,0,15
-Super CSV Annotation,com.github.mygreen.supercsv.validation.beanvalidation,MessageInterpolatorAdapter,18,115,1,3,2,24,4,6,3,5
+Super CSV Annotation,com.github.mygreen.supercsv.validation.beanvalidation,CsvBeanValidator,4,251,3,9,1,60,2,17,0,13
+Super CSV Annotation,com.github.mygreen.supercsv.validation.beanvalidation,MessageInterpolatorAdapter,18,105,0,2,2,21,3,6,3,5
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor,ConversionProcessorHandler,4,133,0,10,1,24,1,11,1,6
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor,ValidationCellProcessor,0,42,0,2,0,13,0,7,0,6
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor,ConstraintProcessorHandler,4,133,0,10,1,24,1,11,1,6
@@ -85,13 +85,18 @@ Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.constraint,Length
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.constraint,NumberRangeFactory,0,162,0,2,0,35,0,5,0,4
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.constraint,Unique.ValueObject,0,15,0,0,0,5,0,1,0,1
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.constraint,DateTimeMinFactory,0,85,0,0,0,17,0,4,0,4
-Super CSV Annotation,com.github.mygreen.supercsv.io,AbstractCsvAnnotationBeanWriter,44,365,0,20,11,75,3,21,3,11
+Super CSV Annotation,com.github.mygreen.supercsv.io,AbstractCsvAnnotationBeanWriter,44,376,0,20,11,80,3,22,3,12
 Super CSV Annotation,com.github.mygreen.supercsv.io,LazyCsvAnnotationBeanReader,56,273,2,20,14,69,3,24,2,14
-Super CSV Annotation,com.github.mygreen.supercsv.io,AbstractCsvAnnotationBeanReader,87,444,1,33,16,87,5,29,4,13
+Super CSV Annotation,com.github.mygreen.supercsv.io,CsvErrorHandler,4,0,0,0,1,0,1,0,1,0
+Super CSV Annotation,com.github.mygreen.supercsv.io,AbstractCsvAnnotationBeanReader,87,473,1,35,16,97,5,32,4,15
 Super CSV Annotation,com.github.mygreen.supercsv.io,BeanMappingCache,0,44,0,0,0,14,0,7,0,7
 Super CSV Annotation,com.github.mygreen.supercsv.io,CsvAnnotationBeanWriter,0,93,1,7,0,27,1,8,0,5
+Super CSV Annotation,com.github.mygreen.supercsv.io,AbstractCsvAnnotationBeanReader.new Iterator() {...},15,35,4,4,4,9,3,4,0,3
+Super CSV Annotation,com.github.mygreen.supercsv.io,CsvErrorHandler.new CsvErrorHandler() {...},4,0,0,0,2,0,2,0,2,0
+Super CSV Annotation,com.github.mygreen.supercsv.io,CsvReadStatus,0,34,0,0,0,4,0,1,0,1
 Super CSV Annotation,com.github.mygreen.supercsv.io,LazyCsvAnnotationBeanWriter,0,345,0,30,0,85,0,35,0,20
 Super CSV Annotation,com.github.mygreen.supercsv.io,CsvAnnotationBeanReader,47,121,1,9,11,36,3,9,2,5
+Super CSV Annotation,com.github.mygreen.supercsv.io,CsvWriteStatus,0,24,0,0,0,3,0,1,0,1
 Super CSV Annotation,com.github.mygreen.supercsv.validation,CsvFieldError,3,16,0,0,1,5,1,2,1,2
 Super CSV Annotation,com.github.mygreen.supercsv.validation,CsvField,40,131,4,8,5,36,6,17,3,14
 Super CSV Annotation,com.github.mygreen.supercsv.validation,ValidationContext,0,15,0,0,0,6,0,3,0,3
@@ -121,7 +126,7 @@ Super CSV Annotation,com.github.mygreen.supercsv.builder,LazyBeanMappingFactory,
 Super CSV Annotation,com.github.mygreen.supercsv.builder,FixedSizeHeaderMapper,3,48,1,1,1,10,1,3,0,3
 Super CSV Annotation,com.github.mygreen.supercsv.builder,CallbackMethod,30,148,3,13,4,27,2,10,0,4
 Super CSV Annotation,com.github.mygreen.supercsv.builder,DefaultBeanFactory,18,53,1,5,3,11,1,4,0,2
-Super CSV Annotation,com.github.mygreen.supercsv.builder,BuildCase,5,33,0,0,0,3,1,3,1,3
+Super CSV Annotation,com.github.mygreen.supercsv.builder,BuildCase,0,24,0,0,0,3,0,1,0,1
 Super CSV Annotation,com.github.mygreen.supercsv.builder,AnnotationComparator,0,42,0,2,0,8,0,3,0,2
 Super CSV Annotation,com.github.mygreen.supercsv.builder,AnnotationExpander,54,607,8,80,13,127,8,45,0,9
 Super CSV Annotation,com.github.mygreen.supercsv.builder,Configuration,8,41,0,0,4,14,2,7,2,7
@@ -129,7 +134,7 @@ Super CSV Annotation,com.github.mygreen.supercsv.builder,ColumnMapping,0,88,0,6,
 Super CSV Annotation,com.github.mygreen.supercsv.builder,BeanMappingFactory,72,463,6,38,14,99,4,31,1,12
 Super CSV Annotation,com.github.mygreen.supercsv.localization,EncodingControl.new PrivilegedExceptionAction() {...},20,28,5,1,7,5,3,2,0,2
 Super CSV Annotation,com.github.mygreen.supercsv.localization,ResourceBundleMessageResolver,33,123,4,10,9,31,4,9,1,5
-Super CSV Annotation,com.github.mygreen.supercsv.localization,EncodingControl,56,72,3,7,10,25,4,6,2,3
+Super CSV Annotation,com.github.mygreen.supercsv.localization,EncodingControl,51,71,3,7,10,24,4,6,2,3
 Super CSV Annotation,com.github.mygreen.supercsv.localization,MessageParseException,10,0,0,0,4,0,2,0,2,0
 Super CSV Annotation,com.github.mygreen.supercsv.localization,MessageBuilder,27,83,1,1,3,18,2,8,1,8
 Super CSV Annotation,com.github.mygreen.supercsv.localization,SpringMessageResolver,9,19,0,0,4,7,2,3,2,3
@@ -178,7 +183,7 @@ Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,HalfCh
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,TrimFactory,0,23,0,0,0,4,0,4,0,4
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,FullCharFactory,0,37,0,2,0,7,0,5,0,4
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,DefaultValue,0,31,0,2,0,10,0,5,0,4
-Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,CharCategory,5,63,0,0,0,6,1,3,1,3
+Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,CharCategory,0,54,0,0,0,6,0,1,0,1
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,Truncate,0,93,0,8,0,24,0,10,0,6
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,CharReplacer,0,206,0,20,0,50,0,17,0,7
 Super CSV Annotation,com.github.mygreen.supercsv.cellprocessor.conversion,NullConvertFactory,0,40,0,0,0,6,0,4,0,4

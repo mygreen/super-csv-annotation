@@ -1,70 +1,40 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>エラー処理の方法 &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>エラー処理の方法 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,12 +42,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -87,12 +52,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -270,92 +230,55 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>エラー処理の方法</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/validation_handle.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="id1">
-<h1>エラー処理の方法<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>エラー処理の方法<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <div class="section" id="id2">
-<h2>例外の種類とハンドリング<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>例外の種類とハンドリング<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>読み込み時の書式の不正や値の検証時に失敗した場合、例外 <code class="docutils literal notranslate"><span class="pre">org.supercsv.exception.SuperCsvException</span></code> がスローされます。</p>
 <p>エラー内容を画面に表示するようなシステムの場合、例外の内容をメッセージに変換する必要があります。
 そのような時には、<code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.CsvExceptionConverter</span></code> を使い、エラーメッセージに変換します。</p>
 <p>CsvExceptionConverter は、CsvAnnotaionBeanReader/CsvAnnotaionBeanWriterに組み込まれており、
 例外発生時に自動的にエラーメッセージに変換されたものがため込まれます。</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Super CSV Annotationの例外体系</span><a class="headerlink" href="#id4" title="このコードへのパーマリンク">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">Super CSV Annotationの例外体系</span><a class="headerlink" href="#id4" title="このコードへのパーマリンク"></a></div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>java.lang.RuntimeException
   └ org.supercsv.exception.SuperCsvException
       ├ org.supercsv.exception.SuperCsvReflectionException
@@ -374,41 +297,41 @@
 </pre></div>
 </div>
 </div>
-<table border="1" class="colwidths-given docutils" id="id5">
-<caption><span class="caption-text">Super CSV の例外</span><a class="headerlink" href="#id5" title="このテーブルへのパーマリンク">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-text">Super CSV の例外</span><a class="headerlink" href="#id5" title="このテーブルへのパーマリンク"></a></caption>
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">クラス名</th>
-<th class="head">説明</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>クラス名</p></th>
+<th class="head"><p>説明</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><em>SuperCsvException</em></td>
-<td><div class="first last line-block">
+<tbody>
+<tr class="row-even"><td><p><em>SuperCsvException</em></p></td>
+<td><div class="line-block">
 <div class="line">Super CSVのルートの例外。</div>
 <div class="line">Super CSV及び、Super CSV Annotationの例外は、全てこのクラスを継承しています。</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><em>SuperCsvReflectionException</em></td>
-<td><div class="first last line-block">
+<tr class="row-odd"><td><p><em>SuperCsvReflectionException</em></p></td>
+<td><div class="line-block">
 <div class="line">Beanのインスタンスなどの作成やプロパティへの値のマッピング時など、</div>
 <div class="line">リフレクションを使ってに失敗したときの例外。</div>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><em>SuperCsvCellProcessorException</em></td>
-<td><div class="first last line-block">
+<tr class="row-even"><td><p><em>SuperCsvCellProcessorException</em></p></td>
+<td><div class="line-block">
 <div class="line">CellProcessor内で、処理対象のセルの値のクラスタイプが不正などのときのときにスローされる例外。</div>
 <div class="line">例えば、文字列を日時にパースするCellProcessor <code class="docutils literal notranslate"><span class="pre">ParseDate</span></code> で、パースに失敗した場合。</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><em>SuperCsvConstraintViolationException</em></td>
-<td><div class="first last line-block">
+<tr class="row-odd"><td><p><em>SuperCsvConstraintViolationException</em></p></td>
+<td><div class="line-block">
 <div class="line">制約のCellProcessor内で、値が制約違反となり不正のときのにスローされる例外。</div>
 <div class="line">例えば、CellProcessor <code class="docutils literal notranslate"><span class="pre">LMinMax</span></code> で、セルの値が指定した数値の範囲以外のときにスローされる例外。</div>
 </div>
@@ -416,55 +339,55 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="colwidths-given docutils" id="id6">
-<caption><span class="caption-text">Super CSV Annotation の例外</span><a class="headerlink" href="#id6" title="このテーブルへのパーマリンク">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id6">
+<caption><span class="caption-text">Super CSV Annotation の例外</span><a class="headerlink" href="#id6" title="このテーブルへのパーマリンク"></a></caption>
 <colgroup>
-<col width="40%" />
-<col width="60%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">クラス名</th>
-<th class="head">説明</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>クラス名</p></th>
+<th class="head"><p>説明</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><em>SuperCsvValidationException</em></td>
-<td><div class="first last line-block">
+<tbody>
+<tr class="row-even"><td><p><em>SuperCsvValidationException</em></p></td>
+<td><div class="line-block">
 <div class="line">Super CSV Annotationの CellProcessor <code class="docutils literal notranslate"><span class="pre">ValidationCellProcessor</span></code> を</div>
 <div class="line">実装しているCellProcessorの制約違反の例外。</div>
 <div class="line">メッセージ変数などの情報が格納されている。</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><em>SuperCsvInvalidAnnotationException</em></td>
-<td><div class="first last line-block">
+<tr class="row-odd"><td><p><em>SuperCsvInvalidAnnotationException</em></p></td>
+<td><div class="line-block">
 <div class="line">アノテーションの値が不正だったりした場合にスローされる例外。</div>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><em>SuperCsvNoMatchHeaderException</em></td>
-<td><div class="first last line-block">
+<tr class="row-even"><td><p><em>SuperCsvNoMatchHeaderException</em></p></td>
+<td><div class="line-block">
 <div class="line">ヘッダー行を読み込む際に、<code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&quot;)</span></code> で定義している</div>
 <div class="line">値と異なる場合にスローされる例外。</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><em>SuperCsvNoMatchColumnSizeException</em></td>
-<td><div class="first last line-block">
+<tr class="row-odd"><td><p><em>SuperCsvNoMatchColumnSizeException</em></p></td>
+<td><div class="line-block">
 <div class="line">ヘッダー行やレコードを読み込む際に、<code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn</span></code> で定義している</div>
 <div class="line">カラムサイズと異なる場合にスローされる例外。</div>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><em>SuperCsvRowException</em></td>
-<td><div class="first last line-block">
+<tr class="row-even"><td><p><em>SuperCsvRowException</em></p></td>
+<td><div class="line-block">
 <div class="line">各カラムのCellProcesor内で発生した <em>SuperCsvCellProcessorException</em> の例外を、</div>
 <div class="line">レコードを単位にまとめた例外。</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><em>SuperCsvBindingException</em></td>
-<td><div class="first last line-block">
+<tr class="row-odd"><td><p><em>SuperCsvBindingException</em></p></td>
+<td><div class="line-block">
 <div class="line">最終的にカラムのマッピングに失敗したときにスローされる例外。</div>
 <div class="line">CsvValidatorによるBeanの検証時のエラーも格納されている。</div>
 </div>
@@ -480,432 +403,297 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 もし、その中で例外が発生するとCSVファイルに関連するリソースが解放されないくなるため分割して定義します。</p>
 <p>また、1レコードずつ処理すると、例外発生時に処理が終わってしまうため、全レコードの値を検証したい場合は、
 <code class="docutils literal notranslate"><span class="pre">readAll(...)/readWrite(...)</span></code> メソッドの使用をお勧めします。</p>
+<p>例外がスローされたときの処理をtry-catchではなく、ハンドラ形式で処理したい場合は、 <code class="docutils literal notranslate"><span class="pre">CsvSuccessHandler</span></code> 、 <code class="docutils literal notranslate"><span class="pre">CsvErrorHandler</span></code> の実装を指定します。
+関数型インタフェースのため、Lambda式を使うことができます。 <em>[v2.3+]</em></p>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">読み込み時のエラー処理</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.exception.SuperCsvException</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvBindingException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvNoMatchColumnSizeException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException</span><span class="o">;</span>
-
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
-
-    <span class="c1">// 読み込み時の場合（1行づつ処理する場合）</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadEach</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="k">try</span><span class="o">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedReader</span><span class="o">(</span>
-                    <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">));</span>
-            <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;(</span>
-                    <span class="n">SampleCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">reader</span><span class="o">,</span> <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span> <span class="o">)</span> <span class="o">{</span>
-
-            <span class="c1">// ヘッダー行の読み込み</span>
-            <span class="n">String</span><span class="o">[]</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-
-            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-
-            <span class="c1">// レコードの読み込み - 1行づつ</span>
-            <span class="n">SampleCsv</span> <span class="n">record</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="k">while</span><span class="o">((</span><span class="n">record</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
-            <span class="o">}</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">SuperCsvNoMatchColumnSizeException</span>
-                <span class="o">|</span> <span class="n">SuperCsvBindingException</span>
-                <span class="o">|</span> <span class="n">SuperCsvNoMatchHeaderException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// レコードの値が不正な場合のときのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// Super CSVの設定などのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// ファイルI/Oに関する例外</span>
-
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="c1">// 読み込み時の場合（全件処理する場合）</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadAll</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="k">try</span><span class="o">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedReader</span><span class="o">(</span>
-                    <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">));</span>
-            <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;(</span>
-                    <span class="n">SampleCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">reader</span><span class="o">,</span> <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span> <span class="o">)</span> <span class="o">{</span>
-
-            <span class="c1">// 全件読み込む - SuperCsvBindingExceptionなどの例外発生しても続けて処理する</span>
-            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">readAll</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-
-            <span class="c1">// エラーメッセージの取得</span>
-            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">getErrorMessages</span><span class="o">();</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// Super CSVの設定などのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// ファイルI/Oに関する例外</span>
-
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="code-block-caption"><span class="caption-text">読み込み時のエラー処理</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク"></a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos">  2</span><span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos">  3</span><span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos">  4</span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="linenos">  5</span><span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="p">;</span>
+<span class="linenos">  6</span><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="linenos">  7</span><span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="linenos">  8</span>
+<span class="linenos">  9</span><span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos"> 10</span><span class="kn">import</span> <span class="nn">org.supercsv.exception.SuperCsvException</span><span class="p">;</span>
+<span class="linenos"> 11</span>
+<span class="linenos"> 12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="p">;</span>
+<span class="linenos"> 13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvBindingException</span><span class="p">;</span>
+<span class="linenos"> 14</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvNoMatchColumnSizeException</span><span class="p">;</span>
+<span class="linenos"> 15</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException</span><span class="p">;</span>
+<span class="linenos"> 16</span>
+<span class="linenos"> 17</span>
+<span class="linenos"> 18</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="p">{</span>
+<span class="linenos"> 19</span>
+<span class="linenos"> 20</span>    <span class="c1">// 読み込み時の場合（1行づつ処理する場合）</span>
+<span class="linenos"> 21</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadEach</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 22</span>
+<span class="linenos"> 23</span>        <span class="k">try</span><span class="p">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span>
+<span class="linenos"> 24</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 25</span>            <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 26</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 27</span>
+<span class="linenos"> 28</span>            <span class="c1">// ヘッダー行の読み込み</span>
+<span class="linenos"> 29</span>            <span class="n">String</span><span class="o">[]</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">getHeader</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="linenos"> 30</span>
+<span class="linenos"> 31</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="linenos"> 32</span>
+<span class="linenos"> 33</span>            <span class="c1">// レコードの読み込み - 1行づつ</span>
+<span class="linenos"> 34</span>            <span class="n">SampleCsv</span> <span class="n">record</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="linenos"> 35</span>            <span class="k">while</span><span class="p">((</span><span class="n">record</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">read</span><span class="p">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 36</span>                    <span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+<span class="linenos"> 37</span>            <span class="p">}</span>
+<span class="linenos"> 38</span>
+<span class="linenos"> 39</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvNoMatchColumnSizeException</span>
+<span class="linenos"> 40</span>                <span class="o">|</span> <span class="n">SuperCsvBindingException</span>
+<span class="linenos"> 41</span>                <span class="o">|</span> <span class="n">SuperCsvNoMatchHeaderException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 42</span>            <span class="c1">// レコードの値が不正な場合のときのエラー</span>
+<span class="linenos"> 43</span>
+<span class="linenos"> 44</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 45</span>            <span class="c1">// Super CSVの設定などのエラー</span>
+<span class="linenos"> 46</span>
+<span class="linenos"> 47</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 48</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos"> 49</span>
+<span class="linenos"> 50</span>        <span class="p">}</span>
+<span class="linenos"> 51</span>    <span class="p">}</span>
+<span class="linenos"> 52</span>
+<span class="linenos"> 53</span>    <span class="c1">// 読み込み時の場合（全件処理する場合）</span>
+<span class="linenos"> 54</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadAll</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 55</span>
+<span class="linenos"> 56</span>        <span class="k">try</span><span class="p">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span>
+<span class="linenos"> 57</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 58</span>            <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 59</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 60</span>
+<span class="linenos"> 61</span>            <span class="c1">// 全件読み込む - SuperCsvBindingExceptionなどの例外発生しても続けて処理する</span>
+<span class="linenos"> 62</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">readAll</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="linenos"> 63</span>
+<span class="linenos"> 64</span>            <span class="c1">// エラーメッセージの取得</span>
+<span class="linenos"> 65</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos"> 66</span>
+<span class="linenos"> 67</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 68</span>            <span class="c1">// Super CSVの設定などのエラー</span>
+<span class="linenos"> 69</span>
+<span class="linenos"> 70</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 71</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos"> 72</span>
+<span class="linenos"> 73</span>        <span class="p">}</span>
+<span class="linenos"> 74</span>    <span class="p">}</span>
+<span class="linenos"> 75</span>
+<span class="linenos"> 76</span>    <span class="c1">// 読み込み時の場合（ハンドラで処理する場合）</span>
+<span class="linenos"> 77</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadWithHandler</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 78</span>
+<span class="linenos"> 79</span>        <span class="k">try</span><span class="p">(</span><span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span>
+<span class="linenos"> 80</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 81</span>            <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 82</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 83</span>
+<span class="linenos"> 84</span>            <span class="c1">// ヘッダー行の読み込み</span>
+<span class="linenos"> 85</span>            <span class="n">String</span><span class="o">[]</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">getHeader</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="linenos"> 86</span>
+<span class="linenos"> 87</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="linenos"> 88</span>
+<span class="linenos"> 89</span>            <span class="c1">// ハンドラによる読み込み</span>
+<span class="linenos"> 90</span>            <span class="k">while</span><span class="p">(</span><span class="n">csvReader</span><span class="p">.</span><span class="na">read</span><span class="p">(</span>
+<span class="linenos"> 91</span>                <span class="n">record</span> <span class="o">-&gt;</span> <span class="p">{</span>
+<span class="linenos"> 92</span>                    <span class="c1">// 読み込み成功時の処理 - CsvSuccessHandler</span>
+<span class="linenos"> 93</span>                    <span class="n">list</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
+<span class="linenos"> 94</span>                <span class="p">},</span>
+<span class="linenos"> 95</span>                <span class="n">error</span> <span class="o">-&gt;</span> <span class="p">{</span>
+<span class="linenos"> 96</span>                    <span class="c1">// Super CSVに関するエラー処理 - CsvErrorHandler</span>
+<span class="linenos"> 97</span>
+<span class="linenos"> 98</span>                <span class="p">})</span> <span class="o">!=</span> <span class="n">CsvReadStatus</span><span class="p">.</span><span class="na">EOF</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 99</span>
+<span class="linenos">100</span>            <span class="p">}</span>
+<span class="linenos">101</span>
+<span class="linenos">102</span>            <span class="c1">// エラーメッセージの取得</span>
+<span class="linenos">103</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvReader</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos">104</span>
+<span class="linenos">105</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">106</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos">107</span>
+<span class="linenos">108</span>        <span class="p">}</span>
+<span class="linenos">109</span>
+<span class="linenos">110</span>    <span class="p">}</span>
+<span class="linenos">111</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">書き込み時のエラー処理</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.Writer</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.exception.SuperCsvException</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvBindingException</span><span class="o">;</span>
-
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
-
-    <span class="c1">// 書き込み時の場合（1行づつ処理する場合）</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteEach</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="k">try</span><span class="o">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedWriter</span><span class="o">(</span>
-                    <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">));</span>
-            <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                    <span class="n">SampleCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">reader</span><span class="o">,</span> <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span> <span class="o">)</span> <span class="o">{</span>
-
-            <span class="c1">// ヘッダー行の書き込み</span>
-            <span class="n">csvWriter</span><span class="o">.</span><span class="na">writeHeaader</span><span class="o">();</span>
-
-            <span class="c1">// レコードの書き込み - 1行づつ</span>
-            <span class="n">SampleCsv</span> <span class="n">record1</span> <span class="o">=</span> <span class="cm">/* 省略*/</span><span class="o">;</span>
-            <span class="n">csvWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record1</span><span class="o">);</span>
-
-            <span class="n">SampleCsv</span> <span class="n">record2</span> <span class="o">=</span> <span class="cm">/* 省略*/</span><span class="o">;</span>
-            <span class="n">csvWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record2</span><span class="o">);</span>
-
-
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SuperCsvBindingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// レコードの値が不正な場合のときのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// Super CSVの設定などのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// ファイルI/Oに関する例外</span>
-
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="c1">// 書き込み時の場合（全件処理する場合）</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteAll</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="k">try</span><span class="o">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedWriter</span><span class="o">(</span>
-                    <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">));</span>
-            <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                    <span class="n">SampleCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">writer</span><span class="o">,</span> <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span> <span class="o">)</span> <span class="o">{</span>
-
-            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="cm">/* 省略 */</span><span class="o">;</span>
-
-            <span class="c1">// 全件書き込む - SuperCsvBindingExceptionなどの例外発生しても続けて処理する</span>
-            <span class="n">csvWriter</span><span class="o">.</span><span class="na">writeAll</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-
-            <span class="c1">// エラーメッセージの取得</span>
-            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvWriter</span><span class="o">.</span><span class="na">getErrorMessages</span><span class="o">();</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// Super CSVの設定などのエラー</span>
-
-        <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="c1">// ファイルI/Oに関する例外</span>
-
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="code-block-caption"><span class="caption-text">書き込み時のエラー処理</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク"></a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos">  2</span><span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos">  3</span><span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos">  4</span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="linenos">  5</span><span class="kn">import</span> <span class="nn">java.io.Writer</span><span class="p">;</span>
+<span class="linenos">  6</span><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="linenos">  7</span><span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+<span class="linenos">  8</span>
+<span class="linenos">  9</span><span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos"> 10</span><span class="kn">import</span> <span class="nn">org.supercsv.exception.SuperCsvException</span><span class="p">;</span>
+<span class="linenos"> 11</span>
+<span class="linenos"> 12</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter</span><span class="p">;</span>
+<span class="linenos"> 13</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.exception.SuperCsvBindingException</span><span class="p">;</span>
+<span class="linenos"> 14</span>
+<span class="linenos"> 15</span>
+<span class="linenos"> 16</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="p">{</span>
+<span class="linenos"> 17</span>
+<span class="linenos"> 18</span>    <span class="c1">// 書き込み時の場合（1行づつ処理する場合）</span>
+<span class="linenos"> 19</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteEach</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span>        <span class="k">try</span><span class="p">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span>
+<span class="linenos"> 22</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 23</span>            <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 24</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 25</span>
+<span class="linenos"> 26</span>            <span class="c1">// ヘッダー行の書き込み</span>
+<span class="linenos"> 27</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">writeHeaader</span><span class="p">();</span>
+<span class="linenos"> 28</span>
+<span class="linenos"> 29</span>            <span class="c1">// レコードの書き込み - 1行づつ</span>
+<span class="linenos"> 30</span>            <span class="n">SampleCsv</span> <span class="n">record1</span> <span class="o">=</span> <span class="cm">/* 省略*/</span><span class="p">;</span>
+<span class="linenos"> 31</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">record1</span><span class="p">);</span>
+<span class="linenos"> 32</span>
+<span class="linenos"> 33</span>            <span class="n">SampleCsv</span> <span class="n">record2</span> <span class="o">=</span> <span class="cm">/* 省略*/</span><span class="p">;</span>
+<span class="linenos"> 34</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">record2</span><span class="p">);</span>
+<span class="linenos"> 35</span>
+<span class="linenos"> 36</span>
+<span class="linenos"> 37</span>        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">SuperCsvBindingException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 38</span>            <span class="c1">// レコードの値が不正な場合のときのエラー</span>
+<span class="linenos"> 39</span>
+<span class="linenos"> 40</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 41</span>            <span class="c1">// Super CSVの設定などのエラー</span>
+<span class="linenos"> 42</span>
+<span class="linenos"> 43</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 44</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos"> 45</span>
+<span class="linenos"> 46</span>        <span class="p">}</span>
+<span class="linenos"> 47</span>    <span class="p">}</span>
+<span class="linenos"> 48</span>
+<span class="linenos"> 49</span>    <span class="c1">// 書き込み時の場合（全件処理する場合）</span>
+<span class="linenos"> 50</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteAll</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 51</span>
+<span class="linenos"> 52</span>        <span class="k">try</span><span class="p">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span>
+<span class="linenos"> 53</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 54</span>            <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 55</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 56</span>
+<span class="linenos"> 57</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="cm">/* 省略 */</span><span class="p">;</span>
+<span class="linenos"> 58</span>
+<span class="linenos"> 59</span>            <span class="c1">// 全件書き込む - SuperCsvBindingExceptionなどの例外発生しても続けて処理する</span>
+<span class="linenos"> 60</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">writeAll</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="linenos"> 61</span>
+<span class="linenos"> 62</span>            <span class="c1">// エラーメッセージの取得</span>
+<span class="linenos"> 63</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvWriter</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos"> 64</span>
+<span class="linenos"> 65</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span> <span class="n">e</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 66</span>            <span class="c1">// Super CSVの設定などのエラー</span>
+<span class="linenos"> 67</span>
+<span class="linenos"> 68</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 69</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos"> 70</span>
+<span class="linenos"> 71</span>        <span class="p">}</span>
+<span class="linenos"> 72</span>    <span class="p">}</span>
+<span class="linenos"> 73</span>
+<span class="linenos"> 74</span>    <span class="c1">// 書き込み時の場合（ハンドラで処理する場合）</span>
+<span class="linenos"> 75</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteWithHandler</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos"> 76</span>
+<span class="linenos"> 77</span>        <span class="k">try</span><span class="p">(</span><span class="n">Writer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span>
+<span class="linenos"> 78</span>                    <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">));</span>
+<span class="linenos"> 79</span>            <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos"> 80</span>                    <span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span> <span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 81</span>
+<span class="linenos"> 82</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="cm">/* 省略 */</span><span class="p">;</span>
+<span class="linenos"> 83</span>
+<span class="linenos"> 84</span>            <span class="c1">// ヘッダー行の書き込み</span>
+<span class="linenos"> 85</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">writeHeaader</span><span class="p">();</span>
+<span class="linenos"> 86</span>
+<span class="linenos"> 87</span>            <span class="k">for</span><span class="p">(</span><span class="n">SampleCsv</span> <span class="n">item</span> <span class="p">:</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos"> 88</span>                <span class="n">csvWriter</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">error</span> <span class="o">-&gt;</span> <span class="p">{</span>
+<span class="linenos"> 89</span>                    <span class="c1">// Super CSVに関するエラー処理 - CsvErrorHandler</span>
+<span class="linenos"> 90</span>                    <span class="p">}</span>
+<span class="linenos"> 91</span>                <span class="p">);</span>
+<span class="linenos"> 92</span>            <span class="p">}</span>
+<span class="linenos"> 93</span>
+<span class="linenos"> 94</span>            <span class="n">csvWriter</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+<span class="linenos"> 95</span>
+<span class="linenos"> 96</span>            <span class="c1">// エラーメッセージの取得</span>
+<span class="linenos"> 97</span>            <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">errorMessages</span> <span class="o">=</span> <span class="n">csvWriter</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos"> 98</span>
+<span class="linenos"> 99</span>        <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">100</span>            <span class="c1">// ファイルI/Oに関する例外</span>
+<span class="linenos">101</span>
+<span class="linenos">102</span>        <span class="p">}</span>
+<span class="linenos">103</span>    <span class="p">}</span>
+<span class="linenos">104</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 <div class="section" id="id3">
-<h2>書き込み時の値の検証のスキップ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>書き込み時の値の検証のスキップ<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>書き込み時の値をスキップしたい場合は、グループによる指定もできますが、システム設定を変更することで一律にスキップすることができます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory</span></code> から <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> を取得し、そのプロパティ <code class="docutils literal notranslate"><span class="pre">skipValidationOnWrite</span></code> の値を trueに設定します。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BeanMapping</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BeanMappingFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteWithSkipValidation</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="c1">// システム情報の設定変更</span>
-        <span class="n">BeanMappingFactory</span> <span class="n">mappingFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BeanMappingFactory</span><span class="o">();</span>
-        <span class="n">mappingFactory</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">setSkipValidationOnWrite</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-
-        <span class="c1">// BeanMappingの作成</span>
-        <span class="n">BeanMapping</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">beanMapping</span> <span class="o">=</span> <span class="n">mappingFactory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SampleCsv</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-
-        <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                <span class="n">beanMapping</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span>
-
-        <span class="c1">//... 以下省略</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BeanMapping</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BeanMappingFactory</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="p">{</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteWithSkipValidation</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>        <span class="c1">// システム情報の設定変更</span>
+<span class="linenos">16</span>        <span class="n">BeanMappingFactory</span> <span class="n">mappingFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BeanMappingFactory</span><span class="p">();</span>
+<span class="linenos">17</span>        <span class="n">mappingFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">setSkipValidationOnWrite</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>        <span class="c1">// BeanMappingの作成</span>
+<span class="linenos">20</span>        <span class="n">BeanMapping</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">beanMapping</span> <span class="o">=</span> <span class="n">mappingFactory</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>        <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos">23</span>                <span class="n">beanMapping</span><span class="p">,</span>
+<span class="linenos">24</span>                <span class="n">Files</span><span class="p">.</span><span class="na">newBufferedWriter</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span> <span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">)),</span>
+<span class="linenos">25</span>                <span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>        <span class="c1">//... 以下省略</span>
+<span class="linenos">28</span>    <span class="p">}</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });

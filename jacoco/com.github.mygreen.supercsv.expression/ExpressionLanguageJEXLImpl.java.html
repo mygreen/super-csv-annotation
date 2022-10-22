@@ -14,51 +14,54 @@ import org.slf4j.LoggerFactory;
  * 式言語&lt;a href=&quot;http://commons.apache.org/proper/commons-jexl/&quot; target=&quot;_blank&quot;&gt;JEXL(Java Expression Language)&lt;/a&gt;の実装。
  * &lt;p&gt;利用する際には、JEXL2.1のライブラリが必要です。
  *
+ * @version 2.3
  * @since 2.0
  * @author T.TSUCHIE
  *
  */
 public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
     
-<span class="fc" id="L23">    private static final Logger logger = LoggerFactory.getLogger(ExpressionLanguageJEXLImpl.class);</span>
+<span class="fc" id="L24">    private static final Logger logger = LoggerFactory.getLogger(ExpressionLanguageJEXLImpl.class);</span>
     
     private final JexlEngine jexlEngine;
     
-<span class="fc" id="L27">    private final ObjectCache&lt;String, Expression&gt; expressionCache = new ObjectCache&lt;&gt;();</span>
+<span class="pc" id="L28">    private final ObjectCache&lt;String, Expression&gt; expressionCache = new ObjectCache&lt;&gt;();</span>
     
-    public ExpressionLanguageJEXLImpl() {
-<span class="fc" id="L30">        this(new JexlEngine());</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L30">    public ExpressionLanguageJEXLImpl() {</span>
+<span class="fc" id="L31">        JexlEngine engine = new JexlEngine();</span>
+<span class="fc" id="L32">        engine.setSilent(true);</span>
+<span class="fc" id="L33">        this.jexlEngine = engine;</span>
+<span class="fc" id="L34">    }</span>
     
     /**
      * {@link JexlEngine}を指定するコンストラクタ。
      * @param jexlEngine JEXLの処理エンジン。
      */
-<span class="fc" id="L37">    public ExpressionLanguageJEXLImpl(final JexlEngine jexlEngine) {</span>
-<span class="fc" id="L38">        this.jexlEngine = jexlEngine;</span>
-<span class="fc" id="L39">    }</span>
+<span class="nc" id="L40">    public ExpressionLanguageJEXLImpl(final JexlEngine jexlEngine) {</span>
+<span class="nc" id="L41">        this.jexlEngine = jexlEngine;</span>
+<span class="nc" id="L42">    }</span>
     
     @Override
     public Object evaluate(final String expression, final Map&lt;String, Object&gt; values) {
         
-<span class="fc" id="L44">        Objects.requireNonNull(expression, &quot;expression shoud not be null.&quot;);</span>
-<span class="fc" id="L45">        Objects.requireNonNull(values, &quot;values shoud not be null.&quot;);</span>
+<span class="fc" id="L47">        Objects.requireNonNull(expression, &quot;expression shoud not be null.&quot;);</span>
+<span class="fc" id="L48">        Objects.requireNonNull(values, &quot;values shoud not be null.&quot;);</span>
         
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if(logger.isDebugEnabled()) {</span>
-<span class="fc" id="L48">            logger.debug(&quot;Evaluating JEXL expression: {}&quot;, expression);</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if(logger.isDebugEnabled()) {</span>
+<span class="fc" id="L51">            logger.debug(&quot;Evaluating JEXL expression: {}&quot;, expression);</span>
         }
         
         try {
-<span class="fc" id="L52">            Expression expr = expressionCache.get(expression);</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (expr == null) {</span>
-<span class="fc" id="L54">                expr = jexlEngine.createExpression(expression);</span>
-<span class="fc" id="L55">                expressionCache.put(expression, expr);</span>
+<span class="fc" id="L55">            Expression expr = expressionCache.get(expression);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (expr == null) {</span>
+<span class="fc" id="L57">                expr = jexlEngine.createExpression(expression);</span>
+<span class="fc" id="L58">                expressionCache.put(expression, expr);</span>
             }
             
-<span class="fc" id="L58">            return expr.evaluate(new MapContext((Map&lt;String, Object&gt;) values));</span>
+<span class="fc" id="L61">            return expr.evaluate(new MapContext((Map&lt;String, Object&gt;) values));</span>
             
-<span class="fc" id="L60">        } catch(Exception ex) {</span>
-<span class="fc" id="L61">            throw new ExpressionEvaluationException(String.format(&quot;Evaluating [%s] script with JEXL failed.&quot;, expression), ex,</span>
+<span class="fc" id="L63">        } catch(Exception ex) {</span>
+<span class="fc" id="L64">            throw new ExpressionEvaluationException(String.format(&quot;Evaluating [%s] script with JEXL failed.&quot;, expression), ex,</span>
                     expression, values);
         }
     }
@@ -68,8 +71,8 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
      * @return
      */
     public JexlEngine getJexlEngine() {
-<span class="fc" id="L71">        return jexlEngine;</span>
+<span class="fc" id="L74">        return jexlEngine;</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

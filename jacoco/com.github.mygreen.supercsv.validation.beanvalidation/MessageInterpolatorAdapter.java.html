@@ -8,8 +8,6 @@ import java.util.Optional;
 
 import javax.validation.metadata.ConstraintDescriptor;
 
-import org.hibernate.validator.internal.engine.MessageInterpolatorContext;
-
 import com.github.mygreen.supercsv.localization.MessageInterpolator;
 import com.github.mygreen.supercsv.localization.MessageResolver;
 
@@ -17,7 +15,7 @@ import com.github.mygreen.supercsv.localization.MessageResolver;
  * SuperCsvAnnotationの{@link MessageInterpolator}とBeanValidationの{@link javax.validation.MessageInterpolator}をブリッジする。
  * &lt;p&gt;BeanValidationのメッセージ処理をカスタマイズするために利用する。&lt;/p&gt;
  *
- * @version 2.2
+ * @version 2.3
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -34,22 +32,22 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
      * @param csvMessageInterpolator
      * @throws NullPointerException {@literal if messageResolver or csvMessageInterpolator is null.}
      */
-<span class="fc" id="L37">    public MessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {</span>
-<span class="fc" id="L38">        Objects.requireNonNull(messageResolver);</span>
-<span class="fc" id="L39">        Objects.requireNonNull(csvMessageInterpolator);</span>
+<span class="fc" id="L35">    public MessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {</span>
+<span class="fc" id="L36">        Objects.requireNonNull(messageResolver);</span>
+<span class="fc" id="L37">        Objects.requireNonNull(csvMessageInterpolator);</span>
         
-<span class="fc" id="L41">        this.messageResolver = messageResolver;</span>
-<span class="fc" id="L42">        this.csvMessageInterpolator = csvMessageInterpolator;</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L39">        this.messageResolver = messageResolver;</span>
+<span class="fc" id="L40">        this.csvMessageInterpolator = csvMessageInterpolator;</span>
+<span class="fc" id="L41">    }</span>
     
     @Override
     public String interpolate(final String messageTemplate, final Context context) {
-<span class="fc" id="L47">        return csvMessageInterpolator.interpolate(messageTemplate, createMessageVariables(context), true, messageResolver);</span>
+<span class="fc" id="L45">        return csvMessageInterpolator.interpolate(messageTemplate, createMessageVariables(context), true, messageResolver);</span>
     }
     
     @Override
     public String interpolate(final String messageTemplate, final Context context, final Locale locale) {
-<span class="fc" id="L52">        return csvMessageInterpolator.interpolate(messageTemplate, createMessageVariables(context), true, messageResolver);</span>
+<span class="fc" id="L50">        return csvMessageInterpolator.interpolate(messageTemplate, createMessageVariables(context), true, messageResolver);</span>
     }
     
     /**
@@ -59,43 +57,38 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
      */
     private Map&lt;String, Object&gt; createMessageVariables(final Context context) {
         
-<span class="fc" id="L62">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L60">        final Map&lt;String, Object&gt; vars = new HashMap&lt;&gt;();</span>
         
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if(context instanceof MessageInterpolatorContext) {</span>
-<span class="fc" id="L65">            MessageInterpolatorContext mic = (MessageInterpolatorContext)context;</span>
-<span class="fc" id="L66">            vars.putAll(mic.getMessageParameters());</span>
-        }
-        
-<span class="fc" id="L69">        final ConstraintDescriptor&lt;?&gt; descriptor = context.getConstraintDescriptor();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        for(Map.Entry&lt;String, Object&gt; entry : descriptor.getAttributes().entrySet()) {</span>
-<span class="fc" id="L71">            final String attrName = entry.getKey();</span>
-<span class="fc" id="L72">            final Object attrValue = entry.getValue();</span>
+<span class="fc" id="L62">        final ConstraintDescriptor&lt;?&gt; descriptor = context.getConstraintDescriptor();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for(Map.Entry&lt;String, Object&gt; entry : descriptor.getAttributes().entrySet()) {</span>
+<span class="fc" id="L64">            final String attrName = entry.getKey();</span>
+<span class="fc" id="L65">            final Object attrValue = entry.getValue();</span>
             
-<span class="fc" id="L74">            vars.put(attrName, attrValue);</span>
-<span class="fc" id="L75">        }</span>
+<span class="fc" id="L67">            vars.put(attrName, attrValue);</span>
+<span class="fc" id="L68">        }</span>
         
         // 検証対象の値
-<span class="fc" id="L78">        vars.computeIfAbsent(&quot;validatedValue&quot;, key -&gt; context.getValidatedValue());</span>
+<span class="fc" id="L71">        vars.computeIfAbsent(&quot;validatedValue&quot;, key -&gt; context.getValidatedValue());</span>
         
         // デフォルトのメッセージ
-<span class="fc" id="L81">        final String defaultCode = String.format(&quot;%s.message&quot;, descriptor.getAnnotation().annotationType().getCanonicalName());</span>
-<span class="fc" id="L82">        final Optional&lt;String&gt; defaultMessage = messageResolver.getMessage(defaultCode);</span>
+<span class="fc" id="L74">        final String defaultCode = String.format(&quot;%s.message&quot;, descriptor.getAnnotation().annotationType().getCanonicalName());</span>
+<span class="fc" id="L75">        final Optional&lt;String&gt; defaultMessage = messageResolver.getMessage(defaultCode);</span>
         
-<span class="fc" id="L84">        vars.put(defaultCode, </span>
-<span class="pc" id="L85">                defaultMessage.orElseThrow(() -&gt; new RuntimeException(String.format(&quot;not found message code '%s'&quot;, defaultCode))));</span>
+<span class="fc" id="L77">        vars.put(defaultCode, </span>
+<span class="pc" id="L78">                defaultMessage.orElseThrow(() -&gt; new RuntimeException(String.format(&quot;not found message code '%s'&quot;, defaultCode))));</span>
         
         
-<span class="fc" id="L88">        return vars;</span>
+<span class="fc" id="L81">        return vars;</span>
         
     }
     
     public MessageResolver getMessageResolver() {
-<span class="nc" id="L93">        return messageResolver;</span>
+<span class="nc" id="L86">        return messageResolver;</span>
     }
     
     public MessageInterpolator getCsvMessageInterpolator() {
-<span class="nc" id="L97">        return csvMessageInterpolator;</span>
+<span class="nc" id="L90">        return csvMessageInterpolator;</span>
     }
     
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

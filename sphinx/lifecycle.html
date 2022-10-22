@@ -1,72 +1,42 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11. ライフサイクルイベントの管理 &mdash; Super CSV Annotation 2.3 ドキュメント</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>11. ライフサイクルイベントの管理 &mdash; Super CSV Annotation 2.2 ドキュメント</title>
-  
-
-  
-  
-  
-  
-
-  
-
-  
-  
-    
-
-  
-
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="next" title="12. Spring Frameworkとの連携" href="spring.html" />
     <link rel="prev" title="10. 独自のProcessorBuilderの作成" href="processorbuilder.html" />
  
 <!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
+        <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                2.2
+                2.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,12 +44,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
 <p class="caption"><span class="caption-text">関連リンク</span></p>
 <ul>
 	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
@@ -89,12 +54,7 @@
 </ul>
 
 
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
@@ -272,428 +232,264 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.1. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.2. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.3. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.4. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.5. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.6. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.7. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.8. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
 <!-- my theme custom extramenu beacon -->
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Super CSV Annotation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>11. ライフサイクルイベントの管理</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">11. </span>ライフサイクルイベントの管理</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/lifecycle.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="id1">
-<h1>11. ライフサイクルイベントの管理<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1><span class="section-number">11. </span>ライフサイクルイベントの管理<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <p>レコード単位に、読み込み／書き込みの前後のイベントをハンドリングすることができます。</p>
 <p>実装方法として、JavaBeanに直接処理を実装する方法と、リスナークラスを指定して別のクラスで実装する方法の2種類があります。</p>
 <div class="section" id="id2">
-<h2>11.1. ライフサイクル・コールバック用のアノテーション<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">11.1. </span>ライフサイクル・コールバック用のアノテーション<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>ライフサイクルイベントに対応するアノテーションをメソッドに付与することで、
 そのメソッドをコールバック呼び出しすることができます。</p>
-<table border="1" class="colwidths-given docutils" id="id10">
-<caption><span class="caption-number">表 - 11.1.1 </span><span class="caption-text">ライフサイクルイベント用のアノテーション</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id10">
+<caption><span class="caption-number">表 - 11.1.1 </span><span class="caption-text">ライフサイクルイベント用のアノテーション</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク"></a></caption>
 <colgroup>
-<col width="30%" />
-<col width="55%" />
-<col width="15%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+<col style="width: 15%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">アノテーション</th>
-<th class="head">概要</th>
-<th class="head">参照</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>アノテーション</p></th>
+<th class="head"><p>概要</p></th>
+<th class="head"><p>参照</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPreRead</span></code></td>
-<td>レコードの読み込み前に実行されます。</td>
-<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPreRead.html">JavaDoc</a></td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;CsvPreRead</span></code></p></td>
+<td><p>レコードの読み込み前に実行されます。</p></td>
+<td><p><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPreRead.html">JavaDoc</a></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPostRead</span></code></td>
-<td>レコードの読み込み後に実行されます。</td>
-<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPostRead.html">JavaDoc</a></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;CsvPostRead</span></code></p></td>
+<td><p>レコードの読み込み後に実行されます。</p></td>
+<td><p><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPostRead.html">JavaDoc</a></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPreWrite</span></code></td>
-<td>レコードの書き込み前に実行されます。</td>
-<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPreWrite.html">JavaDoc</a></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;CsvPreWrite</span></code></p></td>
+<td><p>レコードの書き込み前に実行されます。</p></td>
+<td><p><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPreWrite.html">JavaDoc</a></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&#64;CsvPostWrite</span></code></td>
-<td>レコードの書き込み後に実行されます。</td>
-<td><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPostWrite.html">JavaDoc</a></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;CsvPostWrite</span></code></p></td>
+<td><p>レコードの書き込み後に実行されます。</p></td>
+<td><p><a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvPostWrite.html">JavaDoc</a></p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="first admonition-title">注釈</p>
-<p class="last">不明な引数を定義している場合は、nullが渡されます。</p>
+<p class="admonition-title">注釈</p>
+<p>不明な引数を定義している場合は、nullが渡されます。</p>
 </div>
 <p>メソッドには以下の引数を取ることができます。</p>
 <ul class="simple">
-<li>引数は、とらなくても可能です。</li>
-<li>引数の順番は任意で指定可能です。</li>
+<li><p>引数は、とらなくても可能です。</p></li>
+<li><p>引数の順番は任意で指定可能です。</p></li>
 </ul>
-<table border="1" class="colwidths-given docutils" id="id11">
-<caption><span class="caption-number">表 - 11.1.2 </span><span class="caption-text">コールバック用のメソッドに指定可能な引数一覧</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id11">
+<caption><span class="caption-number">表 - 11.1.2 </span><span class="caption-text">コールバック用のメソッドに指定可能な引数一覧</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク"></a></caption>
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">引数のタイプ</th>
-<th class="head">説明</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>引数のタイプ</p></th>
+<th class="head"><p>説明</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">org.supercsv.util.CsvContext</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/util/CsvContext.html">JavaDoc</a> ]</td>
-<td>CSVの1レコード分の情報。</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">org.supercsv.util.CsvContext</span></code> [ <a class="reference external" href="http://super-csv.github.io/super-csv/apidocs/org/supercsv/util/CsvContext.html">JavaDoc</a> ]</p></td>
+<td><p>CSVの1レコード分の情報。</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.CsvBindingErrors</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/validation/CsvBindingErrors.html">JavaDoc</a> ]</td>
-<td>CSVの1レコード分のエラー情報。</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.CsvBindingErrors</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/validation/CsvBindingErrors.html">JavaDoc</a> ]</p></td>
+<td><p>CSVの1レコード分のエラー情報。</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.ValidationContext</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/validation/ValidationContext.html">JavaDoc</a> ]</td>
-<td>値の検証用の情報。</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.validation.ValidationContext</span></code> [<a class="reference external" href="../apidocs/com/github/mygreen/supercsv/validation/ValidationContext.html">JavaDoc</a> ]</p></td>
+<td><p>値の検証用の情報。</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Class[]</span></code></td>
-<td>グループのクラス情報。</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Class[]</span></code></p></td>
+<td><p>グループのクラス情報。</p></td>
 </tr>
-<tr class="row-even"><td><em>処理対象のBeanクラス</em></td>
-<td>処理対象のBeanオブジェクト。</td>
+<tr class="row-even"><td><p><em>処理対象のBeanクラス</em></p></td>
+<td><p>処理対象のBeanオブジェクト。</p></td>
 </tr>
 </tbody>
 </table>
 <p>以下のような時にライフサイクル・コールバック関数を利用します。</p>
 <ul class="simple">
-<li>書き込み前のフィールドの初期化。</li>
-<li>読み込み後の入力値の検証。</li>
+<li><p>書き込み前のフィールドの初期化。</p></li>
+<li><p>読み込み後の入力値の検証。</p></li>
 </ul>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostRead</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostWrite</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreRead</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreWrite</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;値&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">value</span><span class="o">;</span>
-
-    <span class="nd">@CsvPreRead</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreRead</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの読み込み前に呼び出されます。</span>
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPostRead</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostRead</span><span class="o">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの読み込み後に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPreWrite</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreWrite</span><span class="o">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの書き込み前に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPostWrite</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostWrite</span><span class="o">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの書き込み後に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-    <span class="c1">// setter/getterは省略</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostRead</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostWrite</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreRead</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreWrite</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos"> 9</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;値&quot;</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">value</span><span class="p">;</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="nd">@CsvPreRead</span>
+<span class="linenos">18</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreRead</span><span class="p">()</span> <span class="p">{</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>        <span class="c1">// レコードの読み込み前に呼び出されます。</span>
+<span class="linenos">21</span>    <span class="p">}</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="nd">@CsvPostRead</span>
+<span class="linenos">24</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostRead</span><span class="p">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>        <span class="c1">// レコードの読み込み後に呼び出されます。</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="p">}</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>    <span class="nd">@CsvPreWrite</span>
+<span class="linenos">31</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreWrite</span><span class="p">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>        <span class="c1">// レコードの書き込み前に呼び出されます。</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="p">}</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>    <span class="nd">@CsvPostWrite</span>
+<span class="linenos">38</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostWrite</span><span class="p">(</span><span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>        <span class="c1">// レコードの書き込み後に呼び出されます。</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span>    <span class="p">}</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span>    <span class="c1">// setter/getterは省略</span>
+<span class="linenos">45</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id9">
-<h2>11.2. リスナークラスによるライフサイクルの管理<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><span class="section-number">11.2. </span>リスナークラスによるライフサイクルの管理<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
 <p>リスナークラスはPOJOで作成し、ライスサイクル用のアノテーションでメソッドを実装します。</p>
 <p>処理対象のレコードオブジェクトが必要なため、基本的に引数にはレコードクラスを指定しておきます。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostRead</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostWrite</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreRead</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreWrite</span><span class="o">;</span>
-
-<span class="c1">// リスナークラスの定義</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleListener</span> <span class="o">{</span>
-
-    <span class="nd">@CsvPreRead</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreRead</span><span class="o">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの読み込み前に呼び出されます。</span>
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPostRead</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostRead</span><span class="o">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="o">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの読み込み後に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPreWrite</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreWrite</span><span class="o">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="o">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの書き込み前に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-    <span class="nd">@CsvPostWrite</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostWrite</span><span class="o">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="o">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// レコードの書き込み後に呼び出されます。</span>
-
-    <span class="o">}</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostRead</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPostWrite</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreRead</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvPreWrite</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c1">// リスナークラスの定義</span>
+<span class="linenos"> 7</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleListener</span> <span class="p">{</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="nd">@CsvPreRead</span>
+<span class="linenos">10</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreRead</span><span class="p">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>        <span class="c1">// レコードの読み込み前に呼び出されます。</span>
+<span class="linenos">13</span>    <span class="p">}</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="nd">@CsvPostRead</span>
+<span class="linenos">16</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostRead</span><span class="p">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="p">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>        <span class="c1">// レコードの読み込み後に呼び出されます。</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="p">}</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="nd">@CsvPreWrite</span>
+<span class="linenos">23</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePreWrite</span><span class="p">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="p">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>        <span class="c1">// レコードの書き込み前に呼び出されます。</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>    <span class="p">}</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>    <span class="nd">@CsvPostWrite</span>
+<span class="linenos">30</span>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handlePostWrite</span><span class="p">(</span><span class="kd">final</span> <span class="n">SampleCsv</span> <span class="n">record</span><span class="p">,</span> <span class="kd">final</span> <span class="n">CsvBindingErrors</span> <span class="n">bindingErrors</span><span class="p">,</span> <span class="kd">final</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="p">)</span> <span class="p">{</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>        <span class="c1">// レコードの書き込み後に呼び出されます。</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="p">}</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>使用する際には、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(listeners=&lt;リスナークラス&gt;)</span></code> にクラスを指定します。</p>
-<div class="highlight-java notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-
-<span class="c1">// リスナクラスを指定します</span>
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">SampleListener</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;値&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">value</span><span class="o">;</span>
-
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1">// リスナクラスを指定します</span>
+<span class="linenos"> 5</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">listeners</span><span class="o">=</span><span class="n">SampleListener</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span>    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;値&quot;</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">value</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="spring.html" class="btn btn-neutral float-right" title="12. Spring Frameworkとの連携" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="processorbuilder.html" class="btn btn-neutral" title="10. 独自のProcessorBuilderの作成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="processorbuilder.html" class="btn btn-neutral float-left" title="10. 独自のProcessorBuilderの作成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="spring.html" class="btn btn-neutral float-right" title="12. Spring Frameworkとの連携" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2018, T.TSUCHIE.
-      最終更新: 2018-07-14 09:50:22
-
-    </p>
+    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
