@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+	</appender>
+	<logger name="com.github.mygreen.supercsv" level="DEBUG">
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	<root>
+		<level value="WARN" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

@@ -104,6 +104,9 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 また、1レコードずつ処理すると、例外発生時に処理が終わってしまうため、全レコードの値を検証したい場合は、
 ``readAll(...)/readWrite(...)`` メソッドの使用をお勧めします。
 
+例外がスローされたときの処理をtry-catchではなく、ハンドラ形式で処理したい場合は、 ``CsvSuccessHandler`` 、 ``CsvErrorHandler`` の実装を指定します。
+関数型インタフェースのため、Lambda式を使うことができます。 *[v2.3+]*
+
 .. sourcecode:: java
     :linenos:
     :caption: 読み込み時のエラー処理
@@ -182,6 +185,42 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
                 
             }
         }
+
+        // 読み込み時の場合（ハンドラで処理する場合）
+        public void sampleReadWithHandler() {
+
+            try(Reader reader = Files.newBufferedReader(
+                        new File("sample.csv").toPath(), Charset.forName("Windows-31j"));
+                CsvAnnotationBeanReader<SampleCsv> csvReader = new CsvAnnotationBeanReader<>(
+                        SampleCsv.class, reader, CsvPreference.STANDARD_PREFERENCE); ) {
+                
+                // ヘッダー行の読み込み
+                String[] headers = csvReader.getHeader(true);
+
+                List<SampleCsv> list = new ArrayList<>();
+
+                // ハンドラによる読み込み
+                while(csvReader.read(
+                    record -> {
+                        // 読み込み成功時の処理 - CsvSuccessHandler
+                        list.add(record);
+                    },
+                    error -> {
+                        // Super CSVに関するエラー処理 - CsvErrorHandler
+
+                    }) != CsvReadStatus.EOF) {
+            
+                }
+                
+                // エラーメッセージの取得
+                List<String> errorMessages = csvReader.getErrorMessages();
+                
+            } catch(IOException e) {
+                // ファイルI/Oに関する例外
+                
+            }
+
+        }
     }
     
 
@@ -255,6 +294,37 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
                 
             } catch(SuperCsvException e ) {
                 // Super CSVの設定などのエラー
+                
+            } catch(IOException e) {
+                // ファイルI/Oに関する例外
+                
+            }
+        }
+
+        // 書き込み時の場合（ハンドラで処理する場合）
+        public void sampleWriteWithHandler() {
+            
+            try(Writer writer = Files.newBufferedWriter(
+                        new File("sample.csv").toPath(), Charset.forName("Windows-31j"));
+                CsvAnnotationBeanWriter<SampleCsv> csvWriter = new CsvAnnotationBeanWriter<>(
+                        SampleCsv.class, writer, CsvPreference.STANDARD_PREFERENCE); ) {
+                
+                List<SampleCsv> list = /* 省略 */;
+                
+                // ヘッダー行の書き込み
+                csvWriter.writeHeaader();
+
+                for(SampleCsv item : list) {
+                    csvWriter.write(item, error -> {
+                        // Super CSVに関するエラー処理 - CsvErrorHandler
+                        }
+                    );
+                }
+                
+                csvWriter.flush();
+                
+                // エラーメッセージの取得
+                List<String> errorMessages = csvWriter.getErrorMessages();
                 
             } catch(IOException e) {
                 // ファイルI/Oに関する例外

@@ -2,12 +2,19 @@ package com.github.mygreen.supercsv.io;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
@@ -39,6 +46,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
  * @param <T> マッピング対象のBeanのクラスタイプ
  *
  * @see CsvBeanReader
+ * @version 2.3
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -142,6 +150,81 @@ public abstract class AbstractCsvAnnotationBeanReader<T> extends AbstractCsvRead
         return null; // EOF
         
         
+    }
+    
+    /**
+     * 成功時、例外発生時の処理を指定して、1レコード分を読み込みます。
+     * 
+     * @since 2.3
+     * @param successHandler 読み込み成功時の処理の実装。
+     * @param errorHandler CSVに関する例外発生時の処理の実装。
+     * @return CSVの読み込み処理ステータスを返します。
+     * @throws IOException 致命的なレコードの読み込みに失敗した場合にスローされます。
+     */
+    public CsvReadStatus read(final CsvSuccessHandler<T> successHandler, final CsvErrorHandler errorHandler) throws IOException {
+        
+        try {
+            final T bean = read();
+            if(bean != null) {
+                successHandler.onSuccess(bean);
+                return CsvReadStatus.SUCCESS;
+            } else {
+                return CsvReadStatus.EOF;
+            }
+        
+        } catch(SuperCsvException e) {
+            errorHandler.onError(e);
+            return CsvReadStatus.ERROR;
+            
+        }
+        
+    }
+    
+    /**
+     * {@link Stream} を返します。要素はCSVの行をBeanにマッピングしたオブジェクトです。
+     * <p>読み込む際には例外 {@link SuperCsvException} / {@link UncheckedIOException} が発生する可能性があります（読み込みを行った {@link Stream} メソッドからスローされます)。</p>
+     * <p>読み込み時にスローされた {@link IOException} は、{@link UncheckedIOException} にラップされます。</p>
+     * 
+     * @since 2.3
+     * @return 各レコードをBeanに変換した {@link Stream} を返します。
+     */
+    public Stream<T> lines() {
+        
+        Iterator<T> itr = new Iterator<T>() {
+            
+            T nextLine = null;
+            
+            @Override
+            public boolean hasNext() {
+                if(nextLine != null) {
+                    return true;
+                    
+                } else {
+                    try {
+                        nextLine = read();
+                        return (nextLine != null);
+                    } catch(IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
+                }
+            }
+
+            @Override
+            public T next() {
+                if (nextLine != null || hasNext()) {
+                    T line = nextLine;
+                    nextLine = null;
+                    return line;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+            
+        };
+        
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                itr, Spliterator.ORDERED | Spliterator.NONNULL), false);
+
     }
     
     /**

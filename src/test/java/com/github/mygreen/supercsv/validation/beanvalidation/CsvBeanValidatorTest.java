@@ -1,8 +1,7 @@
 package com.github.mygreen.supercsv.validation.beanvalidation;
 
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.*;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -156,7 +155,7 @@ public class CsvBeanValidatorTest {
                 .collect(Collectors.toList());
         
         assertThat(messages).hasSize(1)
-            .contains("値が未設定です。");
+            .contains("[2行, 1列] : 項目「id」の値は必須です。");
         
     }
     
@@ -263,7 +262,7 @@ public class CsvBeanValidatorTest {
                 .collect(Collectors.toList());
         
         assertThat(messages).hasSize(1)
-            .contains("20以下の値を設定してください。");
+            .contains("[2行, 3列] : 項目「age」の値（40）は、20以下の値を設定してください。");
         
     }
     

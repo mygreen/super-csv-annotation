@@ -37,6 +37,7 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
  * @param <T> マッピング対象のBeanのクラスタイプ
  * 
  * @see CsvBeanWriter
+ * @version 2.3
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -142,6 +143,29 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
         
         // エラーメッセージの変換
         processErrors(bindingErrors, context, rowException);
+        
+    }
+    
+    /**
+     * 例外発生時の処理を指定して、1レコード分を書き込みます。
+     * 
+     * @since 2.3
+     * @param source 書き込むレコードのデータ。
+     * @param errorHandler  CSVに関する例外発生時の処理の実装。
+     * @return CSVの書き込み処理ステータスを返します。
+     * @throws IOException
+     */
+    public CsvWriteStatus write(final T source, final CsvErrorHandler errorHandler) throws IOException {
+        
+        try {
+            write(source);
+            return CsvWriteStatus.SUCCESS;
+            
+        } catch(SuperCsvException e) {
+            errorHandler.onError(e);
+            return CsvWriteStatus.ERROR;
+            
+        }
         
     }
     
