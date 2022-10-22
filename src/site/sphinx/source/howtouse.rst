@@ -132,6 +132,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 * CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
 * 一度に全レコードを読み込む場合は、メソッド ``readAll(...)`` を使用します。
 * 1件ずつ読み込む場合は、メソッド ``read(...)`` を使用します。
+* Stream API による読み込みを行う場合は、メソッド ``lines(...)`` を使用します。 *[v2.3+]*
 
 .. sourcecode:: java
     :linenos:
@@ -182,8 +183,31 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
             
             csvReader.close();
         }
+
+        // Stream APIによる読み込む場合
+        public void sampleReadStream() {
+        
+            CsvAnnotationBeanReader<UserCsv> csvReader = new CsvAnnotationBeanReader<>(
+                    UserCsv.class,
+                    Files.newBufferedReader(new File("sample.csv").toPath(), Charset.forName("Windows-31j")),
+                    CsvPreference.STANDARD_PREFERENCE);
+            
+            // ヘッダー行の読み込み
+            String headers[] = csvReader.getHeader(true);
+            
+            List<UserCsv> list = new ArrayList<>();
+            
+            // Streamによる読み込み
+            csvReader.lines().forEach(record -> {
+                list.add(record);
+            });
+            
+            csvReader.close();
+        
+        }
+
     }
-    
+
 
 --------------------------------------
 書き込み方法
