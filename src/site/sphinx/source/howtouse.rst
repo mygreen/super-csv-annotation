@@ -23,18 +23,37 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
 
 .. sourcecode:: xml
     :linenos:
-    :caption: ロギングライブラリの実装の追加（Log4jの場合）
+    :caption: ロギングライブラリの実装の追加（Lobbackの場合）
     
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.1</version>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.11</version>
+        <scope>test</scope>
     </dependency>
-    <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
-    </dependency>
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: logback.xml
+    
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %msg %n</Pattern>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>TRACE</level>
+            </filter>
+        </appender>
+        <logger name="com.github.mygreen.supercsv" level="DEBUG">
+            <appender-ref ref="CONSOLE" />
+        </logger>
+        <root>
+            <level value="WARN" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </configuration>
 
 
 --------------------------------------
