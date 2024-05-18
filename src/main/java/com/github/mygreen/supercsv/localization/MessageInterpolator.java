@@ -1,7 +1,6 @@
 package com.github.mygreen.supercsv.localization;
 
 import java.util.Formatter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.mygreen.supercsv.expression.CustomFunctions;
 import com.github.mygreen.supercsv.expression.ExpressionEvaluationException;
 import com.github.mygreen.supercsv.expression.ExpressionLanguage;
 import com.github.mygreen.supercsv.expression.ExpressionLanguageJEXLImpl;
@@ -39,20 +37,10 @@ public class MessageInterpolator {
     /**
      * デフォルトのコンストラクタ
      * <p>式言語の処理実装として、JEXLの{@link ExpressionLanguageJEXLImpl} が設定されます。
-     *   <br>さらに、関数として{@link CustomFunctions}が登録されており、接頭語 {@literal f:}で呼び出し可能です。
-     * </p>
      * 
      */
     public MessageInterpolator() {
-        
-        // EL式中で使用可能な関数の登録
-        ExpressionLanguageJEXLImpl el = new ExpressionLanguageJEXLImpl();
-        
-        Map<String, Object> funcs = new HashMap<>(); 
-        funcs.put("f", CustomFunctions.class);
-        el.getJexlEngine().setFunctions(funcs);
-        
-        setExpressionLanguage(el);
+        this.expressionLanguage = new ExpressionLanguageJEXLImpl();
     }
     
     /**
@@ -80,7 +68,7 @@ public class MessageInterpolator {
      * 
      * @param message 対象のメッセージ。
      * @param vars メッセージ中の変数に対する値のマップ。
-     * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか
+     * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか。
      * @return 補完したメッセージ。
      */
     public String interpolate(final String message, final Map<String, ?> vars, boolean recursive) {
@@ -93,7 +81,7 @@ public class MessageInterpolator {
      * 
      * @param message 対象のメッセージ。
      * @param vars メッセージ中の変数に対する値のマップ。
-     * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか
+     * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか。
      * @param messageResolver メッセージを解決するクラス。nullの場合、指定しないと同じ意味になります。
      * @return 補完したメッセージ。
      */
@@ -106,6 +94,7 @@ public class MessageInterpolator {
      * メッセージをパースし、変数に値を差し込み、EL式を評価する。
      * @param message 対象のメッセージ。
      * @param vars メッセージ中の変数に対する値のマップ。
+     * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか。
      * @param messageResolver メッセージを解決するクラス。nullの場合、指定しないと同じ意味になります。
      * @return 補完したメッセージ。
      */
@@ -264,12 +253,17 @@ public class MessageInterpolator {
         // フォーマッターの追加
         context.computeIfAbsent("formatter", key -> new Formatter());
         
-        final String value = expressionLanguage.evaluate(expression, context).toString();
+        /*
+         * 以下のケースの時、評価値はnullが返されるため、空文字に変換する。
+         * ・JEXLで存在しない変数名のとき。
+         * ・ELインジェクション対象の式のとき
+         */
+        final String evalValue = Objects.toString(expressionLanguage.evaluate(expression, context), "");
         if(logger.isTraceEnabled()) {
-            logger.trace("evaluate expression language: expression='{}' ===> value='{}'", expression, value);
+            logger.trace("evaluate expression language: expression='{}' ===> value='{}'", expression, evalValue);
         }
         
-        return value;
+        return evalValue;
     }
     
     /**

@@ -372,8 +372,8 @@ $(document).ready(function() {
 		<!-- 式言語 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-jexl</artifactId>
-			<version>2.1.1</version>
+			<artifactId>commons-jexl3</artifactId>
+			<version>3.4.0</version>
 		</dependency>
 
 		<!-- Bean Validation 2.0 -->
