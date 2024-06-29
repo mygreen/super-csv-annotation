@@ -324,6 +324,90 @@ public class CsvAnnotationBeanReaderTest {
     }
     
     /**
+     * ELインジェクションのテスト - ヘッダーのバリデーションエラー。
+     */
+    @Test
+    public void testRead_error_elInjection_header() throws Exception {
+        
+        File file = new File("src/test/data/test_read_error_elinjection_header.csv");
+        
+        CsvAnnotationBeanReader<SampleELInjectionBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleELInjectionBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        try {
+            // read header
+            String headers[] = csvReader.getHeader(true);
+           
+            fail();
+            
+        } catch(SuperCsvException e) {
+            assertThat(e).isInstanceOf(SuperCsvNoMatchHeaderException.class);
+            
+//            e.printStackTrace();
+            
+        } finally {
+            csvReader.close();
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        // ELインジェクション対象の式は空文字として変換される。
+        assertThat(messages).hasSize(1)
+            .contains("[1行]  : ヘッダーの値「id, abcefg」は、「id, value」と一致しません。");
+        messages.forEach(System.out::println);
+        
+    }
+    
+    /**
+     * ELインジェクションのテスト - カラムのバリデーションエラー。
+     */
+    @Test
+    public void testRead_error_elInjection_column() throws Exception {
+        File file = new File("src/test/data/test_read_error_elinjection_column.csv");
+        
+        CsvAnnotationBeanReader<SampleELInjectionBean> csvReader = new CsvAnnotationBeanReader<>(
+                SampleELInjectionBean.class,
+                new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE,
+                DefaultGroup.class, SampleNormalBean.ReadGroup.class);
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleELInjectionBean> list = new ArrayList<>();
+        try {
+            // read header
+            csvReader.getHeader(true);
+            
+            SampleELInjectionBean bean;
+            while((bean = csvReader.read()) != null) {
+                list.add(bean);
+            }
+            
+            fail();
+            
+        } catch(SuperCsvException e) {
+            assertThat(e).isInstanceOf(SuperCsvBindingException.class);
+            
+//            e.printStackTrace();
+            
+        } finally {
+            csvReader.close();
+            
+        }
+        
+        // convert error messages.
+        List<String> messages = csvReader.getErrorMessages();
+        // ELインジェクション対象の式は空文字として変換される。
+        assertThat(messages).hasSize(1)
+            .contains("[2行, 2列] : 項目「value」の値（abcefg）には、禁止語彙 「getRuntime」が含まれています。");
+        messages.forEach(System.out::println);
+        
+    }
+    
+    /**
      * 全件読み込み（正常系のテスト）
      */
     @Test
