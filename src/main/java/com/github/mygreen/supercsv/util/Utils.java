@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -76,6 +77,23 @@ public class Utils {
     
     public static boolean isNotEmpty(final Collection<?> collection) {
         return !isEmpty(collection);
+    }
+    
+    /**
+     * Mapが空か判定する。
+     * @param map
+     * @return nullまたはサイズが0のときにtrueを返す。
+     */
+    public static boolean isEmpty(final Map<?, ?> map) {
+        if(map == null || map.isEmpty()) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public static boolean isNotEmpty(final Map<?, ?> map) {
+        return !isEmpty(map);
     }
     
     /**
