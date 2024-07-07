@@ -24,6 +24,7 @@ import com.github.mygreen.supercsv.util.StackUtils;
  * <p>{@link MessageResolver}を指定した場合、メッセージ中の変数<code>{...}</code>をメッセージ定義コードとして解決する。
  *    ただし、メッセージ変数で指定されている変数が優先される。
  * 
+ * @version 2.4
  * @since 2.0
  * @author T.TSUCHIE
  *
@@ -33,6 +34,21 @@ public class MessageInterpolator {
     private static final Logger logger = LoggerFactory.getLogger(MessageInterpolator.class);
     
     private ExpressionLanguage expressionLanguage;
+    
+    /**
+     * EL式を再帰的に評価するかどうか。
+     */
+    private boolean recursiveForEl = false;
+    
+    /**
+     * 変数を再帰的に評価するかどうか。
+     */
+    private boolean recursiveForVar = false;
+    
+    /**
+     * 再帰処理の最大回数
+     */
+    private int maxRecursiveDepth = 5;
     
     /**
      * デフォルトのコンストラクタ
@@ -72,7 +88,7 @@ public class MessageInterpolator {
      * @return 補完したメッセージ。
      */
     public String interpolate(final String message, final Map<String, ?> vars, boolean recursive) {
-        return parse(message, vars, recursive, null);
+        return parse(message, vars, recursive, 0, null);
     }
     
     /**
@@ -87,7 +103,7 @@ public class MessageInterpolator {
      */
     public String interpolate(final String message, final Map<String, ?> vars, boolean recursive,
             final MessageResolver messageResolver) {
-        return parse(message, vars, recursive, messageResolver);
+        return parse(message, vars, recursive, 0, messageResolver);
     }
     
     /**
@@ -95,10 +111,12 @@ public class MessageInterpolator {
      * @param message 対象のメッセージ。
      * @param vars メッセージ中の変数に対する値のマップ。
      * @param recursive 変換したメッセージに対しても再帰的に処理するかどうか。
+     * @param currentRecursiveDepth 現在の再帰処理回数。
      * @param messageResolver メッセージを解決するクラス。nullの場合、指定しないと同じ意味になります。
      * @return 補完したメッセージ。
      */
-    protected String parse(final String message, final Map<String, ?> vars, boolean recursive, final MessageResolver messageResolver) {
+    protected String parse(final String message, final Map<String, ?> vars, final boolean recursive, final int currentRecursiveDepth,
+            final MessageResolver messageResolver) {
         
         // 評価したメッセージを格納するバッファ。
         final StringBuilder sb = new StringBuilder(message.length());
@@ -156,7 +174,7 @@ public class MessageInterpolator {
                     // エスケープを解除する
                     expression = removeEscapeChar(expression, '\\');
                     
-                    String result = evaluate(expression, vars, recursive, messageResolver);
+                    String result = evaluate(expression, vars, recursive, currentRecursiveDepth, messageResolver);
                     sb.append(result);
                     
                 } else {
@@ -187,7 +205,7 @@ public class MessageInterpolator {
     }
     
     private String evaluate(final String expression, final Map<String, ?> values, final boolean recursive,
-            final MessageResolver messageResolver) {
+            final int currentRecursiveDepth, final MessageResolver messageResolver) {
         
         if(expression.startsWith("{")) {
             // 変数の置換の場合
@@ -197,8 +215,8 @@ public class MessageInterpolator {
                 // 該当するキーが存在する場合
                 final Object value = values.get(varName);
                 final String eval = (value == null) ? "" : value.toString();
-                if(!eval.isEmpty() && recursive) {
-                    return parse(eval, values, recursive, messageResolver);
+                if(!eval.isEmpty() && recursivable(recursive && recursiveForVar, maxRecursiveDepth, currentRecursiveDepth, eval)) {
+                    return parse(eval, values, recursive, currentRecursiveDepth + 1, messageResolver);
                 } else {
                     return eval;
                 }
@@ -211,8 +229,8 @@ public class MessageInterpolator {
                     return String.format("{%s}", varName);
                 }
                 
-                if(recursive) {
-                    return parse(eval.get(), values, recursive, messageResolver);
+                if(recursivable(recursive, maxRecursiveDepth, currentRecursiveDepth, eval.get())) {
+                    return parse(eval.get(), values, recursive, currentRecursiveDepth + 1, messageResolver);
                 } else {
                     return eval.get();
                 }
@@ -226,8 +244,8 @@ public class MessageInterpolator {
             // EL式で処理する
             final String expr = expression.substring(2, expression.length()-1);
             final String eval = evaluateExpression(expr, values);
-            if(recursive) {
-                return parse(eval, values, recursive, messageResolver);
+            if(recursive && recursivable(recursive && recursiveForEl, maxRecursiveDepth, currentRecursiveDepth, eval)) {
+                return parse(eval, values, recursive,currentRecursiveDepth + 1, messageResolver);
             } else {
                 return eval;
             }
@@ -236,6 +254,37 @@ public class MessageInterpolator {
         
         throw new MessageParseException(expression, "not support expression.");
         
+    }
+    
+    /**
+     * 現在の再帰回数が最大回数に達しているかどうか。
+     * 
+     * @param recursive 再帰的に処理するかどうか。
+     * @param maxRecursion 最大再帰回数
+     * @param currentDepth 再帰回数
+     * @param expression 再帰対象のメッセージ
+     * @return 最大再帰回数を超えていなければfalseを返す。
+     */
+    private boolean recursivable(final boolean recursive, final int maxRecursion, final int currentDepth,
+            String message) {
+
+        if(!recursive) {
+            return false;
+        }
+
+        if(maxRecursion <= 0) {
+            // 再帰回数の制限なし。
+            return true;
+        }
+
+        if(currentDepth <= maxRecursion) {
+            return true;
+        }
+
+        logger.warn("Over recursive depth : currentDepth={}, maxDepth={}, message={}.", currentDepth, maxRecursion, message);
+
+        return false;
+
     }
     
     /**
@@ -325,5 +374,70 @@ public class MessageInterpolator {
     public void setExpressionLanguage(ExpressionLanguage expressionLanguage) {
         this.expressionLanguage = expressionLanguage;
     }
+
+    /**
+     * EL式を再帰的に評価するかどうか判定する。
+     * 
+     * @since 2.4
+     * @return {@literal true}のとき再帰的に処理しない。
+     */
+    public boolean isRecursiveForEl() {
+        return recursiveForEl;
+    }
     
+    /**
+     * EL式を再帰的に評価するかどうか設定する。
+     * <p>入力値などの任意の値がEL式(<code>${...}</code>)の形式の場合、
+     *    不要に再帰的に評価されてELインジェクションが発生してしまうのを防ぐために設定します。
+     * <p>デフォルト値は、{@literal false} と再帰的に評価しない。
+     * 
+     * @since 2.4
+     * @param recursiveForEl {@literal true}のとき再帰的に処理しない。
+     */
+    public void setRecursiveForEl(boolean recursiveForEl) {
+        this.recursiveForEl = recursiveForEl;
+    }
+    
+    /**
+     * 変数を再帰的に評価するかどうか判定する。
+     * 
+     * @since 2.4
+     * @return {@literal true}のとき再帰的評価する。
+     */
+    public boolean isRecursiveForVar() {
+        return recursiveForVar;
+    }
+    
+    /**
+     * リソースファイルのキーを除く変数を再帰的に処理しないかどうか設定する。
+     * <p>入力値などの任意の値が変数(<code>{...}</code>)の形式の場合、
+     *   不要に再帰的に評価されてELインジェクションが発生してしまうのを防ぐために設定します。
+     * <p>デフォルト値は、{@literal false} と再帰的に評価しない。
+     * 
+     * @since 2.4
+     * @param recursiveForVar {@literal true}のとき再帰的評価する。
+     */
+    public void setRecursiveForVar(boolean recursiveForVar) {
+        this.recursiveForVar = recursiveForVar;
+    }
+    
+    /**
+     * 評価した変数やEL式を再帰的に処するときの最大回数を取得します。
+     * 
+     * @since 2.4
+     * @return 再帰的に処するときの最大回数。
+     */
+    public int getMaxRecursiveDepth() {
+        return maxRecursiveDepth;
+    }
+    
+    /**
+     * 評価した変数やEL式を再帰的に処するときの最大回数を設定します。
+     * 
+     * @since 2.4
+     * @param maxRecursiveDepth 再帰的に処するときの最大回数。{@literal -1} のとき制限はありません。
+     */
+    public void setMaxRecursiveDepth(int maxRecursiveDepth) {
+        this.maxRecursiveDepth = maxRecursiveDepth;
+    }
 }
