@@ -8,7 +8,7 @@
 			<level>TRACE</level>
 		</filter>
 	</appender>
-	<logger name="com.github.mygreen.supercsv" level="DEBUG">
+	<logger name="com.github.mygreen.supercsv" level="DEBUG" additivity="false">
 		<appender-ref ref="CONSOLE" />
 	</logger>
 	<root>
