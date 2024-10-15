@@ -357,7 +357,7 @@ public class CsvAnnotationBeanReaderTest {
         List<String> messages = csvReader.getErrorMessages();
         // ELインジェクション対象の式は空文字として変換される。
         assertThat(messages).hasSize(1)
-            .contains("[1行]  : ヘッダーの値「id, abcefg」は、「id, value」と一致しません。");
+            .contains("[1行]  : ヘッダーの値「id, abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg」は、「id, value」と一致しません。");
         messages.forEach(System.out::println);
         
     }
@@ -402,7 +402,7 @@ public class CsvAnnotationBeanReaderTest {
         List<String> messages = csvReader.getErrorMessages();
         // ELインジェクション対象の式は空文字として変換される。
         assertThat(messages).hasSize(1)
-            .contains("[2行, 2列] : 項目「value」の値（abcefg）には、禁止語彙 「getRuntime」が含まれています。");
+            .contains("[2行, 2列] : 項目「value」の値（abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg）には、禁止語彙 「getRuntime」が含まれています。");
         messages.forEach(System.out::println);
         
     }

@@ -1,5 +1,6 @@
 package com.github.mygreen.supercsv.validation.beanvalidation;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,9 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.metadata.ConstraintDescriptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.localization.MessageInterpolator;
 import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
@@ -24,12 +28,14 @@ import com.github.mygreen.supercsv.validation.ValidationContext;
 /**
  * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)にブリッジする{@link CsvValidator}。
  * 
- * @version 2.3
+ * @version 2.4
  * @since 2.0
  * @author T.TSUCHIE
  *
  */
 public class CsvBeanValidator implements CsvValidator<Object> {
+    
+    private static final Logger logger = LoggerFactory.getLogger(CsvBeanValidator.class);
     
     /**
      * BeanValidationのアノテーションの属性で、メッセージ中の変数から除外するもの。
@@ -140,14 +146,12 @@ public class CsvBeanValidator implements CsvValidator<Object> {
                 final Object fieldValue = violation.getInvalidValue();
                 errorVars.computeIfAbsent("validatedValue", key -> fieldValue);
                 
-                String defaultMessage = violation.getMessage();
-                
                 bindingErrors.rejectValue(field, columnMapping.getField().getType(), 
-                        errorCodes, errorVars, defaultMessage);
+                        errorCodes, errorVars, violation.getMessageTemplate());
                 
             } else {
                 // オブジェクトエラーの場合
-                bindingErrors.reject(errorCodes, errorVars, violation.getMessage());
+                bindingErrors.reject(errorCodes, errorVars, violation.getMessageTemplate());
                 
             }
             
@@ -157,17 +161,40 @@ public class CsvBeanValidator implements CsvValidator<Object> {
     }
     
     /**
-     * エラーコードの決定する
+     * エラーコードを決定する。
+     * <p>※ユーザ指定メッセージの場合はエラーコードは空。</p>
+     * 
+     * @since 2.4
      * @param descriptor フィールド情報
      * @return エラーコード
      */
-    protected String[] determineErrorCode(ConstraintDescriptor<?> descriptor) {
-        return new String[] {
-                descriptor.getAnnotation().annotationType().getSimpleName()/*,
-                descriptor.getAnnotation().annotationType().getCanonicalName(),
-                descriptor.getAnnotation().annotationType().getCanonicalName() + ".message"
-                */
-        };
+    protected String[] determineErrorCode(final ConstraintDescriptor<?> descriptor) {
+        
+        // バリデーション用アノテーションから属性「message」のでデフォルト値を取得し、変更されているかどう比較する。
+        String defaultMessage = null;
+        try {
+            Method messageMethod = descriptor.getAnnotation().annotationType().getMethod("message");
+            messageMethod.setAccessible(true);
+            defaultMessage = Objects.toString(messageMethod.getDefaultValue(), null);
+        } catch (NoSuchMethodException | SecurityException e) {
+            logger.warn("Fail getting annotation's attribute 'message' for " + descriptor.getAnnotation().annotationType().getSimpleName() , e);
+        }
+        
+        if(!descriptor.getMessageTemplate().equals(defaultMessage)) {
+            /*
+             * アノテーション属性「message」の値がデフォルト値から変更されている場合は、
+             * ユーザー指定メッセージとして判断し、エラーコードは空にしてユーザー指定メッセージを優先させる。
+             */
+            return new String[]{};
+            
+        } else {
+            // アノテーションのクラス名をもとに生成する。
+            return new String[]{
+                    descriptor.getAnnotation().annotationType().getSimpleName(),
+                    descriptor.getAnnotation().annotationType().getCanonicalName(),
+                    descriptor.getAnnotation().annotationType().getCanonicalName() + ".message"
+            };
+        }
     }
     
     /**

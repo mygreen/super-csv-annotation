@@ -191,6 +191,10 @@ public class TestUtils {
         return new Timestamp(date.getTime());
     }
     
+    public static Timestamp toTimestamp(final String value) {
+        return Timestamp.valueOf(value);
+    }
+    
     public static Time toTime(final int hour, final int minute, final int second) {
         
         Calendar cal = Calendar.getInstance();
