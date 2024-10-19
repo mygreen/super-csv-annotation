@@ -41,7 +41,7 @@ public class RegexReplaceFactory implements ConversionProcessorFactory<CsvRegexR
                     .varWithAnno("anno", anno.annotationType())
                     .var("attrName", "regex")
                     .var("attrValue", anno.regex())
-                    .var("type", "{key.regex}")
+                    .var("type", MessageBuilder.create("key.regex").format())
                     .format(true));
         }
         
