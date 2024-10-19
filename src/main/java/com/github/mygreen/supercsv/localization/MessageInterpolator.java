@@ -244,11 +244,10 @@ public class MessageInterpolator {
      * @param recursive 再帰的に処理するかどうか。
      * @param maxRecursion 最大再帰回数
      * @param currentDepth 再帰回数
-     * @param expression 再帰対象のメッセージ
+     * @param expression 再帰対象の式
      * @return 最大再帰回数を超えていなければfalseを返す。
      */
-    private boolean recursivable(final boolean recursive, final int maxRecursion, final int currentDepth,
-            String message) {
+    private boolean recursivable(final boolean recursive, final int maxRecursion, final int currentDepth, final String expression) {
 
         if(!recursive) {
             return false;
@@ -263,7 +262,7 @@ public class MessageInterpolator {
             return true;
         }
 
-        logger.warn("Over recursive depth : currentDepth={}, maxDepth={}, message={}.", currentDepth, maxRecursion, message);
+        logger.warn("Over recursive depth : currentDepth={}, maxDepth={}, expression={}.", currentDepth, maxRecursion, expression);
 
         return false;
 
