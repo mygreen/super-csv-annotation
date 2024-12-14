@@ -36,7 +36,12 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
     private static final Logger logger = LoggerFactory.getLogger(ExpressionLanguageJEXLImpl.class);
     
     /**
-     * 本ライブラリでJEXLからアクセス許可するパッケージ指定のパーミッション。
+     * システムプロパティ - JEXLをRESTRICTモードで使用するかどうかフラグ。
+     */
+    public static final String PROPERTY_JEXL_RESTRICTED = "supercsv.annotation.jexlRestricted";
+    
+    /**
+     * システムプロパティ - JEXLをRESTRICTモードで使用する場合のパーミッションを指定する
      */
     protected static final String[] LIB_PERMISSIONS = {"com.github.mygreen.supercsv.*"};
     
@@ -49,7 +54,7 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
         if(Utils.isNotEmpty(value)) {
             USER_PERMISSIONS = Arrays.stream(value.split(","))
                     .map(String::trim)
-                    .filter(String::isEmpty)
+                    .filter(Utils::isNotEmpty)
                     .collect(Collectors.toList())
                     .toArray(new String[0]);
             
@@ -74,7 +79,7 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
      *        詳細は、<a href="https://commons.apache.org/proper/commons-jexl/apidocs/org/apache/commons/jexl3/introspection/JexlPermissions.html)">JexlPermissions</a> を参照。
      */
     public ExpressionLanguageJEXLImpl(final String... userPermissions) {
-        this(Collections.emptyMap(), userPermissions);
+        this(Collections.emptyMap(), true, userPermissions);
         
     }
     
@@ -86,11 +91,11 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
      * @param userPermissions JEXLのパーミッション。
      *        詳細は、<a href="https://commons.apache.org/proper/commons-jexl/apidocs/org/apache/commons/jexl3/introspection/JexlPermissions.html)">JexlPermissions</a> を参照。
      */
-    public ExpressionLanguageJEXLImpl(final Map<String, Object> userFunctions, final String... userPermissions) {
+    public ExpressionLanguageJEXLImpl(final Map<String, Object> userFunctions, final boolean restricted, final String... userPermissions) {
         
         this.jexlEngine = new JexlBuilder()
                 .namespaces(buildNamespace(userFunctions))
-                .permissions(buildPermissions(userPermissions))
+                .permissions(buildPermissions(restricted, userPermissions))
                 .silent(true)
                 .cache(CACHE_SIZE)
                 .create();
@@ -131,16 +136,24 @@ public class ExpressionLanguageJEXLImpl implements ExpressionLanguage {
      *        詳細は、<a href="https://commons.apache.org/proper/commons-jexl/apidocs/org/apache/commons/jexl3/introspection/JexlPermissions.html)">JexlPermissions</a> を参照。
      * @return JEXLのパーミッション
      */
-    protected JexlPermissions buildPermissions(final String... userPermissions) {
-        /*
-         * EL式で本ライブラリのクラス／メソッドのアクセスを許可する。
-         * ・CustomFunctions以外にも、TextPrinterを実装している各CellProcessorでも参照するため。
-         * ・JEXL3からサーバーサイド・テンプレート・インジェクション、コマンドインジェクション対策のために、
-         *   許可されたクラスしか参照できなくなったため、本ライブラリをEL式から参照可能に許可する。
-         */
-        String[] concateedUserPermission = Utils.concat(USER_PERMISSIONS, userPermissions);
-        JexlPermissions permissions = JexlPermissions.RESTRICTED
-                .compose(Utils.concat(LIB_PERMISSIONS, concateedUserPermission));
+    protected JexlPermissions buildPermissions(final boolean restricted, final String... userPermissions) {
+        
+        final JexlPermissions permissions;
+        if(Utils.toBoolean(System.getProperty(PROPERTY_JEXL_RESTRICTED), restricted)) {
+            /*
+             * EL式で本ライブラリのクラス／メソッドのアクセスを許可する。
+             * ・CustomFunctions以外にも、TextPrinterを実装している各CellProcessorでも参照するため。
+             * ・JEXL3からサーバーサイド・テンプレート・インジェクション、コマンドインジェクション対策のために、
+             *   許可されたクラスしか参照できなくなったため、本ライブラリをEL式から参照可能に許可する。
+             */
+            String[] concateedUserPermission = Utils.concat(USER_PERMISSIONS, userPermissions);
+            permissions = JexlPermissions.RESTRICTED
+                    .compose(Utils.concat(LIB_PERMISSIONS, concateedUserPermission));
+            
+        } else {
+            // パーミッションによる制限を行わない。
+            permissions = JexlPermissions.UNRESTRICTED;
+        }
         
         return permissions;
     }
