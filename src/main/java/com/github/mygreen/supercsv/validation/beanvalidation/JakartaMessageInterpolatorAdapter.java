@@ -11,7 +11,7 @@ import com.github.mygreen.supercsv.localization.MessageResolver;
 import jakarta.validation.metadata.ConstraintDescriptor;
 
 /**
- * SuperCsvAnnotationの{@link MessageInterpolator}とBeanValidationの{@link jakarata.validation.MessageInterpolator}をブリッジする。
+ * SuperCsvAnnotationの{@link MessageInterpolator}とBeanValidationの{@link jakarta.validation.MessageInterpolator}をブリッジする。
  * <p>BeanValidationのメッセージ処理をカスタマイズするために利用する。</p>
  *
  * @since 2.4
@@ -25,9 +25,10 @@ public class JakartaMessageInterpolatorAdapter implements jakarta.validation.Mes
     private final MessageInterpolator csvMessageInterpolator;
     
     /**
+     * SuperCsvAnnotation用のメッセージソースとInterpolatorを指定してBeanValidationのMessageInterpolatorを作成します。
      * 
-     * @param messageResolver
-     * @param csvMessageInterpolator
+     * @param messageResolver SuperCsvAnnotation用のメッセージソース。
+     * @param csvMessageInterpolator SuperCsvAnnotation用のMessageInterpolator。
      * @throws NullPointerException {@literal if messageResolver or csvMessageInterpolator is null.}
      */
     public JakartaMessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {

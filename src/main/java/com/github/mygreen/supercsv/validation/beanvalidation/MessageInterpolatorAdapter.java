@@ -26,9 +26,10 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
     private final MessageInterpolator csvMessageInterpolator;
     
     /**
+     * SuperCsvAnnotation用のメッセージソースとInterpolatorを指定してBeanValidationのMessageInterpolatorを作成します。
      * 
-     * @param messageResolver
-     * @param csvMessageInterpolator
+     * @param messageResolver SuperCsvAnnotation用のメッセージソース。
+     * @param csvMessageInterpolator SuperCsvAnnotation用のMessageInterpolator。
      * @throws NullPointerException {@literal if messageResolver or csvMessageInterpolator is null.}
      */
     public MessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {
