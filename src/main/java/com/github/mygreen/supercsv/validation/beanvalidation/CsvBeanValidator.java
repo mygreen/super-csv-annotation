@@ -67,10 +67,11 @@ public class CsvBeanValidator implements CsvValidator<Object> {
      * @return 
      */
     private Validator createDefaultValidator() {
-        final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        final ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure()
+                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))
+                .buildValidatorFactory();
         
         final Validator validator = validatorFactory.usingContext()
-                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))
                 .getValidator();
         
         return validator;
