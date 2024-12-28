@@ -64,13 +64,14 @@ public class CsvBeanValidator implements CsvValidator<Object> {
     
     /**
      * Bean Validatonのデフォルトのインスタンスを取得する。
-     * @return 
+     * @return Validatorを取得します。
      */
     private Validator createDefaultValidator() {
-        final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        final ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure()
+                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))
+                .buildValidatorFactory();
         
         final Validator validator = validatorFactory.usingContext()
-                .messageInterpolator(new MessageInterpolatorAdapter(new ResourceBundleMessageResolver(), new MessageInterpolator()))
                 .getValidator();
         
         return validator;
@@ -78,7 +79,7 @@ public class CsvBeanValidator implements CsvValidator<Object> {
     
     /**
      * BeanValidationのValidatorを取得する。
-     * @return
+     * @return Validatorを取得します。
      */
     public Validator getTargetValidator() {
         return targetValidator;
