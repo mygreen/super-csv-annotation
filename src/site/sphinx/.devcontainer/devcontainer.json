@@ -1,0 +1,52 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Sphinx",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	"runArgs": ["--name", "supser-csv-annotation-sphinx"],
+
+	"workspaceFolder": "/home/vscode/project/sphinx",
+
+	"containerEnv": {
+		"TZ": "Asia/Tokyo",
+		"NODE_VERSION": "18.20.5",
+		"CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+	},
+
+	"mounts": [
+		// ドキュメントのソース
+		"source=${localWorkspaceFolder},target=/home/vscode/project/sphinx,type=bind,consistency=cached",
+		// ドキュメントのビルド出力先
+		"source=${localWorkspaceFolder}/../../../target,target=/home/vscode/project/target,type=bind,consistency=cached",
+		// node_modules(volumeeとしてマウント)
+		"source=super-csv-annotation-sphinx-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+	],
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"onCreateCommand": "/bin/bash .devcontainer/on_create.sh",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"textlint.languages": [
+					"markdown",
+					"restructuredtext"
+				]
+			},
+			"extensions": [
+				"oderwat.indent-rainbow",
+				"mosapride.zenkaku",
+				"lextudio.restructuredtext",
+				"taichi.vscode-textlint"
+			]
+		}
+	},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "vscode"
+}

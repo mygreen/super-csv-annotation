@@ -1,0 +1,20 @@
+{
+    "name": "super-csv-annotation-sphinx",
+    "version": "1.0.0",
+    "description": "Super CSV AnnotationのSphinx + Textlint用のプロジェクト。",
+    "main": "index.js",
+    "scripts": {
+        "build": "make html",
+        "deploy": "/bin/bash deploy.sh",
+        "lint": "npx textlint ./source/*.rst"
+    },
+    "keywords": [],
+    "author": "T.TSUCHIE",
+    "license": "ISC",
+    "devDependencies": {
+        "textlint": "^13.4.1",
+        "textlint-plugin-rst": "github:shiguredo/textlint-plugin-rst#shiguredo",
+        "textlint-rule-preset-ja-technical-writing": "^7.0.0",
+        "textlint-rule-preset-jtf-style": "^2.3.14"
+    }
+}
