@@ -1,8 +1,11 @@
 ## sphinx
 /build
 
+## node
+/.cache
+/node_modules
+
 ## for tmporary file.
 *~
 ~*
 \#*\#
-
