@@ -6,7 +6,7 @@
 システム設定の変更方法
 --------------------------------------------------------
 
-CellProcessorを組み立てる際の動作を ``Configuration`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]クラスでカスタマイズすることができます。
+CellProcessorを組み立てる際の動作を ``Configuration`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/Configuration.html>`_ ]クラスでカスタマイズできます。
 
 * Configuration は、``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`_ ]から設定／取得できます。
 
@@ -74,7 +74,7 @@ CellProcessorを組み立てる際の動作を ``Configuration`` [ `JavaDoc <../
    * - *beanFactory*
      - | 独自のTextFormatter/ConstraintProcessorFactory/ConversionProcessorFactoryなどの
        | インスタンスを作成するためのクラスです。
-       | ``SpringBeanFactory`` に切り替えることで、Spring FrameworkのDI機能を使用することができます。
+       | ``SpringBeanFactory`` に切り替えることで、Spring FrameworkのDI機能を使用できます。
        
    * - *annoationComparator*
      - | アノテーションを取得する際に、順番を一定に保つために並び変えるためのクラスです。
@@ -82,11 +82,11 @@ CellProcessorを組み立てる際の動作を ``Configuration`` [ `JavaDoc <../
    
    * - *builderResolver*
      - | 各タイプの ``ProcessorBuilder`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/ProcessorBuilder.html>`_ ]のインスタンスを管理するためのクラスです。
-       | 基本的に、各種アノテーションで独自のクラスタイプに対応・カスタマイズすることができますが、
+       | 基本的に、各種アノテーションで独自のクラスタイプに対応・カスタマイズできますが、
        | 既存の実装を切り替えることもできます。
      
    * - *skipValidationOnWrite*
-     - | 書き込み時の値の検証を一律でスキップするかどうか設定することができます。
+     - | 書き込み時の値の検証を一律でスキップするかどうか設定できます。
        | デフォルトは *false* で値の検証を行います。
 
 

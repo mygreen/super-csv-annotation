@@ -27,7 +27,7 @@ TextFormatterの実装クラスの作成
   * 変換に失敗した場合、例外 ``TextPrintException`` をスローします。
     既存の例外が発生する場合は、ラップするようにします。
   
-* メソッド ``getMessageVariables(...)`` で、エラーメッセージ中の変数を定義することができます。
+* メソッド ``getMessageVariables(...)`` で、エラーメッセージ中の変数を定義できます。
   
   * 必要がなければ実装する必要はありません。
 
@@ -86,7 +86,7 @@ TextFormatterの実装クラスの作成
 作成したTextFormatterを指定するには、アノテーション ``@CsvFormat`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvFormat.html>`_ ]を使用します。
 
 * 属性 ``formatter`` で、TextFormatterの実装クラスを指定します。
-* 属性 ``message`` で、読み込み時のエラーメッセージを指定することができます。
+* 属性 ``message`` で、読み込み時のエラーメッセージを指定できます。
 
 .. sourcecode:: java
     :linenos:

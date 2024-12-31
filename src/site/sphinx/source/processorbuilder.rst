@@ -76,7 +76,7 @@ Super CSVの既存のCellProcessorでは、値が不正な場合は、
 例外 ``SuperCsvCellProcessorException`` または、その子クラス ``SuperCsvConstraintViolationException`` が
 スローされます。
 
-* スローされた例外は、 ``CsvExceptionConverter`` でメッセージに変換することができます。
+* スローされた例外は、 ``CsvExceptionConverter`` でメッセージに変換できます。
 * *CsvExceptionConverter* は、 *CsvAnnotationBeanReader/CsvAnnotationBeanWriter* に組み込まれており、
   例外発生後に変換したメッセージを取得できます。
     
