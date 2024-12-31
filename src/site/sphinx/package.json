@@ -4,7 +4,7 @@
     "description": "Super CSV AnnotationのSphinx + Textlint用のプロジェクト。",
     "main": "index.js",
     "scripts": {
-        "build": "make html",
+        "build": "rm -rf build && make html",
         "deploy": "/bin/bash deploy.sh",
         "lint": "npx textlint ./source/*.rst"
     },
