@@ -17,7 +17,7 @@ echo "========= Setup Textlint =========="
 # reStructuredText用をASTに変換するPythonモジュールのインストール「docutils-ast-writer」
 # ・「textlint-plugin-rst」で使用する。
 # ・Sphinxに合わせた docutils に対応したフォークしたモジュール。
-mkdir python_modules && cd python_modules
+mkdir ~/python_modules && cd ~/python_modules
 pip3 install -e git+https://github.com/mygreen/docutils-ast-writer@mygreen#egg=docutils-ast-writer
 cd ${CONTAINER_WORKSPACE_FOLDER}
 
