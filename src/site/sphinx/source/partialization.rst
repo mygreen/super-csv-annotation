@@ -10,7 +10,7 @@ Beanに定義しているカラムのみ処理する方法を説明します。
 
 CSVファイルで一部のカラムを読み込みたい場合は、フィールドの定義を単純に行わなければマッピングできます。
 
-* 最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、``@CsvPartial(columnSize=<カラムサイズ>)`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html>`_ ] で、実際のカラムサイズを指定します。
+* 最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、``@CsvPartial(columnSize=<カラムサイズ>)`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html>`__ ] で、実際のカラムサイズを指定します。
 * ``@CsvBean(validateHeader=false)`` に設定し、ヘッダー行の検証をスキップするようにしてください。
   
   * 値を *true* にして、ヘッダー行の検証を行うと、定義していない見出しがあり、値が一致しないためエラーとなります。
@@ -83,7 +83,7 @@ CSVファイルで一部のカラムを読み込みたい場合は、フィー�
 部分的なカラムの書き込みも、読み込み時と同様に行います。
 定義していないカラムの値は、空として出力されます。
 
-* 最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、``@CsvPartial(columnSize=<カラムサイズ>)`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html>`_ ]で、実際のカラムサイズを指定します。
+* 最後のカラム番号が実際のCSVファイルのカラム番号よりも小さい場合は、``@CsvPartial(columnSize=<カラムサイズ>)`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPartial.html>`__ ]で、実際のカラムサイズを指定します。
 * ヘッダー行を書き込む場合、定義されていないカラムの見出しは、 ``column<カラム番号>`` の形式となります。
 
   * 定義していないカラムの見出しの値を指定したい場合は、``@CsvBean(headers={})`` で設定します。

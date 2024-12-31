@@ -95,7 +95,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズできます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvEnumFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvEnumFormat.html>`__ を参照してください。
 
 
 .. sourcecode:: java

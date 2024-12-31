@@ -4,12 +4,12 @@
 
 固定長のカラムは、書き込み時は任意の長さになるよう空白などを詰め、読み込み時は書き込み時に詰めた空白などの文字を除去するとで実現しています。*[v2.1+]*
 
-固定長のカラムを定義したい場合は、フィールドにアノテーション ``@CsvFixedSize`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html>`_ ] を付与します。
+固定長のカラムを定義したい場合は、フィールドにアノテーション ``@CsvFixedSize`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html>`__ ] を付与します。
 
 このアノテーションは、 以下の変換用のアノテーションを合成したアノテーションになります。
 
-* 書き込み時は、パディングするアノテーション ``@CsvMultiPad`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`_ ]。
-* 読み込み時は、トリムするアノテーション ``@CsvOneSideTrim`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`_ ]。
+* 書き込み時は、パディングするアノテーション ``@CsvMultiPad`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`__ ]。
+* 読み込み時は、トリムするアノテーション ``@CsvOneSideTrim`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`__ ]。
 
 
 --------------------------------------------------------
@@ -91,7 +91,7 @@
 
 ヘッダー行もカラムの定義と同様に固定長にしたい場合は、``@CsvBean(headerMapper=<ヘッダーのマッピング処理クラス>)`` でヘッダーの処理方法を変更します。
 
-``FixedSizeHeaderMapper`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/FixedSizeHeaderMapper.html>`_ ] は、フィールドに付与されたアノテーション ``@CsvFixedSize`` を元に、見出しに対してパディングを行います。
+``FixedSizeHeaderMapper`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/FixedSizeHeaderMapper.html>`__ ] は、フィールドに付与されたアノテーション ``@CsvFixedSize`` を元に、見出しに対してパディングを行います。
 
 .. sourcecode:: java
     :linenos:
@@ -139,9 +139,9 @@
 * パディング処理の実装を切り替えることができ、``@CsvFixedSize`` の属性 ``paddingProcessor`` でパディング処理の実装クラスを指定します。
 * 本ライブラリでは、以下のパディング処理の実装が提供されています。
 
-  * ``SimplePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/SimplePaddingProcessor.html>`_ ] - 文字の種別にかかわらず１文字としてカウントしてパディングします。
-  * ``CharWidthPaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/CharWidthPaddingProcessor.html>`_ ] - 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。デフォルトの実装です。
-  * ``ByteSizePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/ByteSizePaddingProcessor.html>`_ ] - バイト数によってカウントしてパディングします。
+  * ``SimplePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/SimplePaddingProcessor.html>`__ ] - 文字の種別にかかわらず１文字としてカウントしてパディングします。
+  * ``CharWidthPaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/CharWidthPaddingProcessor.html>`__ ] - 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。デフォルトの実装です。
+  * ``ByteSizePaddingProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/conversion/ByteSizePaddingProcessor.html>`__ ] - バイト数によってカウントしてパディングします。
 
     * バイト数で換算する場合、文字コードに依存するため、文字コードに対応したサブクラスを指定する必要があります。
 

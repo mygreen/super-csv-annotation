@@ -2,7 +2,7 @@
 機能概要
 ======================================
 
-本ライブラリは、JavaのCSVファイルのライブラリ「 `Super CSV <http://super-csv.github.io/super-csv/>`_ 」に、
+本ライブラリは、JavaのCSVファイルのライブラリ「 `Super CSV <http://super-csv.github.io/super-csv/>`__ 」に、
 アノテーション機能を追加したものです。
 
 アノテーションを利用することで、煩わしいCellProcessorの組み立てを簡略化ですることがきます。
@@ -169,7 +169,7 @@ Super CSVの拡張ライブラリ
    * - 1
      - CellProcessorの組み立て
      - | Beanに定義したアノテーションを元に、CellProcessorを組み立てます。
-       | ``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`_ ] で処理を行います。
+       | ``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`__ ] で処理を行います。
        
    * - 2
      - CSVの読み込み
@@ -188,7 +188,7 @@ Super CSVの拡張ライブラリ
      - | 文字列から各オブジェクトにパースを行うCellProcessorを実行します。
        | 日時、数値などの書式を指定可能なアノテーションが準備されていますが、独自に追加もできます。
        | 詳細は、「 :doc:`format` 」を参照してください。
-       | ``PrintProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/PrintProcessor.html>`_ ] で処理を行います。
+       | ``PrintProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/PrintProcessor.html>`__ ] で処理を行います。
 
    * - 5
      - 検証処理
@@ -209,7 +209,7 @@ Super CSVの拡張ライブラリ
    * - 1
      - CellProcessorの組み立て
      - | Beanに定義したアノテーションを元に、CellProcessorを組み立てます。
-       | ``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`_ ] で処理を行います。
+       | ``BeanMappingFactory`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/builder/BeanMappingFactory.html>`__ ] で処理を行います。
        
    * - 2
      - 検証処理
@@ -223,7 +223,7 @@ Super CSVの拡張ライブラリ
      - | オブジェクから文字列にフォーマットを行うCellProcessorを実行します。
        | 日時、数値などの書式を指定可能なアノテーションが準備されていますが、独自に追加もできます。
        | 詳細は、「 :doc:`format` 」を参照してください。
-       | ``ParseProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/ParseProcessor.html>`_ ] で処理を行います。
+       | ``ParseProcessor`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/cellprocessor/format/ParseProcessor.html>`__ ] で処理を行います。
     
    * - 4
      - 変換処理

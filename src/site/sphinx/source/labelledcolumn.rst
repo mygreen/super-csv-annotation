@@ -53,7 +53,7 @@ Beanの定義
 読み込み方法
 --------------------------------------------------------
 
-ラベルによるマッピングを行い読み込むには、 ``LazyCsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html>`_ ] を使用します。
+ラベルによるマッピングを行い読み込むには、 ``LazyCsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html>`__ ] を使用します。
 
 * 全件読み込む場合の使用方法は、基本的に既存の ``CsvAnnotationBeanReader`` と変わりません。
 * 1件ずつ読み込む場合は、メソッド ``LazyCsvAnnotationBeanReader#init()`` を呼んでマッピング情報を初期化します。
@@ -173,7 +173,7 @@ Beanの定義
 書き出し方法
 --------------------------------------------------------
 
-ラベルによるマッピングを行い書き出すには、 ``LazyCsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html>`_ ] を使用します。
+ラベルによるマッピングを行い書き出すには、 ``LazyCsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html>`__ ] を使用します。
 
 * 全件読み出す場合の使用方法は、基本的に既存の ``CsvAnnotationBeanWriter`` と変わりません。
 * 1件ずつ書き出す場合は、メソッド ``CsvAnnotationBeanWriter#init()`` を呼んでマッピング情報を初期化します。

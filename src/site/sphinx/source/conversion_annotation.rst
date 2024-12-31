@@ -14,64 +14,64 @@
      
    * - ``@CsvTrim``
      - 前後の空白をトリミングします。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTrim.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTrim.html>`__
 
    * - ``@CsvOneSideTrim`` *[v2.1+]*
      - 前後どちらか一方をトリミングします。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`__
 
    * - ``@CsvDefaultValue``
      - 値がnullのときに他の値に変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`__
 
    * - ``@CsvNullConvert``
      - 指定した値と一致するときにnullに変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvNullConvert.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvNullConvert.html>`__
      
    * - ``@CsvLower``
      - 英字のアルファベットの大文字から小文字に変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLower.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLower.html>`__
 
    * - ``@CsvUpper``
      - 英字のアルファベットの小文字を大文字に変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvUpper.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvUpper.html>`__
 
    * - ``@CsvRegexReplace``
      - 正規表現による置換を行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRegexReplace.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRegexReplace.html>`__
 
    * - ``@CsvWordReplace``
      - 語彙による置換を行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvWordReplace.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvWordReplace.html>`__
 
    * - ``@CsvFullChar``
      - 半角文字を日本語の全角文字に変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFullChar.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFullChar.html>`__
 
    * - ``@CsvHalfChar``
      - 日本語の全角文字を半角文字に変換します。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvHalfChar.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvHalfChar.html>`__
 
    * - ``@CsvTruncate``
      - 一定の文字長を超える場合に切り出しを行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTruncate.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvTruncate.html>`__
 
    * - ``@CsvLeftPad``
      - 左側にパディングを行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLeftPad.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvLeftPad.html>`__
 
    * - ``@CsvRightPad``
      - 右側にパディングを行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRightPad.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvRightPad.html>`__
 
    * - ``@CsvMultiPad`` *[v2.1+]*
      - 柔軟な設定でパディングを行います。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`__
 
    * - ``@CsvFixedSize`` *[v2.1+]*
      - | 固定長のサイズに変換します。
        | 詳細は、「 :doc:`fixedsizecolumn` 」を参照してください。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html>`__
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

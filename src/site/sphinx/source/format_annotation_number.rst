@@ -14,7 +14,7 @@
    プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、それぞれのプリミティブ型の初期値が設定されます。
    
    整数型の場合は ``0`` が、小数型の場合は ``0.0`` が設定されます。
-   初期値を変更したい場合は、アノテーション ``@CsvDefaultValue`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`_]を使用してください。
+   初期値を変更したい場合は、アノテーション ``@CsvDefaultValue`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`__]を使用してください。
 
 
 
@@ -118,7 +118,7 @@
   
   * 値は、列挙型 ``java.math.RoundingMode`` を設定します。
   * デフォルトでは、``RoundingMode.HALF_EVEN`` です。
-    詳細は、 `RoundingModeのJavaDoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`_ を参照してください。
+    詳細は、 `RoundingModeのJavaDoc <https://docs.oracle.com/javase/jp/8/docs/api/java/math/RoundingMode.html>`__ を参照してください。
   * 属性patternを指定した場合は、書式自身が精度を表現しており、属性roundingで丸めの方法を指定できます。
 
 
@@ -158,7 +158,7 @@
 予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズできます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvNumberFormat.html>`__ を参照してください。
 
 
 .. sourcecode:: java
