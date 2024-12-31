@@ -38,15 +38,7 @@ This library 'Super CSV' extension library with annotation function.
 
 1. Setup Java SE 8 (1.8.0_121+)
 2. Setup Maven
-3. Setup Sphinx (building for manual)
-    1. install Python
-    2. install sphinx and theme for read the docs, janome
-    ```console
-    # pip install sphinx
-    # pip install sphinx_rtd_theme --upgrade
-    # pip install janome
-    ```
-4. Build with Maven
+3. Build with Maven
     1. make jar files.
     ```console
     # mvn clean package
