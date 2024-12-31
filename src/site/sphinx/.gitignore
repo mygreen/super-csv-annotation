@@ -1,5 +1,6 @@
 ## sphinx
 /build
+/_build
 
 ## node
 /.cache
