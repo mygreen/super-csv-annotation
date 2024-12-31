@@ -17,7 +17,7 @@ This library 'Super CSV' extension library with annotation function.
 # Setup
 
 1. Add dependency for Super Csv Annotation
-    ```xml
+    ```xml:pom.xml
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
@@ -25,7 +25,7 @@ This library 'Super CSV' extension library with annotation function.
     </dependency>
     ```
 2. Add dependency for Logging library. Example Logback.
-    ```xml
+    ```xml:pom.xml
     <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
