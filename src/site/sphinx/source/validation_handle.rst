@@ -201,11 +201,11 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 
                 // ハンドラによる読み込み
                 while(csvReader.read(
-                    record -> {
+                    (record) -> {
                         // 読み込み成功時の処理 - CsvSuccessHandler
                         list.add(record);
                     },
-                    error -> {
+                    (error) -> {
                         // Super CSVに関するエラー処理 - CsvErrorHandler
 
                     }) != CsvReadStatus.EOF) {
