@@ -35,7 +35,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Pattern;
 
 /**
- * {@link JakaratCsvBeanValidator}のテスタ
+ * {@link JakartaCsvBeanValidator}のテスタ
  *
  * @since 2.4
  * @author T.TSUCHIE
