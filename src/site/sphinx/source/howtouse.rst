@@ -15,7 +15,7 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
-        <version>2.3</version>
+        <version>2.4</version>
     </dependency>
 
 

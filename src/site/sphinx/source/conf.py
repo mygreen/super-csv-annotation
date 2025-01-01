@@ -66,7 +66,7 @@ author = u'T.TSUCHIE'
 # built documents.
 #
 # The short X.Y version.
-version = u'2.3'
+version = u'2.4'
 # The full version, including alpha/beta/rc tags.
 release = version
 
