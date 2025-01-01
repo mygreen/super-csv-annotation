@@ -3,7 +3,7 @@
 --------------------------------------------------------
 
 ライフサイクルイベントに対応するアノテーションをメソッドに付与することで、
-そのメソッドをコールバック呼び出しすることができます。
+そのメソッドをコールバック呼び出すことができます。
 
 .. list-table:: ライフサイクルイベント用のアノテーション
    :widths: 30 55 15
@@ -15,19 +15,19 @@
      
    * - ``@CsvPreRead``
      - レコードの読み込み前に実行されます。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPreRead.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPreRead.html>`__
 
    * - ``@CsvPostRead``
      - レコードの読み込み後に実行されます。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPostRead.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPostRead.html>`__
 
    * - ``@CsvPreWrite``
      - レコードの書き込み前に実行されます。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPreWrite.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPreWrite.html>`__
 
    * - ``@CsvPostWrite``
      - レコードの書き込み後に実行されます。
-     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPostWrite.html>`_
+     - `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvPostWrite.html>`__
 
 .. note::
    
@@ -48,13 +48,13 @@
    * - 引数のタイプ
      - 説明
    
-   * - ``org.supercsv.util.CsvContext`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/util/CsvContext.html>`_ ]
+   * - ``org.supercsv.util.CsvContext`` [ `JavaDoc <http://super-csv.github.io/super-csv/apidocs/org/supercsv/util/CsvContext.html>`__ ]
      - CSVの1レコード分の情報。
    
-   * - ``com.github.mygreen.supercsv.validation.CsvBindingErrors`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/validation/CsvBindingErrors.html>`_ ]
+   * - ``com.github.mygreen.supercsv.validation.CsvBindingErrors`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/validation/CsvBindingErrors.html>`__ ]
      - CSVの1レコード分のエラー情報。
    
-   * - ``com.github.mygreen.supercsv.validation.ValidationContext`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/validation/ValidationContext.html>`_ ]
+   * - ``com.github.mygreen.supercsv.validation.ValidationContext`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/validation/ValidationContext.html>`__ ]
      - 値の検証用の情報。
    
    * - ``Class[]``

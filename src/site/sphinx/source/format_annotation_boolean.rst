@@ -9,7 +9,7 @@
 .. note::
    
    プリミティブ型に対して読み込む際に、CSVのカラムの値が空の場合、 ``false`` が設定されます。
-   初期値を変更したい場合は、アノテーション ``@CsvDefaultValue`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`_]を使用してください。
+   初期値を変更したい場合は、アノテーション ``@CsvDefaultValue`` [`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvDefaultValue.html>`__]を使用してください。
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -128,13 +128,13 @@
 読み込み時の値のパースに失敗した際のメッセージ
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 ``message`` で指定することができます。
+読み込み時に値のパースに失敗した時に独自のメッセージとして、属性 ``message`` で指定できます。
 
 メッセージ中は、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ による式言語を使うことができ、
-予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズすることができます。
+予め登録されている変数を用いて、メッセージ内容を独自にカスタマイズできます。
 詳細は、:doc:`値の検証時のメッセージ <validation_message>` を参照してください。
 
-メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html>`_ を参照してください。
+メッセージ中で利用可能な変数は、`JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/format/CsvBooleanFormat.html>`__ を参照してください。
 
 
 .. sourcecode:: java

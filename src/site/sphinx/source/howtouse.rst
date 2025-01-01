@@ -67,14 +67,14 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
   * 引数なしの ``public`` なコンストラクタが必要です。
   * コンストラクタを定義しない場合は、デフォルトコンストラクタでもかまいません。
   
-* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html>`_ ] をクラスに付与します。
+* CSV用のクラスであることを示すために、アノテーション ``@CsvBean`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html>`__ ] をクラスに付与します。
 
   * 属性 ``header`` をtrueとすると、 *CsvAnnotationBeanReader#readAll(...)* と *CsvAnnotationBeanWriter#writeAll(...)* メソッドの呼び出し時に、ヘッダー行がある前提として処理します。
 
-* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html>`_ ]をフィールドに付与します。
+* カラムをフィールドにマッピングするために、アノテーション ``@CsvColumn`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html>`__ ]をフィールドに付与します。
 
   * 属性 ``number`` で、マッピングするカラムの番号を指定します。カラムの番号は1から始まります。
-  * 属性 ``label`` で、ヘッダー行のラベル名を指定することができます。省略した場合はフィールド名が適用されます。
+  * 属性 ``label`` で、ヘッダー行のラベル名を指定できます。省略した場合はフィールド名が適用されます。
 
 * フィールドに対応するgetter/setterのアクセッサメソッドを作成します。
 
@@ -129,7 +129,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 読み込み方法
 --------------------------------------
 
-* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`_ ]を使用します。
+* CSVファイルを読み込む場合は、クラス ``CsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html>`__ ]を使用します。
 * 一度に全レコードを読み込む場合は、メソッド ``readAll(...)`` を使用します。
 * 1件ずつ読み込む場合は、メソッド ``read(...)`` を使用します。
 * Stream API による読み込みを行う場合は、メソッド ``lines(...)`` を使用します。 *[v2.3+]*
@@ -213,7 +213,7 @@ CSVの1レコード分をマッピングするためのPOJOクラスを作成し
 書き込み方法
 --------------------------------------
 
-* CSVファイルを書き込む場合は、クラス ``CsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html>`_ ]を使用します。
+* CSVファイルを書き込む場合は、クラス ``CsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html>`__ ]を使用します。
 * 一度に全レコードを書き込む場合は、メソッド ``writeAll(...)`` を使用します。
 * 1件ずつ書き込む場合は、メソッド ``write(...)`` を使用します。
 

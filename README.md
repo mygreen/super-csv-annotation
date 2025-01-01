@@ -1,5 +1,5 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/super-csv-annotation/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/super-csv-annotation/)
- [![Javadocs](http://javadoc.io/badge/com.github.mygreen/super-csv-annotation.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/super-csv-annotation) [![Build Status](https://travis-ci.org/mygreen/super-csv-annotation.svg?branch=master)](https://travis-ci.org/mygreen/super-csv-annotation) [![SonarQube](https://sonarcloud.io/api/project_badges/measure?project=com.github.mygreen%3Asuper-csv-annotation&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.mygreen%3Asuper-csv-annotation)
+ [![Javadocs](http://javadoc.io/badge/com.github.mygreen/super-csv-annotation.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/super-csv-annotation) [![Build Status](https://github.com/mygreen/super-csv-annotation/actions/workflows/verify.yml/badge.svg)](https://travis-ci.org/mygreen/super-csv-annotation)
 
 Super CSV Annotation
 ====================
@@ -17,7 +17,7 @@ This library 'Super CSV' extension library with annotation function.
 # Setup
 
 1. Add dependency for Super Csv Annotation
-    ```xml
+    ```xml:pom.xml
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
@@ -25,7 +25,7 @@ This library 'Super CSV' extension library with annotation function.
     </dependency>
     ```
 2. Add dependency for Logging library. Example Logback.
-    ```xml
+    ```xml:pom.xml
     <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
@@ -38,15 +38,7 @@ This library 'Super CSV' extension library with annotation function.
 
 1. Setup Java SE 8 (1.8.0_121+)
 2. Setup Maven
-3. Setup Sphinx (building for manual)
-    1. install Python
-    2. install sphinx and theme for read the docs, janome
-    ```console
-    # pip install sphinx
-    # pip install sphinx_rtd_theme --upgrade
-    # pip install janome
-    ```
-4. Build with Maven
+3. Build with Maven
     1. make jar files.
     ```console
     # mvn clean package

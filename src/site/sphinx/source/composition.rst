@@ -2,9 +2,9 @@
 アノテーションの合成
 ======================================
 
-既存のアノテーションを組み合わせて、容易にアノテーションを作成することができます。
+既存のアノテーションを組み合わせて、容易にアノテーションを作成できます。
 
-この機能は、同じアノテーションの組み合わせを他の多くのフィールドに設定したくないときに利用します。
+この機能は、同じアノテーションの組み合わせを他の多くのフィールドで設定したくないときに利用します。
 
 --------------------------------------------------------
 アノテーションの合成の基本
@@ -22,7 +22,7 @@
 
   * 内部クラスのアノテーションとして、 *List* を定義します。
 
-* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html>`_ ]を指定します。
+* 合成したのアノテーションと示すためのメタアノテーション ``@CsvComposition`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvComposition.html>`__ ]を指定します。
 
 
 .. sourcecode:: java
@@ -89,10 +89,10 @@
 属性の上書き
 --------------------------------------------------------
 
-合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html>`_ ]を使用します。
+合成したアノテーションに対して、一部の属性値を可変にしたい場合は、アノテーション ``@CsvOverridesAttribute`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/CsvOverridesAttribute.html>`__ ]を使用します。
 
 * 属性 ``annotation`` で上書き対象のアノテーションを指定し、属性 ``name`` で属性名を指定します。
-* アノテーション ``@CsvOverridesAttribute`` を複数付与することで、1つの属性で複数の属性を上書きすることができます。
+* アノテーション ``@CsvOverridesAttribute`` を複数付与することで、1つの属性で複数の属性を上書きできます。
 
 .. sourcecode:: java
     :linenos:
@@ -198,7 +198,7 @@
 共通の属性の上書き
 --------------------------------------------------------
 
-共通の属性である ``cases``, ``groups`` , ``message`` は、アノテーション *@CsvOverridesAttribute* が無くても上書きすることができます。
+共通の属性である ``cases``, ``groups`` , ``message`` は、アノテーション *@CsvOverridesAttribute* が無くても上書きできます。
 
 .. sourcecode:: java
     :linenos:
@@ -251,7 +251,7 @@
 
 
 
-もちろん、共通の属性 *cases* 、 *message* 、 *groups* も、アノテーション *@CsvOverridesAttribute* を使用して、特定のアノテーションの属性を上書きすることができます。
+もちろん、共通の属性 *cases* 、 *message* 、 *groups* も、アノテーション *@CsvOverridesAttribute* を使用して、特定のアノテーションの属性を上書きができます。
 
 下記の例の場合、*@CsvOverridesAttribute* で上書きされていないアノテーションの属性 *cases* 、 *message* 、 *groups* は、共通の属性 *cases* 、 *message* 、 *groups* で上書きされます。
 
