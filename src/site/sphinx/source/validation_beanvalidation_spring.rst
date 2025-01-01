@@ -62,12 +62,26 @@ XMLによる設定方法を説明します。
             <property name="messageSource" ref="messageSource" />
         </bean>
         
-        <!-- BeanValidation用のCsvValidatorの定義 -->
+        <!-- Bean Validation用のCsvValidatorの定義 -->
         <bean id="csvBeanValidator" class="com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator">
             <constructor-arg>
                 <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
                     <property name="messageInterpolator">
                         <bean class="com.github.mygreen.supercsv.validation.beanvalidation.MessageInterpolatorAdapter">
+                            <constructor-arg ref="springMessageResolver" />
+                            <constructor-arg><bean class="com.github.mygreen.supercsv.localization.MessageInterpolator" /></constructor-arg>
+                        </bean>
+                    </property>
+                </bean>
+            </constructor-arg>
+        </bean>
+
+        <!-- Jakarta Bean Validation 用のCsvValidatorの定義 -->
+        <bean id="jakartaCsvBeanValidator" class="com.github.mygreen.supercsv.validation.beanvalidation.JakartaCsvBeanValidator">
+            <constructor-arg>
+                <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+                    <property name="messageInterpolator">
+                        <bean class="com.github.mygreen.supercsv.validation.beanvalidation.JakartaMessageInterpolatorAdapter">
                             <constructor-arg ref="springMessageResolver" />
                             <constructor-arg><bean class="com.github.mygreen.supercsv.localization.MessageInterpolator" /></constructor-arg>
                         </bean>
@@ -136,23 +150,30 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
         }
         
         @Bean
-        @Description("Spring用のBeanValidatorのValidatorの定義")
-        public Validator csvLocalValidatorFactoryBean() {
-            
-            LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-            
-            // メッセージなどをカスタマイズ
-            validator.setMessageInterpolator(new MessageInterpolatorAdapter(
-                    springMessageResolver(), new MessageInterpolator()));
-            return validator;
-        }
-        
-        @Bean
         @Description("CSV用のCsvValidaotrの定義")
         public CsvBeanValidator csvBeanValidator() {
             
+            LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+            // メッセージなどをカスタマイズ
+            validator.setMessageInterpolator(new MessageInterpolatorAdapter(
+                    springMessageResolver(), new MessageInterpolator()));
+
             // ValidarorのインスタンスをSpring経由で作成したものを利用する
-            CsvBeanValidator csvBeanValidator = new CsvBeanValidator(csvLocalValidatorFactoryBean());
+            CsvBeanValidator csvBeanValidator = new CsvBeanValidator(validator);
+            return csvBeanValidator;
+        }
+
+        @Bean
+        @Description("CSV用のCsvValidaotrの定義 - Jakarta Bean Validationの場合")
+        public JakartaCsvBeanValidator jakartaCsvBeanValidator() {
+            
+            LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+            // メッセージなどをカスタマイズ
+            validator.setMessageInterpolator(new JakartaMessageInterpolatorAdapter(
+                    springMessageResolver(), new MessageInterpolator()));
+
+            // ValidarorのインスタンスをSpring経由で作成したものを利用する
+            JakartaCsvBeanValidator csvBeanValidator = new JakartaCsvBeanValidator(validator);
             return csvBeanValidator;
         }
         
