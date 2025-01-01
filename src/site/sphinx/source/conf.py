@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Super CSV Annotation'
-copyright = u'2016-2022, T.TSUCHIE'
+copyright = u'2016-2025, T.TSUCHIE'
 author = u'T.TSUCHIE'
 
 # The version info for the project you're documenting, acts as replacement for
