@@ -7,6 +7,6 @@ call env.bat
 
 call mvn -version
 
-call mvn clean -Dmaven.test.skip=true source:jar javadoc:jar deploy
+call mvn clean -Dmaven.test.skip=true source:jar javadoc:jar verify deploy
 
 pause
