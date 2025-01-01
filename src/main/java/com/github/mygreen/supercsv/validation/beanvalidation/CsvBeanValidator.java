@@ -26,7 +26,7 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
 import com.github.mygreen.supercsv.validation.ValidationContext;
 
 /**
- * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)にブリッジする{@link CsvValidator}。
+ * BeanValidaion JSR-303(ver.1.0)/JSR-349(ver.1.1)/JSR-380(ver2.0)にブリッジする{@link CsvValidator}。
  * 
  * @version 2.4
  * @since 2.0
