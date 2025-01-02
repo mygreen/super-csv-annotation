@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.3</version>
+	<version>2.4</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description><![CDATA[
@@ -22,17 +22,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		<developerConnection>scm:git:ssh://git@github.com/mygreen/super-csv-annotation.git</developerConnection>
 		<url>https://github.com/mygreen/super-csv-annotation</url>
 	</scm>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 
 	<licenses>
 		<license>
@@ -76,75 +65,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		<sonar.organization>mygreen-github</sonar.organization>
 
 	</properties>
-
-	<!-- ビルド環境によって、sphinxのスクリプトを切り替える -->
-	<profiles>
-		<profile>
-			<id>platform-windows</id>
-			<activation>
-				<os>
-					<family>windows</family>
-				</os>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.6.0</version>
-						<executions>
-							<execution>
-								<id>sphinx-doc</id>
-								<phase>site</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>make_sphinx_html.bat</executable>
-									<arguments>
-										<argument>${project.version}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>platform-linux</id>
-			<activation>
-				<os>
-					<family>!windows</family>
-				</os>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.6.0</version>
-						<executions>
-							<execution>
-								<id>sphinx-doc</id>
-								<phase>site</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>make_sphinx_html.sh</executable>
-									<arguments>
-										<argument>${project.version}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-	</profiles>
 
 	<build>
 		<resources>
@@ -190,6 +110,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>source-jar</id>
@@ -259,28 +180,6 @@ $(document).ready(function() {
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<id>sphinx-doc</id>
-						<phase>site</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>make_sphinx_html.bat</executable>
-							<arguments>
-								<argument>${project.version}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -340,14 +239,12 @@ $(document).ready(function() {
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.13</version>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.6.0</version>
 				<extensions>true</extensions>
 				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<publishingServerId>central</publishingServerId>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -372,9 +269,31 @@ $(document).ready(function() {
 		<!-- 式言語 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-jexl</artifactId>
-			<version>2.1.1</version>
+			<artifactId>commons-jexl3</artifactId>
+			<version>3.4.0</version>
 		</dependency>
+		
+		<!-- Jakarta Bean Validation (Java11以上が必要) -->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
 
 		<!-- Bean Validation 2.0 -->
 		<dependency>
@@ -478,6 +397,14 @@ $(document).ready(function() {
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.11</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- JAXB(Java9以降の場合は必要) -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
 		</dependency>
 		
 	</dependencies>

@@ -12,7 +12,7 @@
   * *ResourceBundleMessageResolver* では、システムのプロパティファイル ``com/github/mygreen/supercsv/localization/SuperCsvMessages.properties`` が読み込まれます。
   * 独自のメッセージは、クラスパスのルート配置した ``SuperCsvMessages.properties`` が読み込まれます。
 
-* 実装を切り替えることで、他の形式のファイルからも取得することができます。
+* 実装を切り替えることで、他の形式のファイルからも取得できます。
 
 .. list-table:: MessageResolverの実装
    :widths: 40 60
@@ -30,15 +30,21 @@
      
    * - *SpringMessageResolver*
      - | ``org.springframework.context.MessageSource`` を経由してメッセージを参照します。
-       | 詳細は、 :doc:`Spring Frameworkとの連携（エラーメッセージの設定方法） <spring_message>` を参照してください。
+       | 詳細は、 「:doc:`Spring Frameworkとの連携（エラーメッセージの設定方法） <spring_message>`」 を参照してください。
 
 
 また、メッセージ中には ``{var}`` の形式で変数が可能です。
-さらに、``${exp}`` の形式で 式言語の `Java Expression Language (JEXL) <http://commons.apache.org/proper/commons-jexl/>`_ が利用可能です。
+さらに、``${exp}`` の形式で式言語の `Java Expression Language (JEXL) <http://commons.apache.org/proper/commons-jexl/>`_ が利用可能です。
 
 デフォルト設定では、式言語ので呼び出し可能な関数が登録されています。
 ``com.github.mygreen.supercsv.expression.CustomFunction`` のメソッドが接頭語 `f:` を付けて呼び出し可能です。
 また、独自の関数も登録可能です。
+
+.. note::
+    
+    EL式で独自のクラスに対して評価を行う場合、評価されない場合があります。
+    その場合、JEXLのRestcitパーミッションとして、評価したいクラスのパッケージをシステムプロパティ ``supercsv.annotation.jexlPermissions`` で指定してください。
+    詳細は、「:doc:`configuration_systemproperty`」 を参照してください。
 
 
 .. sourcecode:: java

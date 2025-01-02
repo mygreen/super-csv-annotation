@@ -66,7 +66,7 @@ public class CsvError implements Serializable {
             
         }
         
-        // デフォルトメッセージはBeanValidationのとき変数を追加している場合があるため、再度フォーマットする。
+        // ユーザー指定のときはエラーコード指定がなため、デフォルトメッセージでフォーマットする。
         return messageInterpolator.interpolate(getDefaultMessage(), getVariables(), true, messageResolver);
     }
     

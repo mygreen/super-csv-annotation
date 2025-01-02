@@ -1,9 +1,10 @@
 package com.github.mygreen.supercsv.cellprocessor.constraint;
 
-import static org.junit.Assert.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.assertThat;
 import static com.github.mygreen.supercsv.tool.TestUtils.*;
-import static com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import java.lang.annotation.Annotation;
 import java.util.Comparator;
@@ -20,13 +21,12 @@ import com.github.mygreen.supercsv.annotation.CsvBean;
 import com.github.mygreen.supercsv.annotation.CsvColumn;
 import com.github.mygreen.supercsv.annotation.PatternFlag;
 import com.github.mygreen.supercsv.annotation.constraint.CsvPattern;
-import com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.BeanMappingFactory;
-import com.github.mygreen.supercsv.builder.BuildCase;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.Configuration;
 import com.github.mygreen.supercsv.builder.FieldAccessor;
+import com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
 import com.github.mygreen.supercsv.builder.standard.StringProcessorBuilder;
 import com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
@@ -287,7 +287,7 @@ public class PatternFactoryTest {
             
             List<String> messages = exceptionConverter.convertAndFormat((SuperCsvValidationException)e, beanMapping);
             assertThat(messages).hasSize(1)
-                    .contains("[2行, 2列] : 項目「col_description_empty」の値（abcdef）は、正規表現「d{4}-d{2}-d{2}」に一致しません。");
+                    .contains("[2行, 2列] : 項目「col_description_empty」の値（abcdef）は、正規表現「\\d{4}-\\d{2}-\\d{2}」に一致しません。");
         }
         
     }
@@ -377,7 +377,7 @@ public class PatternFactoryTest {
             
             List<String> messages = exceptionConverter.convertAndFormat((SuperCsvValidationException)e, beanMapping);
             assertThat(messages).hasSize(1)
-                    .contains("lineNumber=1, rowNumber=2, columnNumber=12, label=col_message_variables, validatedValue=abcdef, regex=d{4}-d{2}-d{2}, flags=2, description=説明");
+                    .contains("lineNumber=1, rowNumber=2, columnNumber=12, label=col_message_variables, validatedValue=abcdef, regex=\\d{4}-\\d{2}-\\d{2}, flags=2, description=説明");
         }
         
     }

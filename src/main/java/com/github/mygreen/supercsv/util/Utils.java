@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -76,6 +77,23 @@ public class Utils {
     
     public static boolean isNotEmpty(final Collection<?> collection) {
         return !isEmpty(collection);
+    }
+    
+    /**
+     * Mapが空か判定する。
+     * @param map
+     * @return nullまたはサイズが0のときにtrueを返す。
+     */
+    public static boolean isEmpty(final Map<?, ?> map) {
+        if(map == null || map.isEmpty()) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public static boolean isNotEmpty(final Map<?, ?> map) {
+        return !isEmpty(map);
     }
     
     /**
@@ -340,6 +358,37 @@ public class Utils {
             .append(String.valueOf(str.charAt(0)).toLowerCase())
             .append(str.substring(1))
             .toString();
+    }
+    
+    /**
+     * 文字列をトリムする。
+     * @param value トリム対象の文字
+     * @param trimmed トリムするかどうか。
+     * @return トリミングした結果。
+     */
+    public static String trim(final String value, final boolean trimmed) {
+        if(!trimmed || value == null) {
+            return value;
+        }
+
+        return value.trim();
+
+    }
+    
+    /**
+     * 文字列をbooleanに変換します。
+     * 
+     * @param value 変換対象の値。
+     * @param defaultValue 変換対象がnull or 空文字の時のデフォルト値。
+     * @return 引数がnullのとき、falseを返します。
+     */
+    public static boolean toBoolean(final String value, final boolean defaultValue) {
+        String text = trim(value, true);
+        if(isEmpty(text)) {
+            return defaultValue;
+        }
+        
+        return Boolean.valueOf(text.toLowerCase());
     }
     
 }

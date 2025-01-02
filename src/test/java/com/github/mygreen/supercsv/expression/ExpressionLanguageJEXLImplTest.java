@@ -1,18 +1,14 @@
 package com.github.mygreen.supercsv.expression;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.github.mygreen.supercsv.expression.CustomFunctions;
-import com.github.mygreen.supercsv.expression.ExpressionEvaluationException;
-import com.github.mygreen.supercsv.expression.ExpressionLanguageJEXLImpl;
 
 /**
  * {@link ExpressionLanguageJEXLImpl}のテスタ
@@ -24,7 +20,7 @@ import com.github.mygreen.supercsv.expression.ExpressionLanguageJEXLImpl;
 public class ExpressionLanguageJEXLImplTest {
     
     private ExpressionLanguageJEXLImpl el;
-    
+
     @Before
     public void setUp() throws Exception {
         this.el = new ExpressionLanguageJEXLImpl();
@@ -70,11 +66,6 @@ public class ExpressionLanguageJEXLImplTest {
     @Test
     public void test_function() {
         
-        // 関数の登録
-        Map<String, Object> funcs = new HashMap<>(); 
-        funcs.put("f", CustomFunctions.class);
-        el.getJexlEngine().setFunctions(funcs);
-        
         String expression = "f:join(array, ', ')";
         
         Map<String, Object> vars = new HashMap<>();
@@ -84,4 +75,22 @@ public class ExpressionLanguageJEXLImplTest {
         assertThat(eval).isEqualTo("1, 2, 3");
         
     }
+    
+
+    /**
+     * ELインジェクション
+     */
+    @Test
+    public void test_injection() {
+
+        String expression = "''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')";
+
+        Object eval = el.evaluate(expression, Collections.emptyMap());
+        
+        // 評価に失敗しnullが返ってくる
+        assertThat(eval).isNull();
+
+    }
+    
+    
 }

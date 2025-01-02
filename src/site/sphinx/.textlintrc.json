@@ -1,0 +1,13 @@
+{
+  "plugins": {
+    "rst": {
+      "parseCommand": "rst2ast -q --no-file-insertion"
+    }
+  },
+  "filters": {},
+  "rules": {
+    "preset-ja-technical-writing": true,
+    "preset-jtf-style": true
+  }
+}
+

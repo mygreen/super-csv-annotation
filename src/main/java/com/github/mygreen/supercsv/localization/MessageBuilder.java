@@ -102,6 +102,12 @@ public class MessageBuilder {
         return MESSAGE_INTERPOLATOR.interpolate(message, vars, recusrsive, MESSAGE_RESOLVER);
     }
     
+    /**
+     * メッセージの組み立てを開始します。
+     * 
+     * @param code メッセージコード。
+     * @return メッセージを組み立てるためのクラス。
+     */
     public static MessageBuilder create(final String code) {
         
         return new MessageBuilder(code);

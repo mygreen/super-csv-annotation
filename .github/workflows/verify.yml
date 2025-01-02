@@ -20,15 +20,26 @@ jobs:
     - name: Set up Locale
       run: |
         sudo apt-get -y install fonts-ipafont language-pack-ja
+        sudo locale-gen ja_JP.UTF-8
         sudo update-locale LANG=ja_JP.UTF-8
         sudo update-locale LC_ALL=ja_JP.UTF-8
+        sudo localectl status
     - name: Set up Time-Zone
-      run: sudo timedatectl set-timezone Asia/Tokyo
-    - uses: actions/checkout@v2
+      run: |
+        sudo timedatectl set-timezone Asia/Tokyo
+        date
+    - uses: actions/checkout@v4
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v4
       with:
-        java-version: 1.8
+        distribution: 'corretto'
+        java-version: 8
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v5
+      with:
+        maven-version: 3.9.6
     - name: Build with Maven
-      #run: mvn -B package --file pom.xml
+      env:
+        TZ: 'Asia/Tokyo'
       run: mvn -B clean verify -Dgpg.skip=true
+

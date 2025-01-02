@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.validation.metadata.ConstraintDescriptor;
 
@@ -27,9 +26,10 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
     private final MessageInterpolator csvMessageInterpolator;
     
     /**
+     * SuperCsvAnnotation用のメッセージソースとInterpolatorを指定してBeanValidationのMessageInterpolatorを作成します。
      * 
-     * @param messageResolver
-     * @param csvMessageInterpolator
+     * @param messageResolver SuperCsvAnnotation用のメッセージソース。
+     * @param csvMessageInterpolator SuperCsvAnnotation用のMessageInterpolator。
      * @throws NullPointerException {@literal if messageResolver or csvMessageInterpolator is null.}
      */
     public MessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {
@@ -69,14 +69,6 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
         
         // 検証対象の値
         vars.computeIfAbsent("validatedValue", key -> context.getValidatedValue());
-        
-        // デフォルトのメッセージ
-        final String defaultCode = String.format("%s.message", descriptor.getAnnotation().annotationType().getCanonicalName());
-        final Optional<String> defaultMessage = messageResolver.getMessage(defaultCode);
-        
-        vars.put(defaultCode, 
-                defaultMessage.orElseThrow(() -> new RuntimeException(String.format("not found message code '%s'", defaultCode))));
-        
         
         return vars;
         
