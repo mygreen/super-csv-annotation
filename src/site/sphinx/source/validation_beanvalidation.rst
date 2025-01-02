@@ -11,7 +11,7 @@ Bean Validationによるカラムの値の検証する方法を説明します�
 Bean Validationを利用する際には、ライブリを追加します。 
 Mavenを利用している場合は、pom.xmlに以下を追加します。
 
-本ライブラリは、Bean Validation1.0/1.1/2.0 及び、Jakarta Bean Validaiton 3.0 に対応しており、その参照実装である `Hibernate Validator <http://hibernate.org/validator/>`_ を追加します。
+本ライブラリは、Bean Validation1.0/1.1/2.0 及び、Jakarta Bean Validaiton 3.0/3.1 に対応しており、その参照実装である `Hibernate Validator <http://hibernate.org/validator/>`_ を追加します。
 
 Hibernate Validator は対応するBean Validaitonのバージョンが決まっているため、対応したライブラリのバージョンを追加する必要があります。
 
@@ -39,7 +39,7 @@ Hibernate Validator は対応するBean Validaitonのバージョンが決まっ
      - ver.6.x
      - Java8以上で利用可能です。
 
-   * - ver.3.0
+   * - ver.3.0/3.1
      - ver.8.x
      - | **Super Csv Annotation 2.4+** から対応しています。
        | Hibernate Validator v8.xから、**Java11以上** が必須になります。
@@ -120,14 +120,14 @@ Bean Validation 2.0(JSR-380)を利用する場合は、Hibernate Validator6.x系
     </dependency>
 
 
-Jakarta Bean Validation 3.0を利用する場合は、Hibernate Validator8.x系を利用します。
+Jakarta Bean Validation 3.0/3.1を利用する場合は、Hibernate Validator8.x系を利用します。
 さらに、メッセージ中にJakarta EEのEL式が利用可能となっているため、その実装であるライブリを追加します。
 
 .. sourcecode:: xml
     :linenos:
-    :caption: pom.xmlの依存関係の追加（Jakarta Bean Validation3.0を利用する場合）
+    :caption: pom.xmlの依存関係の追加（Jakarta Bean Validation3.1を利用する場合）
     
-    <!-- jakarta Bean Validation 3.0 -->
+    <!-- Jakarta Bean Validation 3.1 -->
     <dependency>
         <groupId>jakarta.validation</groupId>
         <artifactId>jakarta.validation-api</artifactId>
@@ -154,7 +154,7 @@ Bean Validationの利用方法
 アノテーション ``@CsvBean(validatosr=CsvBeanValidator.class)`` を指定します。
 
   * Bean Validation 1.0/1.1/2.0の場合は、 ``CsvBeanValidator`` を指定します。
-  * Jakarta Bean Validation 3.0の場合は、 ``JakartaCsvBeanValidator`` を指定します。
+  * Jakarta Bean Validation 3.0/3.1の場合は、 ``JakartaCsvBeanValidator`` を指定します。
 
 ``CsvBeanValidator`` / ``JakartaCsvBeanValidator`` は、Bean Validation と、本ライブラリの ``CsvValidator`` をブリッジするクラスです。
 
@@ -177,7 +177,7 @@ Bean Validationの利用方法
     
     // Bean Validationの指定方法
     @CsvBean(validators=CsvBeanValidator.class)
-    // @CsvBean(validators=JakartaCsvBeanValidator.class)   // Jakarta Bean Validation 3.0の場合
+    // @CsvBean(validators=JakartaCsvBeanValidator.class)   // Jakarta Bean Validation の場合
     private static class TestCsv {
         
         @CsvColumn(number=1)

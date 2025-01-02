@@ -27,7 +27,7 @@ ver.2.4 - 2025-01-01
 
 * 変更内容
 
-  * `#57 <https://github.com/mygreen/super-csv-annotation/pull/57>`_ - Jakarta Bean Validation 3.0に対応しました。
+  * `#57 <https://github.com/mygreen/super-csv-annotation/pull/57>`_ - Jakarta Bean Validation 3.0/3.1に対応しました。
 
   * `#59 <https://github.com/mygreen/super-csv-annotation/pull/59>`_ - Sphinxによるドキュメント生成環境として、DevContainer の設定を追加しました。
 
