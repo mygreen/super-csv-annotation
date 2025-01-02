@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<html class="writer-html5" lang="ja" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>8. 固定長のカラムの読み書き &mdash; Super CSV Annotation 2.3 ドキュメント</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>8. 固定長のカラムの読み書き &mdash; Super CSV Annotation 2.4 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/translations.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=05b04c43"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=91613774"></script>
         <script src="_static/mytheme.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
@@ -32,14 +35,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Super CSV Annotation
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Super CSV Annotation
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,9 +66,9 @@
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#csvbean">1.2. CSV用のBeanクラスの定義</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id4">1.3. 読み込み方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id6">1.4. 書き込み方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id8">1.5. 値の加工方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id3">1.3. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id4">1.4. 書き込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id5">1.5. 値の加工方法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#csv">1.6. タブ区切りCSVファイルへの対応</a></li>
 </ul>
 </li>
@@ -74,90 +81,90 @@
 <li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format.html#id2">3.1. 書式指定用の既存のアノテーション</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvbooleanformat">3.1.1. &#64;CsvBooleanFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.1.1. 読み込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.1.2. 書き込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id10">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id3">3.1.1.1. 読み込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id4">3.1.1.2. 書き込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id5">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id6">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvnumberformat">3.1.2. &#64;CsvNumberFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id15">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id16">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id10">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvdatetimeformat">3.1.3. &#64;CsvDateTimeFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id19">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id20">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id21">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id12">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="format.html#csvenumformat">3.1.4. &#64;CsvEnumFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id24">3.1.4.1. 基本的な使い方</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id25">3.1.4.2. 別名でマッピングする場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id26">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id16">3.1.4.1. 基本的な使い方</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id17">3.1.4.2. 別名でマッピングする場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id18">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="format.html#id29">3.2. 独自のクラスタイプへの対応</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format.html#id20">3.2. 独自のクラスタイプへの対応</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="format.html#textformatter">3.2.1. TextFormatterの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="format.html#id31">3.2.2. 作成したTextFormatterの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html#id21">3.2.2. 作成したTextFormatterの指定</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">4. 値の変換方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conversion.html#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id17">4.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id18">4.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id19">4.1.3. グループの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id3">4.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id4">4.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id5">4.1.3. グループの指定</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="conversion.html#id20">4.2. 独自の変換処理の作成方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conversion.html#id6">4.2. 独自の変換処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="conversion.html#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id23">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id25">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id7">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id8">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="validation.html">5. 値の検証方法</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="validation.html#id2">5.1. 値の検証用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id20">5.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id21">5.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id22">5.1.3. グループの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id3">5.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id4">5.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id5">5.1.3. グループの指定</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id23">5.2. 独自の検証処理の作成方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id6">5.2. 独自の検証処理の作成方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#cellprocessor">5.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id27">5.2.2. 値の検証用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id30">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id7">5.2.2. 値の検証用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id8">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="validation.html#bean">5.3. Bean単位での値の検証方法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="validation.html#csvvalidator">5.3.1. CsvValidatorの実装</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id32">5.3.2. エラーメッセージの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id33">5.3.3. エラーのハンドリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id9">5.3.2. エラーメッセージの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id10">5.3.3. エラーのハンドリング</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id34">5.4. エラー処理の方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id35">5.4.1. 例外の種類とハンドリング</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id36">5.4.2. 書き込み時の値の検証のスキップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id11">5.4. エラー処理の方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id12">5.4.1. 例外の種類とハンドリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id13">5.4.2. 書き込み時の値の検証のスキップ</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id37">5.5. 値の検証時のエラーメッセージ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id14">5.5. 値の検証時のエラーメッセージ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="validation.html#bean-validation">5.6. Bean Validationとの連携</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id38">5.6.1. ライブラリの追加</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id41">5.6.2. Bean Validationの利用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id42">5.6.3. Bean Validationのカスタマイズ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#beanvalidationspring-framework">5.6.4. BeanValidationとSpring Frameworkとの連携</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id15">5.6.1. ライブラリの追加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id18">5.6.2. Bean Validationの利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id19">5.6.3. Bean Validationのカスタマイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#bean-validationspring-framework">5.6.4. Bean ValidationとSpring Frameworkとの連携</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#xml">5.6.4.1. XMLによるコンテナの設定</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#javaconfig">5.6.4.2. JavaConfigによるコンテナの設定</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#constraintvalidator">5.6.4.3. 独自のConstraintValidatorの作成</a></li>
 <li class="toctree-l4"><a class="reference internal" href="validation.html#csvbean">5.6.4.4. CsvBeanの定義</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#id44">5.6.4.5. 値の検証方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#id21">5.6.4.5. 値の検証方法</a></li>
 </ul>
 </li>
 </ul>
@@ -167,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="composition.html">6. アノテーションの合成</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="composition.html#id2">6.1. アノテーションの合成の基本</a></li>
 <li class="toctree-l2"><a class="reference internal" href="composition.html#id3">6.2. 属性の上書き</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composition.html#id5">6.3. 共通の属性の上書き</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composition.html#id4">6.3. 共通の属性の上書き</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="partialization.html">7. 部分的なカラムの読み書き</a><ul>
@@ -176,9 +183,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">8. 固定長のカラムの読み書き</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id4">8.1. 基本的な設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">8.2. ヘッダー行の固定長の指定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">8.3. パディング処理方式の切り替え</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">8.1. 基本的な設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">8.2. ヘッダー行の固定長の指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">8.3. パディング処理方式の切り替え</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
@@ -194,7 +201,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">11.2. リスナークラスによるライフサイクルの管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id3">11.2. リスナークラスによるライフサイクルの管理</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spring.html">12. Spring Frameworkとの連携</a><ul>
@@ -223,8 +230,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">13.1. システム設定の変更方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#confugration">13.1. Confugrationによる設定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#id2">13.1.1. Confugrationによる変更方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#id3">13.1.2. Confugrationによる設定項目一覧</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#java">13.2. Javaシステムプロパティによる設定</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
@@ -232,15 +243,16 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.1. ver.2.3 - 2022-10-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.2. ver.2.2 - 2018-07-14</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.3. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.4. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.5. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.6. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.7. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.8. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.9. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-4-2025-01-01">15.1. ver.2.4 - 2025-01-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.2. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.3. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.4. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.5. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.6. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.7. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.8. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.9. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.10. ver.1.1 - 2014-11-30</a></li>
 </ul>
 </li>
 </ul>
@@ -259,8 +271,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><span class="section-number">8. </span>固定長のカラムの読み書き</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>固定長のカラムの読み書き</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/fixedsizecolumn.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -270,8 +282,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="id1">
-<h1><span class="section-number">8. </span>固定長のカラムの読み書き<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+  <section id="id1">
+<h1><span class="section-number">8. </span>固定長のカラムの読み書き<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <p>固定長のカラムは、書き込み時は任意の長さになるよう空白などを詰め、読み込み時は書き込み時に詰めた空白などの文字を除去するとで実現しています。<em>[v2.1+]</em></p>
 <p>固定長のカラムを定義したい場合は、フィールドにアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFixedSize</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvFixedSize.html">JavaDoc</a> ] を付与します。</p>
 <p>このアノテーションは、 以下の変換用のアノテーションを合成したアノテーションになります。</p>
@@ -279,8 +291,8 @@
 <li><p>書き込み時は、パディングするアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvMultiPad</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html">JavaDoc</a> ]。</p></li>
 <li><p>読み込み時は、トリムするアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvOneSideTrim</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html">JavaDoc</a> ]。</p></li>
 </ul>
-<div class="section" id="id4">
-<h2><span class="section-number">8.1. </span>基本的な設定<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<section id="id2">
+<h2><span class="section-number">8.1. </span>基本的な設定<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;CsvFixedSize</span></code> の属性を指定することで、細やかな設定ができます。</p>
 <ul class="simple">
 <li><p>属性 <code class="docutils literal notranslate"><span class="pre">size</span></code> にて、固定長のサイズを指定します。</p></li>
@@ -290,7 +302,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">false</span></code> のとき左寄席で、デフォルト値となります。書き込み時に右側にパディング文字を詰め、読み見込み時に右側の文字をトリミングします。</p></li>
 </ul>
 </li>
-<li><p>属性 <code class="docutils literal notranslate"><span class="pre">padChar</span></code> で、パディングする文字を指定することができます。</p>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">padChar</span></code> で、パディングする文字を指定できます。</p>
 <ul>
 <li><p>デフォルトは半角空白です。</p></li>
 <li><p>値には、半角以外の全角文字の指定可能です。</p></li>
@@ -302,81 +314,81 @@
 </ul>
 </li>
 </ul>
-<div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-number">コード - 8.1.1 </span><span class="caption-text">Beanの定義例</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク"></a></div>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
-<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
-<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-number">コード - 8.1.1 </span><span class="caption-text">Beanの定義例</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
 <span class="linenos"> 4</span>
 <span class="linenos"> 5</span>
 <span class="linenos"> 6</span><span class="nd">@CsvBean</span>
-<span class="linenos"> 7</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 7</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SampleCsv</span><span class="w"> </span><span class="p">{</span>
 <span class="linenos"> 8</span>
-<span class="linenos"> 9</span>    <span class="c1">// 右詰めする</span>
-<span class="linenos">10</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="linenos">11</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rightAlign</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
-<span class="linenos">12</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="c1">// 右詰めする</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">rightAlign</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos">12</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
 <span class="linenos">13</span>
-<span class="linenos">14</span>    <span class="c1">// パディング文字を全角空白にする。</span>
-<span class="linenos">15</span>    <span class="c1">// 全角を入力する前提としたカラムと想定し、さらに @CsvFullChar で半角を全角に変換します。</span>
-<span class="linenos">16</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="p">)</span>
-<span class="linenos">17</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">padChar</span><span class="o">=</span><span class="sc">&#39;　&#39;</span><span class="p">)</span>
-<span class="linenos">18</span>    <span class="nd">@CsvFullChar</span>
-<span class="linenos">19</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1">// パディング文字を全角空白にする。</span>
+<span class="linenos">15</span><span class="w">    </span><span class="c1">// 全角を入力する前提としたカラムと想定し、さらに @CsvFullChar で半角を全角に変換します。</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;氏名&quot;</span><span class="p">)</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">padChar</span><span class="o">=</span><span class="sc">&#39;　&#39;</span><span class="p">)</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nd">@CsvFullChar</span>
+<span class="linenos">19</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
 <span class="linenos">20</span>
-<span class="linenos">21</span>    <span class="c1">// パディング文字をアンダースコア（_）にする。</span>
-<span class="linenos">22</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="p">)</span>
-<span class="linenos">23</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padChar</span><span class="o">=</span><span class="sc">&#39;_&#39;</span><span class="p">)</span>
-<span class="linenos">24</span>    <span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu-MM-dd&quot;</span><span class="p">)</span>
-<span class="linenos">25</span>    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="p">;</span>
+<span class="linenos">21</span><span class="w">    </span><span class="c1">// パディング文字をアンダースコア（_）にする。</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;生年月日&quot;</span><span class="p">)</span>
+<span class="linenos">23</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">padChar</span><span class="o">=</span><span class="sc">&#39;_&#39;</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nd">@CsvDateTimeFormat</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;uuuu-MM-dd&quot;</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">LocalDate</span><span class="w"> </span><span class="n">birthday</span><span class="p">;</span>
 <span class="linenos">26</span>
-<span class="linenos">27</span>    <span class="c1">// 文字サイズを超えている場合は、切り出す。</span>
-<span class="linenos">28</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;備考&quot;</span><span class="p">)</span>
-<span class="linenos">29</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">chopped</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
-<span class="linenos">30</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">comment</span><span class="p">;</span>
+<span class="linenos">27</span><span class="w">    </span><span class="c1">// 文字サイズを超えている場合は、切り出す。</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;備考&quot;</span><span class="p">)</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">chopped</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos">30</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">comment</span><span class="p">;</span>
 <span class="linenos">31</span>
-<span class="linenos">32</span>    <span class="c1">// getter, setterは省略</span>
+<span class="linenos">32</span><span class="w">    </span><span class="c1">// getter, setterは省略</span>
 <span class="linenos">33</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <p>出力されるCSVは下記のようになります。</p>
 <p>ヘッダー行が固定長になっていないことがわかります。</p>
-<div class="literal-block-wrapper docutils container" id="id12">
-<div class="code-block-caption"><span class="caption-number">コード - 8.1.2 </span><span class="caption-text">出力されるCSV(1)</span><a class="headerlink" href="#id12" title="このコードへのパーマリンク"></a></div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-number">コード - 8.1.2 </span><span class="caption-text">出力されるCSV(1)</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>id,氏名,生年月日,備考
 <span class="linenos">2</span>         1,山田　太郎　　　　　,1990-01-12,コメント
 <span class="linenos">3</span>         2,山田　花子　　　　　,__________,
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2><span class="section-number">8.2. </span>ヘッダー行の固定長の指定<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+</section>
+<section id="id3">
+<h2><span class="section-number">8.2. </span>ヘッダー行の固定長の指定<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>ヘッダー行もカラムの定義と同様に固定長にしたい場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(headerMapper=&lt;ヘッダーのマッピング処理クラス&gt;)</span></code> でヘッダーの処理方法を変更します。</p>
 <p><code class="docutils literal notranslate"><span class="pre">FixedSizeHeaderMapper</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/builder/FixedSizeHeaderMapper.html">JavaDoc</a> ] は、フィールドに付与されたアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvFixedSize</span></code> を元に、見出しに対してパディングを行います。</p>
-<div class="literal-block-wrapper docutils container" id="id13">
-<div class="code-block-caption"><span class="caption-number">コード - 8.2.1 </span><span class="caption-text">ヘッダーのマッピング定義を変更する</span><a class="headerlink" href="#id13" title="このコードへのパーマリンク"></a></div>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
-<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
-<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
-<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.FixedSizeHeaderMapper</span><span class="p">;</span>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-number">コード - 8.2.1 </span><span class="caption-text">ヘッダーのマッピング定義を変更する</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.FixedSizeHeaderMapper</span><span class="p">;</span>
 <span class="linenos"> 5</span>
-<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">headerMapper</span><span class="o">=</span><span class="n">FixedSizeHeaderMapper</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="linenos"> 7</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">headerMapper</span><span class="o">=</span><span class="n">FixedSizeHeaderMapper</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SampleCsv</span><span class="w"> </span><span class="p">{</span>
 <span class="linenos"> 8</span>
-<span class="linenos"> 9</span>    <span class="c1">// 右詰めする</span>
-<span class="linenos">10</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="linenos">11</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rightAlign</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
-<span class="linenos">12</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="c1">// 右詰めする</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">rightAlign</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="linenos">12</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
 <span class="linenos">13</span>
-<span class="linenos">14</span>    <span class="c1">// 以下、省略</span>
+<span class="linenos">14</span><span class="w">    </span><span class="c1">// 以下、省略</span>
 <span class="linenos">15</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id14">
-<div class="code-block-caption"><span class="caption-number">コード - 8.2.2 </span><span class="caption-text">出力されるCSV - ヘッダーも固定長にする</span><a class="headerlink" href="#id14" title="このコードへのパーマリンク"></a></div>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-number">コード - 8.2.2 </span><span class="caption-text">出力されるCSV - ヘッダーも固定長にする</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>        id,氏名　　　　　　　　,生年月日__,備考
 <span class="linenos">2</span>         1,山田　太郎　　　　　,1990-01-12,コメント
 <span class="linenos">3</span>         2,山田　花子　　　　　,__________,
@@ -388,9 +400,9 @@
 <p>ヘッダーの見出しが全角、実際の値が半角で出力するような場合、意図した変換がされない場合があります。
 その際は、独自に <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.builder.HeaderMapper</span></code> を実装したクラスを指定することで対応できます。</p>
 </div>
-</div>
-<div class="section" id="id7">
-<h2><span class="section-number">8.3. </span>パディング処理方式の切り替え<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+</section>
+<section id="id4">
+<h2><span class="section-number">8.3. </span>パディング処理方式の切り替え<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>固定長としてパディングする場合、サイズカウント方法の考え方は、複数あります。
 例えば、半角は1文字、全角は2文字分として換算する。
 または、文字のバイト数で換算することもあります。</p>
@@ -409,41 +421,41 @@
 </li>
 <li><p>独自のパディング処理を指定したい場合は、 <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.cellprocessor.conversion.PaddingProcessor</span></code> を実装したクラスを指定してください。</p></li>
 </ul>
-<div class="literal-block-wrapper docutils container" id="id15">
-<div class="code-block-caption"><span class="caption-number">コード - 8.3.1 </span><span class="caption-text">ヘッダーのマッピング定義を変更する</span><a class="headerlink" href="#id15" title="このコードへのパーマリンク"></a></div>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
-<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
-<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
-<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.FixedSizeHeaderMapper</span><span class="p">;</span>
-<span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.ByteSizePaddingProcessor</span><span class="p">;</span>
-<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.CharWidthPaddingProcessor</span><span class="p">;</span>
-<span class="linenos"> 7</span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcessor</span><span class="p">;</span>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">コード - 8.3.1 </span><span class="caption-text">ヘッダーのマッピング定義を変更する</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvFixedSize</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.FixedSizeHeaderMapper</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.ByteSizePaddingProcessor</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.CharWidthPaddingProcessor</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcessor</span><span class="p">;</span>
 <span class="linenos"> 8</span>
-<span class="linenos"> 9</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">headerMapper</span><span class="o">=</span><span class="n">FixedSizeHeaderMapper</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="linenos">10</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="p">{</span>
+<span class="linenos"> 9</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">headerMapper</span><span class="o">=</span><span class="n">FixedSizeHeaderMapper</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">10</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SampleCsv</span><span class="w"> </span><span class="p">{</span>
 <span class="linenos">11</span>
-<span class="linenos">12</span>    <span class="c1">// 文字の種別にかかわらず１文字としてカウントしてパディングします。</span>
-<span class="linenos">13</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="linenos">14</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">paddingProcessor</span><span class="o">=</span><span class="n">SimplePaddingProcessor</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="linenos">15</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<span class="linenos">12</span><span class="w">    </span><span class="c1">// 文字の種別にかかわらず１文字としてカウントしてパディングします。</span>
+<span class="linenos">13</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">14</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">paddingProcessor</span><span class="o">=</span><span class="n">SimplePaddingProcessor</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">15</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
 <span class="linenos">16</span>
-<span class="linenos">17</span>    <span class="c1">// 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。</span>
-<span class="linenos">18</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="linenos">19</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">paddingProcessor</span><span class="o">=</span><span class="n">CharWidthPaddingProcessor</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="linenos">20</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="linenos">17</span><span class="w">    </span><span class="c1">// 文字の幅（半角は1文字、全角は2文字）によってカウントしてパディングします。</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">paddingProcessor</span><span class="o">=</span><span class="n">CharWidthPaddingProcessor</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">20</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
 <span class="linenos">21</span>
-<span class="linenos">22</span>    <span class="c1">// バイト数によってカウントしてパディングします。</span>
-<span class="linenos">23</span>    <span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="linenos">24</span>    <span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">paddingProcessor</span><span class="o">=</span><span class="n">ByteSizePaddingProcessor</span><span class="p">.</span><span class="na">Windows31j</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-<span class="linenos">25</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">comment</span><span class="p">;</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1">// バイト数によってカウントしてパディングします。</span>
+<span class="linenos">23</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nd">@CsvFixedSize</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">paddingProcessor</span><span class="o">=</span><span class="n">ByteSizePaddingProcessor</span><span class="p">.</span><span class="na">Windows31j</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">comment</span><span class="p">;</span>
 <span class="linenos">26</span>
-<span class="linenos">27</span>    <span class="c1">// 以下、省略</span>
+<span class="linenos">27</span><span class="w">    </span><span class="c1">// 以下、省略</span>
 <span class="linenos">28</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -456,8 +468,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2016-2022, T.TSUCHIE.
-      <span class="lastupdated">最終更新: 2022-10-22 13:24:27
+    <p>&#169; Copyright 2016-2025, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2025-01-02 13:09:09
       </span></p>
   </div>
 
@@ -489,15 +501,14 @@
 	});
 </script>
 
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZD2H4X48K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  ga('create', 'UA-37313068-3', 'auto');
-  ga('send', 'pageview');
-  
+  gtag('config', 'G-YZD2H4X48K');
 </script>
 
  

@@ -313,8 +313,8 @@ public class CsvBindingErrors implements Serializable {
     public void reject(final String[] errorCodes, final Map&lt;String, Object&gt; messageVariables, final String defaultMessage) {
         
 <span class="fc" id="L315">        String[] codes = new String[0];</span>
-<span class="fc bfc" id="L316" title="All 2 branches covered.">        for(String errorCode : errorCodes) {</span>
-<span class="fc" id="L317">            codes = Utils.concat(codes, messageCodeGenerator.generateCodes(errorCode, getObjectName()));</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">        for(String errorCode : errorCodes) {</span>
+<span class="nc" id="L317">            codes = Utils.concat(codes, messageCodeGenerator.generateCodes(errorCode, getObjectName()));</span>
         }
 <span class="fc" id="L319">        addError(new CsvError(getObjectName(), codes, messageVariables, defaultMessage));</span>
 <span class="fc" id="L320">    }</span>

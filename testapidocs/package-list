@@ -9,7 +9,9 @@ com.github.mygreen.supercsv.cellprocessor.conversion
 com.github.mygreen.supercsv.cellprocessor.format
 com.github.mygreen.supercsv.expression
 com.github.mygreen.supercsv.io
+com.github.mygreen.supercsv.localization
 com.github.mygreen.supercsv.tool
 com.github.mygreen.supercsv.util
 com.github.mygreen.supercsv.validation
 com.github.mygreen.supercsv.validation.beanvalidation
+test.external

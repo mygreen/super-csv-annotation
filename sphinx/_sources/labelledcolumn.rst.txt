@@ -53,13 +53,13 @@ Beanの定義
 読み込み方法
 --------------------------------------------------------
 
-ラベルによるマッピングを行い読み込むには、 ``LazyCsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html>`_ ] を使用します。
+ラベルによるマッピングを行い読み込むには、 ``LazyCsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanReader.html>`__ ] を使用します。
 
 * 全件読み込む場合の使用方法は、基本的に既存の ``CsvAnnotationBeanReader`` と変わりません。
 * 1件ずつ読み込む場合は、メソッド ``LazyCsvAnnotationBeanReader#init()`` を呼んでマッピング情報を初期化します。
 
   * 処理内容としては、ヘッダー行を読み込み、それを元にBeanのフィールドとマッピングを行い、カラムの番号を決定します。
-  * 全件読み込むメソッド ``readAll()`` 内では、メソッド ``init()`` が呼ばれているため、初期化が省略することができます。
+  * 全件読み込むメソッド ``readAll()`` 内では、メソッド ``init()`` が呼ばれているため、初期化が省略できます。
     特に、 ``readAll()`` を呼び出す前に、 ``init()`` を実行してもかまいません。
 
 .. sourcecode:: java
@@ -173,14 +173,14 @@ Beanの定義
 書き出し方法
 --------------------------------------------------------
 
-ラベルによるマッピングを行い書き出すには、 ``LazyCsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html>`_ ] を使用します。
+ラベルによるマッピングを行い書き出すには、 ``LazyCsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/LazyCsvAnnotationBeanWriter.html>`__ ] を使用します。
 
 * 全件読み出す場合の使用方法は、基本的に既存の ``CsvAnnotationBeanWriter`` と変わりません。
 * 1件ずつ書き出す場合は、メソッド ``CsvAnnotationBeanWriter#init()`` を呼んでマッピング情報を初期化します。
 
   * 処理内容としては、カラムの番号を決定します。カラムの番号は、フィールド名の昇順になります。
   * Beanの定義中にカラム番号を指定しているフィールドと指定していないフィールドが混在する場合、カラム番号が空いているものが利用されます。
-  * 全件書き出すメソッド ``writeAll()`` 内では、メソッド ``init()`` が呼ばれているため、初期化が省略することができます。
+  * 全件書き出すメソッド ``writeAll()`` 内では、メソッド ``init()`` が呼ばれているため、初期化が省略できます。
     特に、 ``writeAll()`` を呼び出す前に、 ``init()`` を実行してもかまいません。
 
 .. sourcecode:: java

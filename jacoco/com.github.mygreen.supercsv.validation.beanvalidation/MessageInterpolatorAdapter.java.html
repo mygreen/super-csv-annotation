@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.validation.metadata.ConstraintDescriptor;
 
@@ -27,9 +26,10 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
     private final MessageInterpolator csvMessageInterpolator;
     
     /**
+     * SuperCsvAnnotation用のメッセージソースとInterpolatorを指定してBeanValidationのMessageInterpolatorを作成します。
      * 
-     * @param messageResolver
-     * @param csvMessageInterpolator
+     * @param messageResolver SuperCsvAnnotation用のメッセージソース。
+     * @param csvMessageInterpolator SuperCsvAnnotation用のMessageInterpolator。
      * @throws NullPointerException {@literal if messageResolver or csvMessageInterpolator is null.}
      */
 <span class="fc" id="L35">    public MessageInterpolatorAdapter(final MessageResolver messageResolver, final MessageInterpolator csvMessageInterpolator) {</span>
@@ -70,24 +70,16 @@ public class MessageInterpolatorAdapter implements javax.validation.MessageInter
         // 検証対象の値
 <span class="fc" id="L71">        vars.computeIfAbsent(&quot;validatedValue&quot;, key -&gt; context.getValidatedValue());</span>
         
-        // デフォルトのメッセージ
-<span class="fc" id="L74">        final String defaultCode = String.format(&quot;%s.message&quot;, descriptor.getAnnotation().annotationType().getCanonicalName());</span>
-<span class="fc" id="L75">        final Optional&lt;String&gt; defaultMessage = messageResolver.getMessage(defaultCode);</span>
-        
-<span class="fc" id="L77">        vars.put(defaultCode, </span>
-<span class="pc" id="L78">                defaultMessage.orElseThrow(() -&gt; new RuntimeException(String.format(&quot;not found message code '%s'&quot;, defaultCode))));</span>
-        
-        
-<span class="fc" id="L81">        return vars;</span>
+<span class="fc" id="L73">        return vars;</span>
         
     }
     
     public MessageResolver getMessageResolver() {
-<span class="nc" id="L86">        return messageResolver;</span>
+<span class="nc" id="L78">        return messageResolver;</span>
     }
     
     public MessageInterpolator getCsvMessageInterpolator() {
-<span class="nc" id="L90">        return csvMessageInterpolator;</span>
+<span class="nc" id="L82">        return csvMessageInterpolator;</span>
     }
     
 }

@@ -8,33 +8,33 @@
 <div id="overview"><a href="../../../../../../../testapidocs/com/github/mygreen/supercsv/cellprocessor/constraint/PatternFactoryTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.supercsv.cellprocessor.constraint;
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.*;
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.supercsv.tool.TestUtils.*;
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.supercsv.tool.HasCellProcessorAssert.*;
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.Annotation;
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> java.util.Comparator;
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.Optional;
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> org.junit.Before;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> org.junit.Rule;
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> org.junit.rules.TestName;
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> org.supercsv.cellprocessor.ift.CellProcessor;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvBean;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvColumn;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.PatternFlag;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.constraint.CsvPattern;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.supercsv.tool.HasCellProcessorAssert.assertThat;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.supercsv.tool.TestUtils.*;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.*;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.fail;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.Annotation;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> java.util.Optional;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> org.junit.Before;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> org.junit.Rule;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> org.junit.rules.TestName;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.supercsv.cellprocessor.ift.CellProcessor;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvBean;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.CsvColumn;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.PatternFlag;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.annotation.constraint.CsvPattern;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMapping;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BeanMappingFactory;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.BuildCase;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ColumnMapping;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.Configuration;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.FieldAccessor;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ColumnMapping;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.Configuration;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.FieldAccessor;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.ProcessorBuilderResolver;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.standard.StringProcessorBuilder;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.cellprocessor.format.TextFormatter;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
@@ -295,7 +295,7 @@
 <a class="jxr_linenumber" name="L287" href="#L287">287</a>             
 <a class="jxr_linenumber" name="L288" href="#L288">288</a>             List&lt;String&gt; messages = exceptionConverter.convertAndFormat((SuperCsvValidationException)e, beanMapping);
 <a class="jxr_linenumber" name="L289" href="#L289">289</a>             assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>                     .contains(<span class="jxr_string">"[2行, 2列] : 項目「col_description_empty」の値（abcdef）は、正規表現「d{4}-d{2}-d{2}」に一致しません。"</span>);
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                     .contains(<span class="jxr_string">"[2行, 2列] : 項目「col_description_empty」の値（abcdef）は、正規表現「&#92;&#92;d{4}-&#92;&#92;d{2}-&#92;&#92;d{2}」に一致しません。"</span>);
 <a class="jxr_linenumber" name="L291" href="#L291">291</a>         }
 <a class="jxr_linenumber" name="L292" href="#L292">292</a>         
 <a class="jxr_linenumber" name="L293" href="#L293">293</a>     }
@@ -385,7 +385,7 @@
 <a class="jxr_linenumber" name="L377" href="#L377">377</a>             
 <a class="jxr_linenumber" name="L378" href="#L378">378</a>             List&lt;String&gt; messages = exceptionConverter.convertAndFormat((SuperCsvValidationException)e, beanMapping);
 <a class="jxr_linenumber" name="L379" href="#L379">379</a>             assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>                     .contains(<span class="jxr_string">"lineNumber=1, rowNumber=2, columnNumber=12, label=col_message_variables, validatedValue=abcdef, regex=d{4}-d{2}-d{2}, flags=2, description=説明"</span>);
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>                     .contains(<span class="jxr_string">"lineNumber=1, rowNumber=2, columnNumber=12, label=col_message_variables, validatedValue=abcdef, regex=&#92;&#92;d{4}-&#92;&#92;d{2}-&#92;&#92;d{2}, flags=2, description=説明"</span>);
 <a class="jxr_linenumber" name="L381" href="#L381">381</a>         }
 <a class="jxr_linenumber" name="L382" href="#L382">382</a>         
 <a class="jxr_linenumber" name="L383" href="#L383">383</a>     }
@@ -394,6 +394,6 @@
 <a class="jxr_linenumber" name="L386" href="#L386">386</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2022 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2025 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

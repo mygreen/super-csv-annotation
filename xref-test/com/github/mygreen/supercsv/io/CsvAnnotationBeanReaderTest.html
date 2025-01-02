@@ -332,470 +332,554 @@
 <a class="jxr_linenumber" name="L324" href="#L324">324</a>     }
 <a class="jxr_linenumber" name="L325" href="#L325">325</a>     
 <a class="jxr_linenumber" name="L326" href="#L326">326</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     * 全件読み込み（正常系のテスト）</em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     * ELインジェクションのテスト - ヘッダーのバリデーションエラー。</em>
 <a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L329" href="#L329">329</a>     @Test
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_normal() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_error_elInjection_header() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L331" href="#L331">331</a>         
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_elinjection_header.csv"</span>);
 <a class="jxr_linenumber" name="L333" href="#L333">333</a>         
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         CsvAnnotationBeanReader&lt;SampleELInjectionBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 SampleELInjectionBean.<strong class="jxr_keyword">class</strong>,
 <a class="jxr_linenumber" name="L336" href="#L336">336</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
 <a class="jxr_linenumber" name="L337" href="#L337">337</a>                 CsvPreference.STANDARD_PREFERENCE,
 <a class="jxr_linenumber" name="L338" href="#L338">338</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L339" href="#L339">339</a>         csvReader.setExceptionConverter(exceptionConverter);
 <a class="jxr_linenumber" name="L340" href="#L340">340</a>         
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll();
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>         assertThat(list).hasSize(2);
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>         
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>             assertBean(bean);
-<a class="jxr_linenumber" name="L346" href="#L346">346</a>         }
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>         
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>         
-<a class="jxr_linenumber" name="L350" href="#L350">350</a>         csvReader.close();
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>         
-<a class="jxr_linenumber" name="L352" href="#L352">352</a>     }
-<a class="jxr_linenumber" name="L353" href="#L353">353</a>     
-<a class="jxr_linenumber" name="L354" href="#L354">354</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L355" href="#L355">355</a> <em class="jxr_javadoccomment">     * 全件読み込み - カラムにエラーがある</em>
-<a class="jxr_linenumber" name="L356" href="#L356">356</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>     @Test
-<a class="jxr_linenumber" name="L358" href="#L358">358</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_column() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>         
-<a class="jxr_linenumber" name="L360" href="#L360">360</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>         
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L368" href="#L368">368</a>         
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L370" href="#L370">370</a>             List&lt;SampleNormalBean&gt; list = csvReader.readAll();
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>             <em class="jxr_comment">// read header</em>
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>             String headers[] = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>            
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>             fail();
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>             
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>         } <strong class="jxr_keyword">catch</strong>(SuperCsvException e) {
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>             assertThat(e).isInstanceOf(SuperCsvNoMatchHeaderException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>             
+<a class="jxr_linenumber" name="L350" href="#L350">350</a> <em class="jxr_comment">//            e.printStackTrace();</em>
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>             
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>             csvReader.close();
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>         }
+<a class="jxr_linenumber" name="L355" href="#L355">355</a>         
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>         <em class="jxr_comment">// ELインジェクション対象の式は空文字として変換される。</em>
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>             .contains(<span class="jxr_string">"[1行]  : ヘッダーの値「id, abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg」は、「id, value」と一致しません。"</span>);
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>         
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>     }
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>     
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L366" href="#L366">366</a> <em class="jxr_javadoccomment">     * ELインジェクションのテスト - カラムのバリデーションエラー。</em>
+<a class="jxr_linenumber" name="L367" href="#L367">367</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>     @Test
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_error_elInjection_column() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_elinjection_column.csv"</span>);
 <a class="jxr_linenumber" name="L371" href="#L371">371</a>         
-<a class="jxr_linenumber" name="L372" href="#L372">372</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>             assertThat(e).isInstanceOf(SuperCsvBindingException.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L374" href="#L374">374</a>         }
-<a class="jxr_linenumber" name="L375" href="#L375">375</a>         
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>         <em class="jxr_comment">// convert error messages.</em>
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
-<a class="jxr_linenumber" name="L378" href="#L378">378</a>         assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L379" href="#L379">379</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>         messages.forEach(System.out::println);
-<a class="jxr_linenumber" name="L381" href="#L381">381</a>         
-<a class="jxr_linenumber" name="L382" href="#L382">382</a>         csvReader.close();
-<a class="jxr_linenumber" name="L383" href="#L383">383</a>         
-<a class="jxr_linenumber" name="L384" href="#L384">384</a>     }
-<a class="jxr_linenumber" name="L385" href="#L385">385</a>     
-<a class="jxr_linenumber" name="L386" href="#L386">386</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L387" href="#L387">387</a> <em class="jxr_javadoccomment">     * 全件読み込み - カラムにエラーがある場合も処理を続ける</em>
-<a class="jxr_linenumber" name="L388" href="#L388">388</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>     @Test
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_continueOnError() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>         
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>         
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L395" href="#L395">395</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L397" href="#L397">397</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L399" href="#L399">399</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>         CsvAnnotationBeanReader&lt;SampleELInjectionBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L373" href="#L373">373</a>                 SampleELInjectionBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L374" href="#L374">374</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>         
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>         List&lt;SampleELInjectionBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>             <em class="jxr_comment">// read header</em>
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>             csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>             
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>             <a name="SampleELInjectionBean" href="../../../../../com/github/mygreen/supercsv/io/SampleELInjectionBean.html#SampleELInjectionBean">SampleELInjectionBean</a> bean;
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>             <strong class="jxr_keyword">while</strong>((bean = csvReader.read()) != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L386" href="#L386">386</a>                 list.add(bean);
+<a class="jxr_linenumber" name="L387" href="#L387">387</a>             }
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>             
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>             fail();
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>             
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>         } <strong class="jxr_keyword">catch</strong>(SuperCsvException e) {
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>             assertThat(e).isInstanceOf(SuperCsvBindingException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>             
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> <em class="jxr_comment">//            e.printStackTrace();</em>
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>             
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>             csvReader.close();
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>             
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>         }
 <a class="jxr_linenumber" name="L400" href="#L400">400</a>         
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L402" href="#L402">402</a>         assertThat(list).hasSize(1);
-<a class="jxr_linenumber" name="L403" href="#L403">403</a>         
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>             assertBean(bean);
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>         }
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>         <em class="jxr_comment">// ELインジェクション対象の式は空文字として変換される。</em>
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>             .contains(<span class="jxr_string">"[2行, 2列] : 項目「value」の値（abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg）には、禁止語彙 「getRuntime」が含まれています。"</span>);
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>         messages.forEach(System.out::println);
 <a class="jxr_linenumber" name="L407" href="#L407">407</a>         
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>         <em class="jxr_comment">// convert error messages.</em>
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
-<a class="jxr_linenumber" name="L410" href="#L410">410</a>         assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>         messages.forEach(System.out::println);
-<a class="jxr_linenumber" name="L413" href="#L413">413</a>         
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>         csvReader.close();
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>     }
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>     
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L411" href="#L411">411</a> <em class="jxr_javadoccomment">     * 全件読み込み（正常系のテスト）</em>
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>     @Test
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_normal() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L415" href="#L415">415</a>         
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>     }
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>     
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L419" href="#L419">419</a> <em class="jxr_javadoccomment">     * 全件読み込み - ヘッダーにエラーがある場合</em>
-<a class="jxr_linenumber" name="L420" href="#L420">420</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L421" href="#L421">421</a>     @Test
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_header_size() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>         
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_header_size.csv"</span>);
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>         
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>         
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>             List&lt;SampleNormalBean&gt; list = csvReader.readAll();
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>         
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>         
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll();
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>         assertThat(list).hasSize(2);
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>         
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>             assertBean(bean);
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>         }
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>         
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>         
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>         csvReader.close();
 <a class="jxr_linenumber" name="L435" href="#L435">435</a>         
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>             assertThat(e).isInstanceOf(SuperCsvNoMatchColumnSizeException.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>         }
-<a class="jxr_linenumber" name="L439" href="#L439">439</a>         
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>         <em class="jxr_comment">// convert error messages.</em>
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>         assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>             .contains(<span class="jxr_string">"[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。"</span>);
-<a class="jxr_linenumber" name="L444" href="#L444">444</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>     }
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>     
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     * 全件読み込み - カラムにエラーがある</em>
+<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>     @Test
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_column() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>         
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
 <a class="jxr_linenumber" name="L445" href="#L445">445</a>         
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>         csvReader.close();
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>         
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>     }
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>     
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L451" href="#L451">451</a> <em class="jxr_javadoccomment">     * 全件読み込み - ヘッダーにエラーがある場合 - エラーがあっても処理を続ける</em>
-<a class="jxr_linenumber" name="L452" href="#L452">452</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>     @Test
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_header_size_continueOnError() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>         
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>             List&lt;SampleNormalBean&gt; list = csvReader.readAll();
 <a class="jxr_linenumber" name="L455" href="#L455">455</a>         
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_header_size.csv"</span>);
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>         
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         assertThat(list).hasSize(2);
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>             assertThat(e).isInstanceOf(SuperCsvBindingException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>         }
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>         
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>         csvReader.close();
 <a class="jxr_linenumber" name="L467" href="#L467">467</a>         
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>             assertBean(bean);
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>         }
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>         
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>         <em class="jxr_comment">// convert error messages.</em>
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>         assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>             .contains(<span class="jxr_string">"[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。"</span>);
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>     }
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>     
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L471" href="#L471">471</a> <em class="jxr_javadoccomment">     * 全件読み込み - カラムにエラーがある場合も処理を続ける</em>
+<a class="jxr_linenumber" name="L472" href="#L472">472</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>     @Test
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_continueOnError() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>         
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
 <a class="jxr_linenumber" name="L477" href="#L477">477</a>         
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>         csvReader.close();
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>         
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>     }
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>     
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L483" href="#L483">483</a> <em class="jxr_javadoccomment">     * 部分的にカラムを読み込む</em>
-<a class="jxr_linenumber" name="L484" href="#L484">484</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>     @Test
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_partial() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>         assertThat(list).hasSize(1);
 <a class="jxr_linenumber" name="L487" href="#L487">487</a>         
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>         
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>         CsvAnnotationBeanReader&lt;SamplePartialBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>                 SamplePartialBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>         List&lt;SamplePartialBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>         
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>         <strong class="jxr_keyword">final</strong> String[] expectedHeaders = <strong class="jxr_keyword">new</strong> String[]{
-<a class="jxr_linenumber" name="L500" href="#L500">500</a>                 <span class="jxr_string">"id"</span>,
-<a class="jxr_linenumber" name="L501" href="#L501">501</a>                 <span class="jxr_string">"数字1"</span>, <span class="jxr_string">"number2"</span>,
-<a class="jxr_linenumber" name="L502" href="#L502">502</a>                 <span class="jxr_string">"string1"</span>, <span class="jxr_string">"string2"</span>,
-<a class="jxr_linenumber" name="L503" href="#L503">503</a>                 <span class="jxr_string">"date1"</span>, <span class="jxr_string">"date2"</span>,
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>                 <span class="jxr_string">"enum1"</span>, <span class="jxr_string">"列挙型2"</span>,
-<a class="jxr_linenumber" name="L505" href="#L505">505</a>                 <span class="jxr_string">"boolean1"</span>, <span class="jxr_string">"boolean2"</span>
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>             };
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>             assertBean(bean);
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>         }
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>         
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L497" href="#L497">497</a>         
+<a class="jxr_linenumber" name="L498" href="#L498">498</a>         csvReader.close();
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>         
+<a class="jxr_linenumber" name="L500" href="#L500">500</a>     }
+<a class="jxr_linenumber" name="L501" href="#L501">501</a>     
+<a class="jxr_linenumber" name="L502" href="#L502">502</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * 全件読み込み - ヘッダーにエラーがある場合</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L505" href="#L505">505</a>     @Test
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_header_size() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L507" href="#L507">507</a>         
-<a class="jxr_linenumber" name="L508" href="#L508">508</a>         <strong class="jxr_keyword">final</strong> String[] definitionHeaders = csvReader.getDefinedHeader();
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>         assertThat(definitionHeaders).containsExactly(expectedHeaders);
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>         
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>         <em class="jxr_comment">// read header</em>
-<a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">final</strong> String[] csvHeaders = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L513" href="#L513">513</a>         assertThat(csvHeaders).containsExactly(expectedHeaders);
-<a class="jxr_linenumber" name="L514" href="#L514">514</a>         
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>         SamplePartialBean bean;
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>         <strong class="jxr_keyword">while</strong>((bean = csvReader.read()) != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>             list.add(bean);
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>             
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>             assertBean(bean);
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>         }
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>         
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_header_size.csv"</span>);
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>         
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L515" href="#L515">515</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>         
+<a class="jxr_linenumber" name="L517" href="#L517">517</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L518" href="#L518">518</a>             List&lt;SampleNormalBean&gt; list = csvReader.readAll();
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>         
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>         } <strong class="jxr_keyword">catch</strong>(Exception e) {
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>             assertThat(e).isInstanceOf(SuperCsvNoMatchColumnSizeException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>         }
 <a class="jxr_linenumber" name="L523" href="#L523">523</a>         
-<a class="jxr_linenumber" name="L524" href="#L524">524</a>         csvReader.close();
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>         
-<a class="jxr_linenumber" name="L526" href="#L526">526</a>     }
-<a class="jxr_linenumber" name="L527" href="#L527">527</a>     
-<a class="jxr_linenumber" name="L528" href="#L528">528</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L529" href="#L529">529</a> <em class="jxr_javadoccomment">     * 固定長のカラムを読み込む</em>
-<a class="jxr_linenumber" name="L530" href="#L530">530</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>     @Test
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_fixedColumn() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>         
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_fixedColumn.csv"</span>);
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>         
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>         CsvAnnotationBeanReader&lt;SampleFixedColumnBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>                 SampleFixedColumnBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L538" href="#L538">538</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>                 CsvPreference.STANDARD_PREFERENCE);
-<a class="jxr_linenumber" name="L540" href="#L540">540</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>             .contains(<span class="jxr_string">"[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。"</span>);
+<a class="jxr_linenumber" name="L528" href="#L528">528</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L529" href="#L529">529</a>         
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>         csvReader.close();
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>         
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>     }
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>     
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L535" href="#L535">535</a> <em class="jxr_javadoccomment">     * 全件読み込み - ヘッダーにエラーがある場合 - エラーがあっても処理を続ける</em>
+<a class="jxr_linenumber" name="L536" href="#L536">536</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>     @Test
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReadAll_error_header_size_continueOnError() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>         
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_header_size.csv"</span>);
 <a class="jxr_linenumber" name="L541" href="#L541">541</a>         
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>         List&lt;SampleFixedColumnBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L543" href="#L543">543</a>         
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>         <strong class="jxr_keyword">final</strong> String[] expectedHeaders = <strong class="jxr_keyword">new</strong> String[]{
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>                 <span class="jxr_string">"   no"</span>,
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>                 <span class="jxr_string">"ユーザ名　　　　　　"</span>,
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>                 <span class="jxr_string">"誕生日____"</span>,
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>                 <span class="jxr_string">"コメント            "</span>
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>             };
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>         
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>         <strong class="jxr_keyword">final</strong> String[] definitionHeaders = csvReader.getDefinedHeader();
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>         assertThat(definitionHeaders).containsExactly(expectedHeaders);
-<a class="jxr_linenumber" name="L553" href="#L553">553</a>         
-<a class="jxr_linenumber" name="L554" href="#L554">554</a>         <em class="jxr_comment">// read header</em>
-<a class="jxr_linenumber" name="L555" href="#L555">555</a>         <strong class="jxr_keyword">final</strong> String[] csvHeaders = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L556" href="#L556">556</a>         assertThat(csvHeaders).containsExactly(expectedHeaders);
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>         
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>         <a name="SampleFixedColumnBean" href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html#SampleFixedColumnBean">SampleFixedColumnBean</a> bean;
-<a class="jxr_linenumber" name="L559" href="#L559">559</a>         <strong class="jxr_keyword">while</strong>((bean = csvReader.read()) != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>             list.add(bean);
-<a class="jxr_linenumber" name="L561" href="#L561">561</a>             
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>             assertBean(bean);
-<a class="jxr_linenumber" name="L563" href="#L563">563</a>         }
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>         
-<a class="jxr_linenumber" name="L565" href="#L565">565</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
-<a class="jxr_linenumber" name="L566" href="#L566">566</a>         
-<a class="jxr_linenumber" name="L567" href="#L567">567</a>         csvReader.close();
-<a class="jxr_linenumber" name="L568" href="#L568">568</a>         
-<a class="jxr_linenumber" name="L569" href="#L569">569</a>     }
-<a class="jxr_linenumber" name="L570" href="#L570">570</a>     
-<a class="jxr_linenumber" name="L571" href="#L571">571</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L572" href="#L572">572</a> <em class="jxr_javadoccomment">     * ハンドラ指定で読み込むテスト - 正常データのみ</em>
-<a class="jxr_linenumber" name="L573" href="#L573">573</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
-<a class="jxr_linenumber" name="L574" href="#L574">574</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L575" href="#L575">575</a>     @Test
-<a class="jxr_linenumber" name="L576" href="#L576">576</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_withHandler_normal() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L577" href="#L577">577</a>         
-<a class="jxr_linenumber" name="L578" href="#L578">578</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
-<a class="jxr_linenumber" name="L579" href="#L579">579</a>         
-<a class="jxr_linenumber" name="L580" href="#L580">580</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L581" href="#L581">581</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L582" href="#L582">582</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L585" href="#L585">585</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>         
-<a class="jxr_linenumber" name="L587" href="#L587">587</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L588" href="#L588">588</a>         
-<a class="jxr_linenumber" name="L589" href="#L589">589</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L590" href="#L590">590</a>         assertThat(headers).hasSize(11);
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>         
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>         List&lt;SampleNormalBean&gt; list = csvReader.readAll(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>         assertThat(list).hasSize(2);
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>         
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>         <strong class="jxr_keyword">for</strong>(<a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean : list) {
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>             assertBean(bean);
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>         }
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>         
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>             .contains(<span class="jxr_string">"[1行] : 列数が不正です。 11列で設定すべきですが、実際には10列になっています。"</span>);
+<a class="jxr_linenumber" name="L560" href="#L560">560</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>         
+<a class="jxr_linenumber" name="L562" href="#L562">562</a>         csvReader.close();
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>         
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>     }
+<a class="jxr_linenumber" name="L565" href="#L565">565</a>     
+<a class="jxr_linenumber" name="L566" href="#L566">566</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L567" href="#L567">567</a> <em class="jxr_javadoccomment">     * 部分的にカラムを読み込む</em>
+<a class="jxr_linenumber" name="L568" href="#L568">568</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L569" href="#L569">569</a>     @Test
+<a class="jxr_linenumber" name="L570" href="#L570">570</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_partial() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L571" href="#L571">571</a>         
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L573" href="#L573">573</a>         
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>         CsvAnnotationBeanReader&lt;SamplePartialBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L575" href="#L575">575</a>                 SamplePartialBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L576" href="#L576">576</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L577" href="#L577">577</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L578" href="#L578">578</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L579" href="#L579">579</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L580" href="#L580">580</a>         
+<a class="jxr_linenumber" name="L581" href="#L581">581</a>         List&lt;SamplePartialBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L582" href="#L582">582</a>         
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>         <strong class="jxr_keyword">final</strong> String[] expectedHeaders = <strong class="jxr_keyword">new</strong> String[]{
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>                 <span class="jxr_string">"id"</span>,
+<a class="jxr_linenumber" name="L585" href="#L585">585</a>                 <span class="jxr_string">"数字1"</span>, <span class="jxr_string">"number2"</span>,
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>                 <span class="jxr_string">"string1"</span>, <span class="jxr_string">"string2"</span>,
+<a class="jxr_linenumber" name="L587" href="#L587">587</a>                 <span class="jxr_string">"date1"</span>, <span class="jxr_string">"date2"</span>,
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>                 <span class="jxr_string">"enum1"</span>, <span class="jxr_string">"列挙型2"</span>,
+<a class="jxr_linenumber" name="L589" href="#L589">589</a>                 <span class="jxr_string">"boolean1"</span>, <span class="jxr_string">"boolean2"</span>
+<a class="jxr_linenumber" name="L590" href="#L590">590</a>             };
 <a class="jxr_linenumber" name="L591" href="#L591">591</a>         
-<a class="jxr_linenumber" name="L592" href="#L592">592</a>         <strong class="jxr_keyword">while</strong>(csvReader.read(
-<a class="jxr_linenumber" name="L593" href="#L593">593</a>                 record -&gt; {
-<a class="jxr_linenumber" name="L594" href="#L594">594</a>                     list.add(record);
-<a class="jxr_linenumber" name="L595" href="#L595">595</a>                     assertBean(record);
-<a class="jxr_linenumber" name="L596" href="#L596">596</a>                 },
-<a class="jxr_linenumber" name="L597" href="#L597">597</a>                 error -&gt; fail(error.getMessage())) != CsvReadStatus.EOF) {
-<a class="jxr_linenumber" name="L598" href="#L598">598</a>             
-<a class="jxr_linenumber" name="L599" href="#L599">599</a>         }
-<a class="jxr_linenumber" name="L600" href="#L600">600</a>         
-<a class="jxr_linenumber" name="L601" href="#L601">601</a>         assertThat(list).hasSize(2);
-<a class="jxr_linenumber" name="L602" href="#L602">602</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
-<a class="jxr_linenumber" name="L603" href="#L603">603</a>         
-<a class="jxr_linenumber" name="L604" href="#L604">604</a>         csvReader.close();
+<a class="jxr_linenumber" name="L592" href="#L592">592</a>         <strong class="jxr_keyword">final</strong> String[] definitionHeaders = csvReader.getDefinedHeader();
+<a class="jxr_linenumber" name="L593" href="#L593">593</a>         assertThat(definitionHeaders).containsExactly(expectedHeaders);
+<a class="jxr_linenumber" name="L594" href="#L594">594</a>         
+<a class="jxr_linenumber" name="L595" href="#L595">595</a>         <em class="jxr_comment">// read header</em>
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>         <strong class="jxr_keyword">final</strong> String[] csvHeaders = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L597" href="#L597">597</a>         assertThat(csvHeaders).containsExactly(expectedHeaders);
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>         
+<a class="jxr_linenumber" name="L599" href="#L599">599</a>         SamplePartialBean bean;
+<a class="jxr_linenumber" name="L600" href="#L600">600</a>         <strong class="jxr_keyword">while</strong>((bean = csvReader.read()) != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L601" href="#L601">601</a>             list.add(bean);
+<a class="jxr_linenumber" name="L602" href="#L602">602</a>             
+<a class="jxr_linenumber" name="L603" href="#L603">603</a>             assertBean(bean);
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>         }
 <a class="jxr_linenumber" name="L605" href="#L605">605</a>         
-<a class="jxr_linenumber" name="L606" href="#L606">606</a>     }
-<a class="jxr_linenumber" name="L607" href="#L607">607</a>     
-<a class="jxr_linenumber" name="L608" href="#L608">608</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L609" href="#L609">609</a> <em class="jxr_javadoccomment">     * ハンドラ指定で読み込むテスト - エラーがある場合</em>
-<a class="jxr_linenumber" name="L610" href="#L610">610</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
-<a class="jxr_linenumber" name="L611" href="#L611">611</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L612" href="#L612">612</a>     @Test
-<a class="jxr_linenumber" name="L613" href="#L613">613</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_withHandler_error_column() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L614" href="#L614">614</a>         
-<a class="jxr_linenumber" name="L615" href="#L615">615</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
-<a class="jxr_linenumber" name="L616" href="#L616">616</a>         
-<a class="jxr_linenumber" name="L617" href="#L617">617</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L618" href="#L618">618</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L619" href="#L619">619</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L620" href="#L620">620</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L622" href="#L622">622</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L623" href="#L623">623</a>         
-<a class="jxr_linenumber" name="L624" href="#L624">624</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L606" href="#L606">606</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="L607" href="#L607">607</a>         
+<a class="jxr_linenumber" name="L608" href="#L608">608</a>         csvReader.close();
+<a class="jxr_linenumber" name="L609" href="#L609">609</a>         
+<a class="jxr_linenumber" name="L610" href="#L610">610</a>     }
+<a class="jxr_linenumber" name="L611" href="#L611">611</a>     
+<a class="jxr_linenumber" name="L612" href="#L612">612</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L613" href="#L613">613</a> <em class="jxr_javadoccomment">     * 固定長のカラムを読み込む</em>
+<a class="jxr_linenumber" name="L614" href="#L614">614</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L615" href="#L615">615</a>     @Test
+<a class="jxr_linenumber" name="L616" href="#L616">616</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_fixedColumn() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>         
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_fixedColumn.csv"</span>);
+<a class="jxr_linenumber" name="L619" href="#L619">619</a>         
+<a class="jxr_linenumber" name="L620" href="#L620">620</a>         CsvAnnotationBeanReader&lt;SampleFixedColumnBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L621" href="#L621">621</a>                 SampleFixedColumnBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L622" href="#L622">622</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L623" href="#L623">623</a>                 CsvPreference.STANDARD_PREFERENCE);
+<a class="jxr_linenumber" name="L624" href="#L624">624</a>         csvReader.setExceptionConverter(exceptionConverter);
 <a class="jxr_linenumber" name="L625" href="#L625">625</a>         
-<a class="jxr_linenumber" name="L626" href="#L626">626</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L627" href="#L627">627</a>         assertThat(headers).hasSize(11);
-<a class="jxr_linenumber" name="L628" href="#L628">628</a>         
-<a class="jxr_linenumber" name="L629" href="#L629">629</a>         <strong class="jxr_keyword">while</strong>(csvReader.read(
-<a class="jxr_linenumber" name="L630" href="#L630">630</a>                 record -&gt; {
-<a class="jxr_linenumber" name="L631" href="#L631">631</a>                     list.add(record);
-<a class="jxr_linenumber" name="L632" href="#L632">632</a>                     assertBean(record);
-<a class="jxr_linenumber" name="L633" href="#L633">633</a>                 },
-<a class="jxr_linenumber" name="L634" href="#L634">634</a>                 error -&gt; {
-<a class="jxr_linenumber" name="L635" href="#L635">635</a>                     assertThat(error).isInstanceOf(SuperCsvBindingException.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L636" href="#L636">636</a>                 }
-<a class="jxr_linenumber" name="L637" href="#L637">637</a>                 ) != CsvReadStatus.EOF) {
-<a class="jxr_linenumber" name="L638" href="#L638">638</a>             
-<a class="jxr_linenumber" name="L639" href="#L639">639</a>         }
-<a class="jxr_linenumber" name="L640" href="#L640">640</a>         
-<a class="jxr_linenumber" name="L641" href="#L641">641</a>         assertThat(list).hasSize(1);
-<a class="jxr_linenumber" name="L642" href="#L642">642</a>         
-<a class="jxr_linenumber" name="L643" href="#L643">643</a>         <em class="jxr_comment">// convert error messages.</em>
-<a class="jxr_linenumber" name="L644" href="#L644">644</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
-<a class="jxr_linenumber" name="L645" href="#L645">645</a>         assertThat(messages).hasSize(1)
-<a class="jxr_linenumber" name="L646" href="#L646">646</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
-<a class="jxr_linenumber" name="L647" href="#L647">647</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L626" href="#L626">626</a>         List&lt;SampleFixedColumnBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L627" href="#L627">627</a>         
+<a class="jxr_linenumber" name="L628" href="#L628">628</a>         <strong class="jxr_keyword">final</strong> String[] expectedHeaders = <strong class="jxr_keyword">new</strong> String[]{
+<a class="jxr_linenumber" name="L629" href="#L629">629</a>                 <span class="jxr_string">"   no"</span>,
+<a class="jxr_linenumber" name="L630" href="#L630">630</a>                 <span class="jxr_string">"ユーザ名　　　　　　"</span>,
+<a class="jxr_linenumber" name="L631" href="#L631">631</a>                 <span class="jxr_string">"誕生日____"</span>,
+<a class="jxr_linenumber" name="L632" href="#L632">632</a>                 <span class="jxr_string">"コメント            "</span>
+<a class="jxr_linenumber" name="L633" href="#L633">633</a>             };
+<a class="jxr_linenumber" name="L634" href="#L634">634</a>         
+<a class="jxr_linenumber" name="L635" href="#L635">635</a>         <strong class="jxr_keyword">final</strong> String[] definitionHeaders = csvReader.getDefinedHeader();
+<a class="jxr_linenumber" name="L636" href="#L636">636</a>         assertThat(definitionHeaders).containsExactly(expectedHeaders);
+<a class="jxr_linenumber" name="L637" href="#L637">637</a>         
+<a class="jxr_linenumber" name="L638" href="#L638">638</a>         <em class="jxr_comment">// read header</em>
+<a class="jxr_linenumber" name="L639" href="#L639">639</a>         <strong class="jxr_keyword">final</strong> String[] csvHeaders = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L640" href="#L640">640</a>         assertThat(csvHeaders).containsExactly(expectedHeaders);
+<a class="jxr_linenumber" name="L641" href="#L641">641</a>         
+<a class="jxr_linenumber" name="L642" href="#L642">642</a>         <a name="SampleFixedColumnBean" href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html#SampleFixedColumnBean">SampleFixedColumnBean</a> bean;
+<a class="jxr_linenumber" name="L643" href="#L643">643</a>         <strong class="jxr_keyword">while</strong>((bean = csvReader.read()) != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L644" href="#L644">644</a>             list.add(bean);
+<a class="jxr_linenumber" name="L645" href="#L645">645</a>             
+<a class="jxr_linenumber" name="L646" href="#L646">646</a>             assertBean(bean);
+<a class="jxr_linenumber" name="L647" href="#L647">647</a>         }
 <a class="jxr_linenumber" name="L648" href="#L648">648</a>         
-<a class="jxr_linenumber" name="L649" href="#L649">649</a>         csvReader.close();
+<a class="jxr_linenumber" name="L649" href="#L649">649</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
 <a class="jxr_linenumber" name="L650" href="#L650">650</a>         
-<a class="jxr_linenumber" name="L651" href="#L651">651</a>     }
-<a class="jxr_linenumber" name="L652" href="#L652">652</a>     
-<a class="jxr_linenumber" name="L653" href="#L653">653</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L654" href="#L654">654</a> <em class="jxr_javadoccomment">     * Streamで読み込むテスト - 正常時</em>
-<a class="jxr_linenumber" name="L655" href="#L655">655</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
-<a class="jxr_linenumber" name="L656" href="#L656">656</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L657" href="#L657">657</a>     @Test
-<a class="jxr_linenumber" name="L658" href="#L658">658</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testLines_normal() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L659" href="#L659">659</a>         
-<a class="jxr_linenumber" name="L660" href="#L660">660</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L651" href="#L651">651</a>         csvReader.close();
+<a class="jxr_linenumber" name="L652" href="#L652">652</a>         
+<a class="jxr_linenumber" name="L653" href="#L653">653</a>     }
+<a class="jxr_linenumber" name="L654" href="#L654">654</a>     
+<a class="jxr_linenumber" name="L655" href="#L655">655</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L656" href="#L656">656</a> <em class="jxr_javadoccomment">     * ハンドラ指定で読み込むテスト - 正常データのみ</em>
+<a class="jxr_linenumber" name="L657" href="#L657">657</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
+<a class="jxr_linenumber" name="L658" href="#L658">658</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L659" href="#L659">659</a>     @Test
+<a class="jxr_linenumber" name="L660" href="#L660">660</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_withHandler_normal() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L661" href="#L661">661</a>         
-<a class="jxr_linenumber" name="L662" href="#L662">662</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
-<a class="jxr_linenumber" name="L663" href="#L663">663</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
-<a class="jxr_linenumber" name="L664" href="#L664">664</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
-<a class="jxr_linenumber" name="L665" href="#L665">665</a>                 CsvPreference.STANDARD_PREFERENCE,
-<a class="jxr_linenumber" name="L666" href="#L666">666</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L667" href="#L667">667</a>         csvReader.setExceptionConverter(exceptionConverter);
-<a class="jxr_linenumber" name="L668" href="#L668">668</a>         
-<a class="jxr_linenumber" name="L669" href="#L669">669</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L662" href="#L662">662</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L663" href="#L663">663</a>         
+<a class="jxr_linenumber" name="L664" href="#L664">664</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L665" href="#L665">665</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L667" href="#L667">667</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L668" href="#L668">668</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L669" href="#L669">669</a>         csvReader.setExceptionConverter(exceptionConverter);
 <a class="jxr_linenumber" name="L670" href="#L670">670</a>         
-<a class="jxr_linenumber" name="L671" href="#L671">671</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L672" href="#L672">672</a>         assertThat(headers).hasSize(11);
-<a class="jxr_linenumber" name="L673" href="#L673">673</a>         
-<a class="jxr_linenumber" name="L674" href="#L674">674</a>         csvReader.lines().forEach(record -&gt; {
-<a class="jxr_linenumber" name="L675" href="#L675">675</a>             list.add(record);
-<a class="jxr_linenumber" name="L676" href="#L676">676</a>             assertBean(record);
-<a class="jxr_linenumber" name="L677" href="#L677">677</a>         });
-<a class="jxr_linenumber" name="L678" href="#L678">678</a>         
-<a class="jxr_linenumber" name="L679" href="#L679">679</a>         assertThat(list).hasSize(2);
-<a class="jxr_linenumber" name="L680" href="#L680">680</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
-<a class="jxr_linenumber" name="L681" href="#L681">681</a>         
-<a class="jxr_linenumber" name="L682" href="#L682">682</a>         <em class="jxr_comment">// 順番の確認</em>
-<a class="jxr_linenumber" name="L683" href="#L683">683</a>         assertThat(list.get(0)).hasFieldOrPropertyWithValue(<span class="jxr_string">"id"</span>, 1);
-<a class="jxr_linenumber" name="L684" href="#L684">684</a>         assertThat(list.get(1)).hasFieldOrPropertyWithValue(<span class="jxr_string">"id"</span>, 2);
-<a class="jxr_linenumber" name="L685" href="#L685">685</a>         
-<a class="jxr_linenumber" name="L686" href="#L686">686</a>         csvReader.close();
-<a class="jxr_linenumber" name="L687" href="#L687">687</a>     }
-<a class="jxr_linenumber" name="L688" href="#L688">688</a>     
-<a class="jxr_linenumber" name="L689" href="#L689">689</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> <a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean) {
-<a class="jxr_linenumber" name="L690" href="#L690">690</a>         
-<a class="jxr_linenumber" name="L691" href="#L691">691</a>         <strong class="jxr_keyword">if</strong>(bean.getId() == 1) {
-<a class="jxr_linenumber" name="L692" href="#L692">692</a>             assertThat(bean.getNumber1()).isEqualTo(999110);
-<a class="jxr_linenumber" name="L693" href="#L693">693</a>             assertThat(bean.getNumber2()).isEqualTo(10.2d);
-<a class="jxr_linenumber" name="L694" href="#L694">694</a>             
-<a class="jxr_linenumber" name="L695" href="#L695">695</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"abcd"</span>);
-<a class="jxr_linenumber" name="L696" href="#L696">696</a>             assertThat(bean.getString2()).isEqualTo(<span class="jxr_string">"12345"</span>);
-<a class="jxr_linenumber" name="L697" href="#L697">697</a>             
-<a class="jxr_linenumber" name="L698" href="#L698">698</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
-<a class="jxr_linenumber" name="L699" href="#L699">699</a>             assertThat(bean.getDate2()).isEqualTo(toTimestamp(toDate(2000, 2, 3)));
-<a class="jxr_linenumber" name="L700" href="#L700">700</a>             
-<a class="jxr_linenumber" name="L701" href="#L701">701</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
-<a class="jxr_linenumber" name="L702" href="#L702">702</a>             assertThat(bean.getEnum2()).isEqualTo(SampleEnum.RED);
-<a class="jxr_linenumber" name="L703" href="#L703">703</a>             
-<a class="jxr_linenumber" name="L704" href="#L704">704</a>             assertThat(bean.isBoolean1()).isEqualTo(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L705" href="#L705">705</a>             assertThat(bean.getBoolean2()).isEqualTo(Boolean.TRUE);
-<a class="jxr_linenumber" name="L706" href="#L706">706</a>             
-<a class="jxr_linenumber" name="L707" href="#L707">707</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getId() == 2) {
-<a class="jxr_linenumber" name="L708" href="#L708">708</a>             
-<a class="jxr_linenumber" name="L709" href="#L709">709</a>             assertThat(bean.getNumber1()).isEqualTo(-12);
-<a class="jxr_linenumber" name="L710" href="#L710">710</a>             assertThat(bean.getNumber2()).isNull();
-<a class="jxr_linenumber" name="L711" href="#L711">711</a>             
-<a class="jxr_linenumber" name="L712" href="#L712">712</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"あいうえお"</span>);
-<a class="jxr_linenumber" name="L713" href="#L713">713</a>             assertThat(bean.getString2()).isEqualTo(<span class="jxr_string">""</span>);
-<a class="jxr_linenumber" name="L714" href="#L714">714</a>             
-<a class="jxr_linenumber" name="L715" href="#L715">715</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
-<a class="jxr_linenumber" name="L716" href="#L716">716</a>             assertThat(bean.getDate2()).isNull();;
-<a class="jxr_linenumber" name="L717" href="#L717">717</a>             
-<a class="jxr_linenumber" name="L718" href="#L718">718</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
-<a class="jxr_linenumber" name="L719" href="#L719">719</a>             assertThat(bean.getEnum2()).isEqualTo(SampleEnum.BLUE);
-<a class="jxr_linenumber" name="L720" href="#L720">720</a>             
-<a class="jxr_linenumber" name="L721" href="#L721">721</a>             assertThat(bean.isBoolean1()).isEqualTo(false);
-<a class="jxr_linenumber" name="L722" href="#L722">722</a>             assertThat(bean.getBoolean2()).isEqualTo(Boolean.FALSE);
-<a class="jxr_linenumber" name="L723" href="#L723">723</a>             
-<a class="jxr_linenumber" name="L724" href="#L724">724</a>         }
-<a class="jxr_linenumber" name="L725" href="#L725">725</a>         
-<a class="jxr_linenumber" name="L726" href="#L726">726</a>     }
-<a class="jxr_linenumber" name="L727" href="#L727">727</a>     
-<a class="jxr_linenumber" name="L728" href="#L728">728</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> SamplePartialBean bean) {
-<a class="jxr_linenumber" name="L729" href="#L729">729</a>         
-<a class="jxr_linenumber" name="L730" href="#L730">730</a>         <strong class="jxr_keyword">if</strong>(bean.getId() == 1) {
-<a class="jxr_linenumber" name="L731" href="#L731">731</a>             assertThat(bean.getNumber1()).isEqualTo(999110);
-<a class="jxr_linenumber" name="L732" href="#L732">732</a>             
-<a class="jxr_linenumber" name="L733" href="#L733">733</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"abcd"</span>);
-<a class="jxr_linenumber" name="L734" href="#L734">734</a>             
-<a class="jxr_linenumber" name="L735" href="#L735">735</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
-<a class="jxr_linenumber" name="L736" href="#L736">736</a>             
-<a class="jxr_linenumber" name="L737" href="#L737">737</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
-<a class="jxr_linenumber" name="L738" href="#L738">738</a>             
-<a class="jxr_linenumber" name="L739" href="#L739">739</a>             assertThat(bean.isBoolean1()).isEqualTo(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L740" href="#L740">740</a>             
-<a class="jxr_linenumber" name="L741" href="#L741">741</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getId() == 2) {
-<a class="jxr_linenumber" name="L742" href="#L742">742</a>             
-<a class="jxr_linenumber" name="L743" href="#L743">743</a>             assertThat(bean.getNumber1()).isEqualTo(-12);
-<a class="jxr_linenumber" name="L744" href="#L744">744</a>             
-<a class="jxr_linenumber" name="L745" href="#L745">745</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"あいうえお"</span>);
-<a class="jxr_linenumber" name="L746" href="#L746">746</a>             
-<a class="jxr_linenumber" name="L747" href="#L747">747</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
-<a class="jxr_linenumber" name="L748" href="#L748">748</a>             
-<a class="jxr_linenumber" name="L749" href="#L749">749</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
-<a class="jxr_linenumber" name="L750" href="#L750">750</a>             
-<a class="jxr_linenumber" name="L751" href="#L751">751</a>             assertThat(bean.isBoolean1()).isEqualTo(false);
-<a class="jxr_linenumber" name="L752" href="#L752">752</a>             
-<a class="jxr_linenumber" name="L753" href="#L753">753</a>         }
+<a class="jxr_linenumber" name="L671" href="#L671">671</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L672" href="#L672">672</a>         
+<a class="jxr_linenumber" name="L673" href="#L673">673</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L674" href="#L674">674</a>         assertThat(headers).hasSize(11);
+<a class="jxr_linenumber" name="L675" href="#L675">675</a>         
+<a class="jxr_linenumber" name="L676" href="#L676">676</a>         <strong class="jxr_keyword">while</strong>(csvReader.read(
+<a class="jxr_linenumber" name="L677" href="#L677">677</a>                 record -&gt; {
+<a class="jxr_linenumber" name="L678" href="#L678">678</a>                     list.add(record);
+<a class="jxr_linenumber" name="L679" href="#L679">679</a>                     assertBean(record);
+<a class="jxr_linenumber" name="L680" href="#L680">680</a>                 },
+<a class="jxr_linenumber" name="L681" href="#L681">681</a>                 error -&gt; fail(error.getMessage())) != CsvReadStatus.EOF) {
+<a class="jxr_linenumber" name="L682" href="#L682">682</a>             
+<a class="jxr_linenumber" name="L683" href="#L683">683</a>         }
+<a class="jxr_linenumber" name="L684" href="#L684">684</a>         
+<a class="jxr_linenumber" name="L685" href="#L685">685</a>         assertThat(list).hasSize(2);
+<a class="jxr_linenumber" name="L686" href="#L686">686</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="L687" href="#L687">687</a>         
+<a class="jxr_linenumber" name="L688" href="#L688">688</a>         csvReader.close();
+<a class="jxr_linenumber" name="L689" href="#L689">689</a>         
+<a class="jxr_linenumber" name="L690" href="#L690">690</a>     }
+<a class="jxr_linenumber" name="L691" href="#L691">691</a>     
+<a class="jxr_linenumber" name="L692" href="#L692">692</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L693" href="#L693">693</a> <em class="jxr_javadoccomment">     * ハンドラ指定で読み込むテスト - エラーがある場合</em>
+<a class="jxr_linenumber" name="L694" href="#L694">694</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
+<a class="jxr_linenumber" name="L695" href="#L695">695</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L696" href="#L696">696</a>     @Test
+<a class="jxr_linenumber" name="L697" href="#L697">697</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRead_withHandler_error_column() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L698" href="#L698">698</a>         
+<a class="jxr_linenumber" name="L699" href="#L699">699</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_error_wrong_pattern.csv"</span>);
+<a class="jxr_linenumber" name="L700" href="#L700">700</a>         
+<a class="jxr_linenumber" name="L701" href="#L701">701</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L702" href="#L702">702</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L703" href="#L703">703</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L704" href="#L704">704</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L705" href="#L705">705</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L706" href="#L706">706</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L707" href="#L707">707</a>         
+<a class="jxr_linenumber" name="L708" href="#L708">708</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L709" href="#L709">709</a>         
+<a class="jxr_linenumber" name="L710" href="#L710">710</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L711" href="#L711">711</a>         assertThat(headers).hasSize(11);
+<a class="jxr_linenumber" name="L712" href="#L712">712</a>         
+<a class="jxr_linenumber" name="L713" href="#L713">713</a>         <strong class="jxr_keyword">while</strong>(csvReader.read(
+<a class="jxr_linenumber" name="L714" href="#L714">714</a>                 record -&gt; {
+<a class="jxr_linenumber" name="L715" href="#L715">715</a>                     list.add(record);
+<a class="jxr_linenumber" name="L716" href="#L716">716</a>                     assertBean(record);
+<a class="jxr_linenumber" name="L717" href="#L717">717</a>                 },
+<a class="jxr_linenumber" name="L718" href="#L718">718</a>                 error -&gt; {
+<a class="jxr_linenumber" name="L719" href="#L719">719</a>                     assertThat(error).isInstanceOf(SuperCsvBindingException.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L720" href="#L720">720</a>                 }
+<a class="jxr_linenumber" name="L721" href="#L721">721</a>                 ) != CsvReadStatus.EOF) {
+<a class="jxr_linenumber" name="L722" href="#L722">722</a>             
+<a class="jxr_linenumber" name="L723" href="#L723">723</a>         }
+<a class="jxr_linenumber" name="L724" href="#L724">724</a>         
+<a class="jxr_linenumber" name="L725" href="#L725">725</a>         assertThat(list).hasSize(1);
+<a class="jxr_linenumber" name="L726" href="#L726">726</a>         
+<a class="jxr_linenumber" name="L727" href="#L727">727</a>         <em class="jxr_comment">// convert error messages.</em>
+<a class="jxr_linenumber" name="L728" href="#L728">728</a>         List&lt;String&gt; messages = csvReader.getErrorMessages();
+<a class="jxr_linenumber" name="L729" href="#L729">729</a>         assertThat(messages).hasSize(1)
+<a class="jxr_linenumber" name="L730" href="#L730">730</a>             .contains(<span class="jxr_string">"[2行, 6列] : 項目「date1」の値（2000/01/01 00:01:02）の書式は不正です。"</span>);
+<a class="jxr_linenumber" name="L731" href="#L731">731</a>         messages.forEach(System.out::println);
+<a class="jxr_linenumber" name="L732" href="#L732">732</a>         
+<a class="jxr_linenumber" name="L733" href="#L733">733</a>         csvReader.close();
+<a class="jxr_linenumber" name="L734" href="#L734">734</a>         
+<a class="jxr_linenumber" name="L735" href="#L735">735</a>     }
+<a class="jxr_linenumber" name="L736" href="#L736">736</a>     
+<a class="jxr_linenumber" name="L737" href="#L737">737</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L738" href="#L738">738</a> <em class="jxr_javadoccomment">     * Streamで読み込むテスト - 正常時</em>
+<a class="jxr_linenumber" name="L739" href="#L739">739</a> <em class="jxr_javadoccomment">     * @since 2.3</em>
+<a class="jxr_linenumber" name="L740" href="#L740">740</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L741" href="#L741">741</a>     @Test
+<a class="jxr_linenumber" name="L742" href="#L742">742</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testLines_normal() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L743" href="#L743">743</a>         
+<a class="jxr_linenumber" name="L744" href="#L744">744</a>         File file = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/data/test_read_normal.csv"</span>);
+<a class="jxr_linenumber" name="L745" href="#L745">745</a>         
+<a class="jxr_linenumber" name="L746" href="#L746">746</a>         CsvAnnotationBeanReader&lt;SampleNormalBean&gt; csvReader = <strong class="jxr_keyword">new</strong> CsvAnnotationBeanReader&lt;&gt;(
+<a class="jxr_linenumber" name="L747" href="#L747">747</a>                 SampleNormalBean.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L748" href="#L748">748</a>                 <strong class="jxr_keyword">new</strong> InputStreamReader(<strong class="jxr_keyword">new</strong> FileInputStream(file), Charset.forName(<span class="jxr_string">"UTF-8"</span>)),
+<a class="jxr_linenumber" name="L749" href="#L749">749</a>                 CsvPreference.STANDARD_PREFERENCE,
+<a class="jxr_linenumber" name="L750" href="#L750">750</a>                 DefaultGroup.<strong class="jxr_keyword">class</strong>, SampleNormalBean.ReadGroup.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L751" href="#L751">751</a>         csvReader.setExceptionConverter(exceptionConverter);
+<a class="jxr_linenumber" name="L752" href="#L752">752</a>         
+<a class="jxr_linenumber" name="L753" href="#L753">753</a>         List&lt;SampleNormalBean&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L754" href="#L754">754</a>         
-<a class="jxr_linenumber" name="L755" href="#L755">755</a>     }
-<a class="jxr_linenumber" name="L756" href="#L756">756</a>     
-<a class="jxr_linenumber" name="L757" href="#L757">757</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> <a name="SampleFixedColumnBean" href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html#SampleFixedColumnBean">SampleFixedColumnBean</a> bean) {
-<a class="jxr_linenumber" name="L758" href="#L758">758</a>         
-<a class="jxr_linenumber" name="L759" href="#L759">759</a>         <strong class="jxr_keyword">if</strong>(bean.getNo() == 1) {
-<a class="jxr_linenumber" name="L760" href="#L760">760</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"山田　太郎"</span>);
-<a class="jxr_linenumber" name="L761" href="#L761">761</a>             
-<a class="jxr_linenumber" name="L762" href="#L762">762</a>             assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(1980, 1, 28));
-<a class="jxr_linenumber" name="L763" href="#L763">763</a>             
-<a class="jxr_linenumber" name="L764" href="#L764">764</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"全ての項目に値が設定"</span>);
-<a class="jxr_linenumber" name="L765" href="#L765">765</a>             
-<a class="jxr_linenumber" name="L766" href="#L766">766</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getNo() == 2) {
-<a class="jxr_linenumber" name="L767" href="#L767">767</a>             
-<a class="jxr_linenumber" name="L768" href="#L768">768</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"田中　次郎"</span>);
-<a class="jxr_linenumber" name="L769" href="#L769">769</a>             
-<a class="jxr_linenumber" name="L770" href="#L770">770</a>             assertThat(bean.getBirthDay()).isNull();
-<a class="jxr_linenumber" name="L771" href="#L771">771</a>             
-<a class="jxr_linenumber" name="L772" href="#L772">772</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"誕生日の項目が空。"</span>);
-<a class="jxr_linenumber" name="L773" href="#L773">773</a>             
-<a class="jxr_linenumber" name="L774" href="#L774">774</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getNo() == 3) {
-<a class="jxr_linenumber" name="L775" href="#L775">775</a>             
-<a class="jxr_linenumber" name="L776" href="#L776">776</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"鈴木　三郎"</span>);
-<a class="jxr_linenumber" name="L777" href="#L777">777</a>             
-<a class="jxr_linenumber" name="L778" href="#L778">778</a>             assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(2000, 3, 25));
-<a class="jxr_linenumber" name="L779" href="#L779">779</a>             
-<a class="jxr_linenumber" name="L780" href="#L780">780</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"コメントを切落とす。あいう。"</span>);
+<a class="jxr_linenumber" name="L755" href="#L755">755</a>         String[] headers = csvReader.getHeader(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L756" href="#L756">756</a>         assertThat(headers).hasSize(11);
+<a class="jxr_linenumber" name="L757" href="#L757">757</a>         
+<a class="jxr_linenumber" name="L758" href="#L758">758</a>         csvReader.lines().forEach(record -&gt; {
+<a class="jxr_linenumber" name="L759" href="#L759">759</a>             list.add(record);
+<a class="jxr_linenumber" name="L760" href="#L760">760</a>             assertBean(record);
+<a class="jxr_linenumber" name="L761" href="#L761">761</a>         });
+<a class="jxr_linenumber" name="L762" href="#L762">762</a>         
+<a class="jxr_linenumber" name="L763" href="#L763">763</a>         assertThat(list).hasSize(2);
+<a class="jxr_linenumber" name="L764" href="#L764">764</a>         assertThat(csvReader.getErrorMessages()).hasSize(0);
+<a class="jxr_linenumber" name="L765" href="#L765">765</a>         
+<a class="jxr_linenumber" name="L766" href="#L766">766</a>         <em class="jxr_comment">// 順番の確認</em>
+<a class="jxr_linenumber" name="L767" href="#L767">767</a>         assertThat(list.get(0)).hasFieldOrPropertyWithValue(<span class="jxr_string">"id"</span>, 1);
+<a class="jxr_linenumber" name="L768" href="#L768">768</a>         assertThat(list.get(1)).hasFieldOrPropertyWithValue(<span class="jxr_string">"id"</span>, 2);
+<a class="jxr_linenumber" name="L769" href="#L769">769</a>         
+<a class="jxr_linenumber" name="L770" href="#L770">770</a>         csvReader.close();
+<a class="jxr_linenumber" name="L771" href="#L771">771</a>     }
+<a class="jxr_linenumber" name="L772" href="#L772">772</a>     
+<a class="jxr_linenumber" name="L773" href="#L773">773</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> <a name="SampleNormalBean" href="../../../../../com/github/mygreen/supercsv/io/SampleNormalBean.html#SampleNormalBean">SampleNormalBean</a> bean) {
+<a class="jxr_linenumber" name="L774" href="#L774">774</a>         
+<a class="jxr_linenumber" name="L775" href="#L775">775</a>         <strong class="jxr_keyword">if</strong>(bean.getId() == 1) {
+<a class="jxr_linenumber" name="L776" href="#L776">776</a>             assertThat(bean.getNumber1()).isEqualTo(999110);
+<a class="jxr_linenumber" name="L777" href="#L777">777</a>             assertThat(bean.getNumber2()).isEqualTo(10.2d);
+<a class="jxr_linenumber" name="L778" href="#L778">778</a>             
+<a class="jxr_linenumber" name="L779" href="#L779">779</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"abcd"</span>);
+<a class="jxr_linenumber" name="L780" href="#L780">780</a>             assertThat(bean.getString2()).isEqualTo(<span class="jxr_string">"12345"</span>);
 <a class="jxr_linenumber" name="L781" href="#L781">781</a>             
-<a class="jxr_linenumber" name="L782" href="#L782">782</a>         }
-<a class="jxr_linenumber" name="L783" href="#L783">783</a>         
-<a class="jxr_linenumber" name="L784" href="#L784">784</a>     }
-<a class="jxr_linenumber" name="L785" href="#L785">785</a>     
-<a class="jxr_linenumber" name="L786" href="#L786">786</a>     
-<a class="jxr_linenumber" name="L787" href="#L787">787</a>     
-<a class="jxr_linenumber" name="L788" href="#L788">788</a> }
+<a class="jxr_linenumber" name="L782" href="#L782">782</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
+<a class="jxr_linenumber" name="L783" href="#L783">783</a>             assertThat(bean.getDate2()).isEqualTo(toTimestamp(toDate(2000, 2, 3)));
+<a class="jxr_linenumber" name="L784" href="#L784">784</a>             
+<a class="jxr_linenumber" name="L785" href="#L785">785</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
+<a class="jxr_linenumber" name="L786" href="#L786">786</a>             assertThat(bean.getEnum2()).isEqualTo(SampleEnum.RED);
+<a class="jxr_linenumber" name="L787" href="#L787">787</a>             
+<a class="jxr_linenumber" name="L788" href="#L788">788</a>             assertThat(bean.isBoolean1()).isEqualTo(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L789" href="#L789">789</a>             assertThat(bean.getBoolean2()).isEqualTo(Boolean.TRUE);
+<a class="jxr_linenumber" name="L790" href="#L790">790</a>             
+<a class="jxr_linenumber" name="L791" href="#L791">791</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getId() == 2) {
+<a class="jxr_linenumber" name="L792" href="#L792">792</a>             
+<a class="jxr_linenumber" name="L793" href="#L793">793</a>             assertThat(bean.getNumber1()).isEqualTo(-12);
+<a class="jxr_linenumber" name="L794" href="#L794">794</a>             assertThat(bean.getNumber2()).isNull();
+<a class="jxr_linenumber" name="L795" href="#L795">795</a>             
+<a class="jxr_linenumber" name="L796" href="#L796">796</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"あいうえお"</span>);
+<a class="jxr_linenumber" name="L797" href="#L797">797</a>             assertThat(bean.getString2()).isEqualTo(<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L798" href="#L798">798</a>             
+<a class="jxr_linenumber" name="L799" href="#L799">799</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
+<a class="jxr_linenumber" name="L800" href="#L800">800</a>             assertThat(bean.getDate2()).isNull();;
+<a class="jxr_linenumber" name="L801" href="#L801">801</a>             
+<a class="jxr_linenumber" name="L802" href="#L802">802</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
+<a class="jxr_linenumber" name="L803" href="#L803">803</a>             assertThat(bean.getEnum2()).isEqualTo(SampleEnum.BLUE);
+<a class="jxr_linenumber" name="L804" href="#L804">804</a>             
+<a class="jxr_linenumber" name="L805" href="#L805">805</a>             assertThat(bean.isBoolean1()).isEqualTo(false);
+<a class="jxr_linenumber" name="L806" href="#L806">806</a>             assertThat(bean.getBoolean2()).isEqualTo(Boolean.FALSE);
+<a class="jxr_linenumber" name="L807" href="#L807">807</a>             
+<a class="jxr_linenumber" name="L808" href="#L808">808</a>         }
+<a class="jxr_linenumber" name="L809" href="#L809">809</a>         
+<a class="jxr_linenumber" name="L810" href="#L810">810</a>     }
+<a class="jxr_linenumber" name="L811" href="#L811">811</a>     
+<a class="jxr_linenumber" name="L812" href="#L812">812</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> SamplePartialBean bean) {
+<a class="jxr_linenumber" name="L813" href="#L813">813</a>         
+<a class="jxr_linenumber" name="L814" href="#L814">814</a>         <strong class="jxr_keyword">if</strong>(bean.getId() == 1) {
+<a class="jxr_linenumber" name="L815" href="#L815">815</a>             assertThat(bean.getNumber1()).isEqualTo(999110);
+<a class="jxr_linenumber" name="L816" href="#L816">816</a>             
+<a class="jxr_linenumber" name="L817" href="#L817">817</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"abcd"</span>);
+<a class="jxr_linenumber" name="L818" href="#L818">818</a>             
+<a class="jxr_linenumber" name="L819" href="#L819">819</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 1, 1, 0, 1, 2));
+<a class="jxr_linenumber" name="L820" href="#L820">820</a>             
+<a class="jxr_linenumber" name="L821" href="#L821">821</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.RED);
+<a class="jxr_linenumber" name="L822" href="#L822">822</a>             
+<a class="jxr_linenumber" name="L823" href="#L823">823</a>             assertThat(bean.isBoolean1()).isEqualTo(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L824" href="#L824">824</a>             
+<a class="jxr_linenumber" name="L825" href="#L825">825</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getId() == 2) {
+<a class="jxr_linenumber" name="L826" href="#L826">826</a>             
+<a class="jxr_linenumber" name="L827" href="#L827">827</a>             assertThat(bean.getNumber1()).isEqualTo(-12);
+<a class="jxr_linenumber" name="L828" href="#L828">828</a>             
+<a class="jxr_linenumber" name="L829" href="#L829">829</a>             assertThat(bean.getString1()).isEqualTo(<span class="jxr_string">"あいうえお"</span>);
+<a class="jxr_linenumber" name="L830" href="#L830">830</a>             
+<a class="jxr_linenumber" name="L831" href="#L831">831</a>             assertThat(bean.getDate1()).isEqualTo(toDate(2000, 2, 1, 3, 4, 5));
+<a class="jxr_linenumber" name="L832" href="#L832">832</a>             
+<a class="jxr_linenumber" name="L833" href="#L833">833</a>             assertThat(bean.getEnum1()).isEqualTo(SampleEnum.BLUE);
+<a class="jxr_linenumber" name="L834" href="#L834">834</a>             
+<a class="jxr_linenumber" name="L835" href="#L835">835</a>             assertThat(bean.isBoolean1()).isEqualTo(false);
+<a class="jxr_linenumber" name="L836" href="#L836">836</a>             
+<a class="jxr_linenumber" name="L837" href="#L837">837</a>         }
+<a class="jxr_linenumber" name="L838" href="#L838">838</a>         
+<a class="jxr_linenumber" name="L839" href="#L839">839</a>     }
+<a class="jxr_linenumber" name="L840" href="#L840">840</a>     
+<a class="jxr_linenumber" name="L841" href="#L841">841</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertBean(<strong class="jxr_keyword">final</strong> <a name="SampleFixedColumnBean" href="../../../../../com/github/mygreen/supercsv/io/SampleFixedColumnBean.html#SampleFixedColumnBean">SampleFixedColumnBean</a> bean) {
+<a class="jxr_linenumber" name="L842" href="#L842">842</a>         
+<a class="jxr_linenumber" name="L843" href="#L843">843</a>         <strong class="jxr_keyword">if</strong>(bean.getNo() == 1) {
+<a class="jxr_linenumber" name="L844" href="#L844">844</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"山田　太郎"</span>);
+<a class="jxr_linenumber" name="L845" href="#L845">845</a>             
+<a class="jxr_linenumber" name="L846" href="#L846">846</a>             assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(1980, 1, 28));
+<a class="jxr_linenumber" name="L847" href="#L847">847</a>             
+<a class="jxr_linenumber" name="L848" href="#L848">848</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"全ての項目に値が設定"</span>);
+<a class="jxr_linenumber" name="L849" href="#L849">849</a>             
+<a class="jxr_linenumber" name="L850" href="#L850">850</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getNo() == 2) {
+<a class="jxr_linenumber" name="L851" href="#L851">851</a>             
+<a class="jxr_linenumber" name="L852" href="#L852">852</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"田中　次郎"</span>);
+<a class="jxr_linenumber" name="L853" href="#L853">853</a>             
+<a class="jxr_linenumber" name="L854" href="#L854">854</a>             assertThat(bean.getBirthDay()).isNull();
+<a class="jxr_linenumber" name="L855" href="#L855">855</a>             
+<a class="jxr_linenumber" name="L856" href="#L856">856</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"誕生日の項目が空。"</span>);
+<a class="jxr_linenumber" name="L857" href="#L857">857</a>             
+<a class="jxr_linenumber" name="L858" href="#L858">858</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(bean.getNo() == 3) {
+<a class="jxr_linenumber" name="L859" href="#L859">859</a>             
+<a class="jxr_linenumber" name="L860" href="#L860">860</a>             assertThat(bean.getUserName()).isEqualTo(<span class="jxr_string">"鈴木　三郎"</span>);
+<a class="jxr_linenumber" name="L861" href="#L861">861</a>             
+<a class="jxr_linenumber" name="L862" href="#L862">862</a>             assertThat(bean.getBirthDay()).isEqualTo(LocalDate.of(2000, 3, 25));
+<a class="jxr_linenumber" name="L863" href="#L863">863</a>             
+<a class="jxr_linenumber" name="L864" href="#L864">864</a>             assertThat(bean.getComment()).isEqualTo(<span class="jxr_string">"コメントを切落とす。あいう。"</span>);
+<a class="jxr_linenumber" name="L865" href="#L865">865</a>             
+<a class="jxr_linenumber" name="L866" href="#L866">866</a>         }
+<a class="jxr_linenumber" name="L867" href="#L867">867</a>         
+<a class="jxr_linenumber" name="L868" href="#L868">868</a>     }
+<a class="jxr_linenumber" name="L869" href="#L869">869</a>     
+<a class="jxr_linenumber" name="L870" href="#L870">870</a>     
+<a class="jxr_linenumber" name="L871" href="#L871">871</a>     
+<a class="jxr_linenumber" name="L872" href="#L872">872</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2022 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2025 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

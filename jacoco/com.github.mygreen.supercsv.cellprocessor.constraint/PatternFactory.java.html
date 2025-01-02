@@ -39,7 +39,7 @@ import com.github.mygreen.supercsv.util.Utils;
 <span class="fc" id="L39">                    .varWithAnno(&quot;anno&quot;, anno.annotationType())</span>
 <span class="fc" id="L40">                    .var(&quot;attrName&quot;, &quot;regex&quot;)</span>
 <span class="fc" id="L41">                    .var(&quot;attrValue&quot;, anno.regex())</span>
-<span class="fc" id="L42">                    .var(&quot;type&quot;, &quot;{key.regex}&quot;)</span>
+<span class="fc" id="L42">                    .var(&quot;type&quot;, MessageBuilder.create(&quot;key.regex&quot;).format())</span>
 <span class="fc" id="L43">                    .format(true));</span>
 <span class="fc" id="L44">        }</span>
         

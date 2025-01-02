@@ -201,11 +201,11 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 
                 // ハンドラによる読み込み
                 while(csvReader.read(
-                    record -> {
+                    (record) -> {
                         // 読み込み成功時の処理 - CsvSuccessHandler
                         list.add(record);
                     },
-                    error -> {
+                    (error) -> {
                         // Super CSVに関するエラー処理 - CsvErrorHandler
 
                     }) != CsvReadStatus.EOF) {
@@ -338,7 +338,7 @@ try-with-resources 文を使用する場合は注意が必要です。アノテ�
 書き込み時の値の検証のスキップ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-書き込み時の値をスキップしたい場合は、グループによる指定もできますが、システム設定を変更することで一律にスキップすることができます。
+書き込み時の値をスキップしたい場合は、グループによる指定もできますが、システム設定を変更することで一律にスキップできます。
 
 ``BeanMappingFactory`` から ``Configuration`` を取得し、そのプロパティ ``skipValidationOnWrite`` の値を trueに設定します。
 
