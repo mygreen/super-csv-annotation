@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.3</version>
+	<version>2.4</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description><![CDATA[
@@ -22,17 +22,6 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		<developerConnection>scm:git:ssh://git@github.com/mygreen/super-csv-annotation.git</developerConnection>
 		<url>https://github.com/mygreen/super-csv-annotation</url>
 	</scm>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 
 	<licenses>
 		<license>
@@ -121,6 +110,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>source-jar</id>
@@ -249,14 +239,12 @@ $(document).ready(function() {
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.13</version>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.6.0</version>
 				<extensions>true</extensions>
 				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<publishingServerId>central</publishingServerId>
 				</configuration>
 			</plugin>
 		</plugins>

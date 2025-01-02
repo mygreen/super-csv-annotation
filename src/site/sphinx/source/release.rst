@@ -3,6 +3,36 @@
 ======================================
 
 --------------------------------------------------------
+ver.2.4 - 2025-01-01
+--------------------------------------------------------
+
+* 修正内容
+
+  * `#50 <https://github.com/mygreen/super-csv-annotation/pull/50>`_ / `#56 <https://github.com/mygreen/super-csv-annotation/pull/56>`_ - 依存ライブラリ Commons JEXL を v2.1からv3.4へアップデートしました。
+  
+    * 脆弱性 `ELインジェクション <https://owasp.org/www-community/vulnerabilities/Expression_Language_Injection>`__ 対策として、任意のプログラムが実行可能だったため、JEXL v3.3から導入された `JexlPermissions <https://commons.apache.org/proper/commons-jexl/apidocs/org/apache/commons/jexl3/introspection/JexlPermissions.html>`_ によるEL式中で実行／参照可能なクラスなどを制限するようにしました。
+    * システムプロパティ ``supercsv.annotation.jexlRestricted`` / ``supercsv.annotation.jexlPermissions`` にて、EL式の実行制限を変更することができます。詳細は、「 :doc:`configuration_systemproperty` 」を参照してください。
+
+  * `#52 <https://github.com/mygreen/super-csv-annotation/pull/52>`_ - ``MessageInterpolator`` にてエラーメッセージを組み立てる際に、ELインジェクションの起点とならないよう、EL式 / 変数形式は再帰的評価の対象外設定を追加しました。
+
+    * メッセージソースのみ再帰的評価の対象とするように変更しました。
+    * さらに、メッセージソースの再帰的評価の回数の上限として、最大5回までと制限を設けました。
+
+  * `#54 <https://github.com/mygreen/super-csv-annotation/pull/54>`_ - 文字コード指定のプロパティファイルを読み込んだ時文字化けする事象を修正しました。
+    
+    * ``EncodingControl`` を使用し、UTF-8のプロパティファイルをResourceBundle経由で読み込んだ時に文字化けする事象を修正しました。
+
+  * `#60 <https://github.com/mygreen/super-csv-annotation/pull/60>`_ - Sphinxによるドキュメントの警告を修正しました。
+
+
+* 変更内容
+
+  * `#57 <https://github.com/mygreen/super-csv-annotation/pull/57>`_ - Jakarta Bean Validation 3.0/3.1に対応しました。
+
+  * `#59 <https://github.com/mygreen/super-csv-annotation/pull/59>`_ - Sphinxによるドキュメント生成環境として、DevContainer の設定を追加しました。
+
+
+--------------------------------------------------------
 ver.2.3 - 2022-10-23
 --------------------------------------------------------
 

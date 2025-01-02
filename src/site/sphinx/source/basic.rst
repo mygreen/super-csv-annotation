@@ -46,6 +46,10 @@ Super CSVの拡張ライブラリ
      - | ver.1.0/1.1/2.0
        | (Hibernate Validator 4.x/5.x/6.x)
 
+   * - | Jakarta Bean Validation  (option)
+       | ( `Hibernate Validator <http://hibernate.org/validator/>`_ )
+     - | ver.3.0/3.1
+       | (Hibernate Validator 8.x)
 
 
 ----------------------------------------

@@ -11,14 +11,64 @@ Bean Validationによるカラムの値の検証する方法を説明します�
 Bean Validationを利用する際には、ライブリを追加します。 
 Mavenを利用している場合は、pom.xmlに以下を追加します。
 
-本ライブラリは、Bean Validation1.0/1.1の両方に対応しており、
-その参照実装である `Hibernate Validator <http://hibernate.org/validator/>`_ を追加します。
+本ライブラリは、Bean Validation1.0/1.1/2.0 及び、Jakarta Bean Validaiton 3.0/3.1 に対応しており、その参照実装である `Hibernate Validator <http://hibernate.org/validator/>`_ を追加します。
 
-Bean Validation 1.1(JSR-349)を利用する場合は、Hibernate Validator5.x系を利用します。
-さらに、メッセージ中にJava EEのEL式が利用可能となっているため、その実装であるライブリを追加します。
+Hibernate Validator は対応するBean Validaitonのバージョンが決まっているため、対応したライブラリのバージョンを追加する必要があります。
 
 * ただし、TomcatやGlassFishなどのWebコンテナ上で使用するのであれば、EL式のライブラリはそれらに組み込まれているため必要ありません。
 * また、本ライブラリの機能を利用して、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ に切り替えるのであれば、式言語の追加は必要ありません。
+
+
+.. list-table:: Bean ValidationとHibernate Validatorの対応バージョン
+   :widths: 20 20 60
+   :header-rows: 1
+   
+   * - Bean Validation
+     - Hibernate Validator
+     - 備考
+     
+   * - ver.1.0 (JSR-303)
+     - ver.4.x
+     - Java8以上で利用可能です。
+     
+   * - ver.1.1 (JSR-349)
+     - ver.5.x
+     - Java8以上で利用可能です。
+
+   * - ver.2.0 (JSR-380)
+     - ver.6.x
+     - Java8以上で利用可能です。
+
+   * - ver.3.0/3.1
+     - ver.8.x
+     - | **Super Csv Annotation 2.4+** から対応しています。
+       | Hibernate Validator v8.xから、**Java11以上** が必須になります。
+       | Bean Validaitonから、Jakarta Bean Validationに名称が変更されパッケージも変更されています。
+
+
+Bean Validation 1.0(JSR-303)を利用する場合は、Hibernate Validator4.x系を利用します。
+Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ が利用できます。
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: pom.xmlの依存関係の追加（Bean Validation1.0を利用する場合）
+    
+    
+    <!-- Bean Validation 1.0 -->
+    <dependency>
+    <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>1.0.0.GA</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>4.3.2.Final</version>
+    </dependency>
+
+
+Bean Validation 1.1(JSR-349)を利用する場合は、Hibernate Validator5.x系を利用します。
+さらに、メッセージ中にJava EEのEL式が利用可能となっているため、その実装であるライブリを追加します。
 
 .. sourcecode:: xml
     :linenos:
@@ -43,25 +93,57 @@ Bean Validation 1.1(JSR-349)を利用する場合は、Hibernate Validator5.x系
         <version>3.0.1-b08</version>
     </dependency>
 
-
-Bean Validation 1.0(JSR-303)を利用する場合は、Hibernate Validator4.x系を利用します。
-Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、`JEXL <http://commons.apache.org/proper/commons-jexl/>`_ が利用できます。
+Bean Validation 2.0(JSR-380)を利用する場合は、Hibernate Validator6.x系を利用します。
+さらに、メッセージ中にJava EEのEL式が利用可能となっているため、その実装であるライブリを追加します。
 
 .. sourcecode:: xml
     :linenos:
-    :caption: pom.xmlの依存関係の追加（Bean Validation1.0を利用する場合）
+    :caption: pom.xmlの依存関係の追加（Bean Validation2.0を利用する場合）
     
-    
-    <!-- Bean Validation 1.0 -->
+    <!-- Bean Validation 2.0 -->
     <dependency>
-    <groupId>javax.validation</groupId>
+        <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
-        <version>1.0.0.GA</version>
+        <version>2.0.1.Final</version>
     </dependency>
     <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.validator</groupId>
         <artifactId>hibernate-validator</artifactId>
-        <version>4.3.2.Final</version>
+        <version>6.2.3.Final</version>
+    </dependency>
+    
+    <!-- EL式のライブラリが必要であれば追加します -->
+    <dependency>
+        <groupId>org.glassfish</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>3.0.1-b12</version>
+    </dependency>
+
+
+Jakarta Bean Validation 3.0/3.1を利用する場合は、Hibernate Validator8.x系を利用します。
+さらに、メッセージ中にJakarta EEのEL式が利用可能となっているため、その実装であるライブリを追加します。
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: pom.xmlの依存関係の追加（Jakarta Bean Validation3.1を利用する場合）
+    
+    <!-- Jakarta Bean Validation 3.1 -->
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>8.0.2.Final</version>
+    </dependency>
+    
+    <!-- EL式のライブラリが必要であれば追加します -->
+    <dependency>
+        <groupId>org.glassfish.expressly</groupId>
+        <artifactId>expressly</artifactId>
+        <version>5.0.0</version>
     </dependency>
 
 
@@ -71,7 +153,10 @@ Bean Validationの利用方法
 
 アノテーション ``@CsvBean(validatosr=CsvBeanValidator.class)`` を指定します。
 
-``CsvBeanValidator`` は、Bean Validation と、本ライブラリの ``CsvValidator`` をブリッジするクラスです。
+  * Bean Validation 1.0/1.1/2.0の場合は、 ``CsvBeanValidator`` を指定します。
+  * Jakarta Bean Validation 3.0/3.1の場合は、 ``JakartaCsvBeanValidator`` を指定します。
+
+``CsvBeanValidator`` / ``JakartaCsvBeanValidator`` は、Bean Validation と、本ライブラリの ``CsvValidator`` をブリッジするクラスです。
 
 独自のメッセージソースは、クラスパスのルートに ``HibernateValidation.properties`` を配置しておけば自動的に読み込まれます。
 
@@ -92,6 +177,7 @@ Bean Validationの利用方法
     
     // Bean Validationの指定方法
     @CsvBean(validators=CsvBeanValidator.class)
+    // @CsvBean(validators=JakartaCsvBeanValidator.class)   // Jakarta Bean Validation の場合
     private static class TestCsv {
         
         @CsvColumn(number=1)
@@ -199,6 +285,7 @@ Bean Validationのインスタンスを変更する必要があります。
     import com.github.mygreen.supercsv.localization.MessageInterpolator;
     import com.github.mygreen.supercsv.localization.MessageResolver;
     import com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver;
+    import com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator;
     
     import java.nio.charset.Charset;
     import java.nio.file.Files;
@@ -223,18 +310,20 @@ Bean Validationのインスタンスを変更する必要があります。
                     CsvPreference.STANDARD_PREFERENCE);
             
             // BeanValidator用のValidatorの作成
-            final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-            
-            // メッセージ処理クラスを本ライブラリのものに入れ替えてインスタンスを生成する
-            final Validator beanValidator = validatorFactory.usingContext()
+            final ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure()
+                // メッセージ処理クラスを本ライブラリのものに入れ替えてインスタンスを生成する
                 .messageInterpolator(new MessageInterpolatorAdapter(
                     new ResourceBundleMessageResolver(),
                     new MessageInterpolator()))
+                .buildValidatorFactory();
+            
+            final Validator beanValidator = validatorFactory.usingContext()
                 .getValidator();
             
             // Validatorの追加
-            csvReader.addValidators(beanValidator);
-            
+            csvReader.addValidators(new CsvBeanValidator(beanValidator));
+            // Jakarta Bean Validation の場合は、JakartaCsvBeanValidator を使用します。
+            // csvReader.addValidators(new JakartaCsvBeanValidator(beanValidator));
         }
     
     }

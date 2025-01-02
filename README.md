@@ -21,7 +21,7 @@ This library 'Super CSV' extension library with annotation function.
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
-        <version>2.3</version>
+        <version>2.4</version>
     </dependency>
     ```
 2. Add dependency for Logging library. Example Logback.
@@ -36,7 +36,7 @@ This library 'Super CSV' extension library with annotation function.
 
 # Build
 
-1. Setup Java SE 8 (1.8.0_121+)
+1. Setup Java SE 8
 2. Setup Maven
 3. Build with Maven
     1. make jar files.
