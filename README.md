@@ -1,4 +1,5 @@
-[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.mygreen/super-csv-annotation)](https://central.sonatype.com/artifact/com.github.mygreen/super-csv-annotation) [![Javadocs](http://javadoc.io/badge/com.github.mygreen/super-csv-annotation.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/super-csv-annotation) [![Build Status](https://github.com/mygreen/super-csv-annotation/actions/workflows/verify.yml/badge.svg)](https://travis-ci.org/mygreen/super-csv-annotation)
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.mygreen/super-csv-annotation?color=ffa500
+)](https://central.sonatype.com/artifact/com.github.mygreen/super-csv-annotation) [![Javadocs](http://javadoc.io/badge/com.github.mygreen/super-csv-annotation.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/super-csv-annotation) [![Build Status](https://github.com/mygreen/super-csv-annotation/actions/workflows/verify.yml/badge.svg)](https://travis-ci.org/mygreen/super-csv-annotation)
 
 Super CSV Annotation
 ====================
