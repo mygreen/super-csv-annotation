@@ -700,7 +700,7 @@
 <span class="linenos">21</span><span class="w">        </span><span class="n">beanMappingFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">setBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span>
 <span class="linenos">22</span>
 <span class="linenos">23</span><span class="w">        </span><span class="c1">// BeanMappingの作成</span>
-<span class="linenos">24</span><span class="w">        </span><span class="n">BeanMapping</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">beanMapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mappingFactory</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">UserCsv</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="linenos">24</span><span class="w">        </span><span class="n">BeanMapping</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">beanMapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beanMappingFactory</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">UserCsv</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
 <span class="linenos">25</span>
 <span class="linenos">26</span><span class="w">        </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">csvReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
 <span class="linenos">27</span><span class="w">                </span><span class="n">beanMapping</span><span class="p">,</span>
@@ -725,7 +725,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2016-2025, T.TSUCHIE.
-      <span class="lastupdated">最終更新: 2025-01-02 13:09:09
+      <span class="lastupdated">最終更新: 2025-01-13 20:27:31
       </span></p>
   </div>
 
