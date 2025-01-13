@@ -494,7 +494,7 @@ SpringBeanFactoryの使用方法
             beanMappingFactory.getConfiguration().setBeanFactory(beanFactory);
             
             // BeanMappingの作成
-            BeanMapping<UserCsv> beanMapping = mappingFactory.create(UserCsv.class);
+            BeanMapping<UserCsv> beanMapping = beanMappingFactory.create(UserCsv.class);
             
             CsvAnnotationBeanReader<UserCsv> csvReader = new CsvAnnotationBeanReader<>(
                     beanMapping,
