@@ -31,8 +31,8 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcess
  *   <li>文字のサイズは、カウント方法の考え型によって変わるため、{@link #paddingProcessor()} で処理方式を指定します。
  *      <br>例えば、{@link CharWidthPaddingProcessor}は、文字の幅（半角文字のサイズ=1、全角文字のサイズ=2）として書き込み時にパディングします。
  *   </li>
- *   <li>属性{@link #rightAlign()}によって、右寄せか左寄せか指定します。
- *    <br>trueのとき右寄せ、falseのとき左よせで、デフォルトは左寄せです。
+ *   <li>属性{@link #rightAlign()}によって、右詰めか左詰めか指定します。
+ *    <br>trueのとき右詰め、falseのとき左詰めで、デフォルトは左詰めです。
  *   </li>
  * </ul>
  * 
@@ -71,7 +71,7 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcess
  * @author T.TSUCHIE
  *
  */
-@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Repeatable(CsvFixedSize.List.class)
@@ -127,7 +127,7 @@ public @interface CsvFixedSize {
     Class<? extends PaddingProcessor> paddingProcessor() default CharWidthPaddingProcessor.class;
     
     /**
-     * 右寄せをするかどうか指定します。
+     * 右詰めするかどうか指定します。
      * <br>読み込み時のトリム時は、逆の意味になるので注意。
      * <br>falseの場合は、左詰めです。
      *
@@ -144,6 +144,9 @@ public @interface CsvFixedSize {
      */
     Class<?>[] groups() default {};
     
+    /**
+     * アノテーションを複数個指定する際の要素です。
+     */
     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @Documented

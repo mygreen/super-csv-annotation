@@ -221,7 +221,7 @@ public class CsvAnnotationBeanReaderTest {
         // convert error messages.
         List<String> messages = csvReader.getErrorMessages();
         assertThat(messages).hasSize(1)
-            .contains("[1行]  : ヘッダーの値「id, 間違い, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」は、「id, 数字1, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」と一致しません。");
+            .contains("[1行] : ヘッダーの値「id, 間違い, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」は、「id, 数字1, number2, string1, string2, date1, date2, enum1, 列挙型2, boolean1, boolean2」と一致しません。");
         messages.forEach(System.out::println);
         
         csvReader.close();
@@ -357,7 +357,7 @@ public class CsvAnnotationBeanReaderTest {
         List<String> messages = csvReader.getErrorMessages();
         // ELインジェクション対象の式は空文字として変換される。
         assertThat(messages).hasSize(1)
-            .contains("[1行]  : ヘッダーの値「id, abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg」は、「id, value」と一致しません。");
+            .contains("[1行] : ヘッダーの値「id, abc${''.getClass().forName('java.lang.Runtime').getRuntime().exec('notepad')}efg」は、「id, value」と一致しません。");
         messages.forEach(System.out::println);
         
     }

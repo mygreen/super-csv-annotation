@@ -385,6 +385,22 @@ public abstract class AbstractCsvAnnotationBeanReader<T> extends AbstractCsvRead
     }
     
     /**
+     * Beanのマッピング情報をキャッシュするクラスを取得します。
+     * @return Beanのマッピング情報をキャッシュするクラス
+     */
+    protected BeanMappingCache<T> getBeanMappingCache() {
+        return beanMappingCache;
+    }
+    
+    /**
+     * Beanのマッピング情報をキャッシュするクラスを設定します。
+     * @param beanMappingCache Beanのマッピング情報をキャッシュするクラス
+     */
+    protected void setBeanMappingCache(BeanMappingCache<T> beanMappingCache) {
+        this.beanMappingCache = beanMappingCache;
+    }
+    
+    /**
      * Beanクラスを元に作成したヘッダー情報を取得する。
      * @return ヘッダー一覧。
      */

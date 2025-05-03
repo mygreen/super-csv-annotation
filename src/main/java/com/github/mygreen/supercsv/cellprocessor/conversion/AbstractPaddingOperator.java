@@ -1,5 +1,7 @@
 package com.github.mygreen.supercsv.cellprocessor.conversion;
 
+import com.github.mygreen.supercsv.util.Utils;
+
 /**
  * パディング処理の抽象クラス。
  * <p>サロゲートペアを考慮します。</p>
@@ -10,30 +12,12 @@ package com.github.mygreen.supercsv.cellprocessor.conversion;
  */
 public abstract class AbstractPaddingOperator implements PaddingProcessor {
 
-    /**
-     * コードポイントの配列に変換する。
-     * @param text
-     * @return
-     */
-    private int[] toCodePointArray(final String text) {
-        final int length = text.length();
-        final int codePointLength = text.codePointCount(0, length);
-
-        int[] array = new int[codePointLength];
-        for(int i=0, j=0, codePoint=0; i < length; j++, i+=Character.charCount(codePoint)) {
-            codePoint = text.codePointAt(i);
-            array[j] = codePoint;
-        }
-
-        return array;
-    }
-
     @Override
     public String pad(final String text, final int size, final char padChar, final boolean rightAlign, final boolean chopped) {
 
         final int currentSize = count(text);
         final int padCharSize = count(String.valueOf(padChar));
-        final int[] codePointArray = toCodePointArray(text);
+        final int[] codePointArray = Utils.toCodePointArray(text);
         final int codePointSize = codePointArray.length;
 
         if(rightAlign) {
@@ -149,21 +133,5 @@ public abstract class AbstractPaddingOperator implements PaddingProcessor {
         }
 
     }
-
-    /**
-     * 文字数をカウントする
-     * @param codePoint カウント対象のコードポイント
-     * @return 文字数
-     */
-    protected abstract int count(int codePoint);
-
-    /**
-     * 文字数をカウントする。
-     * @param text カウント対象の文字列
-     * @return 文字数
-     * @throws NullPointerException {@literal text is null.}
-     */
-    protected abstract int count(String text);
-
 
 }
