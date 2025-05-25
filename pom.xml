@@ -48,11 +48,17 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
-    	<maven.compiler.target>1.8</maven.compiler.target>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<supercsv.version>2.4.0</supercsv.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
+		<!--
+			surefire pluginのJaCoCoのエラー回避。
+			https://github.com/jacoco/jacoco/issues/964
+			https://github.com/eclipse-m2e/m2e-core/issues/1824
+		-->
+		<argLine>-Duser.language=ja -Duser.country=JP -Dfile.encoding=UTF-8</argLine>
 
 		<!-- SonarQubeの解析から除外したいファイル -->
 		<sonar.exclusions>
@@ -60,7 +66,7 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 			**/*Test.*,
 			**/*.js,
 		</sonar.exclusions>
-		<sonar.projectName>${groupId}/${project.artifactId}</sonar.projectName>
+		<sonar.projectName>${project.groupId}/${project.artifactId}</sonar.projectName>
 		<sonar.host.url>https://sonarcloud.io/</sonar.host.url>
 		<sonar.organization>mygreen-github</sonar.organization>
 
@@ -185,13 +191,15 @@ $(document).ready(function() {
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 				<configuration>
+					<!--
 					<argLine>${jacocoArgs} -Duser.language=ja -Duser.country=JP</argLine>
+					-->
 				</configuration>
 			</plugin>
 			<plugin>
 		        <groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.8.12</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -228,6 +236,7 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
+				<version>3.2.7</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
