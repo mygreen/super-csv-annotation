@@ -48,8 +48,8 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
-    	<maven.compiler.target>1.8</maven.compiler.target>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<supercsv.version>2.4.0</supercsv.version>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<jacoco.include.package>com.github.mygreen.supercsv.*</jacoco.include.package>
