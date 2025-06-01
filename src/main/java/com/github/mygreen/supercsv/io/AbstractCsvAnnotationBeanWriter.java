@@ -283,7 +283,7 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
      * @param context CSV情報。
      * @return 処理後のカラムの値。
      */
-    private Object executeNonCellProcessor(Object value, CsvContext context) {
+    protected Object executeNonCellProcessor(Object value, CsvContext context) {
         
         if (value != null) {
             return value;
