@@ -1,7 +1,5 @@
 package com.github.mygreen.supercsv.builder;
 
-import java.util.Optional;
-
 import com.github.mygreen.supercsv.annotation.conversion.CsvFixedSize;
 import com.github.mygreen.supercsv.cellprocessor.conversion.PaddingProcessor;
 
@@ -11,6 +9,7 @@ import com.github.mygreen.supercsv.cellprocessor.conversion.PaddingProcessor;
  *    意図した結果とならない場合があるため、このクラスを参考に各自実装してください。
  * </p>
  * 
+ * @version 2.5
  * @since 2.1
  * @author T.TSUCHIE
  *
@@ -20,21 +19,16 @@ public class FixedSizeHeaderMapper implements HeaderMapper {
     @Override
     public String toMap(final ColumnMapping column, final Configuration config, final Class<?>[] groups) {
         
-        // @CsvFixedSizeアノテーションを取得する
-        final Optional<CsvFixedSize> fixedLengthAnno = column.getField().getAnnotationsByGroup(CsvFixedSize.class, groups)
-                .stream().findFirst();
-        
-        if(!fixedLengthAnno.isPresent()) {
+        FixedSizeColumnProperty fixedSizeProperty = column.getFixedSizeProperty();
+        if (fixedSizeProperty == null) {
+            // 固定長カラムでない場合
             return column.getLabel();
         }
         
-        final PaddingProcessor paddingProcessor = (PaddingProcessor)config.getBeanFactory()
-                .create(fixedLengthAnno.get().paddingProcessor());
-        
-        // アノテーションが存在する場合は、その情報を使ってパディングする。
-        String label = fixedLengthAnno.map(anno -> paddingProcessor.pad(column.getLabel(),
-                anno.size(), anno.padChar(), anno.rightAlign(), anno.chopped()))
-                .orElse(column.getLabel());
+        final PaddingProcessor paddingProcessor = fixedSizeProperty.getPaddingProcessor();
+        String label = paddingProcessor.pad(column.getLabel(),
+                fixedSizeProperty.getSize(), fixedSizeProperty.getPadChar(),
+                fixedSizeProperty.isRightAlign(), fixedSizeProperty.isChopped());
         
         return label;
     }

@@ -92,8 +92,8 @@ public @interface CsvMultiPad {
     char padChar() default ' ';
 
     /**
-     * 右寄せをするかどうか指定します。
-     * <br>falseの場合は、左詰めです。
+     * 右詰めをするかどうか指定します。
+     * <br>falseの場合は左詰めです。
      *
      * @return trueのときは右側に詰め、パディング文字は左側に追加されます。
      */

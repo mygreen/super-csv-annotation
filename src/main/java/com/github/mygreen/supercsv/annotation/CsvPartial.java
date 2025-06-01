@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.github.mygreen.supercsv.annotation.conversion.CsvFixedSize;
+
 /**
  * 部分的にカラムをマッピングする際のカラム情報を補完するためのアノテーションです。
  * 
@@ -82,6 +84,15 @@ public @interface CsvPartial {
          * @return ヘッダーの値を指定します。
          */
         String label();
+        
+        /**
+         * 固定長を指定します。
+         * 複数指定した場合は先頭のアノテーションが採用されます。
+         * 
+         * @since 2.5
+         * @return 固定長カラムの設定。
+         */
+        CsvFixedSize[] fixedSize() default {};
         
     }
 }

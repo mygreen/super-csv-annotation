@@ -23,6 +23,9 @@ import org.supercsv.util.MethodCache;
 
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.CallbackMethod;
+import com.github.mygreen.supercsv.builder.ColumnMapping;
+import com.github.mygreen.supercsv.builder.FixedSizeColumnProperty;
+import com.github.mygreen.supercsv.cellprocessor.conversion.PaddingProcessor;
 import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
 import com.github.mygreen.supercsv.exception.SuperCsvRowException;
 import com.github.mygreen.supercsv.validation.CsvBindingErrors;
@@ -87,7 +90,7 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
         Objects.requireNonNull(source, "the bean to write should not be null.");
         
         // update the current row/line numbers
-        super.incrementRowAndLineNo();
+        incrementRowAndLineNo();
         
         final CsvContext context = new CsvContext(getLineNumber(), getRowNumber(), 1);
         context.setRowSource(Collections.emptyList());  // 空の値を入れる
@@ -134,7 +137,7 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
         processErrors(bindingErrors, context, rowException);
         
         // write the list
-        super.writeRow(processedColumns);
+        writeRow(processedColumns);
         
         // コールバックメソッドの実行（書き込み後）
         for(CallbackMethod callback : beanMappingCache.getOriginal().getPostWriteMethods()) {
@@ -235,10 +238,10 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
     /**
      * 行の各カラムの値に対して、CellProcessorを適用します。
      * 
-     * @param destination
-     * @param source
-     * @param processors
-     * @param context
+     * @param destination CellProcessorで処理した結果のカラムの値。
+     * @param source CellProcessで処理前のカラムの値。
+     * @param processors 適用するCellProcesor。
+     * @param context CSVカラム。
      */
     protected void executeCellProcessors(final List<Object> destination, final List<?> source,
             final CellProcessor[] processors, final CsvContext context) {
@@ -253,7 +256,7 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
                 context.setColumnNumber(i + 1); // update context (columns start at 1)
                 
                 if( processors[i] == null ) {
-                    destination.add(source.get(i)); // no processing required
+                    destination.add(executeNonCellProcessor(source.get(i), context)); // no processing required
                 } else {
                     destination.add(processors[i].execute(source.get(i), context)); // execute the processor chain
                 }
@@ -272,6 +275,41 @@ public abstract class AbstractCsvAnnotationBeanWriter<T> extends AbstractCsvWrit
             throw rowException;
         }
         
+    }
+    
+    /**
+     * CellProcessorを持たないカラムの値を処理します。
+     * @param value 処理前のカラムの値。
+     * @param context CSV情報。
+     * @return 処理後のカラムの値。
+     */
+    protected Object executeNonCellProcessor(Object value, CsvContext context) {
+        
+        if (value != null) {
+            return value;
+        }
+        
+        Optional<ColumnMapping> columnMapping = beanMappingCache.getOriginal().getColumnMapping(context.getColumnNumber());
+        if (!columnMapping.isPresent()) {
+            return value;
+        }
+        
+        /*
+         * 部分的なカラムかつ、固定長カラムの場合は、CellProcessorは存在しないため、
+         * null -> 空文字として、独自にパディングする。
+         */
+        if (columnMapping.get().isPartialized() && columnMapping.get().getFixedSizeProperty() != null) {
+            FixedSizeColumnProperty fixedSizeProperty = columnMapping.get().getFixedSizeProperty();
+            PaddingProcessor paddingProcessor = columnMapping.get().getFixedSizeProperty().getPaddingProcessor();
+            return paddingProcessor.pad("",
+                    fixedSizeProperty.getSize(),
+                    fixedSizeProperty.getPadChar(),
+                    fixedSizeProperty.isRightAlign(),
+                    fixedSizeProperty.isChopped());
+            
+        }
+        
+        return value;
     }
     
     /**
