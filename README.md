@@ -21,7 +21,7 @@ This library 'Super CSV' extension library with annotation function.
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>super-csv-annotation</artifactId>
-        <version>2.4</version>
+        <version>2.5</version>
     </dependency>
     ```
 2. Add dependency for Logging library. Example Logback.
