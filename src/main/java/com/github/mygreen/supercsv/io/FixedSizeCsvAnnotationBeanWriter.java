@@ -176,7 +176,7 @@ public class FixedSizeCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBe
             }
         }
         
-        super.flush();
+        flush();
         
     }
 }

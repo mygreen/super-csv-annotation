@@ -270,7 +270,7 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
             }
         }
         
-        super.flush();
+        flush();
         
     }
     
