@@ -2,11 +2,15 @@ package com.github.mygreen.supercsv.io;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collection;
+import java.util.Objects;
 
 import org.supercsv.encoder.CsvEncoder;
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.prefs.CsvPreference;
 import org.supercsv.util.CsvContext;
+
+import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
 
 /**
  * アノテーションを元に固定長のCSVファイルを読み込むためのクラス。
@@ -122,5 +126,57 @@ public class FixedSizeCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBe
     @Override
     public int getRowNumber() {
         return rowNumber;
+    }
+    
+    /**
+     * レコードのデータを全て書き込みます。
+     * <p>ヘッダー行も自動的に処理されます。2回目以降に呼び出した場合、ヘッダー情報は書き込まれません。</p>
+     * <p>レコード処理中に例外が発生した場合、その時点で処理を終了します。</p>
+     * 
+     * @param sources 書き込むレコードのデータ。
+     * @throws NullPointerException sources is null.
+     * @throws IOException レコードの出力に失敗した場合。
+     * @throws SuperCsvBindingException セルの値に問題がある場合
+     * @throws SuperCsvException 設定など、その他に問題がある場合
+     * 
+     */
+    public void writeAll(final Collection<T> sources) throws IOException {
+        writeAll(sources, false);
+    }
+    
+    /**
+     * レコードのデータを全て書き込みます。
+     * <p>ヘッダー行も自動的に処理されます。2回目以降に呼び出した場合、ヘッダー情報は書き込まれません。</p>
+     * 
+     * @param sources 書き込むレコードのデータ。
+     * @param continueOnError continueOnError レコードの処理中に、
+     *        例外{@link SuperCsvBindingException}が発生しても、続行するかどうか指定します。
+     *        trueの場合、例外が発生しても、次の処理を行います。
+     * @throws NullPointerException sources is null.
+     * @throws IOException レコードの出力に失敗した場合。
+     * @throws SuperCsvBindingException セルの値に問題がある場合
+     * @throws SuperCsvException 設定など、その他に問題がある場合
+     * 
+     */
+    public void writeAll(final Collection<T> sources, final boolean continueOnError) throws IOException {
+        
+        Objects.requireNonNull(sources, "sources should not be null.");
+        
+        if(beanMappingCache.getOriginal().isHeader() && getLineNumber() == 0) {
+            writeHeader();
+        }
+        
+        for(T record : sources) {
+            try {
+                write(record);
+            } catch(SuperCsvBindingException e) {
+                if(!continueOnError) {
+                    throw e;
+                }
+            }
+        }
+        
+        super.flush();
+        
     }
 }

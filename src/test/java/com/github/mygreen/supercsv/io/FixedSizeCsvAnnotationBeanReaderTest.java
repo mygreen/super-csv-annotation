@@ -74,6 +74,30 @@ public class FixedSizeCsvAnnotationBeanReaderTest {
 
     }
     
+    @Test
+    public void testReadAll_normal() throws IOException {
+        
+        File file = new File("src/test/data/test_read_fixed_normal.csv");
+
+        FixedSizeCsvAnnotationBeanReader<SampleFixedColumnBean> csvReader = FixedSizeCsvPreference.builder(SampleFixedColumnBean.class)
+                .build()
+                .csvReader(new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
+
+        csvReader.setExceptionConverter(exceptionConverter);
+        
+        List<SampleFixedColumnBean> list = csvReader.readAll();
+        assertThat(list).hasSize(3);
+        
+        for(SampleFixedColumnBean bean : list) {
+            assertBean(bean);
+        }
+        
+        assertThat(csvReader.getErrorMessages()).hasSize(0);
+        
+        csvReader.close();
+        
+    }
+    
     /**
      * 列のサイズが不足している場合
      */

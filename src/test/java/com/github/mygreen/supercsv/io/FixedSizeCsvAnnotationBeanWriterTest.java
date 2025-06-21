@@ -76,6 +76,33 @@ public class FixedSizeCsvAnnotationBeanWriterTest {
         
     }
     
+    @Test
+    public void testWriteAll_normal() throws Exception {
+        
+        // テストデータの作成
+        final List<SampleFixedColumnBean> list = createFixedColumnData();
+        
+        StringWriter strWriter = new StringWriter();
+        
+        FixedSizeCsvAnnotationBeanWriter<SampleFixedColumnBean> csvWriter = FixedSizeCsvPreference.builder(SampleFixedColumnBean.class)
+                .build()
+                .csvWriter(strWriter);
+        
+        csvWriter.writeAll(list);
+        csvWriter.flush();
+        
+        String actual = strWriter.toString();
+        System.out.println(actual);
+        
+        String expected = getTextFromFile("src/test/data/test_write_fixed_normal.csv", Charset.forName("UTF-8"));
+        assertThat(actual).isEqualTo(expected);
+        
+        assertThat(csvWriter.getErrorMessages()).hasSize(0);
+        
+        csvWriter.close();
+        
+    }
+    
     /**
      * 固定長サイズオーバーの場合 - 例外をスローすること
      */
