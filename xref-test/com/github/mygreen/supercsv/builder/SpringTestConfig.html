@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>SpringTestConfig xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../testapidocs/com/github/mygreen/supercsv/builder/SpringTestConfig.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.supercsv.builder;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> javax.validation.Validator;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.springframework.context.MessageSource;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> org.springframework.context.annotation.Bean;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> org.springframework.context.annotation.ComponentScan;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> org.springframework.context.annotation.Configuration;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> org.springframework.context.annotation.Description;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> org.springframework.context.support.ResourceBundleMessageSource;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.builder.SpringBeanFactory;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.localization.MessageInterpolator;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.localization.SpringMessageResolver;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> com.github.mygreen.supercsv.validation.beanvalidation.MessageInterpolatorAdapter;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment"> * Springのテスト用のコンフィグ</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> * @since 2.0</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  @Configuration
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  @ComponentScan(basePackages=<span class="jxr_string">"com.github.mygreen.supercsv.builder.spring"</span>)
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="SpringTestConfig" href="../../../../../com/github/mygreen/supercsv/builder/SpringTestConfig.html#SpringTestConfig">SpringTestConfig</a> {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      @Bean
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      @Description(<span class="jxr_string">"Springのコンテナを経由するCSV用のBeanFactoryの定義"</span>)
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">public</strong> SpringBeanFactory springBeanFactory() {
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SpringBeanFactory();
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      @Bean
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @Description(<span class="jxr_string">"Spring標準のメッセージソースの定義"</span>)
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> MessageSource messageSource() {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          ResourceBundleMessageSource messageSource = <strong class="jxr_keyword">new</strong> ResourceBundleMessageSource();
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          messageSource.addBasenames(<span class="jxr_string">"com.github.mygreen.supercsv.localization.SuperCsvMessages"</span>, <span class="jxr_string">"TestMessages"</span>);
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">return</strong> messageSource;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      }
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      @Bean
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      @Description(<span class="jxr_string">"本ライブラリのSpring用のMessgeResolverの定義"</span>)
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> SpringMessageResolver springMessageResolver() {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SpringMessageResolver(messageSource());
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Bean
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      @Description(<span class="jxr_string">"Spring用のBeanValidatorのValidatorの定義"</span>)
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> Validator csvLocalValidatorFactoryBean() {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          LocalValidatorFactoryBean validator = <strong class="jxr_keyword">new</strong> LocalValidatorFactoryBean();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          <em class="jxr_comment">// メッセージなどをカスタマイズ</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          validator.setMessageInterpolator(<strong class="jxr_keyword">new</strong> MessageInterpolatorAdapter(
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  springMessageResolver(), <strong class="jxr_keyword">new</strong> MessageInterpolator()));
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">return</strong> validator;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      }
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      @Bean
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      @Description(<span class="jxr_string">"CSV用のCsvValidaotrの定義"</span>)
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">public</strong> CsvBeanValidator csvBeanValidator() {
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <em class="jxr_comment">// ValidarorのインスタンスをSpring経由で作成したものを利用する</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          CsvBeanValidator csvBeanValidator = <strong class="jxr_keyword">new</strong> CsvBeanValidator(csvLocalValidatorFactoryBean());
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">return</strong> csvBeanValidator;
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2025 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
+</body>
+</html>

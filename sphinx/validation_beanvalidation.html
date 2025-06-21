@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bean Validationとの連携 &mdash; Super CSV Annotation 2.5 ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=a1c8c85a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=91613774"></script>
+        <script src="_static/mytheme.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+ 
+<!-- my theme custom extrahead beacon -->
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Super CSV Annotation
+          </a>
+              <div class="version">
+                2.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+<p class="caption"><span class="caption-text">関連リンク</span></p>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/super-csv-annotation">GitHub</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="http://super-csv.github.io/super-csv/index.html">Super CSV</a></li>
+</ul>
+
+
+              <p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#csvbean">1.2. CSV用のBeanクラスの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id3">1.3. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id4">1.4. 書き込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id5">1.5. 値の加工方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#csv">1.6. タブ区切りCSVファイルへの対応</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">2. 機能概要</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id2">2.1. 前提条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.2. 対応しているクラスタイプ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html#id5">2.3. 処理の流れ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format.html#id2">3.1. 書式指定用の既存のアノテーション</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="format.html#csvbooleanformat">3.1.1. &#64;CsvBooleanFormat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id3">3.1.1.1. 読み込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id4">3.1.1.2. 書き込み時の値の指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id5">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id6">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="format.html#csvnumberformat">3.1.2. &#64;CsvNumberFormat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id10">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="format.html#csvdatetimeformat">3.1.3. &#64;CsvDateTimeFormat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id12">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="format.html#csvenumformat">3.1.4. &#64;CsvEnumFormat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id16">3.1.4.1. 基本的な使い方</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id17">3.1.4.2. 別名でマッピングする場合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html#id18">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="format.html#id20">3.2. 独自のクラスタイプへの対応</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="format.html#textformatter">3.2.1. TextFormatterの実装クラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html#id21">3.2.2. 作成したTextFormatterの指定</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="conversion.html">4. 値の変換方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conversion.html#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id3">4.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id4">4.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id5">4.1.3. グループの指定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conversion.html#id6">4.2. 独自の変換処理の作成方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id7">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conversion.html#id8">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">5. 値の検証方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id2">5.1. 値の検証用の既存のアノテーション</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id3">5.1.1. 処理順序の指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id4">5.1.2. 処理ケースの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id5">5.1.3. グループの指定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id6">5.2. 独自の検証処理の作成方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#cellprocessor">5.2.1. CellProcessorの実装クラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id7">5.2.2. 値の検証用のアノテーションクラスの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id8">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#bean">5.3. Bean単位での値の検証方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#csvvalidator">5.3.1. CsvValidatorの実装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id9">5.3.2. エラーメッセージの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id10">5.3.3. エラーのハンドリング</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id11">5.4. エラー処理の方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id12">5.4.1. 例外の種類とハンドリング</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id13">5.4.2. 書き込み時の値の検証のスキップ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#id14">5.5. 値の検証時のエラーメッセージ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html#bean-validation">5.6. Bean Validationとの連携</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id15">5.6.1. ライブラリの追加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id18">5.6.2. Bean Validationの利用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#id19">5.6.3. Bean Validationのカスタマイズ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="validation.html#bean-validationspring-framework">5.6.4. Bean ValidationとSpring Frameworkとの連携</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#xml">5.6.4.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#javaconfig">5.6.4.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#constraintvalidator">5.6.4.3. 独自のConstraintValidatorの作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#csvbean">5.6.4.4. CsvBeanの定義</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html#id21">5.6.4.5. 値の検証方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="composition.html">6. アノテーションの合成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="composition.html#id2">6.1. アノテーションの合成の基本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composition.html#id3">6.2. 属性の上書き</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composition.html#id4">6.3. 共通の属性の上書き</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="partialization.html">7. 部分的なカラムの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="partialization.html#id2">7.1. 部分的なカラムの読み込み</a></li>
+<li class="toctree-l2"><a class="reference internal" href="partialization.html#id3">7.2. 部分的なカラムの書き込み</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fixedsizecolumn.html">8. 固定長のカラムの読み書き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id2">8.1. 基本的な設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id3">8.2. 区切り文字のない固定長の処理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id4">8.3. 区切り文字のある固定長の処理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id5">8.4. パディング処理方式の切り替え</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#bean">9.1. Beanの定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id2">9.2. 読み込み方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id3">9.3. 書き出し方法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">10. 独自のProcessorBuilderの作成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">10.1. CellProcessorを直接組み立てる場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">10.2. エラー処理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id3">11.2. リスナークラスによるライフサイクルの管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spring.html">12. Spring Frameworkとの連携</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">12.1. ライブラリの追加</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">12.2. SpringBeanFactoryの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">12.2.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">12.2.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">12.2.3. SpringBeanとしての定義</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">12.2.3.1. 独自の書式の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">12.2.3.2. 独自の変換/検証の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">12.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">12.2.3.4. CsvValidator の作成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">12.2.3.5. リスナクラスの作成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">12.2.4. CsvBeanの定義</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">12.2.5. SpringBeanFactoryの使用方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">12.3. エラーメッセージの設定方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">12.3.1. XMLによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">12.3.2. JavaConfigによるコンテナの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">12.3.3. SpringMessageResolverの使用方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#confugration">13.1. Confugrationによる設定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#id2">13.1.1. Confugrationによる変更方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#id3">13.1.2. Confugrationによる設定項目一覧</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#java">13.2. Javaシステムプロパティによる設定</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">14. マイグレーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#to-ver-2-2">14.1. To ver.2.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">15. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-5-2025-06-22">15.1. ver.2.5 - 2025-06-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-4-2025-01-01">15.2. ver.2.4 - 2025-01-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-3-2022-10-23">15.3. ver.2.3 - 2022-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-2-2018-07-14">15.4. ver.2.2 - 2018-07-14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">15.5. ver.2.1 - 2017-09-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">15.6. ver.2.0.3 - 2017-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">15.7. ver.2.0.2 - 2017-01-30</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">15.8. ver.2.0.1 - 2016-12-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">15.9. ver.2.0 - 2016-12-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">15.10. ver.1.2 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">15.11. ver.1.1 - 2014-11-30</a></li>
+</ul>
+</li>
+</ul>
+
+<!-- my theme custom extramenu beacon -->
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Super CSV Annotation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Bean Validationとの連携</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/validation_beanvalidation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bean-validation">
+<h1>Bean Validationとの連携<a class="headerlink" href="#bean-validation" title="Link to this heading"></a></h1>
+<p>Bean Validationによるカラムの値の検証する方法を説明します。</p>
+<section id="id1">
+<h2>ライブラリの追加<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Bean Validationを利用する際には、ライブリを追加します。
+Mavenを利用している場合は、pom.xmlに以下を追加します。</p>
+<p>本ライブラリは、Bean Validation1.0/1.1/2.0 及び、Jakarta Bean Validaiton 3.0/3.1 に対応しており、その参照実装である <a class="reference external" href="http://hibernate.org/validator/">Hibernate Validator</a> を追加します。</p>
+<p>Hibernate Validator は対応するBean Validaitonのバージョンが決まっているため、対応したライブラリのバージョンを追加する必要があります。</p>
+<ul class="simple">
+<li><p>ただし、TomcatやGlassFishなどのWebコンテナ上で使用するのであれば、EL式のライブラリはそれらに組み込まれているため必要ありません。</p></li>
+<li><p>また、本ライブラリの機能を利用して、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> に切り替えるのであれば、式言語の追加は必要ありません。</p></li>
+</ul>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">Bean ValidationとHibernate Validatorの対応バージョン</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Bean Validation</p></th>
+<th class="head"><p>Hibernate Validator</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ver.1.0 (JSR-303)</p></td>
+<td><p>ver.4.x</p></td>
+<td><p>Java8以上で利用可能です。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ver.1.1 (JSR-349)</p></td>
+<td><p>ver.5.x</p></td>
+<td><p>Java8以上で利用可能です。</p></td>
+</tr>
+<tr class="row-even"><td><p>ver.2.0 (JSR-380)</p></td>
+<td><p>ver.6.x</p></td>
+<td><p>Java8以上で利用可能です。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ver.3.0/3.1</p></td>
+<td><p>ver.8.x</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Super Csv Annotation 2.4+</strong> から対応しています。</div>
+<div class="line">Hibernate Validator v8.xから、<strong>Java11以上</strong> が必須になります。</div>
+<div class="line">Bean Validaitonから、Jakarta Bean Validationに名称が変更されパッケージも変更されています。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Bean Validation 1.0(JSR-303)を利用する場合は、Hibernate Validator4.x系を利用します。
+Bean Validation 1.0では、メッセージ中でEL式は利用できませんが、本ライブラリの機能を使用すれば、<a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> が利用できます。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.0を利用する場合）</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">&lt;!-- Bean Validation 1.0 --&gt;</span>
+<span class="linenos"> 2</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 3</span><span class="nt">&lt;groupId&gt;</span>javax.validation<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>validation-api<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.0.0.GA<span class="nt">&lt;/version&gt;</span>
+<span class="linenos"> 6</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos"> 7</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>4.3.2.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">11</span><span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Bean Validation 1.1(JSR-349)を利用する場合は、Hibernate Validator5.x系を利用します。
+さらに、メッセージ中にJava EEのEL式が利用可能となっているため、その実装であるライブリを追加します。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation1.1を利用する場合）</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">&lt;!-- Bean Validation 1.1 --&gt;</span>
+<span class="linenos"> 2</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>javax.validation<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>validation-api<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.1.0.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos"> 6</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos"> 7</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 8</span><span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>5.3.3.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">11</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="cm">&lt;!-- EL式のライブラリが必要であれば追加します --&gt;</span>
+<span class="linenos">14</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.glassfish<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>javax.el<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>3.0.1-b08<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">18</span><span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Bean Validation 2.0(JSR-380)を利用する場合は、Hibernate Validator6.x系を利用します。
+さらに、メッセージ中にJava EEのEL式が利用可能となっているため、その実装であるライブリを追加します。</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Bean Validation2.0を利用する場合）</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">&lt;!-- Bean Validation 2.0 --&gt;</span>
+<span class="linenos"> 2</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>javax.validation<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>validation-api<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>2.0.1.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos"> 6</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos"> 7</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.hibernate.validator<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>6.2.3.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">11</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="cm">&lt;!-- EL式のライブラリが必要であれば追加します --&gt;</span>
+<span class="linenos">14</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.glassfish<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>javax.el<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>3.0.1-b12<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">18</span><span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Jakarta Bean Validation 3.0/3.1を利用する場合は、Hibernate Validator8.x系を利用します。
+さらに、メッセージ中にJakarta EEのEL式が利用可能となっているため、その実装であるライブリを追加します。</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">pom.xmlの依存関係の追加（Jakarta Bean Validation3.1を利用する場合）</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">&lt;!-- Jakarta Bean Validation 3.1 --&gt;</span>
+<span class="linenos"> 2</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>jakarta.validation<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>jakarta.validation-api<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="linenos"> 6</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos"> 7</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.hibernate.validator<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>8.0.2.Final<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">11</span><span class="nt">&lt;/dependency&gt;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="cm">&lt;!-- EL式のライブラリが必要であれば追加します --&gt;</span>
+<span class="linenos">14</span><span class="nt">&lt;dependency&gt;</span>
+<span class="linenos">15</span><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.glassfish.expressly<span class="nt">&lt;/groupId&gt;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>expressly<span class="nt">&lt;/artifactId&gt;</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nt">&lt;version&gt;</span>5.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="linenos">18</span><span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>Bean Validationの利用方法<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validatosr=CsvBeanValidator.class)</span></code> を指定します。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Bean Validation 1.0/1.1/2.0の場合は、 <code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> を指定します。</p></li>
+<li><p>Jakarta Bean Validation 3.0/3.1の場合は、 <code class="docutils literal notranslate"><span class="pre">JakartaCsvBeanValidator</span></code> を指定します。</p></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> / <code class="docutils literal notranslate"><span class="pre">JakartaCsvBeanValidator</span></code> は、Bean Validation と、本ライブラリの <code class="docutils literal notranslate"><span class="pre">CsvValidator</span></code> をブリッジするクラスです。</p>
+<p>独自のメッセージソースは、クラスパスのルートに <code class="docutils literal notranslate"><span class="pre">HibernateValidation.properties</span></code> を配置しておけば自動的に読み込まれます。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.AssertTrue</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.DecimalMax</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Pattern</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Length</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.NotEmpty</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Range</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="c1">// Bean Validationの指定方法</span>
+<span class="linenos">14</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="n">CsvBeanValidator</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">15</span><span class="c1">// @CsvBean(validators=JakartaCsvBeanValidator.class)   // Jakarta Bean Validation の場合</span>
+<span class="linenos">16</span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestCsv</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nd">@NotEmpty</span>
+<span class="linenos">20</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">23</span><span class="w">    </span><span class="nd">@Length</span><span class="p">(</span><span class="n">max</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="o">=</span><span class="s">&quot;[\\p{Alnum}]+&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">&quot;半角英数字で設定してください。&quot;</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nd">@Range</span><span class="p">(</span><span class="n">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="linenos">29</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">32</span><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">used</span><span class="p">;</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="w">    </span><span class="c1">// 相関チェック</span>
+<span class="linenos">35</span><span class="w">    </span><span class="nd">@AssertTrue</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s">&quot;{name}が設定されている際には、{age}は必須です。&quot;</span><span class="p">)</span>
+<span class="linenos">36</span><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isValidAgeRequired</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">37</span><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">name</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">38</span><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="linenos">39</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="linenos">42</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="w">    </span><span class="c1">// setter/gettterは省略</span>
+<span class="linenos">45</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Bean Validation による値の検証でエラーがある場合は、例外 <code class="docutils literal notranslate"><span class="pre">SuperCsvBindingException</span></code> としてスローされます。</p>
+<ul class="simple">
+<li><p>例外クラスは、 <code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter</span></code> メッセージに変換します。</p></li>
+<li><p><em>CsvExceptionConverter</em> は、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader/CsvAnnotationBeanWriter</span></code> に組み込まれているため、
+メソッド <code class="docutils literal notranslate"><span class="pre">#getErrorMessages()</span></code> で取得できます。</p>
+<ul>
+<li><p>詳細は、<a class="reference internal" href="validation_message.html"><span class="doc">値の検証時のエラーメッセージ</span></a> を参照してください。</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.supercsv.exception.SuperCsvException</span><span class="p">;</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.CsvExceptionConverter</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Sample</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sampleRead</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">        </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">csvReader</span><span class="p">;</span>
+<span class="linenos">19</span><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">20</span><span class="w">            </span><span class="n">csvReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos">21</span><span class="w">                </span><span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span>
+<span class="linenos">22</span><span class="w">                </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span><span class="w"> </span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">)),</span>
+<span class="linenos">23</span><span class="w">                </span><span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">            </span><span class="c1">// ファイルの読み込み</span>
+<span class="linenos">26</span><span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csvReader</span><span class="p">.</span><span class="na">readAll</span><span class="p">();</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="w">            </span><span class="c1">// 変換されたエラーメッセージの取得</span>
+<span class="linenos">31</span><span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csvReader</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">34</span><span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">csvReader</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">35</span><span class="w">                </span><span class="n">csvReader</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="linenos">36</span><span class="w">            </span><span class="p">}</span>
+<span class="linenos">37</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">38</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>Bean Validationのカスタマイズ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>本ライブラリ用のメッセージソースや <a class="reference external" href="http://commons.apache.org/proper/commons-jexl/">JEXL</a> に切り替える場合、
+Bean Validationのインスタンスを変更する必要があります。</p>
+<p>その場合は、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validators=CsvBeanValidator.class)</span></code> で指定するのではなく、
+メソッド <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#addValidators(...)</span></code> 、<code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanWriter#addValidators(...)</span></code> で直接追加します。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.BeanMapping</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.BeanMappingFactory</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.localization.MessageInterpolator</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.localization.MessageResolver</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.localization.ResourceBundleMessageResolver</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Sample</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="w">    </span><span class="c1">// Beanの定義（validatorsの指定は行わない）</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nd">@CsvBean</span>
+<span class="linenos">18</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SampleCsv</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">19</span><span class="w">        </span><span class="c1">// 省略</span>
+<span class="linenos">20</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sampleBeanValidationCustom</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">        </span><span class="c1">// CsvReaderの作成</span>
+<span class="linenos">25</span><span class="w">        </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">csvReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos">26</span><span class="w">                </span><span class="n">SampleCsv</span><span class="p">.</span><span class="na">class</span><span class="p">,</span>
+<span class="linenos">27</span><span class="w">                </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;sample.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span><span class="w"> </span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">)),</span>
+<span class="linenos">28</span><span class="w">                </span><span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="w">        </span><span class="c1">// BeanValidator用のValidatorの作成</span>
+<span class="linenos">31</span><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">ValidatorFactory</span><span class="w"> </span><span class="n">validatorFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Validation</span><span class="p">.</span><span class="na">byDefaultProvider</span><span class="p">().</span><span class="na">configure</span><span class="p">()</span>
+<span class="linenos">32</span><span class="w">            </span><span class="c1">// メッセージ処理クラスを本ライブラリのものに入れ替えてインスタンスを生成する</span>
+<span class="linenos">33</span><span class="w">            </span><span class="p">.</span><span class="na">messageInterpolator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MessageInterpolatorAdapter</span><span class="p">(</span>
+<span class="linenos">34</span><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceBundleMessageResolver</span><span class="p">(),</span>
+<span class="linenos">35</span><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">MessageInterpolator</span><span class="p">()))</span>
+<span class="linenos">36</span><span class="w">            </span><span class="p">.</span><span class="na">buildValidatorFactory</span><span class="p">();</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">Validator</span><span class="w"> </span><span class="n">beanValidator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">validatorFactory</span><span class="p">.</span><span class="na">usingContext</span><span class="p">()</span>
+<span class="linenos">39</span><span class="w">            </span><span class="p">.</span><span class="na">getValidator</span><span class="p">();</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">        </span><span class="c1">// Validatorの追加</span>
+<span class="linenos">42</span><span class="w">        </span><span class="n">csvReader</span><span class="p">.</span><span class="na">addValidators</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">CsvBeanValidator</span><span class="p">(</span><span class="n">beanValidator</span><span class="p">));</span>
+<span class="linenos">43</span><span class="w">        </span><span class="c1">// Jakarta Bean Validation の場合は、JakartaCsvBeanValidator を使用します。</span>
+<span class="linenos">44</span><span class="w">        </span><span class="c1">// csvReader.addValidators(new JakartaCsvBeanValidator(beanValidator));</span>
+<span class="linenos">45</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>メッセージ中の変数として、既存の変数に加えて、CSV用の次の変数が登録されており利用可能です。</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-text">メッセージ中で利用可能な変数</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>変数名</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineNumber</p></td>
+<td><div class="line-block">
+<div class="line">CSVの実ファイル上の行番号。</div>
+<div class="line">カラムの値に改行が含まれている場合を考慮した実際の行番号なります。</div>
+<div class="line">1から始まります。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>rowNumber</p></td>
+<td><div class="line-block">
+<div class="line">CSVの論理上の行番号です。</div>
+<div class="line">1から始まります。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>columnNumber</p></td>
+<td><div class="line-block">
+<div class="line">CSVの列番号です。</div>
+<div class="line">1から始まります。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>label</p></td>
+<td><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">&#64;CsvColumn(label=&quot;&lt;見出し&gt;&quot;)</span></code> 出指定したカラムの見出し名です。</div>
+<div class="line">label属性を指定していない場合は、フィールド名になります。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>validatedValue</p></td>
+<td><div class="line-block">
+<div class="line">不正となった値です。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>printer</p></td>
+<td><div class="line-block">
+<div class="line">各クラスの <code class="docutils literal notranslate"><span class="pre">TextFormatter</span></code> のインスタンスです。</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">${printer.print(validatedValue)}</span></code> で、オブジェクトをフォーマットするのに利用します。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="bean-validationspring-framework">
+<h2>Bean ValidationとSpring Frameworkとの連携<a class="headerlink" href="#bean-validationspring-framework" title="Link to this heading"></a></h2>
+<p>Spring Frameworkと連携することで、コードがシンプルになります。
+また、独自のフィールド用のValidator内にSpringBeanをインジェクション可能です。</p>
+<section id="xml">
+<h3>XMLによるコンテナの設定<a class="headerlink" href="#xml" title="Link to this heading"></a></h3>
+<p>XMLによる設定方法を説明します。</p>
+<p>コンテナの定義の基本は次のようになります。</p>
+<ul class="simple">
+<li><p>アノテーションによるDIの有効化を行います。</p></li>
+<li><p>コンポーネントスキャン対象のパッケージの指定を行います。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.builder.SpringBeanFactory</span></code> をSpringBeanとして登録します。</p></li>
+<li><p>Springの <code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> で、本ライブラリのエラーメッセージ <code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SuperCsvMessages</span></code> を読み込んでおきます。
+* 独自のエラーメッセージがあれば、追加で定義します。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">com.github.mygreen.supercsv.localization.SpringMessageResolver</span></code> に、<code class="docutils literal notranslate"><span class="pre">MessageSource</span></code> を渡します。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CsvBeanValidator</span></code> に、Springの <code class="docutils literal notranslate"><span class="pre">LocalValidatorFactoryBean</span></code> で作成したBeanValidationのValidtorのインスタンスを渡します。</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="linenos"> 2</span><span class="cm">&lt;!-- XMLによるコンテナの定義 --&gt;</span>
+<span class="linenos"> 3</span><span class="nt">&lt;beans</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.springframework.org/schema/beans&quot;</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="na">xmlns:context=</span><span class="s">&quot;http://www.springframework.org/schema/context&quot;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.springframework.org/schema/beans</span>
+<span class="linenos"> 7</span><span class="s">        http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+<span class="linenos"> 8</span><span class="s">        http://www.springframework.org/schema/context</span>
+<span class="linenos"> 9</span><span class="s">        http://www.springframework.org/schema/context/spring-context.xsd</span>
+<span class="linenos">10</span><span class="s">    &quot;</span><span class="nt">&gt;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="w">    </span><span class="cm">&lt;!-- アノテーションによるDIの有効化の定義 --&gt;</span>
+<span class="linenos">13</span><span class="w">    </span><span class="nt">&lt;context:annotation-config</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="w">    </span><span class="cm">&lt;!-- コンポーネントスキャン対象のパッケージの指定 --&gt;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="nt">&lt;context:component-scan</span><span class="w"> </span><span class="na">base-package=</span><span class="s">&quot;sample.spring&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="cm">&lt;!-- Springのコンテナを経由するCSV用のBeanFactoryの定義 --&gt;</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;springBeanFacatory&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.builder.SpringBeanFactory&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">    </span><span class="cm">&lt;!-- Spring標準のメッセージソースの定義 --&gt;</span>
+<span class="linenos">22</span><span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;messageSource&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">23</span><span class="w">        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;basenames&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">24</span><span class="w">            </span><span class="nt">&lt;list&gt;</span>
+<span class="linenos">25</span><span class="w">                </span><span class="nt">&lt;value&gt;</span>com.github.mygreen.supercsv.localization.SuperCsvMessages<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">26</span><span class="w">                </span><span class="nt">&lt;value&gt;</span>TestMessages<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">27</span><span class="w">            </span><span class="nt">&lt;/list&gt;</span>
+<span class="linenos">28</span><span class="w">        </span><span class="nt">&lt;/property&gt;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="w">    </span><span class="cm">&lt;!-- Super CSV Annotation 用のMessgeResolverの定義 --&gt;</span>
+<span class="linenos">32</span><span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;springMessageResolver&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.localization.SpringMessageResolver&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">33</span><span class="w">        </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;messageSource&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;messageSource&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">34</span><span class="w">    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="w">    </span><span class="cm">&lt;!-- Bean Validation用のCsvValidatorの定義 --&gt;</span>
+<span class="linenos">37</span><span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;csvBeanValidator&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">38</span><span class="w">        </span><span class="nt">&lt;constructor-arg&gt;</span>
+<span class="linenos">39</span><span class="w">            </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">40</span><span class="w">                </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;messageInterpolator&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">41</span><span class="w">                    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.validation.beanvalidation.MessageInterpolatorAdapter&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">42</span><span class="w">                        </span><span class="nt">&lt;constructor-arg</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;springMessageResolver&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">43</span><span class="w">                        </span><span class="nt">&lt;constructor-arg&gt;&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.localization.MessageInterpolator&quot;</span><span class="w"> </span><span class="nt">/&gt;&lt;/constructor-arg&gt;</span>
+<span class="linenos">44</span><span class="w">                    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">45</span><span class="w">                </span><span class="nt">&lt;/property&gt;</span>
+<span class="linenos">46</span><span class="w">            </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">47</span><span class="w">        </span><span class="nt">&lt;/constructor-arg&gt;</span>
+<span class="linenos">48</span><span class="w">    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="w">    </span><span class="cm">&lt;!-- Jakarta Bean Validation 用のCsvValidatorの定義 --&gt;</span>
+<span class="linenos">51</span><span class="w">    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;jakartaCsvBeanValidator&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.validation.beanvalidation.JakartaCsvBeanValidator&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">52</span><span class="w">        </span><span class="nt">&lt;constructor-arg&gt;</span>
+<span class="linenos">53</span><span class="w">            </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">54</span><span class="w">                </span><span class="nt">&lt;property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;messageInterpolator&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">55</span><span class="w">                    </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.validation.beanvalidation.JakartaMessageInterpolatorAdapter&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">56</span><span class="w">                        </span><span class="nt">&lt;constructor-arg</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;springMessageResolver&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="linenos">57</span><span class="w">                        </span><span class="nt">&lt;constructor-arg&gt;&lt;bean</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;com.github.mygreen.supercsv.localization.MessageInterpolator&quot;</span><span class="w"> </span><span class="nt">/&gt;&lt;/constructor-arg&gt;</span>
+<span class="linenos">58</span><span class="w">                    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">59</span><span class="w">                </span><span class="nt">&lt;/property&gt;</span>
+<span class="linenos">60</span><span class="w">            </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">61</span><span class="w">        </span><span class="nt">&lt;/constructor-arg&gt;</span>
+<span class="linenos">62</span><span class="w">    </span><span class="nt">&lt;/bean&gt;</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span><span class="nt">&lt;/beans&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="javaconfig">
+<h3>JavaConfigによるコンテナの設定<a class="headerlink" href="#javaconfig" title="Link to this heading"></a></h3>
+<p>Spring Framework3.0から追加された、JavaソースによるSpringBean定義の方法を説明します。</p>
+<p>JavaConfigによる設定を使用する場合は、Spring Frameworkのバージョンをできるだけ最新のものを使用してください。
+特に、機能が豊富なバージョン4.0以上の使用を推奨します。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.Validator</span><span class="p">;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.MessageSource</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Description</span><span class="p">;</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.support.ResourceBundleMessageSource</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.validation.beanvalidation.LocalValidatorFactoryBean</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.SpringBeanFactory</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.localization.MessageInterpolator</span><span class="p">;</span>
+<span class="linenos">13</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.localization.SpringMessageResolver</span><span class="p">;</span>
+<span class="linenos">14</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator</span><span class="p">;</span>
+<span class="linenos">15</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.beanvalidation.MessageInterpolatorAdapter</span><span class="p">;</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="c1">// Javaによるコンテナの定義</span>
+<span class="linenos">19</span><span class="nd">@Configuration</span>
+<span class="linenos">20</span><span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="o">=</span><span class="s">&quot;sample.spring&quot;</span><span class="p">)</span>
+<span class="linenos">21</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SuperCsvConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">    </span><span class="nd">@Bean</span>
+<span class="linenos">24</span><span class="w">    </span><span class="nd">@Description</span><span class="p">(</span><span class="s">&quot;Springのコンテナを経由するCSV用のBeanFactoryの定義&quot;</span><span class="p">)</span>
+<span class="linenos">25</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SpringBeanFactory</span><span class="w"> </span><span class="nf">springBeanFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">26</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpringBeanFactory</span><span class="p">();</span>
+<span class="linenos">27</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="w">    </span><span class="nd">@Bean</span>
+<span class="linenos">30</span><span class="w">    </span><span class="nd">@Description</span><span class="p">(</span><span class="s">&quot;Spring標準のメッセージソースの定義&quot;</span><span class="p">)</span>
+<span class="linenos">31</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">MessageSource</span><span class="w"> </span><span class="nf">messageSource</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">32</span><span class="w">        </span><span class="n">ResourceBundleMessageSource</span><span class="w"> </span><span class="n">messageSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceBundleMessageSource</span><span class="p">();</span>
+<span class="linenos">33</span><span class="w">        </span><span class="n">messageSource</span><span class="p">.</span><span class="na">addBasenames</span><span class="p">(</span><span class="s">&quot;com.github.mygreen.supercsv.localization.SuperCsvMessages&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TestMessages&quot;</span><span class="p">);</span>
+<span class="linenos">34</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">messageSource</span><span class="p">;</span>
+<span class="linenos">35</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="w">    </span><span class="nd">@Bean</span>
+<span class="linenos">38</span><span class="w">    </span><span class="nd">@Description</span><span class="p">(</span><span class="s">&quot;本ライブラリのSpring用のMessgeResolverの定義&quot;</span><span class="p">)</span>
+<span class="linenos">39</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">SpringMessageResolver</span><span class="w"> </span><span class="nf">springMessageResolver</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">40</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SpringMessageResolver</span><span class="p">(</span><span class="n">messageSource</span><span class="p">());</span>
+<span class="linenos">41</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="w">    </span><span class="nd">@Bean</span>
+<span class="linenos">44</span><span class="w">    </span><span class="nd">@Description</span><span class="p">(</span><span class="s">&quot;CSV用のCsvValidaotrの定義&quot;</span><span class="p">)</span>
+<span class="linenos">45</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">CsvBeanValidator</span><span class="w"> </span><span class="nf">csvBeanValidator</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="w">        </span><span class="n">LocalValidatorFactoryBean</span><span class="w"> </span><span class="n">validator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LocalValidatorFactoryBean</span><span class="p">();</span>
+<span class="linenos">48</span><span class="w">        </span><span class="c1">// メッセージなどをカスタマイズ</span>
+<span class="linenos">49</span><span class="w">        </span><span class="n">validator</span><span class="p">.</span><span class="na">setMessageInterpolator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MessageInterpolatorAdapter</span><span class="p">(</span>
+<span class="linenos">50</span><span class="w">                </span><span class="n">springMessageResolver</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MessageInterpolator</span><span class="p">()));</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="w">        </span><span class="c1">// ValidarorのインスタンスをSpring経由で作成したものを利用する</span>
+<span class="linenos">53</span><span class="w">        </span><span class="n">CsvBeanValidator</span><span class="w"> </span><span class="n">csvBeanValidator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvBeanValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">);</span>
+<span class="linenos">54</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">csvBeanValidator</span><span class="p">;</span>
+<span class="linenos">55</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="w">    </span><span class="nd">@Bean</span>
+<span class="linenos">58</span><span class="w">    </span><span class="nd">@Description</span><span class="p">(</span><span class="s">&quot;CSV用のCsvValidaotrの定義 - Jakarta Bean Validationの場合&quot;</span><span class="p">)</span>
+<span class="linenos">59</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">JakartaCsvBeanValidator</span><span class="w"> </span><span class="nf">jakartaCsvBeanValidator</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">60</span>
+<span class="linenos">61</span><span class="w">        </span><span class="n">LocalValidatorFactoryBean</span><span class="w"> </span><span class="n">validator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LocalValidatorFactoryBean</span><span class="p">();</span>
+<span class="linenos">62</span><span class="w">        </span><span class="c1">// メッセージなどをカスタマイズ</span>
+<span class="linenos">63</span><span class="w">        </span><span class="n">validator</span><span class="p">.</span><span class="na">setMessageInterpolator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">JakartaMessageInterpolatorAdapter</span><span class="p">(</span>
+<span class="linenos">64</span><span class="w">                </span><span class="n">springMessageResolver</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MessageInterpolator</span><span class="p">()));</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span><span class="w">        </span><span class="c1">// ValidarorのインスタンスをSpring経由で作成したものを利用する</span>
+<span class="linenos">67</span><span class="w">        </span><span class="n">JakartaCsvBeanValidator</span><span class="w"> </span><span class="n">csvBeanValidator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JakartaCsvBeanValidator</span><span class="p">(</span><span class="n">validator</span><span class="p">);</span>
+<span class="linenos">68</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">csvBeanValidator</span><span class="p">;</span>
+<span class="linenos">69</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">70</span>
+<span class="linenos">71</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="constraintvalidator">
+<h3>独自のConstraintValidatorの作成<a class="headerlink" href="#constraintvalidator" title="Link to this heading"></a></h3>
+<p>Bean Validationの独自のアノテーションを作成する際には、通常の方法と同じです。</p>
+<ul class="simple">
+<li><p>メタアノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Constraint</span></code> を付与します。</p>
+<ul>
+<li><p>属性 <code class="docutils literal notranslate"><span class="pre">validatedBy</span></code> に、 <code class="docutils literal notranslate"><span class="pre">ConsraintValidator</span></code> の実装クラスを指定します。</p></li>
+</ul>
+</li>
+<li><p>複数指定可能できるように、内部クラス <code class="docutils literal notranslate"><span class="pre">List</span></code> を定義しておきます。</p>
+<ul>
+<li><p>Bean Validation 1.1の段階では、Java8から追加された <code class="docutils literal notranslate"><span class="pre">&#64;Repeatable</span></code> は対応していませんが、
+従来の定義方法と揃えておくことで、<em>&#64;Repeatable</em> を使ってJava8のスタイルで使用できます。</p></li>
+<li><p>ただし、今後リリース予定のBeanValidator2.0から <em>&#64;Repeatable</em> 対応するため、定義しておいても問題はありません。</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Documented</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Repeatable</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.Constraint</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.Payload</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="c1">//BeanValidationの制約のアノテーション</span>
+<span class="linenos">12</span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">13</span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">14</span><span class="nd">@Documented</span>
+<span class="linenos">15</span><span class="nd">@Repeatable</span><span class="p">(</span><span class="n">UserMailPattern</span><span class="p">.</span><span class="na">List</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w"> </span><span class="c1">// 対応していないので、定義しなくても良い。</span>
+<span class="linenos">16</span><span class="nd">@Constraint</span><span class="p">(</span><span class="n">validatedBy</span><span class="o">=</span><span class="n">UserMailPatternValidator</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos">17</span><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">UserMailPattern</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1">// 共通の属性の定義</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?&gt;[]</span><span class="w"> </span><span class="n">groups</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span>
+<span class="linenos">21</span><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">message</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="s">&quot;{sample.spring.UserMailPattern.message}&quot;</span><span class="p">;</span>
+<span class="linenos">22</span><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Payload</span><span class="o">&gt;[]</span><span class="w"> </span><span class="nf">payload</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">    </span><span class="c1">// 複数のアノテーションを指定する場合の定義</span>
+<span class="linenos">25</span><span class="w">    </span><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">,</span><span class="w"> </span><span class="n">ElementType</span><span class="p">.</span><span class="na">ANNOTATION_TYPE</span><span class="p">})</span>
+<span class="linenos">26</span><span class="w">    </span><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="linenos">27</span><span class="w">    </span><span class="nd">@Documented</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nd">@interface</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">29</span><span class="w">        </span><span class="n">UserMailPattern</span><span class="o">[]</span><span class="w"> </span><span class="nf">value</span><span class="p">();</span>
+<span class="linenos">30</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ConstraintValidator</span></code> の実装中で、SpringBeanのインジェクションを行いたい場合は、アノテーション <code class="docutils literal notranslate"><span class="pre">&#64;Resource/&#64;Autowired</span></code> など使います。</p>
+<p><em>ConstraintValidator</em> 自身は、SpringBeanとして登録する必要はありません。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.ConstraintValidator</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.ConstraintValidatorContext</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="c1">// ConstraintValidatorの実装</span>
+<span class="linenos"> 8</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserMailPatternValidator</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ConstraintValidator</span><span class="o">&lt;</span><span class="n">UserMailPattern</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="w">    </span><span class="c1">// SpringBeanをインジェクションします。</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nd">@Autowired</span>
+<span class="linenos">12</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="w">    </span><span class="nd">@Override</span>
+<span class="linenos">15</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">UserMailPattern</span><span class="w"> </span><span class="n">constraintAnnotation</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="nd">@Override</span>
+<span class="linenos">20</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isValid</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ConstraintValidatorContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">        </span><span class="c1">// nullの場合は対象外</span>
+<span class="linenos">23</span><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">24</span><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="linenos">25</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">isMailPattern</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<span class="linenos">28</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="csvbean">
+<h3>CsvBeanの定義<a class="headerlink" href="#csvbean" title="Link to this heading"></a></h3>
+<p>CSVのBeanの定義では、<code class="docutils literal notranslate"><span class="pre">&#64;CsvBean(validator=CsvBeanValidator.class)</span></code> で、CsvBeanValidatorを指定します。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.validation.beanvalidation.CsvBeanValidator</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@CsvBean</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">validator</span><span class="o">=</span><span class="n">CsvBeanValidator</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserCsv</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="nd">@CsvColumn</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;メールアドレス&quot;</span><span class="p">)</span>
+<span class="linenos">10</span><span class="w">    </span><span class="nd">@UserMailPattern</span><span class="w">   </span><span class="c1">// 独自のBeanValidator用のアノテーションの指定</span>
+<span class="linenos">11</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">mail</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="w">    </span><span class="c1">// setter/getterは省略</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>値の検証方法<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BeanMappingFactory#getConfiguration()</span></code> 取得できる、システム設定に、SpringBeanFactoryを設定します。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CsvExceptionConverter#setMessageResolver(...)</span></code> に、SpringBeanとして定義した <code class="docutils literal notranslate"><span class="pre">SpringMessageResolver</span></code> を設定します。</p>
+<ul>
+<li><p>さらに、 <code class="docutils literal notranslate"><span class="pre">CsvAnnotationBeanReader#setExceptionConverter(...)</span></code> に、作成した <em>CsvExceptionConverter</em> を渡します。</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.BeanMapping</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.builder.BeanMappingFactory</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="p">;</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Files</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.supercsv.prefs.CsvPreference</span><span class="p">;</span>
+<span class="linenos">12</span><span class="kn">import</span><span class="w"> </span><span class="nn">org.supercsv.exception.SuperCsvException</span><span class="p">;</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="nd">@Service</span>
+<span class="linenos">15</span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CsvService</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="w">    </span><span class="nd">@Autowired</span>
+<span class="linenos">18</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">SpringBeanFactory</span><span class="w"> </span><span class="n">beanFactory</span><span class="p">;</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="w">    </span><span class="nd">@Autowired</span>
+<span class="linenos">21</span><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">SpringMessageResolver</span><span class="w"> </span><span class="n">messageResolver</span><span class="p">;</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">sampleSpring</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">        </span><span class="c1">// BeanMappingの作成 - SpringBeanFactoryを設定する</span>
+<span class="linenos">26</span><span class="w">        </span><span class="n">BeanMappingFactory</span><span class="w"> </span><span class="n">beanMappingFactory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BeanMappingFactory</span><span class="p">();</span>
+<span class="linenos">27</span><span class="w">        </span><span class="n">beanMappingFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">setBeanFactory</span><span class="p">(</span><span class="n">beanFactory</span><span class="p">);</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="w">        </span><span class="c1">// BeanMappingの作成</span>
+<span class="linenos">30</span><span class="w">        </span><span class="n">BeanMapping</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">beanMapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mappingFactory</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">UserCsv</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="w">        </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">csvReader</span><span class="p">;</span>
+<span class="linenos">33</span><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">34</span><span class="w">            </span><span class="n">csvReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;</span><span class="p">(</span>
+<span class="linenos">35</span><span class="w">                    </span><span class="n">beanMapping</span><span class="p">,</span>
+<span class="linenos">36</span><span class="w">                    </span><span class="n">Files</span><span class="p">.</span><span class="na">newBufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;user.csv&quot;</span><span class="p">).</span><span class="na">toPath</span><span class="p">(),</span><span class="w"> </span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="p">)),</span>
+<span class="linenos">37</span><span class="w">                    </span><span class="n">CsvPreference</span><span class="p">.</span><span class="na">STANDARD_PREFERENCE</span><span class="p">);</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="w">            </span><span class="c1">// CsvExceptionConverterの作成 - SpringMessageResolverを設定する</span>
+<span class="linenos">40</span><span class="w">            </span><span class="n">CsvExceptionConverter</span><span class="w"> </span><span class="n">exceptionConverter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CsvExceptionConverter</span><span class="p">();</span>
+<span class="linenos">41</span><span class="w">            </span><span class="n">exceptionConverter</span><span class="p">.</span><span class="na">setMessageResolver</span><span class="p">(</span><span class="n">messageResolver</span><span class="p">);</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="w">            </span><span class="c1">// CsvExceptionConverterを設定する</span>
+<span class="linenos">44</span><span class="w">            </span><span class="n">svReader</span><span class="p">.</span><span class="na">setExceptionConverter</span><span class="p">(</span><span class="n">exceptionConverter</span><span class="p">);</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="w">            </span><span class="c1">// ファイルの読み込み</span>
+<span class="linenos">47</span><span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">SampleCsv</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csvReader</span><span class="p">.</span><span class="na">readAll</span><span class="p">();</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">SuperCsvException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span><span class="w">            </span><span class="c1">// 変換されたエラーメッセージの取得</span>
+<span class="linenos">52</span><span class="w">            </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csvReader</span><span class="p">.</span><span class="na">getErrorMessages</span><span class="p">();</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">55</span><span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">csvReader</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">56</span><span class="w">                </span><span class="n">csvReader</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="linenos">57</span><span class="w">            </span><span class="p">}</span>
+<span class="linenos">58</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">59</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">60</span>
+<span class="linenos">61</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2025, T.TSUCHIE.
+      <span class="lastupdated">最終更新: 2025-06-21 14:49:28
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+<!-- my theme custom extrahead beacon -->
+<script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	jQuery(function () {
+		// ナビゲーション用のアイコン
+		$('div.wy-menu').externalLink({cssClass : 'externalink-img', iconUrl:'_static/external-link-12.png', startUrl:'../apidocs/'});
+		
+		// コンテンツ用
+		$('div.wy-nav-content').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
+		
+	});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZD2H4X48K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YZD2H4X48K');
+</script>
+
+ 
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>D:\home\eclipse-workspaces\workspace-super-csv-annotation\git_super-csv-annotation\src\main\java\com\github\mygreen\supercsv\annotation\CsvComposition.java xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../apidocs/com/github/mygreen/supercsv/annotation">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.supercsv.annotation;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.Documented;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.ElementType;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.Retention;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.RetentionPolicy;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.lang.annotation.Target;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * アノテーションを組み合わせた合成のアノテーションを表現するためのメタアノテーションです。</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;合成したのアノテーションには必ず付与します。&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * &lt;h3 class="description"&gt;基本的な使い方&lt;/h3&gt;</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * &lt;ul&gt;</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> *  &lt;li&gt;{@literal @Target}として、{@link ElementType#FIELD}と{@link ElementType#ANNOTATION_TYPE}の2つを指定します。</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *     &lt;br&gt;アノテーションを合成する際にはアノテーションにも付与するため、{@link ElementType#ANNOTATION_TYPE}を追加しておきます。</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> *  &lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> *  &lt;li&gt;繰り返しのアノテーションとして利用できるよう {@literal @Repeatable}を付与します。</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> *     &lt;br&gt;繰り返しのアノテーションを格納する内部アノテーションとして、{@literal List}を定義します。</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment"> *  &lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> *  &lt;li&gt;合成のアノテーションであることを示すためのメタアノテーション {@literal @CsvComposition}を指定します。&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> *  &lt;li&gt;アノテーションの属性を上書きする場合は、{@literal @}{@link CsvOverridesAttribute}を使用します。&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> *  &lt;li&gt;共通の属性 cases、groups、messageは、アノテーション{@literal @CsvOverridesAttribute}を付与していなくても一律で上書きされます。</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> *  &lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> * &lt;/ul&gt;</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * &lt;pre class="highlight"&gt;&lt;code class="java"&gt;</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * {@literal @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})}</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * {@literal @Retention(RetentionPolicy.RUNTIME)}</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> * {@literal @Documented}</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * {@literal @Repeatable(CsvCustomComposition.List.class)}</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * {@literal @CsvComposition}  // 合成のアノテーションであることを示すためのメタアノテーション</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * {@literal @CsvDefaultValue(value="0", cases=BuildCase.Read)}  // 上書き対象のアノテーション</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * {@literal @CsvRequire}</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * {@literal @CsvNumberRange(min="0", max="100,000,000")}</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> * public {@literal @interface} CsvCustomComposition {</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> *     </em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> *     // {@literal @CsvDefaultValueの属性valueの上書き}</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> *     {@literal @CsvOverridesAttribute(annotation=CsvDefaultValue.class, name="value")}</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> *     String defaultValueRead();</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> *     </em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> *     // 共通の属性 - グループ (groups属性を持つアノテーションは上書きされます)</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> *     {@literal Class&lt;?&gt;[]} groups() default {};</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> *     </em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> *     // 繰り返しのアノテーションの格納用アノテーションの定義</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> *     {@literal @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})}</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment"> *     {@literal @Retention(RetentionPolicy.RUNTIME)}</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> *     {@literal @Documented}</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment"> *     {@literal @interface} List {</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> *     </em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> *         CsvCustomComposition[] value();</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> *     }</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> * }</em>
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment"> * &lt;/code&gt;&lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * @since 2.0</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  @Target({ElementType.ANNOTATION_TYPE})
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  @Retention(RetentionPolicy.RUNTIME)
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  @Documented
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <strong class="jxr_keyword">public</strong> @<strong class="jxr_keyword">interface</strong> CsvComposition {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2025 <a href="http://mygreen.github.io/super-csv-annotation/">mygreen</a>. All rights reserved.</div>
+</body>
+</html>
