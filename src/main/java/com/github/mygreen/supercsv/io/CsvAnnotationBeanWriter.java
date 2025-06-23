@@ -121,7 +121,7 @@ public class CsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWriter<
             }
         }
         
-        super.flush();
+        flush();
         
     }
     

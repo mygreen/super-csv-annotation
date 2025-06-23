@@ -8,8 +8,8 @@
 
 このアノテーションは、 以下の変換用のアノテーションを合成したアノテーションになります。
 
-* 書き込み時は、パディングするアノテーション ``@CsvMultiPad`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`__ ]。
 * 読み込み時は、トリムするアノテーション ``@CsvOneSideTrim`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvOneSideTrim.html>`__ ]。
+* 書き込み時は、パディングするアノテーション ``@CsvMultiPad`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/annotation/conversion/CsvMultiPad.html>`__ ]。
 
 
 --------------------------------------------------------
@@ -35,7 +35,7 @@
 
 .. sourcecode:: java
     :linenos:
-    :caption: Beanの定義例
+    :caption: 固定長カラムのBeanの定義例
     
     import com.github.mygreen.supercsv.annotation.CsvBean;
     import com.github.mygreen.supercsv.annotation.CsvColumn;
@@ -43,17 +43,17 @@
     
     
     @CsvBean
-    public class SampleCsv {
+    public class SampleFixedSizeCsv {
     
         // 右詰めする
         @CsvColumn(number=1)
-        @CsvFixedSize(size=10, rightAlign=true)
+        @CsvFixedSize(size=5, rightAlign=true)
         private int id;
         
         // パディング文字を全角空白にする。
         // 全角を入力する前提としたカラムと想定し、さらに @CsvFullChar で半角を全角に変換します。
         @CsvColumn(number=2, label="氏名")
-        @CsvFixedSize(size=20, padChar='　')
+        @CsvFixedSize(size=10, padChar='　')
         @CsvFullChar
         private String name;
         
@@ -71,6 +71,178 @@
         // getter, setterは省略
     }
 
+--------------------------------------------------------
+区切り文字のない固定長の処理
+--------------------------------------------------------
+
+区切り文字のないCSVを処理する場合は、``FixedSizeCsvPreference`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/FixedSizeCsvPreference.html>`__ ] を使用し、CsvReader/CsvWriterを作成し処理します。 *[v2.5+]*
+
+* 全てのカラムに ``@CsvFixedSize`` を付与する必要があります。
+* 区切り文字のない固定長カラム読み込むには、``FixedSizeCsvAnnotationBeanReader`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/FixedSizeCsvAnnotationBeanReader.html>`__ ] を使用します。
+* 区切り文字のない固定長カラムを書き込むには、``FixedSizeCsvAnnotationBeanWriter`` [ `JavaDoc <../apidocs/com/github/mygreen/supercsv/io/FixedSizeCsvAnnotationBeanWriter.html>`__ ] を使用します。
+
+.. sourcecode:: text
+    :linenos:
+    :caption: 区切り文字のない固定長CSVのサンプル
+    
+       id氏名　　　　　　　　生年月日______備考                  ⏎
+        1山田　太郎　　　　　1980-01-28全ての項目に値が設定。    ⏎
+        2田中　次郎　　　　　__________誕生日の項目が空。  ⏎
+        3鈴木　三郎　　　　　2000-03-25                    ⏎
+
+
+.. sourcecode:: java
+    :linenos:
+    :caption: 区切り文字のない固定長カラムの読み込み
+    
+    import java.io.IOException;
+
+    import com.github.mygreen.supercsv.annotation.CsvBean;
+    import com.github.mygreen.supercsv.annotation.CsvColumn;
+    import com.github.mygreen.supercsv.annotation.CsvFixedSize;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvAnnotationBeanReader;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvPreference;
+
+    public void testFixedSizeRead() throws IOException {
+
+        // FixedSizeCsvPreferenceの作成
+        FixedSizeCsvPreference<SampleFixedSizeCsv> csvPreference = FixedSizeCsvPreference.builder(SampleFixedSizeCsv.class)
+                .build();
+
+        // CsvReaderの作成
+        FixedSizeCsvAnnotationBeanReader<SampleFixedSizeCsv> csvReader = csvPreference.csvReader(
+                Files.newBufferedReader(Paths.get("sample_fixed_size.csv"), Charset.forName("UTF-8")));
+        
+        try {
+            // 全行の取得
+            List<SampleFixedSizeCsv> list = csvReader.readAll();
+        
+        } catch(SuperCsvException e) {
+            e.printStackTrace();
+        } finally {
+            csvReader.close();
+        }
+    }
+
+
+.. sourcecode:: java
+    :linenos:
+    :caption: 区切り文字のない固定長カラムの書き込み
+    
+    import java.io.IOException;
+
+    import com.github.mygreen.supercsv.annotation.CsvBean;
+    import com.github.mygreen.supercsv.annotation.CsvColumn;
+    import com.github.mygreen.supercsv.annotation.CsvFixedSize;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvAnnotationBeanWriter;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvPreference;
+
+    public void testFixedSizeWrite() throws IOException {
+
+        // FixedSizeCsvPreferenceの作成
+        FixedSizeCsvPreference<SampleFixedSizeCsv> csvPreference = FixedSizeCsvPreference.builder(SampleFixedSizeCsv.class)
+                .build();
+
+        // CsvWriterの作成
+        FixedSizeCsvAnnotationBeanWriter<SampleFixedColumnBean> csvWriter = csvPrefrerence.csvWriter(
+                Files.newBufferedWriter(Paths.get("sample_fixed_size.csv"), Charset.forName("UTF-8")));
+        
+        // 書き込みデータを作成
+        List<SampleFixedColumnBean> list = new ArrayList<>();
+        list.add(...);
+
+        try {
+            // 全行の書き込み
+            csvWriter.writeAll(list);
+        } catch (SuperCsvException e) {
+            e.printStackTrace();
+        } finally {
+            csvWriter.close();
+        }
+    }
+
+
+--------------------------------------------------------
+区切り文字のある固定長の処理
+--------------------------------------------------------
+
+区切り文字のある固定長CSVを処理する場合は、固定長としたいカラムにのみ `@CsvFixedSize` を付与し、通常のCsvAnnotationBeanReader / CsvAnnotationBeanWriter を使用します。
+
+.. sourcecode:: text
+    :linenos:
+    :caption: 区切り文字のある固定長CSVのサンプル
+    
+       id,氏名　　　　　　　　,生年月日______,備考                  ⏎
+        1,山田　太郎　　　　　,1980-01-28,全ての項目に値が設定。    ⏎
+        2,田中　次郎　　　　　,__________,誕生日の項目が空。  ⏎
+        3,鈴木　三郎　　　　　,2000-03-25,                    ⏎
+
+
+.. sourcecode:: java
+    :linenos:
+    :caption: 区切り文字のある固定長カラムの読み込み
+    
+    import java.io.IOException;
+
+    import com.github.mygreen.supercsv.annotation.CsvBean;
+    import com.github.mygreen.supercsv.annotation.CsvColumn;
+    import com.github.mygreen.supercsv.annotation.CsvFixedSize;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvAnnotationBeanReader;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvPreference;
+
+    public void testFixedSizeRead2() throws IOException {
+
+        // CsvReaderの作成
+        CsvAnnotationBeanReader<SampleFixedSizeCsv> csvWriter = new CsvAnnotationBeanReader<>(
+                SampleFixedSizeCsv.class,
+                Files.newBufferedReader(Paths.get("sample_fixed_size.csv"), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+
+        try {
+            // 全行の取得
+            List<SampleFixedSizeCsv> list = csvReader.readAll();
+        
+        } catch(SuperCsvException e) {
+            e.printStackTrace();
+        } finally {
+            csvReader.close();
+        }
+    }
+
+
+.. sourcecode:: java
+    :linenos:
+    :caption: 区切り文字のある固定長カラムの書き込み
+    
+    import java.io.IOException;
+
+    import com.github.mygreen.supercsv.annotation.CsvBean;
+    import com.github.mygreen.supercsv.annotation.CsvColumn;
+    import com.github.mygreen.supercsv.annotation.CsvFixedSize;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvAnnotationBeanWriter;
+    import com.github.mygreen.supercsv.io.FixedSizeCsvPreference;
+
+    public void testFixedSizeWrite2() throws IOException {
+
+        // CsvReaderの作成
+        CsvAnnotationBeanWriter<SampleFixedSizeCsv> csvWriter = new CsvAnnotationBeanWriter<>(
+                SampleFixedSizeCsv.class,
+                Files.newBufferedWriter(Paths.get("sample_fixed_size.csv"), Charset.forName("UTF-8")),
+                CsvPreference.STANDARD_PREFERENCE);
+        
+        // 書き込みデータを作成
+        List<SampleFixedColumnBean> list = new ArrayList<>();
+        list.add(...);
+
+        try {
+            // 全行の書き込み
+            csvWriter.writeAll(list);
+        } catch (SuperCsvException e) {
+            e.printStackTrace();
+        } finally {
+            csvWriter.close();
+        }
+    }
 
 出力されるCSVは下記のようになります。
 
@@ -84,10 +256,6 @@
              1,山田　太郎　　　　　,1990-01-12,コメント            
              2,山田　花子　　　　　,__________,                    
 
-
---------------------------------------------------------
-ヘッダー行の固定長の指定
---------------------------------------------------------
 
 ヘッダー行もカラムの定義と同様に固定長にしたい場合は、``@CsvBean(headerMapper=<ヘッダーのマッピング処理クラス>)`` でヘッダーの処理方法を変更します。
 
@@ -103,7 +271,7 @@
     import com.github.mygreen.supercsv.builder.FixedSizeHeaderMapper;
     
     @CsvBean(header=true, headerMapper=FixedSizeHeaderMapper.class)
-    public class SampleCsv {
+    public class SampleFixedSizeCsv {
     
         // 右詰めする
         @CsvColumn(number=1)
@@ -120,7 +288,6 @@
             id,氏名　　　　　　　　,生年月日__,備考                
              1,山田　太郎　　　　　,1990-01-12,コメント            
              2,山田　花子　　　　　,__________,                    
-
 
 .. note::
     
@@ -160,8 +327,8 @@
     import com.github.mygreen.supercsv.cellprocessor.conversion.CharWidthPaddingProcessor;
     import com.github.mygreen.supercsv.cellprocessor.conversion.SimplePaddingProcessor;
     
-    @CsvBean(header=true, headerMapper=FixedSizeHeaderMapper.class)
-    public class SampleCsv {
+    @CsvBean(header=true)
+    public class SampleFixedSizeCsv {
     
         // 文字の種別にかかわらず１文字としてカウントしてパディングします。
         @CsvColumn(number=1)

@@ -16,9 +16,9 @@ import org.supercsv.prefs.CsvPreference;
 
 import com.github.mygreen.supercsv.annotation.CsvPartial;
 import com.github.mygreen.supercsv.builder.BeanMapping;
+import com.github.mygreen.supercsv.builder.BeanMappingFactoryHelper;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.builder.HeaderMapper;
-import com.github.mygreen.supercsv.builder.BeanMappingFactoryHelper;
 import com.github.mygreen.supercsv.builder.LazyBeanMappingFactory;
 import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
@@ -198,7 +198,7 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
         BeanMappingFactoryHelper.validateDuplicatedColumnNumber(beanMapping.getType(), columnMappingList);
         
         // 不足しているカラム番号の補完
-        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanMapping.getType(), columnMappingList, partialAnno, headers);
+        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanMapping.getType(), columnMappingList, partialAnno, headers, beanMapping.getConfiguration());
         
         beanMapping.setColumns(columnMappingList);
         
@@ -270,7 +270,7 @@ public class LazyCsvAnnotationBeanWriter<T> extends AbstractCsvAnnotationBeanWri
             }
         }
         
-        super.flush();
+        flush();
         
     }
     

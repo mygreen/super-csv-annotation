@@ -1,5 +1,6 @@
 package com.github.mygreen.supercsv.localization;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -54,13 +55,14 @@ public class EncodingControl extends ResourceBundle.Control {
             final String bundleName = toBundleName(baseName, locale);
             final String resourceName = toResourceName(bundleName, "properties");
             
-            try (InputStream stream = getResourceStream(loader, resourceName)) {
-                try (InputStreamReader isr = new InputStreamReader(stream, encoding)) {
-                    return new PropertyResourceBundle(isr);
-                }
+            try (InputStream stream = getResourceStream(loader, resourceName);
+                    InputStreamReader isr = new InputStreamReader(stream, encoding);
+                    BufferedReader reader = new BufferedReader(isr)) {
+                return new PropertyResourceBundle(reader);
             } catch (PrivilegedActionException e) {
                 throw(IOException) e.getException();
             }
+
         } else {
             // 「java.class」はサポートしない。
             // プロパティファイル(java.properties)のみサポートする。

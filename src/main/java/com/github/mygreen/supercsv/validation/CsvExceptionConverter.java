@@ -15,6 +15,7 @@ import org.supercsv.util.CsvContext;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 import com.github.mygreen.supercsv.builder.ColumnMapping;
 import com.github.mygreen.supercsv.exception.SuperCsvBindingException;
+import com.github.mygreen.supercsv.exception.SuperCsvFixedSizeException;
 import com.github.mygreen.supercsv.exception.SuperCsvNoMatchColumnSizeException;
 import com.github.mygreen.supercsv.exception.SuperCsvNoMatchHeaderException;
 import com.github.mygreen.supercsv.exception.SuperCsvRowException;
@@ -27,7 +28,7 @@ import com.github.mygreen.supercsv.util.Utils;
 /**
  * {@link SuperCsvException}をメッセージに変換するクラス。
  * 
- * @version 2.0
+ * @version 2.5
  * @author T.TSUCHIE
  *
  */
@@ -88,6 +89,9 @@ public class CsvExceptionConverter {
             
         } else if(exception instanceof SuperCsvNoMatchHeaderException) {
             errors.addAll(convert((SuperCsvNoMatchHeaderException)exception, beanMapping));
+            
+        } else if(exception instanceof SuperCsvFixedSizeException) {
+            errors.addAll(convert((SuperCsvFixedSizeException)exception, beanMapping));
             
         } else {
             errors.addAll(convertDefault(exception, beanMapping));
@@ -233,6 +237,37 @@ public class CsvExceptionConverter {
         final String defaultMessage = exception.getMessage();
         
         final String errorCode = "csvError.noMatchHeader";
+        final String objectName = beanMapping.getType().getSimpleName();
+        final String[] errorCodes = codeGenerator.generateCodes(errorCode, objectName);
+        
+        final CsvError error = new CsvError.Builder(objectName, errorCodes)
+                .variables(variables)
+                .defaultMessage(defaultMessage)
+                .build();
+        
+        return Arrays.asList(error);
+        
+    }
+    
+    private List<CsvError> convert(final SuperCsvFixedSizeException exception, final BeanMapping<?> beanMapping) {
+        
+        final CsvContext context = exception.getCsvContext();
+        final int columnNumber = context.getColumnNumber();
+        
+        final ColumnMapping columnMapping = beanMapping.getColumnMapping(columnNumber)
+                .orElseThrow(() ->  new IllegalStateException(
+                        String.format("not found column definition with umber=%d.", columnNumber)));
+        
+        final Map<String, Object> variables = new HashMap<>();
+        variables.put("lineNumber", context.getLineNumber());
+        variables.put("rowNumber", context.getRowNumber());
+        variables.put("columnNumber", context.getColumnNumber());
+        variables.put("label", columnMapping.getLabel());
+        variables.putAll(exception.getMessageVariables());
+        
+        final String defaultMessage = exception.getMessage();
+        
+        final String errorCode = exception.getMessageCode();
         final String objectName = beanMapping.getType().getSimpleName();
         final String[] errorCodes = codeGenerator.generateCodes(errorCode, objectName);
         

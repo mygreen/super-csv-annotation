@@ -327,7 +327,7 @@ public class LazyCsvAnnotationBeanReader<T> extends AbstractCsvAnnotationBeanRea
         
         // 不足しているカラム番号の補完
         final Optional<CsvPartial> partialAnno = Optional.ofNullable(beanMapping.getType().getAnnotation(CsvPartial.class));
-        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanMapping.getType(), columnMappingList, partialAnno, headers);
+        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanMapping.getType(), columnMappingList, partialAnno, headers, beanMapping.getConfiguration());
         
         beanMapping.setColumns(columnMappingList);
         

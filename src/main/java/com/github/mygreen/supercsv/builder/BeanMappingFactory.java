@@ -20,6 +20,7 @@ import com.github.mygreen.supercsv.annotation.CsvPostWrite;
 import com.github.mygreen.supercsv.annotation.CsvPreRead;
 import com.github.mygreen.supercsv.annotation.CsvPreWrite;
 import com.github.mygreen.supercsv.annotation.DefaultGroup;
+import com.github.mygreen.supercsv.annotation.conversion.CsvFixedSize;
 import com.github.mygreen.supercsv.exception.SuperCsvInvalidAnnotationException;
 import com.github.mygreen.supercsv.localization.MessageBuilder;
 import com.github.mygreen.supercsv.validation.CsvValidator;
@@ -27,7 +28,7 @@ import com.github.mygreen.supercsv.validation.CsvValidator;
 /**
  * BeanからCSVのマッピング情報を作成するクラス。
  * 
- * @version 2.1
+ * @version 2.5
  * @author T.TSUCHIE
  *
  */
@@ -207,6 +208,15 @@ public class BeanMappingFactory {
             columnMapping.setFormatter(((AbstractProcessorBuilder)builder).getFormatter(fieldAccessor, configuration));
         }
         
+
+        // 固定長の情報を取得する
+        fieldAccessor.getAnnotation(CsvFixedSize.class).ifPresent(fixedAnno -> {
+
+            FixedSizeColumnProperty fixedSizeProperty = BeanMappingFactoryHelper.createFixedSizeColumnProperty(fixedAnno, getConfiguration());
+            columnMapping.setFixedSizeProperty(fixedSizeProperty);
+
+        });
+        
         return columnMapping;
         
     }
@@ -231,7 +241,7 @@ public class BeanMappingFactory {
         BeanMappingFactoryHelper.validateDuplicatedColumnNumber(beanType, list);
         
         // 不足している番号のカラムを補完する。
-        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanType, list, partialAnno, new String[0]);
+        BeanMappingFactoryHelper.supplyLackedNumberMappingColumn(beanType, list, partialAnno, new String[0], getConfiguration());
         
     }
     
