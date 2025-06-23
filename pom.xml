@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>super-csv-annotation</artifactId>
-	<version>2.4</version>
+	<version>2.5</version>
 	<name>Super CSV Annotation</name>
 	<url>http://mygreen.github.io/super-csv-annotation/</url>
 	<description><![CDATA[
@@ -109,7 +109,39 @@ CSVのJavaライブラリであるSuperCSVに、アノテーション機能を�
 		</testResources>
 		<pluginManagement>
 			<plugins>
-
+				<!--
+					Eclipse上でのJunitの実行時エラーの回避策
+					https://github.com/eclipse-m2e/m2e-core/issues/1824
+					https://qiita.com/sysdev/items/7cb52651adc7ef93b05b
+				-->
+				<!--
+				<plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.jacoco</groupId>
+                                        <artifactId>jacoco-maven-plugin</artifactId>
+                                        <versionRange>[0.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>prepare-agent</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnConfiguration>true</runOnConfiguration>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+                -->
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -250,7 +282,7 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.sonatype.central</groupId>
 				<artifactId>central-publishing-maven-plugin</artifactId>
-				<version>0.6.0</version>
+				<version>0.8.0</version>
 				<extensions>true</extensions>
 				<configuration>
 					<publishingServerId>central</publishingServerId>
