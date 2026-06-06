@@ -21,7 +21,7 @@ XMLによる設定方法を説明します。
   
   * ``com.github.mygreen.supercsv.localization.SpringMessageResolver`` に、``MessageSource`` を渡します。
 
-* ``CsvBeanValidator`` に、Springの ``LocalValidatorFactoryBean`` で作成したBeanValidationのValidtorのインスタンスを渡します。
+* ``CsvBeanValidator`` に、Springの ``LocalValidatorFactoryBean`` で作成したBeanValidationのValidatorのインスタンスを渡します。
 
 .. sourcecode:: xml
     :linenos:
@@ -57,7 +57,7 @@ XMLによる設定方法を説明します。
             </property>
         </bean>
         
-        <!-- Super CSV Annotation 用のMessgeResolverの定義 -->
+        <!-- Super CSV Annotation 用のMessageResolverの定義 -->
         <bean id="springMessageResolver" class="com.github.mygreen.supercsv.localization.SpringMessageResolver">
             <property name="messageSource" ref="messageSource" />
         </bean>
@@ -144,13 +144,13 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
         }
         
         @Bean
-        @Description("本ライブラリのSpring用のMessgeResolverの定義")
+        @Description("本ライブラリのSpring用のMessageResolverの定義")
         public SpringMessageResolver springMessageResolver() {
             return new SpringMessageResolver(messageSource());
         }
         
         @Bean
-        @Description("CSV用のCsvValidaotrの定義")
+        @Description("CSV用のCsvValidatorの定義")
         public CsvBeanValidator csvBeanValidator() {
             
             LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -158,13 +158,13 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
             validator.setMessageInterpolator(new MessageInterpolatorAdapter(
                     springMessageResolver(), new MessageInterpolator()));
 
-            // ValidarorのインスタンスをSpring経由で作成したものを利用する
+            // ValidatorのインスタンスをSpring経由で作成したものを利用する
             CsvBeanValidator csvBeanValidator = new CsvBeanValidator(validator);
             return csvBeanValidator;
         }
 
         @Bean
-        @Description("CSV用のCsvValidaotrの定義 - Jakarta Bean Validationの場合")
+        @Description("CSV用のCsvValidatorの定義 - Jakarta Bean Validationの場合")
         public JakartaCsvBeanValidator jakartaCsvBeanValidator() {
             
             LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -172,7 +172,7 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
             validator.setMessageInterpolator(new JakartaMessageInterpolatorAdapter(
                     springMessageResolver(), new MessageInterpolator()));
 
-            // ValidarorのインスタンスをSpring経由で作成したものを利用する
+            // ValidatorのインスタンスをSpring経由で作成したものを利用する
             JakartaCsvBeanValidator csvBeanValidator = new JakartaCsvBeanValidator(validator);
             return csvBeanValidator;
         }
@@ -188,13 +188,13 @@ Bean Validationの独自のアノテーションを作成する際には、通�
 
 * メタアノテーション ``@Constraint`` を付与します。
   
-  * 属性 ``validatedBy`` に、 ``ConsraintValidator`` の実装クラスを指定します。
+  * 属性 ``validatedBy`` に、 ``ConstraintValidator`` の実装クラスを指定します。
 
-* 複数指定可能できるように、内部クラス ``List`` を定義しておきます。
+* 複数指定できるように、内部クラス ``List`` を定義しておきます。
   
   * Bean Validation 1.1の段階では、Java8から追加された ``@Repeatable`` は対応していませんが、
     従来の定義方法と揃えておくことで、*@Repeatable* を使ってJava8のスタイルで使用できます。
-  * ただし、今後リリース予定のBeanValidator2.0から *@Repeatable* 対応するため、定義しておいても問題はありません。
+  * ただし、今後リリース予定のBean Validation 2.0から *@Repeatable* 対応するため、定義しておいても問題はありません。
 
 .. sourcecode:: java
     :linenos:
