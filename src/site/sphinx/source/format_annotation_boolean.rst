@@ -18,7 +18,7 @@
 
 属性 ``readForTrue`` 、 ``readForFalse`` で、読み込み時のtrueまたはfalseと判定する候補の値を指定します。
    
-* 属性readForTrueとreadForFalseの値に重複がある場合、readForTrueの定義が優先されまます。
+* 属性readForTrueとreadForFalseの値に重複がある場合、readForTrueの定義が優先されます。
   
 * 属性readForTrueを指定しない場合、デフォルトで「"true", "1", "yes", "on", "y", "t"」が設定されます。
   
@@ -148,7 +148,7 @@
     public class SampleCsv {
         
         @CsvColumn(number=1, label="ステータス")
-        @CsvBooleanFormat(message="[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、trueの値「${f:join(trueValues, ', ')}」、またはfalseの値「${f:join(falseValues, ', ')}」の何れかの値で設定してください。"
+        @CsvBooleanFormat(message="[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、trueの値「${f:join(trueValues, ', ')}」、またはfalseの値「${f:join(falseValues, ', ')}」のいずれかの値で設定してください。"
         private boolean availaled;
         
         // setter/getterは省略

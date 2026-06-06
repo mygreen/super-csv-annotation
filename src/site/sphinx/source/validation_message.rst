@@ -72,7 +72,7 @@
             // CsvExceptionConverterの作成
             CsvExceptionConverter exceptionConverter = new CsvExceptionConverter();
             
-            // メッセージソースを既存の物に対して追加する
+            // メッセージソースを既存のものに対して追加する
             ResourceBundleMessageResolver messageResolver = new ResourceBundleMessageResolver();
             messageResolver.addResourceBundle(ResourceBundle.getBundle("SampleMessages"));
             exceptionConverter.setMessageResolver(messageResolver);

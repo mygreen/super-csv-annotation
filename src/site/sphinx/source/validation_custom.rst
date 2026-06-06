@@ -156,7 +156,7 @@ CellProcessorの実装クラスの作成
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @Repeatable(CsvCustomConstraint.List.class)
-    @CsvConstraint(CustomConstratinFactory.class)  // ファクトリクラスを指定
+    @CsvConstraint(CustomConstraintFactory.class)  // ファクトリクラスを指定
     public @interface CsvCustomConstraint {
         
         // 固有の属性 - チェックすることとなる最後の文字を指定します。

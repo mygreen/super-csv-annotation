@@ -2,7 +2,7 @@
 @CsvEnumFormat
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-列挙型の変換規則の設定するためのアノテーションです。
+列挙型の変換規則を設定するためのアノテーションです。
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 基本的な使い方
@@ -109,7 +109,7 @@
     public class SampleCsv {
         
         @CsvColumn(number=1, label="ステータス")
-        @CsvEnumFormat(message="[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、何れかの値「${f:join(enums, ', ')}」である必要があります。"
+        @CsvEnumFormat(message="[{rowNumber}行, {columnNumber}列] : 項目「{label}」の値（{validatedValue}）は、いずれかの値「${f:join(enums, ', ')}」である必要があります。"
         private RoleType role;
         
         // setter/getterは省略

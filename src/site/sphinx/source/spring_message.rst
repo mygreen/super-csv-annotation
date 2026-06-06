@@ -42,7 +42,7 @@ XMLによる設定方法を説明します。
             </property>
         </bean>
         
-        <!-- 本ライブラリのSpring用のMessgeResolverの定義 -->
+        <!-- 本ライブラリのSpring用のMessageResolverの定義 -->
         <bean id="springMessageResolver" class="com.github.mygreen.supercsv.localization.SpringMessageResolver">
             <property name="messageSource" ref="messageSource" />
         </bean>
@@ -90,7 +90,7 @@ JavaConfigによる設定を使用する場合は、Spring Frameworkのバージ
         }
         
         @Bean
-        @Description("本ライブラリのSpring用のMessgeResolverの定義")
+        @Description("本ライブラリのSpring用のMessageResolverの定義")
         public SpringMessageResolver springMessageResolver() {
             return new SpringMessageResolver(messageSource());
         }
