@@ -28,18 +28,14 @@ jobs:
       run: |
         sudo timedatectl set-timezone Asia/Tokyo
         date
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up JDK 1.8
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'corretto'
         java-version: 8
-    - name: Set up Maven
-      uses: stCarolas/setup-maven@v5
-      with:
-        maven-version: 3.9.6
+        cache: maven
     - name: Build with Maven
       env:
         TZ: 'Asia/Tokyo'
-      run: mvn -B clean verify -Dgpg.skip=true
-
+      run: ./mvnw -B clean verify -Dgpg.skip=true
