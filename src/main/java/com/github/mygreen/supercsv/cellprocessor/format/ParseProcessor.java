@@ -36,7 +36,7 @@ public class ParseProcessor<T> extends ValidationCellProcessor implements String
     }
     
     /**
-     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
+     * コンストラクタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
      * @throws NullPointerException type or parser is null.
      * 
      */

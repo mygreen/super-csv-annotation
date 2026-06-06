@@ -59,7 +59,7 @@ public class RegexReplace extends CellProcessorAdaptor implements StringCellProc
     }
     
     /**
-     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
+     * コンストラクタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
      * 
      * @param pattern コンパイル済みの正規表現
      * @param replacement 置換する文字。

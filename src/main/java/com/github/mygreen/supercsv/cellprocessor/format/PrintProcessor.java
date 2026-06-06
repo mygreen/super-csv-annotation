@@ -46,7 +46,7 @@ public class PrintProcessor<T> extends ValidationCellProcessor implements BoolCe
     }
     
     /**
-     * コンスタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
+     * コンストラクタによるインスタンスを生成する際の前提条件となる引数のチェックを行う。
      * @throws NullPointerException printer is null.
      * 
      */

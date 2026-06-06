@@ -172,7 +172,7 @@ public class AnnotationExpander {
                 return false;
             }
             
-            // @Repetableアノテーションが付与されているかどうか
+            // @Repeatableアノテーションが付与されているかどうか
             if(annos[0].annotationType().getAnnotation(Repeatable.class) != null) {
                 return true;
             }
