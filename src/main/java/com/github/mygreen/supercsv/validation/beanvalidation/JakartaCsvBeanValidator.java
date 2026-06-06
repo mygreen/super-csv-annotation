@@ -62,7 +62,7 @@ public class JakartaCsvBeanValidator implements CsvValidator<Object> {
     }
     
     /**
-     * Bean Validatonのデフォルトのインスタンスを取得する。
+     * Bean Validationのデフォルトのインスタンスを取得する。
      * @return Validatorを取得します。
      */
     private Validator createDefaultValidator() {
