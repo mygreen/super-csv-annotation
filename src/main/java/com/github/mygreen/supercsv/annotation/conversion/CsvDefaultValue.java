@@ -31,18 +31,18 @@ import com.github.mygreen.supercsv.builder.BuildCase;
  *     
  *     // クラスタイプに沿った値を指定します。
  *     {@literal @CsvColumn(number=1)}
- *     {@literal @CsvDefalutValue("0")}
+ *     {@literal @CsvDefaultValue("0")}
  *     private Integer id;
  *     
  *     // 書式が指定されている場合は、書式に沿った値を指定します。
  *     {@literal @CsvColumn(number=2)}
- *     {@literal @CsvNumberFomat(pattern="#,##0")}
- *     {@literal @CsvDefalutValue("1,000")}
+ *     {@literal @CsvNumberFormat(pattern="#,##0")}
+ *     {@literal @CsvDefaultValue("1,000")}
  *     private Integer salary;
  *     
  *     // 書き込み時のみ適用する場合
  *     {@literal @CsvColumn(number=3)}
- *     {@literal @CsvDefalutValue(value="-", cases=BuildCase.Write)}
+ *     {@literal @CsvDefaultValue(value="-", cases=BuildCase.Write)}
  *     private String comment;
  *     
  *     // getter/setterは省略

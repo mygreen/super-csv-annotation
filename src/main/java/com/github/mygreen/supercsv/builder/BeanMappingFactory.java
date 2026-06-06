@@ -91,7 +91,7 @@ public class BeanMappingFactory {
      * 
      * @param <T> Beanのタイプ
      * @param beanMapping Beanのマッピング情報
-     * @param beanAnno アノテーション{@literal @CsvBean}のインタンス
+     * @param beanAnno アノテーション{@literal @CsvBean}のインスタンス
      */
     protected <T> void buildHeaderMapper(final BeanMapping<T> beanMapping, final CsvBean beanAnno) {
         
@@ -108,7 +108,7 @@ public class BeanMappingFactory {
      * 
      * @param <T> Beanのタイプ
      * @param beanMapping Beanのマッピング情報
-     * @param beanAnno アノテーション{@literal @CsvBean}のインタンス
+     * @param beanAnno アノテーション{@literal @CsvBean}のインスタンス
      * @param groups グループ情報
      */
     @SuppressWarnings({"unchecked"})

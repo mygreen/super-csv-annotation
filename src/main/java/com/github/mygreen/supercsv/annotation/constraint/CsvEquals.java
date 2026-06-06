@@ -36,7 +36,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
  *     
  *     // 書式を指定している場合
  *     {@literal @CsvColumn(number=2)}
- *     {@literal @CsvNumberForamt(pattern="#,##0")}
+ *     {@literal @CsvNumberFormat(pattern="#,##0")}
  *     {@literal @CsvEquals({"-1,000", "1,000"})}
  *     private Integer number;
  *     

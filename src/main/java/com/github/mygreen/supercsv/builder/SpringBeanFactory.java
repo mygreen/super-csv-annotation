@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**
- * Springのコンテナからインタンスを作成するためのクラスです。
+ * Springのコンテナからインスタンスを作成するためのクラスです。
  * <p>利用するには、このクラスをSpringのコンテナに登録しておく必要があります。</p>
  * <p>Springのコンテナに登録されていないクラスは、通常のクラスとしてインスタンスを作成します。
  *  <br>ただし、コンテナ管理外のクラスに対しても、アノテーション{@link Autowired}によるインジェクションが可能です。

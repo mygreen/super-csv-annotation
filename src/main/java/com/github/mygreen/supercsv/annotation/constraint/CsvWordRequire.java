@@ -44,7 +44,7 @@ import com.github.mygreen.supercsv.cellprocessor.constraint.RequiredWordProvider
  * public class SampleCsv {
  *     
  *     {@literal @CsvColumn(number=1)}
- *     {@literal @CsvWordForbid(provider=FileRequiredWordProvider.class)}
+ *     {@literal @CsvWordRequire(provider=FileRequiredWordProvider.class)}
  *     private String comment;
  *     
  *     // setter/getterは省略
