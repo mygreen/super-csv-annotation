@@ -4,8 +4,8 @@
 cd %~p0
 
 call env.bat
-call mvn -version
+call mvnw -version
 
-call mvn package
+call mvnw package
 
 pause
