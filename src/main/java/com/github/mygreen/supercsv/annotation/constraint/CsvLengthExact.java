@@ -20,7 +20,7 @@ import com.github.mygreen.supercsv.builder.BuildCase;
  * 
  * <ul>
  *   <li>属性{@link #value()}で、文字長を指定します。
- *    <br>複数指定した場合は、何れかの文字長に一致すれば問題ありません。
+ *    <br>複数指定した場合は、いずれかの文字長に一致すれば問題ありません。
  *   </li>
  * </ul>
  * 

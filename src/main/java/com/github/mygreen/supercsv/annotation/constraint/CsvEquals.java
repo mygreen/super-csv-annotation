@@ -22,7 +22,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
  * <h3 class="description">基本的な使い方</h3>
  * <p>属性{@link #value()}で比較対象の値を指定します。</p>
  * <ul>
- *   <li>値は複数指定可能で、その場合、何れかの値に一致すれば問題ありません。</li>
+ *   <li>値は複数指定可能で、その場合、いずれかの値に一致すれば問題ありません。</li>
  *   <li>数値や日時など書式を持つ場合は、その書式に沿った値を指定する必要があります。</li>
  * </ul>
  * 
@@ -36,7 +36,7 @@ import com.github.mygreen.supercsv.cellprocessor.format.TextPrinter;
  *     
  *     // 書式を指定している場合
  *     {@literal @CsvColumn(number=2)}
- *     {@literal @CsvNumberForamt(pattern="#,##0")}
+ *     {@literal @CsvNumberFormat(pattern="#,##0")}
  *     {@literal @CsvEquals({"-1,000", "1,000"})}
  *     private Integer number;
  *     
@@ -99,7 +99,7 @@ public @interface CsvEquals {
     
     /**
      * 比較する値を指定します。
-     * <p>複数指定した場合は、何れかに一致すれば問題ありません。</p>
+     * <p>複数指定した場合は、いずれかに一致すれば問題ありません。</p>
      * <p>ブール型、数値や日時型の場合は、アノテーションで指定した書式に沿った値を指定する必要があります。</p>
      * @return 比較対象の値。
      */

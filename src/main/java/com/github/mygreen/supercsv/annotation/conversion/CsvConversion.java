@@ -21,7 +21,7 @@ import com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
  *  <li>繰り返しのアノテーションとして利用できるよう {@literal @Repeatable}を付与します。
  *     <br>繰り返しのアノテーションを格納する内部アノテーションとして、{@literal List}を定義します。
  *  </li>
- *  <li>検証用のアノテーションであることを示すためのメタアノテーション {@literal @CsvContraint}を指定します。
+ *  <li>変換用のアノテーションであることを示すためのメタアノテーション {@literal @CsvConversion}を指定します。
  *    <br>属性{@link #value()}で、{@link ConversionProcessorFactory}の実装クラスを指定します。
  *  </li>
  *  <li>共通の属性として、{@literal cases, groups, order}を定義します。
@@ -31,12 +31,12 @@ import com.github.mygreen.supercsv.cellprocessor.ConversionProcessorFactory;
  * </ul>
  * 
  * <pre class="highlight"><code class="java">
- * // 独自の値の検証用のアノテーション
+ * // 独自の値の変換用のアノテーション
  * {@literal @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})}
  * {@literal @Retention(RetentionPolicy.RUNTIME)}
  * {@literal @Documented}
  * {@literal @Repeatable(CsvCustomConversion.List.class)}
- * {@literal @CsvConstraint(CustomConversionFactory.class)}  // ファクトリクラスを指定
+ * {@literal @CsvConversion(CustomConversionFactory.class)}  // ファクトリクラスを指定
  * public {@literal @interface} CsvCustomConversion {
  *     
  *     // 固有の属性 - 必要であれば定義します。

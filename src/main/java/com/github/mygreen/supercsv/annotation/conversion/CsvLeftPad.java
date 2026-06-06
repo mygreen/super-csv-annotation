@@ -33,18 +33,18 @@ import com.github.mygreen.supercsv.builder.BuildCase;
  *     
  *     // 値が[10]の場合、結果は、[&nbsp;&nbsp;&nbsp;10]となります。
  *     {@literal @CsvColumn(number=1)}
- *     {@literal @CsvLefPad(size=5)}
+ *     {@literal @CsvLeftPad(size=5)}
  *     private Integer id;
  *     
  *     // パディング文字を変更する場合
  *     {@literal @CsvColumn(number=2)}
- *     {@literal @CsvLefPad(size=5, padChar='_')}
+ *     {@literal @CsvLeftPad(size=5, padChar='_')}
  *     private Integer number;
  *     
  *     // 書き込み時のみ適用する場合
  *     {@literal @CsvColumn(number=3)}
  *     {@literal @CsvTrim(cases=BuildCase.Read)}
- *     {@literal @CsvLefPad(size=20, cases=BuildCase.Write)}
+ *     {@literal @CsvLeftPad(size=20, cases=BuildCase.Write)}
  *     private String name;
  *     
  *     // getter/setterは省略
