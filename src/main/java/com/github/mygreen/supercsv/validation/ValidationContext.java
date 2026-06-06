@@ -5,7 +5,7 @@ import org.supercsv.util.CsvContext;
 import com.github.mygreen.supercsv.builder.BeanMapping;
 
 /**
- * 入力値検証する際のContext.
+ * 入力値検証時のコンテキストです。
  * 
  * @param <T> Beanのタイプ。
  * @since 2.0

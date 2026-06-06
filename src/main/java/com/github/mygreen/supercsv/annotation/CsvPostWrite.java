@@ -72,7 +72,7 @@ import java.lang.annotation.Target;
  * <h3 class="description">リスナークラスに実装する場合</h3>
  * 
  * <p>POJOであるリスナークラスの任意のメソッドにアノテーションを付与します。</p>
- * <p>Spring Frameworkと連携している場合、リスナークラスをSpringBeanとして登録しているとでインジェクションできます。</p>
+ * <p>Spring Frameworkと連携している場合、リスナークラスをSpringBeanとして登録しているとインジェクションできます。</p>
  * 
  * <pre class="highlight"><code class="java">
  * {@literal @CsvBean(listeners=SampleListener.class)}  // リスナークラスの指定
